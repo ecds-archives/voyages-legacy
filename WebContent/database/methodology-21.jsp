@@ -87,36 +87,36 @@
 
 					
 					<p><span class="superscript">8</span> Robert Louis Stein, <font style="font-style: italic;">The French Slave Trade in the Eighteenth Century:
-					An Old Regime Business</font>, (Madison, Wisc, 1979), p. xv. Some armateurs also may have owned the vessel. French
-					dictionaries define armateurs firstly as those merchants who fit out the ship or expedition and secondly as
-					(ship)owners (E. Littré, <font style="font-style: italic;">Dictionnaire de la Langue Française</font> (Paris, 1881), I, 194).</p>
+					An Old Regime Business</font> (Madison: University of Wisconsin Press, 1979), xv. Some armateurs also may have owned the vessel. French 
+					dictionaries define armateurs firstly as those merchants who fit out the ship or expedition and secondly as (ship)owners.  See Emile 
+					Littré, <font style="font-style: italic;">Dictionnaire de la Langue Française</font>, vol. I (Paris: Hachette, 1881), 194.</p>
 					
 					<p><span class="superscript">9</span> One major aid in identifying produce vessels is the Seaman’s Sixpence
-					ledgers (BNA, ADM 68 series). One of our team, Jelmer Vos went through this large series with great care. </p>
+					ledgers (BNA, ADM 68 series). One of our team, Jelmer Vos, went through this large series with great care. </p>
 					
 					<p><span class="superscript">10</span> One of the most widely used contemporary surveys of African regional
-					preferences was Lt. Edward Bold, <font style="font-style: italic;">The Merchants and Mariners’ African Guide</font> (London, 1819). For a very detailed
-					private record see the manuscript in the Sidney Jones Library, University of Liverpool, "Memorandum of African
-					Trade, 1830–1840," for W.A. Maxwell and Co.</p>
+					preferences was Lt. Edward Bold, <font style="font-style: italic;">The Merchants and Mariners’ African Guide</font> 
+					(J. W. Norie and Co.: London, 1822). For a very detailed private record, see the manuscript in the Sidney Jones Library, 
+					University of Liverpool, “Memorandum of African Trade, 1830–1840,” for W.A. Maxwell and Co.</p>
 
 					
 					<p><span class="superscript">11</span> See Pierre Verger, <font style="font-style: italic;">Trade Relations Between Bahia de Todos os Santos and
-					the Bight of Benin, 17th to the 19th Century</font> (Ibadan, 1976), pp. 358–61, and David Eltis, "The Export of Slaves
-					from Africa, 1820–43," <font style="font-style: italic;">Journal of Economic History</font>, 37 (1977), 417–20, for a fuller discussion.</p>
+					the Bight of Benin, 17th to the 19th Century</font> (Ibadan: Ibadan University Press, 1976), 358-361; and David Eltis, “The Export of Slaves 
+					from Africa, 1820–43,” <font style="font-style: italic;">Journal of Economic History</font> 37 (1977): 417-420, for a fuller discussion.</p>
 					
 					<p><span class="superscript">12</span> In the downloadable version they would use the data variables
 					“Percentage male embarked*” (MALRAT1), “Percentage male disembarked*” (MALRAT3), “Percentage children embarked*”
 					(CHILRAT1) and “Percentage children disembarked*” (CHILRAT3) variables instead of the variables, “Percentage male*”
 					(MALRAT7) and “Percentage children*” CHILRAT7.</p>
 					
-					<p><span class="superscript">13</span> For discussion of the general problem see Frederick C. Lane, "Tonnages,
-					Medieval and Modern," <font style="font-style: italic;">Economic History Review</font>, 17 (1964–5), 213–33.</p>
+					<p><span class="superscript">13</span> For discussion of the general problem see Frederick C. Lane, “Tonnages, Medieval and Modern,” 
+					<font style="font-style: italic;">Economic History Review</font>, 17 (1964–5): 213–33.</p>
 
 					
-					<p><span class="superscript">14</span> The 1773 legislation is 13 Geo III, c. 74. See W. Salisbury, "Early
-					Tonnage Measurements in England: I, H.M. Customs and Statutory Rules," <font style="font-style: italic;">Mariner’s Mirror</font>, 52 (1966), 329–40.
-					To convert registered tons into measured tons, we used the formulae in Christopher J. French, "Eighteenth
-					Century Shipping Tonnage Measurements," <font style="font-style: italic;">Journal of Economic History</font>, 33 (1973), 434–43. The 1786 act is 26
+					<p><span class="superscript">14</span> The 1773 legislation is 13 Geo III, c. 74. See W. Salisbury, “Early Tonnage Measurements in England: 
+					I, H.M. Customs and Statutory Rules,” <font style="font-style: italic;">Mariner’s Mirror</font>, 52 (1966): 329–40. To convert registered 
+					tons into measured tons, we used the formulae in Christopher J. French, “Eighteenth Century Shipping Tonnage Measurements,” 
+					<font style="font-style: italic;">Journal of Economic History</font> 33 (1973): 434–43. The 1786 act is 26
 					Geo III, c. 60, and its 1835 counterpart is 5 and 6 Will IV, c. 56, which introduced different rules for
 					empty ships (s. 2) and those with cargo (s. 6). As the latter appears to have been used on slave ships,
 					it is the one adopted here, and a further regression equation allows us to convert post-1836 tonnages
@@ -132,35 +132,36 @@
 					9 Sept. 1837 (enc.), BNA, FO84/214; J. Barrow to Aberdeen, 16 May 1842 (enc.), BNA, FO84/439; G. Jackson and
 					F. Grigg to Aberdeen, 2 Jan. 1841 (enc.), BNA, FO84/350.</p>
 					
-					<p><span class="superscript">17</span> For Spanish into British tonnage data are limited. The equation is:<br>
+					<p><span class="superscript">17</span> For Spanish into British tonnage, data are limited. The equation is:<br>
 				    Y = 71 + (0.86 x X)   N = 32, R² = 0.66.<br>
 				    Where Y = British measured tons, 1773–1835, and X = Spanish tons.<br>
-					For US and British see <font style="font-style: italic;">United States Statutes at Large</font>, Vol. 1, p. 55. For a discussion see W. Salisbury,
-					"Early Tonnage Measurements in England: IV, Rules Used by Shipwrights and Merchants," <font style="font-style: italic;">Mariner’s Mirror</font>,
-					53 (1967): 260–64.</p>
+					For US and British, see “An Act for Registering and Clearing Vessels, Regulating the Coasting Trade, and for other purposes,” 
+					<font style="font-style: italic;">Statutes at Large of the United States of America, 1789-1873</font>, 1 (1789): 55. For a 
+					discussion, see W. Salisbury, “Early Tonnage Measurements in England: IV, Rules Used by Shipwrights and Merchants,” 
+					<font style="font-style: italic;">Mariner’s Mirror</font> 53 (1967): 260–64.</p>
 
 					
-					<p><span class="superscript">18</span> See David Eltis and David Richardson, "Productivity in the
-					Transatlantic Slave Trade," <font style="font-style: italic;">Explorations in Economic History</font>, 32 (1995),
-					481, for the formula and a discussion.</p>
+					<p><span class="superscript">18</span> See David Eltis and David Richardson, “Productivity in the Transatlantic Slave Trade,” 
+					<font style="font-style: italic;">Explorations in Economic History</font> 32 (1995): 481, for the formula and a discussion.</p>
 					
-					<p><span class="superscript">19</span> See Lane, "Tonnages, Medieval and Modern," 217–33 for a discussion.</p>
+					<p><span class="superscript">19</span> See Lane, “Tonnages, Medieval and Modern,” 217-233 for a discussion.</p>
 					
-					<p><span class="superscript">20</span>  Stein, French Slave Trade, 40–1; Patrick Villiers, "The Slave and Colonial
-					Trade in France just before the Revolution," in Babara Solow and Stanley L. Engerman (eds.), <font style="font-style: italic;">Slavery and the Rise
-					of the Atlantic System</font> (Cambridge, 1991), p. 228.</p>
+					<p><span class="superscript">20</span>  Stein, French Slave Trade, 40–1; Patrick Villiers, “The Slave and Colonial Trade 
+					in France just before the Revolution,” in <font style="font-style: italic;">Slavery and the Rise
+					of the Atlantic System</font>, ed. Barbara L. Solow (Cambridge, UK: Cambridge University Press, 1991), 228.</p>
 
 					
 					<p><span class="superscript">21</span> See Herbert S. Klein, The <font style="font-style: italic;">Middle Passage: Comparative Studies in the Atlantic
-					Slave Trade</font> (Princeton, 1978), p. 29–31.</p>
+					Slave Trade</font> (Princeton: Princeton University Press, 1978), 29-31.</p>
 					
-					<p><span class="superscript">22</span> See for example H. Chamberlain to Canning, 7 July 1824 (enc.), BNA, FO84/31.</p>
+					<p><span class="superscript">22</span> See, for example, H. Chamberlain to Canning, 7 July 1824 (enc.), BNA, FO84/31.</p>
 					
-					<p><span class="superscript">23</span> David Eltis and David Richardson, "Slave Prices of Newly Arrived Africans
-					in the Americas, 1673-1807: A Quinquennial Series," in Susan Carter, Scott Gartner et al. (eds.), <font style="font-style: italic;">Historical
-					Statistics of the United States</font> (Cambridge, 2006), 5: 690-1, idem, "Markets for Newly Arrived Slaves in the
-					Americas, 1673-1864," in David Eltis, Frank Lewis and Kenneth Sokoloff (eds.), <font style="font-style: italic;">Slavery in the Development of
-					the Americas</font> (Cambridge, 2004), pp, 183-221.</p>
+					<p><span class="superscript">23</span> David Eltis and David Richardson, “Slave Prices of Newly Arrived Africans in the Americas, 1673-1807: A 
+					Quinquennial Series,” in <font style="font-style: italic;">Historical Statistics of the United States</font>, 
+					Susan Carter et al., eds. (Cambridge, UK: Cambridge University Press, 2006), 5: 690-691; 
+					<font style="font-style: italic;">idem</font>, “Markets for Newly Arrived Slaves in the Americas, 1673-1864,” in 
+					<font style="font-style: italic;">Slavery in the Development of	the Americas</font>, David Eltis, Frank Lewis, and Kenneth Sokoloff, eds. 
+					(Cambridge, UK: Cambridge University Press, 2004), 183-221.</p>
 
 					
 					<p><span class="superscript">24</span> More specifically, the price presented here is the average of the first ten
