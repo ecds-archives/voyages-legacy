@@ -73,7 +73,7 @@
 					Comparatively few enslaved Africans shipped from northwest Africa
 					between rainy July and November; Virginia and Maryland planters
 					purchased most of their new agricultural workers between April and
-					October. In Upper Guinea markets most captains began sailing the
+					October. In Upper Guinea markets, most captains began sailing the
 					Middle Passage in the North Atlantic spring, a time of the year
 					that would place them in American markets in the North Atlantic
 					summer. Strong links between Upper Guinea and the
@@ -104,14 +104,14 @@
 					disembarkation center for French slaving vessels in northern St.
 					Domingue, has the island’s rainiest October-February winter; the
 					greatest number of enslaved Africans, correspondingly, arrived in
-					the dry April-June quarter. In southern St. Domingue the dry season
+					the dry April-June quarter. In southern St. Domingue, the dry season
 					occurs earlier, in December-February, the harvesting months and
 					time of increased planter demand for labor. Whereas northern St.
 					Domingue drew upon Senegal’s January-April provisioning-slaving
 					season, French planters in the south purchased comparatively more
 					Africans shipped overseas during the September-December
 					provisioning-slaving seasons in the Bight of Biafra. In the late
-					1700s the Portuguese resettled trading posts in coastal
+					1700s, the Portuguese resettled trading posts in coastal
 					Guinea-Bissau, a staple rice region with a marked November-April
 					provisioning-slaving season. Captains purchased enslaved Africans
 					during these months to work in the May-July Maranhão rice season.</p>

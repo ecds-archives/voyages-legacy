@@ -64,8 +64,8 @@
 					starches. Intense ultraviolet light damages coffee and other
 					berries. Yams and other tubers are long-growing tropical foods,
 					requiring 8-10 months underground. Except for rice, most crops do
-					not grow well in rainforests, because downpours leech soils of
-					nutrients and roots cannot tolerate water logging. Cold winters in
+					not grow well in rainforests, because downpours leach soils of
+					nutrients and roots cannot tolerate waterlogging. Cold winters in
 					the continental climates of the New World kill sugar, coffee,
 					cacao, and cotton plants. Rainfall loosens soils to facilitate
 					digging and sowing, and all seeds and cuttings require water to
@@ -73,7 +73,7 @@
 					content increases. In ecosystems that support short-growing plants
 					and have two rainy seasons, farmers can produce two crops per year.</p>
 
-					<p>Millet, sorghum, rice, maize, yams and cassava, principal
+					<p>Millet, sorghum, rice, maize, yams, and cassava, principal
 					African crops, grow in ecosystems that dictate agricultural
 					calendars. Millet and sorghum are often the only food plants grown
 					in the semi-arid and arid 10-15° N belt, three hundred miles inland
@@ -95,24 +95,24 @@
 					temperatures, rainfall totalling 60 inches, a 2-3 month dry season,
 					sufficient sunlight, and free-draining soils.</p>
 
-					<p>Sugar, tobacco, coffee and rice were the major New World
-					cash crops. In the tropical Americas sugar (with its by-products
+					<p>Sugar, tobacco, coffee, and rice were the major New World
+					cash crops. In the tropical Americas, sugar (with its by-products
 					rum and molasses) was the principal plantation commodity. Planting
 					occurred during rainy months, June-October in most of the West
 					Indies, and the cane grows over a 14-18 month period. Saccharine
 					matter reaches its greatest content during the ripening period when
-					stalks dry. In the West Indies dry seasons usually occur from
+					stalks dry. In the West Indies, dry seasons usually occur from
 					January to May, though there are microclimates in the larger and
 					mountainous islands, such as Haiti (before 1804, French St.
-					Domingue), Dominica and Jamaica. The best ecosystems for tobacco
+					Domingue), Dominica, and Jamaica. The best ecosystems for tobacco
 					were located in the Chesapeake Lowcountry and Bahia, where high
 					summer humidity keeps growing leaves moist and drier fall air
-					allows them to dry and be cut. In the late 1700s coffee groves
+					allows them to dry and be cut. In the late 1700s, coffee groves
 					became important in well-draining, shaded mountain ecosystems, the
 					six-month fruit cycles ending during dry-season berry picking. Wet
 					rice proved profitable in humid, low-lying areas prone to flooding,
-					as in the coastal Carolinas, Georgia, Surinam and northeast Brazil.
-					On South American rice fields slaves cleared land during the
+					as in the coastal Carolinas, Georgia, Surinam, and northeast Brazil.
+					On South American rice fields, slaves cleared land during the
 					August-November dry season, planted in winter rains, and harvested
 					between March and May. The Carolina rice and indigo cycles began in
 					February and ended in November. Though a crop associated strongly

@@ -102,7 +102,7 @@
 					rain falls in the West Indies in the fall and winter, but the
 					wettest low-lying areas only reach the precipitation levels of the
 					driest rainy seasons in Atlantic Africa. In the Carolinas and the
-					Chesapeake June-August summers are the rainiest times, but there is
+					Chesapeake, June-August summers are the rainiest times, but there is
 					also significant December-February precipitation, levels similar to
 					those experienced during winters in maritime climates of Europe.</p>
 

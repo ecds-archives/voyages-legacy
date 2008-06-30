@@ -64,17 +64,17 @@
 					first rains. After the planting season, families weeded and
 					controlled insect and bird pests—work less dependent upon physical
 					strength. Some crops required long workweeks to transplant shoots
-					from seedbeds to fields. On both sides of the Atlantic farmers
-					worked intensively during dry season cane, fruit, berry, leaf or
+					from seedbeds to fields. On both sides of the Atlantic, farmers
+					worked intensively during dry season cane, fruit, berry, leaf, or
 					cereal harvests.</p>
 
 					<p>African crops require varying numbers of farmer-hours during
-					land clearing, planting (“crop establishment”), weeding and
+					land clearing, planting (“crop establishment”), weeding, and
 					harvesting/threshing. Sorghum and millet, often inter-cropped,
 					demanded intense labor during the summer rains when the cereals
 					were planted and weeded. Threshing the cereals demanded fewer
 					worker-hours. In the coastal West African rice region, from July to
-					early October villagers cut mangrove trees, built dikes and
+					early October villagers cut mangrove trees, built dikes, and
 					transplanted rice to paddies. Labor demand intensity is highest
 					during the October/early November harvest. Rice is the most
 					labor-consuming African crop. Men and women plant maize each year;
@@ -89,10 +89,10 @@
 
 					<p>New World merchant-planters’ demand for workers increased
 					during dry seasons north and south of the equator, when crops
-					ripened, dried and needed to be harvested. Sugar was the most
+					ripened, dried, and needed to be harvested. Sugar was the most
 					important slave-produced crop, the one with the longest crop cycle,
 					and the one that placed the greatest short-term demands on workers.
-					Hours worked in cane-holing, trenching and cutting tripled those
+					Hours worked in cane-holing, trenching, and cutting tripled those
 					hours worked by modern factory hands. Intensive tobacco work
 					occurred when men and women transplanted tobacco stalks to the
 					fields and they cut and stripped tobacco leaves. In the

@@ -54,7 +54,7 @@
 					
 					<h2>Agriculture in the era of the trans-Atlantic slave trade</h2>
 
-					<p>In examining seasonality in the trans-Atlantic slave trade
+					<p>In examining seasonality in the trans-Atlantic slave trade,
 					it is important to focus on agricultural history because the
 					majority of people in the Atlantic world lived on farms, producing
 					crops and raising livestock. During the era of the slave trade,
@@ -63,16 +63,16 @@
 					World lands. They grew some familiar provisions, including crops
 					imported from Africa, like Guinea corn (millet) or West African
 					rice. However, many saw crops such as sugar, tobacco, coffee,
-					indigo, cacao or cotton, for the first time.</p>
+					indigo, cacao, or cotton, for the first time.</p>
 
 					<p>Though historians lack data on precolonial African
 					demography, it is reasonable to suggest that most Africans forced
 					overseas were farmers or pastoralists. Men and women, adults and
 					children, helped to produce yearly supplies of millet, sorghum,
-					rice, maize, yams, cassava, plantains or other crops. The ratio of
-					men, women and children working on farms varied by crops and
+					rice, maize, yams, cassava, plantains, or other crops. The ratio of
+					men, women, and children working on farms varied by crops and
 					region, but all villagers worked together clearing land, planting,
-					weeding and storing crops to produce sufficient amounts of food to
+					weeding, and storing crops to produce sufficient amounts of food to
 					enable communities to survive through the out-of-crop hungry
 					seasons. Smaller numbers of enslaved Africans transported across
 					the Atlantic were craftsmen or professionals; as African towns grew
@@ -82,12 +82,12 @@
 					<p>For those eleven million African peoples who survived the
 					Middle Passage, the majority would labor on plantation lands
 					producing provisions and cash crops. As in Africa, ratios of men,
-					women and children working in the fields varied by crops and
+					women, and children working in the fields varied by crops and
 					region, and the hungry months occurred before the year’s harvest.
 					About 5.25 million African migrants worked in sugar cane, and
-					perhaps 1.5 million toiled on tobacco, coffee, rice, indigo, cotton
+					perhaps 1.5 million toiled on tobacco, coffee, rice, indigo, cotton,
 					and cacao estates. Another 1.5 million people worked in livestock
-					pens, or on plantations producing millet, maize, wheat, cassava or
+					pens, or on plantations producing millet, maize, wheat, cassava, or
 					forestry products. An estimated one million enslaved Africans
 					worked in silver and gold mining, but mostly before 1750. Brazilian
 					gold, important particularly in 1690-1750, drew in perhaps 500,000

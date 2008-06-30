@@ -55,7 +55,7 @@
 					<h2>Provisioning-slaving seasons</h2>
 
 					<p>Seasonality in Atlantic slaving markets linked closely to
-					food supplies, since merchants, whether African, European or
+					food supplies, since merchants, whether African, European, or
 					American, would not purchase large numbers of people they could not
 					keep alive. There were distinct provisioning-slaving seasons in
 					Atlantic regions dependent upon a short rainy season and a staple
@@ -101,7 +101,7 @@
 					the December-May corn and cane harvests. In Brazilian
 					sugar-producing centers, such as Bahia, the provisioning-slaving
 					season centered on the drier November-February quarter. During
-					three months of the harvest season slave import figures ranged from
+					three months of the harvest season, slave import figures ranged from
 					twenty-nine percent of annual totals (Cuba, Pernambuco, Bahia) to
 					forty-four percent (northwest Jamaica). In the smaller
 					non-sugar-growing regions of North and South America, captains
@@ -112,7 +112,7 @@
 					June-August, before harvesting and curing. The autumn corn harvest
 					provided food stocks to sustain workers forced to produce the
 					annual tobacco crop. In the rice-growing Carolina/Georgia
-					Lowcountry, Surinam and Maranhão, planters purchased twice as many
+					Lowcountry, Surinam, and Maranhão, planters purchased twice as many
 					workers during the four in-crop months.</p>
 
 					<table border="0" cellspacing="0" cellpadding="0" class="essay-prev-next">

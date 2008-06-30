@@ -78,7 +78,7 @@
 					<p>The <a href="../database/search.faces">Voyages Database</a>
 					also reveals that in all markets on the African coast, more slaves
 					were embarked on board ship during some months than others.
-					Similarly, in all markets in the Americas more Africans, year after
+					Similarly, in all markets in the Americas, more Africans, year after
 					year, were disembarked during certain months. Why were there
 					seasonal patterns? Focusing on the agricultural histories of
 					African and American societies helps to explain monthly
@@ -86,7 +86,7 @@
 					Whether soils supported subsistence or cash crops, each stage in
 					the agricultural calendar—clearing land, planting, weeding,
 					harvesting—requires different numbers of farmers, different “labor
-					inputs.” On both sides of the Atlantic seasonal crop cycles created
+					inputs.” On both sides of the Atlantic, seasonal crop cycles created
 					seasonal demands for agriculturalists. The trans-Atlantic slave
 					trade reconciled supply and demand for agricultural labor when
 					captains transferred farmers from “in crop” seasons in Africa to
@@ -102,8 +102,8 @@
 					merchants purchased slaves whose agricultural labor became
 					temporarily redundant, and they bought seasonal provisions to keep
 					their captives alive. In turn, New World plantation crop production
-					required greater numbers of slaves to cut, gather and process cane,
-					berries or leaves. Slaving captains attempted to trade “in season”
+					required greater numbers of slaves to cut, gather, and process cane,
+					berries, or leaves. Slaving captains attempted to trade “in season”
 					in both Africa and the Americas by identifying American markets
 					whose cash crop harvests seasons took place 1-3 months after
 					harvest cycles in Africa. Those captains who linked Old and New

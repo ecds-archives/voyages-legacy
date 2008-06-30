@@ -69,8 +69,8 @@
 					Africans shipped from the region passed through the village,
 					located on the
 					<a href="../resources/images-detail.faces?image=new-calabar-and-bonny">New Calabar River</a>.
-					In the 1630s and 1640s the Dutch were the first Europeans to
-					challenge Portuguese dominance in New Calabar; by the late 1670s
+					In the 1630s and 1640s, the Dutch were the first Europeans to
+					challenge Portuguese dominance in New Calabar; by the late 1670s,
 					the London-based Royal African Company (RAC) outfitted the majority
 					of slaving ships to this African trading site. Regarding Barbados,
 					the RAC stationed agents in its main port, Bridgetown, and in the
@@ -87,14 +87,14 @@
 					hinterland, and then exports rose sharply in August as workers
 					harvested yams, peaking during the main harvest in October. They
 					then decreased by February-March, a period that coincides with
-					declining yam stocks (Figure 1). In 1677-78 Arthur Doegood captained
+					declining yam stocks (Figure 1). In 1677-78, Arthur Doegood captained
 					one of the RAC slaving voyages to New Calabar <a
 						href="../database/voyage.faces?voyageId=9990">VoyageID 9990</a>
 					and his <a
 						href="http://www.nationalarchives.gov.uk/slavery/pdf/Arthur_Translation.pdf">logbook</a>
 					survives in the National Archives in London. Doegood anchored at
 					New Calabar in mid-February 1678, after the optimal fall
-					provisioning-slaving season. Within a week his supercargo, George
+					provisioning-slaving season. Within a week, his supercargo, George
 					Hingston, complained that he was not “free to deale in many
 					[slaves]” because we “have noe provitions for them,” “findeing
 					yames very scarse.” By April many of the yams he bought were
