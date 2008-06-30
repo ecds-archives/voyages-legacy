@@ -57,8 +57,8 @@
 					14.9 million headed for the Americas. See <font style="font-style: italic;">Cahiers d’Etudes africaines</font>, 32 (1993):686.</p>
 
 					
-					<p><span class="superscript">3</span> H.C.V. Leibbrandt, <font style="font-style: italic;">Precis of the Archives of the Cape of Good Hope
-					: Journal 1662–1670</font> (Cape Town: Richards, Government Printers, 1901), 127-128.</p>
+					<p><span class="superscript">3</span> H.C.V. Leibbrandt, <font style="font-style: italic;">Precis of the Archives of the Cape of Good Hope: 
+					Journal 1662–1670</font> (Cape Town: Richards, Government Printers, 1901), 127-128.</p>
 					
 					<p><span class="superscript">4</span> British slave ships trading from Africa to Lisbon include the
 					<font style="font-style: italic;">Kent</font> (1731), the <font style="font-style: italic;">Mary</font> (1737), and 
@@ -74,7 +74,7 @@
 					Main Papers, 28 July 1800). This document, however, omitted to report the children embarked (cf. BNA, T70/1574;
 					House of Lords Record Office, House of Lords, Main Papers, 14, 25 June 1799). In Luanda and Benguela Portuguese
 					customs reports of departures for Brazil report very low numbers of children embarked. But in this instance,
-					“children” refers to infants only and was above a tax category that indicated exemption from customs duties.</p>
+					“children” refers to infants only, and was above a tax category that indicated exemption from customs duties.</p>
 					
 					<p><span class="superscript">7</span> Mediterranean passes were issued by most European nations as a result of
 					treaties with the Barbary powers. In theory, these documents allowed the vessels of the signing nation to pass
