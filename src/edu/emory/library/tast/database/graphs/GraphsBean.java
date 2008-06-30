@@ -91,7 +91,7 @@ public class GraphsBean
 		
 		IndependentVariable.createForPort("mjslptimp", "Principal place of slave landing*", "mjslptimp"),
 		IndependentVariable.createForRegion("mjslptimp-region", "Principal region of slave landing*", "mjslptimp"),
-		IndependentVariable.createForArea("mjslptimp-area", "Broad regionof of slave landing*", "mjslptimp"),
+		IndependentVariable.createForArea("mjslptimp-area", "Broad region of slave landing*", "mjslptimp"),
 
 		IndependentVariable.createForPort("portret", "Place where voyage ended", "portret"),
 		IndependentVariable.createForRegion("portret-region", "Region where voyage ended", "portret"),
@@ -145,7 +145,7 @@ public class GraphsBean
 		
 		IndependentVariable.createForPort("mjslptimp", "Principal place of slave landing*", "mjslptimp"),
 		IndependentVariable.createForRegion("mjslptimp-region", "Principal region of slave landing*", "mjslptimp"),
-		IndependentVariable.createForArea("mjslptimp-area", "Broad regionof of slave landing*", "mjslptimp"),
+		IndependentVariable.createForArea("mjslptimp-area", "Broad region of slave landing*", "mjslptimp"),
 		
 		IndependentVariable.createForPort("portret", "Place where voyage ended", "portret"),
 		IndependentVariable.createForRegion("portret-region", "Region where voyage ended", "portret"),
