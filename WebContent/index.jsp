@@ -262,7 +262,7 @@
 							</a>
 						</div>
 						<div class="featured-section-description">
-							This database identifies 67,000 over Africans aboard slave ships, using name, age, gender, origin, 
+							This database identifies over 67,000 Africans aboard slave ships, using name, age, gender, origin, 
 							and place of embarkation.  							
 						</div>
 					</td>
