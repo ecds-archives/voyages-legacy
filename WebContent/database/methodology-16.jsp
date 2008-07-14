@@ -83,7 +83,7 @@
 					<table border="0" cellspacing="0" cellpadding="0" class="method-prev-next">
 					<tr>
 						<td class="method-prev">
-							<a href="methodology-15.faces">Construction of the Trans-Atlantic Slave Trade Database: Sources and Methods</a>
+							<a href="methodology-15.faces">Regions of Embarkation and Disembarkation</a>
 						</td>
 						<td class="method-next">
 							<a href="methodology-17.faces">National Carriers</a>
