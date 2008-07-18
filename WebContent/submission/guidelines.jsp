@@ -66,7 +66,7 @@
 					to provide the <span style="font-weight:bolder;">Voyage Identification number(s)</span>. After choosing a contribution category, 
 					users will be taken step-by-step through each data variable to add new voyage details.</p>
 					
-					<p>Clickable buttons at the top of the screen track your progress through the data contribution 
+					<p>Buttons at the top of the screen track your progress through the data contribution 
 					process and allow you to return to previous steps to add more information. You can also move 
 					forward and backward through the submission process using the “Next” and “Previous” buttons.</p>
 					
