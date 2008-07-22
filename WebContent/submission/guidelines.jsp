@@ -16,6 +16,15 @@
 	<link href="../styles/database-info.css" rel="stylesheet" type="text/css">
 	
 	<script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>
+	
+	<script language="javascript" type="text/javascript">
+	function popitup(url) {
+		newwindow=window.open(url,'name','height=768,width=1024,resizable, scrollbars, location=0');
+		if (window.focus) {newwindow.focus()}
+		return false;
+	}
+	</script>
+	
 </head>
 <body>
 <f:view>
@@ -39,6 +48,14 @@
 				
 					<h1>Guidelines for Contributors</h1>
 					
+					<p>The guide is provided as a PDF file to allow users to reference it in a separate window 
+					or to download and print it.</p>
+					
+					<ul>
+						<li><a href="GuideContributors.pdf" onclick="return popitup('GuideContributors.pdf')">GuideContributors.pdf</a></li>
+					</ul>
+					
+				<% /*
 					<p>Every three years, beginning 1 September 2011, an editorial board will produce 
 					a revised edition of Voyages, incorporating new slaving voyage information located 
 					in primary or secondary sources. Contributions may concern new voyages not currently 
@@ -151,7 +168,7 @@
 					<p>Have you checked whether your source(s) are included in the Voyages Database?</p>
 					
 					<p>Thank you for your time and contribution.</p>
-										
+				*/ %>						
 				</s:simpleBox>
 			</td>
 		</tr>
