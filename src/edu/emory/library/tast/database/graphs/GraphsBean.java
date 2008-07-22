@@ -56,10 +56,10 @@ public class GraphsBean
 		DependentVariable.createAvg("crew3-avg", "Average crew at first landing of slaves", "crew3"),
 		DependentVariable.createSum("crew1-sum", "Total crew at voyage outset", "crew1"),
 		DependentVariable.createSum("crew3-sum", "Total crew at first landing of slaves", "crew3"),
-		DependentVariable.createAvg("slaximp", "Average number of slaves embarked", "slaximp"),
-		DependentVariable.createAvg("slamimp", "Average number of slaves disembarked", "slamimp"),
-		DependentVariable.createSum("slaximp", "Total number of slaves embarked", "slaximp"),
-		DependentVariable.createSum("slamimp", "Total number of slaves disembarked", "slamimp"),
+		DependentVariable.createAvg("slaximpAvg", "Average number of slaves embarked", "slaximp"),
+		DependentVariable.createAvg("slamimpAvg", "Average number of slaves disembarked", "slamimp"),
+		DependentVariable.createSum("slaximpSum", "Total number of slaves embarked", "slaximp"),
+		DependentVariable.createSum("slamimpSum", "Total number of slaves disembarked", "slamimp"),
 		DependentVariable.createPercentage("menrat7", "Percentage men*", "menrat7"),
 		DependentVariable.createPercentage("womrat7", "Percentage women*", "womrat7"),
 		DependentVariable.createPercentage("boyrat7", "Percentage boys*", "boyrat7"),
@@ -110,10 +110,10 @@ public class GraphsBean
 
 	private static final DependentVariable[] dependentVariablesBar = new DependentVariable[] {
 		DependentVariable.createCount("iid", "Number of voyages", "iid"),
-		DependentVariable.createAvg("slaximp", "Average number of slaves embarked", "slaximp"),
-		DependentVariable.createAvg("slamimp", "Average number of slaves disembarked", "slamimp"),
-		DependentVariable.createSum("slaximp", "Total slaves embarked", "slaximp"),
-		DependentVariable.createSum("slamimp", "Total slaves disembarked", "slamimp"),
+		DependentVariable.createAvg("slaximpAvg", "Average number of slaves embarked", "slaximp"),
+		DependentVariable.createAvg("slamimpAvg", "Average number of slaves disembarked", "slamimp"),
+		DependentVariable.createSum("slaximpSum", "Total slaves embarked", "slaximp"),
+		DependentVariable.createSum("slamimpSum", "Total slaves disembarked", "slamimp"),
 		DependentVariable.createPercentage("menrat7", "Percentage men*", "menrat7"),
 		DependentVariable.createPercentage("womrat7", "Percentage women*", "womrat7"),
 		DependentVariable.createPercentage("boyrat7", "Percentage boys*", "boyrat7"),
@@ -154,8 +154,8 @@ public class GraphsBean
 	
 	private static final DependentVariable[] dependentVariablesPie = new DependentVariable[] {
 		DependentVariable.createCount("iid", "Number of voyages", "iid"),
-		DependentVariable.createAvg("slaximp", "Total slaves embarked*", "slaximp"),
-		DependentVariable.createAvg("slamimp", "Total slaves disembarked*", "slamimp"),
+		DependentVariable.createSum("slaximpSum", "Total slaves embarked*", "slaximp"),
+		DependentVariable.createSum("slamimpSum", "Total slaves disembarked*", "slamimp"),
 	};
 	
 	private GraphType[] graphs = new GraphType[] {
