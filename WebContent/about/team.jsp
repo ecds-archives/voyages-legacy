@@ -178,8 +178,8 @@
 								</li>
 								<li>
 									<span class="person">Jelmer Vos</span> &ndash;
-									<span class="function">Visiting Professor</span>
-									<span class="place">(Cento de História de Além-Mar, Universidade Nova de Lisboa, Portugal)</span>
+									<span class="function">Post-Doctoral Fellow</span>
+									<span class="place">(Centro de História de Além-Mar, Universidade Nova de Lisboa, Portugal)</span>
 								</li>
 								<li>
 									<span class="person">Rik van Welie</span> &ndash;

@@ -114,7 +114,7 @@
 											
 						<div style="border-top: 1px solid #CCCCCC;">
 							<p>1 Franz Binder, Ernst van den Boogart, Henk den Heijer and Johannes Postma, James Pritchard, Andrea Weindl, 
-							Antonio de Almeida Mendes, Manuel Barcia Paz, Alexandre Ribeiro, David Wheat and Jose Capela were among those 
+							Antonio de Almeida Mendes, Manuel Barcia Paz, Alexandre Ribeiro, David Wheat and José Capela were among those 
 							making major contributions from data collected for their own research. </p>
 						</div>
 				</s:simpleBox>

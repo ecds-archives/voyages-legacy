@@ -61,7 +61,7 @@
 						<li>Angela J Campbell</li>
 						<li>James Campbell</li>
 						<li>Mariana Pinho Candido</li>
-						<li>Jose Capela</li>
+						<li>José Capela</li>
 						<li>John C. Coombs</li>
 						<li>Jose Curto</li>
 						<li>Daniel B. Domingues da Silva</li>
