@@ -35,11 +35,7 @@
 	
 	<table>
 	<h:panelGroup rendered="#{SourcesBean.newSourceType==-1}">
-	<t:htmlTag value="tr">
-		<t:htmlTag value="td">
-			<h:commandButton style="width: 180px;" value="No new source added" action="done"/>
-		</t:htmlTag>
-	</t:htmlTag>
+	
 	<t:htmlTag value="tr">
 		<t:htmlTag value="td">
 			<h:commandButton style="width: 180px;" value="Primary source" action="#{SourcesBean.primarySource}"/>
