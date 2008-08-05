@@ -211,7 +211,7 @@
 					<tr>
 						<td class="link-info-label">Content</td>
 						<td class="link-info">
-							Interactive materials, articles and 
+							Interactive materials, articles and videoclips 
 						</td>
 					</tr>
 					<tr>

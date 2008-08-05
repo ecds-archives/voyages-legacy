@@ -296,6 +296,7 @@
 				<td><a href="http://www.emory.edu" class="footer-link"><img src="./images/emory-logo-index.png" width="82" height="32" border="0" alt="Emory" /></a></td>
 				<td style="padding-right: 5px;"><a href="http://www.neh.gov"><img src="./images/neh-logo.png" width="32" height="32" border="0" alt="NEH" /></a></td>
 				<td><a href="http://www.neh.gov" class="footer-link">National Endowment<br>for the Humanities</a></td>
+				<td style="padding-right: 5px;"><a href="http://www.fas.harvard.edu/~du_bois"><img src="./images/DBI-logo.jpg" width="32" height="32" border="0" alt="DBI" /></a></td>
 				<td><a href="http://www.fas.harvard.edu/~du_bois" class="footer-link">W.E.B. Du Bois Institute<br>(Harvard University)</a></td>
 				<td><a href="http://web.library.emory.edu" class="footer-link">Emory University<br>Libraries (USA)</a></td>
 				<td><a href="http://www.hull.ac.uk" class="footer-link">The University<br>of Hull (UK)</a></td>

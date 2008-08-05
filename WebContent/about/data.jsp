@@ -77,9 +77,9 @@
 						<li>Henk den Heijer</li>
 						<li>Willem Klooster</li>
 						<li>Ruud Koopman</li>
-						<li>Robin Law</li>
-						<li>Richard Lédée</li>
+						<li>Robin Law</li>						
 						<li>Jean-Pierre Le Glaunec</li>
+						<li>Comité de Liaison et d'Application des Sources Historiques</li>
 						<li>Pedro Machado</li>
 						<li>Antonio de Almeida Mendes</li>
 						<li>Philp Misevich</li>
