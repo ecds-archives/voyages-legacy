@@ -59,9 +59,10 @@
 						<li>Ernst van den Boogart</li>
 						<li>Alex Borucki</li>
 						<li>Angela J Campbell</li>
-						<li>James Campbell</li>
+						<li>James Campbell</li>						
 						<li>Mariana Pinho Candido</li>
 						<li>José Capela</li>
+						<li>Comité de Liaison et d'Application des Sources Historiques</li>
 						<li>John C. Coombs</li>
 						<li>Jose Curto</li>
 						<li>Daniel B. Domingues da Silva</li>
@@ -78,8 +79,7 @@
 						<li>Willem Klooster</li>
 						<li>Ruud Koopman</li>
 						<li>Robin Law</li>						
-						<li>Jean-Pierre Le Glaunec</li>
-						<li>Comité de Liaison et d'Application des Sources Historiques</li>
+						<li>Jean-Pierre Le Glaunec</li>						
 						<li>Pedro Machado</li>
 						<li>Antonio de Almeida Mendes</li>
 						<li>Philp Misevich</li>
