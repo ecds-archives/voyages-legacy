@@ -289,7 +289,7 @@
 		
 			<table border="0" cellspacing="0" cellpadding="0">
 			<tr>
-				<td colspan="4"><div class="footer-section">Sponsors</div></td>
+				<td colspan="5"><div class="footer-section">Sponsors</div></td>
 				<td colspan="4"><div class="footer-section">Partners</div></td>
 			</tr>
 			<tr>
