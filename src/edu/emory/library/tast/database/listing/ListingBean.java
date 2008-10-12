@@ -198,8 +198,10 @@ public class ListingBean {
 	 * @param length
 	 *            number of columns
 	 */
-	private Object[][] queryAndFillInData(TastDbConditions subCondition, TableData dataTable, int start, int length,
-			boolean returnBasicInfo) {
+	private Object[][] queryAndFillInData(TastDbConditions subCondition, TableData dataTable, int start, int length, boolean returnBasicInfo)
+	{
+		
+//		long timeSt = System.currentTimeMillis();
 
 		TastDbQuery qValue = getQuery(subCondition, dataTable, start, length, returnBasicInfo);
 
@@ -208,37 +210,41 @@ public class ListingBean {
 		
 		SourceInformationLookup sourceInfoUtils = SourceInformationLookup.createSourceInformationUtils(session);
 		
-			// Execute query
-			Object[] ret = qValue.executeQuery();
-			dataTable.setData(ret);
-	
-			//get additional info for sources
-			Attribute[] populatedAttributes = dataTable.getAttributesForQuery();
-			for (int i = 0; i < populatedAttributes.length; i++) {
-				if (populatedAttributes[i].getName().startsWith("source")) {
-					for (int j = 0; j < ret.length; j++) {						
-						if (((Object[])ret[j])[i] != null) {
-							Source info = sourceInfoUtils.match((String)((Object[])ret[j])[i]);
-							if (info != null) {
-								data.setRollover(((Object[])ret[j])[i], info.getName());
-							}
+		// Execute query
+		Object[] ret = qValue.executeQuery();
+		dataTable.setData(ret);
+
+		//get additional info for sources
+		Attribute[] populatedAttributes = dataTable.getAttributesForQuery();
+		for (int i = 0; i < populatedAttributes.length; i++) {
+			if (populatedAttributes[i].getName().startsWith("source")) {
+				for (int j = 0; j < ret.length; j++) {						
+					if (((Object[])ret[j])[i] != null) {
+						Source info = sourceInfoUtils.match((String)((Object[])ret[j])[i]);
+						if (info != null) {
+							data.setRollover(((Object[])ret[j])[i], info.getName());
 						}
 					}
 				}
 			}
-			
-			if (returnBasicInfo && ret.length > 0) {
-				int len = ((Object[]) ret[0]).length;
-				t.commit();
-				session.close();
-				return new Object[][] {
-						{ VisibleAttribute.getAttribute("voyageid") },
-						{ ((Object[]) ret[0])[len - 1]} };
-			} else {
-				t.commit();
-				session.close();
-				return new Object[][] {};
-			}
+		}
+
+//		long timeEn = System.currentTimeMillis();
+//		System.out.println("list = " + (timeEn - timeSt));		
+		
+		if (returnBasicInfo && ret.length > 0) {
+			int len = ((Object[]) ret[0]).length;
+			t.commit();
+			session.close();
+			return new Object[][] {
+					{ VisibleAttribute.getAttribute("voyageid") },
+					{ ((Object[]) ret[0])[len - 1]} };
+		} else {
+			t.commit();
+			session.close();
+			return new Object[][] {};
+		}
+	
 	}
 
 	private TastDbQuery getQuery(TastDbConditions subCondition, TableData dataTable, int start, int length, boolean returnBasicInfo) {
@@ -917,13 +923,21 @@ public class ListingBean {
 	 * Checks current number of results.
 	 * 
 	 */
-	private void setNumberOfResults() {
+	private void setNumberOfResults()
+	{
+		
+		// It seems that PostgreSQL is not very good in running COUNT(*) queries.
+		// To check the performance avoiding COUNT(*) queries, replace the content
+		// of this function with the following:
+		//
+		// this.linkManager.setResultsNumber(100);
 
 		TastDbConditions localCond = (TastDbConditions) this.searchBean.getSearchParameters().getConditions().clone();
 		TastDbQuery qValue = new TastDbQuery("Voyage", localCond);
 		qValue.addPopulatedAttribute(new  FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("iid")}));
 		Object[] ret = qValue.executeQuery();
 		this.linkManager.setResultsNumber(((Number) ret[0]).intValue());
+
 	}
 
 	public TableLinkManager getTableManager() {

@@ -51,6 +51,10 @@ public class SearchBean
 	public static final String TAB_ID_CUSTOM_GRAPHS = "custom-graphs";
 	public static final String TAB_ID_BASIC_STATS = "basic-statistics";
 	public static final String TAB_ID_MAP = "map-ports";
+
+	private boolean totalMinMaxYearDetermined = false;
+	private String totalMinYear;
+	private String totalmaxYear;
 	
 	private String minYear;
 	private String maxYear;
@@ -98,26 +102,34 @@ public class SearchBean
 	 */
 	private void determineTimeFrameExtent()
 	{
-
-		TastDbQuery query = new TastDbQuery("Voyage");
 		
-		query.addPopulatedAttribute(
-				new FunctionAttribute("min",
-						new Attribute[] {Voyage.getAttribute("yearam")}));
-		
-		query.addPopulatedAttribute(
-				new FunctionAttribute("max",
-						new Attribute[] {Voyage.getAttribute("yearam")}));
-		
-		List ret = query.executeQueryList();
-		if (ret != null && ret.size() == 1)
+		if (!totalMinMaxYearDetermined)
 		{
-			Object[] row = (Object[]) ret.get(0);
-			minYear = row[0] != null ? row[0].toString() : null;
-			maxYear = row[1] != null ? row[1].toString() : null;
-			workingQuery.setYearFrom(minYear);
-			workingQuery.setYearTo(maxYear);
+
+			TastDbQuery query = new TastDbQuery("Voyage");
+			
+			query.addPopulatedAttribute(
+					new FunctionAttribute("min",
+							new Attribute[] {Voyage.getAttribute("yearam")}));
+			
+			query.addPopulatedAttribute(
+					new FunctionAttribute("max",
+							new Attribute[] {Voyage.getAttribute("yearam")}));
+			
+			List ret = query.executeQueryList();
+			if (ret != null && ret.size() == 1)
+			{
+				Object[] row = (Object[]) ret.get(0);
+				totalMinYear = row[0] != null ? row[0].toString() : null;
+				totalmaxYear = row[1] != null ? row[1].toString() : null;
+			}
+			
+			totalMinMaxYearDetermined = true;
+		
 		}
+		
+		workingQuery.setYearFrom(totalMinYear);
+		workingQuery.setYearTo(totalmaxYear);
 
 	}
 
@@ -246,6 +258,14 @@ public class SearchBean
 	private void updateNumberOfResults()
 	{
 		
+		// It seems that PostgreSQL is not very good in running COUNT(*) queries.
+		// To check the performance avoiding COUNT(*) queries, replace the content
+		// of this function with the following.
+		//
+		// numberOfResults = 100;
+		
+		// long start = System.currentTimeMillis();
+		
 		TastDbConditions dbConds = new TastDbConditions();
 		dbConds.addCondition(Voyage.getAttribute("revision"), new Integer(this.selectedRevision), TastDbConditions.OP_EQUALS);
 		workingQuery.addToDbConditions(false, dbConds);
@@ -254,6 +274,9 @@ public class SearchBean
 		query.addPopulatedAttribute(new FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("iid")}));		
 		Object[] ret = query.executeQuery();
 		numberOfResults = ((Number)ret[0]).intValue();
+
+		// long end = System.currentTimeMillis();
+		// System.out.println("count = " + (end - start));
 
 	}
 	
