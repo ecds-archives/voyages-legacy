@@ -31,6 +31,7 @@ import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.Group;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.util.JsfUtils;
+import edu.emory.library.tast.util.StringUtils;
 
 /**
  * This bean is used to manage the list of groups, attributes, the
@@ -74,6 +75,8 @@ public class SearchBean
 	
 	private PopupComponent permlinkPopup = null;
 	private String lastPermLink = null;
+	
+	private boolean numberOfResultsValid = false;
 	private int numberOfResults;
 	
 	private boolean showVoygeDetail = false;
@@ -92,7 +95,8 @@ public class SearchBean
 	 */
 	private void initNewQuery()
 	{
-		workingQuery = new Query();		
+		workingQuery = new Query();
+		numberOfResultsValid = false;
 		determineTimeFrameExtent();
 	}
 	
@@ -219,9 +223,7 @@ public class SearchBean
 			
 			searchParameters = new SearchParameters();
 			searchParameters.setConditions(dbConds);
-			searchParameters.setColumns(null);
-			
-			updateNumberOfResults();
+			searchParameters.setNumberOfResults(getNumberOfResults());
 	
 			if (storeToHistory && !workingQuery.equals(history.getLatestQuery()))
 			{
@@ -250,7 +252,6 @@ public class SearchBean
 		HttpServletRequest request = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest(); 
 		if (AAUtils.isAjaxRequest(request))
 		{
-			updateNumberOfResults();
 			AAUtils.addZonesToRefresh(request, "total");
 		}
 	}
@@ -274,6 +275,7 @@ public class SearchBean
 		query.addPopulatedAttribute(new FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("iid")}));		
 		Object[] ret = query.executeQuery();
 		numberOfResults = ((Number)ret[0]).intValue();
+		numberOfResultsValid = true;
 
 		// long end = System.currentTimeMillis();
 		// System.out.println("count = " + (end - start));
@@ -283,17 +285,21 @@ public class SearchBean
 	public String getNumberOfResultsText()
 	{
 		MessageFormat fmt = new MessageFormat(TastResource.getText("slaves_search_expected"));
-		return fmt.format(new Object[] {new Integer(numberOfResults)});
+		return fmt.format(new Object[] {new Integer(getNumberOfResults())});
 	}
 	
 	public int getNumberOfResults()
 	{
+		if (!numberOfResultsValid)
+		{
+			updateNumberOfResults();
+		}
 		return numberOfResults;
 	}
 
 	public boolean isNoResult()
 	{
-		return numberOfResults == 0;
+		return getNumberOfResults() == 0;
 	}
 
 	/**
@@ -417,73 +423,44 @@ public class SearchBean
 		return mainItems;
 	}
 	
-	/**
-	 * Gets a list of attributes for beginners. 
-	 * @return
-	 */
 	public MenuItemSection[] getMenuAttributesBeginners()
 	{
 		return getMenuAttributes(UserCategory.Beginners);
 	}
 
-	/**
-	 * Gets a list of attributes for general audience. 
-	 * @return
-	 */
 	public MenuItemSection[] getMenuAttributesGeneral()
 	{
 		return getMenuAttributes(UserCategory.General);
 	}
 
-	/**
-	 * Wrapper for {@link #workingQuery}. 
-	 * @return
-	 */
 	public QueryBuilderQuery getWorkingQuery()
 	{
 		return workingQuery.getBuilderQuery();
 	}
 
-	/**
-	 * Wrapper for {@link #workingQuery}. 
-	 * @return
-	 */
 	public void setWorkingQuery(QueryBuilderQuery newWorkingQuery)
 	{
-		this.workingQuery.setBuilderQuery(newWorkingQuery);
+		if (!this.workingQuery.equals(newWorkingQuery))
+		{
+			this.workingQuery.setBuilderQuery(newWorkingQuery);
+			numberOfResultsValid = false;
+		}
 	}
 
-	/**
-	 * Wrapper for {@link #history}. 
-	 * @return
-	 */
 	public History getHistory()
 	{
 		return history;
 	}
 
-	/**
-	 * Wrapper for {@link #history}. 
-	 * @return
-	 */
 	public void setHistory(History history)
 	{
 		this.history = history;
 	}
 
-	/**
-	 * Wrapper for {@link #searchParameters}. 
-	 * @return
-	 */
 	public SearchParameters getSearchParameters()
 	{
 		return (SearchParameters) searchParameters.clone();
 	}
-
-	/**
-	 * Wrapper for {@link #searchParameters}. 
-	 * @return
-	 */
 
 	public String getSelectedCategory()
 	{
@@ -501,66 +478,52 @@ public class SearchBean
 		this.searchParameters.setCategory(this.selectedCategory);
 	}
 
-	/**
-	 * Wrapper for {@link #mainSectionId} - the current tab. 
-	 * @return
-	 */
 	public String getMainSectionId()
 	{
 		return mainSectionId;
 	}
 
-	/**
-	 * Wrapper for {@link #mainSectionId} - the current tab. 
-	 * @return
-	 */
 	public void setMainSectionId(String mainSectionId)
 	{
 		if (mainSectionId == null) return;
 		this.mainSectionId = mainSectionId;
 	}
 
-	/**
-	 * Wrapper for the starting year of {@link #workingQuery}. 
-	 * @return
-	 */
 	public String getYearFrom()
 	{
 		return workingQuery.getYearFrom();
 	}
 
-	/**
-	 * Wrapper for the starting year of {@link #workingQuery}. 
-	 * @return
-	 */
 	public void setYearFrom(String  yearFrom)
 	{
-		workingQuery.setYearFrom(yearFrom);
+		if (!StringUtils.compareStrings(yearFrom, workingQuery.getYearFrom()))
+		{
+			workingQuery.setYearFrom(yearFrom);
+			numberOfResultsValid = false;
+		}
 	}
 
-	/**
-	 * Wrapper for the ending year of {@link #workingQuery}. 
-	 * @return
-	 */
-	public String  getYearTo()
+	public String getYearTo()
 	{
 		return workingQuery.getYearTo();
 	}
 
-	/**
-	 * Wrapper for the ending year of {@link #workingQuery}. 
-	 * @return
-	 */
-	public void setYearTo(String  yearTo)
+	public void setYearTo(String yearTo)
 	{
-		workingQuery.setYearTo(yearTo);
+		if (!StringUtils.compareStrings(yearTo, workingQuery.getYearTo()))
+		{
+			workingQuery.setYearTo(yearTo);
+			numberOfResultsValid = false;
+		}
 	}
 	
-	public String getSelectedRevision() {
+	public String getSelectedRevision()
+	{
 		return selectedRevision;
 	}
 	
-	public void setSelectedRevision(String selectedRevision) {
+	public void setSelectedRevision(String selectedRevision)
+	{
 		this.selectedRevision = selectedRevision;
 	}
 	

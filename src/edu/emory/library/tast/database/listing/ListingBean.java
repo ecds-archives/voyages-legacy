@@ -181,7 +181,8 @@ public class ListingBean {
 		}
 		if (searchParams.getConditions() != null && needQuery) {
 			this.queryAndFillInData(null, this.data, this.linkManager.getCurrentFirstRecord(), this.linkManager.getStep(), false);
-			this.setNumberOfResults();
+			this.linkManager.setResultsNumber(this.searchBean.getSearchParameters().getNumberOfResults());
+			// this.setNumberOfResults();
 			needQuery = false;
 		}
 	}
@@ -201,7 +202,7 @@ public class ListingBean {
 	private Object[][] queryAndFillInData(TastDbConditions subCondition, TableData dataTable, int start, int length, boolean returnBasicInfo)
 	{
 		
-//		long timeSt = System.currentTimeMillis();
+		// long timeSt = System.currentTimeMillis();
 
 		TastDbQuery qValue = getQuery(subCondition, dataTable, start, length, returnBasicInfo);
 
@@ -229,8 +230,8 @@ public class ListingBean {
 			}
 		}
 
-//		long timeEn = System.currentTimeMillis();
-//		System.out.println("list = " + (timeEn - timeSt));		
+		// long timeEn = System.currentTimeMillis();
+		// System.out.println("list = " + (timeEn - timeSt));		
 		
 		if (returnBasicInfo && ret.length > 0) {
 			int len = ((Object[]) ret[0]).length;

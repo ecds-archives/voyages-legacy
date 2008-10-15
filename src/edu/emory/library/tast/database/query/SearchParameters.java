@@ -2,7 +2,6 @@ package edu.emory.library.tast.database.query;
 
 
 import edu.emory.library.tast.database.query.searchables.UserCategory;
-import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;
 import edu.emory.library.tast.db.TastDbConditions;
 
 /**
@@ -18,38 +17,16 @@ import edu.emory.library.tast.db.TastDbConditions;
 public class SearchParameters
 {
 	
-	public static final int NOT_SPECIFIED = 0;
-	public static final int MAP_PORTS = 1;
-	public static final int MAP_REGIONS = 2;
-	public static final int VALUES_ADJUSTED = 1;
-	public static final int VALUES_RAW = 2;
-	
 	private TastDbConditions conditions;
-	private VisibleAttributeInterface[] columns = new VisibleAttributeInterface[0]; 
+	private int numberOfResults;
 	private UserCategory category = UserCategory.Beginners;
-	private int valuesType = NOT_SPECIFIED;
-	private int mapElements = NOT_SPECIFIED;
 	
 	public SearchParameters()
 	{
 		this.conditions = null;
-	}
-	
-	public SearchParameters(TastDbConditions conditions)
-	{
-		this.conditions = conditions;
+		this.numberOfResults = 0;
 	}
 
-	public VisibleAttributeInterface[] getColumns()
-	{
-		return columns;
-	}
-	
-	public void setColumns(VisibleAttributeInterface[] columns)
-	{
-		this.columns = columns;
-	}
-	
 	public TastDbConditions getConditions()
 	{
 		return conditions;
@@ -70,28 +47,23 @@ public class SearchParameters
 		this.category = category;
 	}
 
-	public int getValuesType()
+	public int getNumberOfResults()
 	{
-		return valuesType;
+		return numberOfResults;
 	}
 
-	public void setValuesType(int displayAdjusted)
+	public void setNumberOfResults(int numberOfResults)
 	{
-		this.valuesType = displayAdjusted;
+		this.numberOfResults = numberOfResults;
 	}
 
-	public int getMapElements()
+	public Object clone()
 	{
-		return mapElements;
-	}
-
-	public void setMapElements(int mapElements)
-	{
-		this.mapElements = mapElements;
-	}
-	
-	public Object clone() {
-		return new SearchParameters((TastDbConditions) this.conditions.clone());
+		SearchParameters params = new SearchParameters();
+		params.setConditions((TastDbConditions) this.conditions.clone());
+		params.setNumberOfResults(numberOfResults);
+		params.setCategory(category);
+		return params;
 	}
 
 }
