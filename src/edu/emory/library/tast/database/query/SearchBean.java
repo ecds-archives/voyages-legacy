@@ -357,6 +357,7 @@ public class SearchBean
 			return false;
 		
 		workingQuery = newQuery;
+		numberOfResultsValid = false;
 		searchInternal(true);
 		return true;
 
