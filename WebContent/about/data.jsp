@@ -62,7 +62,7 @@
 						<li>James Campbell</li>						
 						<li>Mariana Pinho Candido</li>
 						<li>José Capela</li>
-						<li>Comité de Liaison et d'Application des Sources Historiques</li>
+						<li>Comité de Liaison et d'Application des Sources Historiques, <a href="http://www.c-l-a-s-h.info">http://www.c-l-a-s-h.info</a></li>
 						<li>John C. Coombs</li>
 						<li>Jose Curto</li>
 						<li>Daniel B. Domingues da Silva</li>
