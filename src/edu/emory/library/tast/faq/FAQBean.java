@@ -51,7 +51,7 @@ public class FAQBean
 	{
 		
 		// parse keywords
-		String[] keywords = StringUtils.extractQueryKeywords(searchTerm, true);
+		String[] keywords = StringUtils.extractQueryKeywords(searchTerm, StringUtils.UPPER_CASE);
 		
 		// collection which we are supposed to return
 		FAQList faqList = new FAQList();

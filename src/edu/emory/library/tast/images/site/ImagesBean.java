@@ -385,7 +385,7 @@ public class ImagesBean
 		StringBuffer hqlWhere = new StringBuffer();
 		int conditionsCount = 0;
 
-		String[] keywords = StringUtils.extractQueryKeywords(currentQuery.getKeyword(), true);
+		String[] keywords = StringUtils.extractQueryKeywords(currentQuery.getKeyword(), StringUtils.UPPER_CASE);
 		if (keywords.length > 0)
 		{
 			if (conditionsCount > 0) hqlWhere.append(" and ");

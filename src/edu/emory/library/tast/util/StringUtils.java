@@ -15,6 +15,10 @@ public class StringUtils
 	public static final int CREATE_TREE_SET = 2;
 	private static final int DEFAULT_SET_TYPE = 1;
 	
+	public static final int KEEP_CASE = 1;
+	public static final int UPPER_CASE = 2;
+	public static final int LOWER_CASE = 3;
+
 	private final static Pattern keywordSepRegex = Pattern.compile("[^a-zA-Z_/0-9]+");
 	
 	public static int indexOf(String key, String[] haystack)
@@ -373,14 +377,16 @@ public class StringUtils
 		}
 	}
 	
-	public static String[] extractQueryKeywords(String query, boolean upperCase)
+	public static String[] extractQueryKeywords(String query, int changeCase)
 	{
 		
 		if (query == null)
 			return new String[] {};
 		
-		if (upperCase)
+		if (changeCase == UPPER_CASE)
 			query = query.toUpperCase();
+		else if (changeCase == LOWER_CASE)
+			query = query.toLowerCase();
 		
 		String[] keywords = keywordSepRegex.split(query);
 		if (keywords.length == 1 && keywords[0].length() == 0)
@@ -448,6 +454,27 @@ public class StringUtils
 			return null;
 		else
 			return arr[0];
+	}
+	
+	public static String[] getAllSubstrings(String str)
+	{
+		if (str == null)
+			return new String[0];
+		
+		int n = str.length();
+		String[] substrings = new String[n * (n + 1) / 2];
+		
+		int k = 0;
+		for (int i = 0; i < n; i++)
+		{
+			for (int j = i + 1; j < n+1; j++)
+			{
+				substrings[k++] = str.substring(i, j);
+			}
+		}
+		
+		return substrings;
+		
 	}
 
 }

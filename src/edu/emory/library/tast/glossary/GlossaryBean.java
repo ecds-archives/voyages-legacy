@@ -51,7 +51,7 @@ public class GlossaryBean
 	{
 
 		// parse keywords
-		String[] keywords = StringUtils.extractQueryKeywords(searchTerm, true);
+		String[] keywords = StringUtils.extractQueryKeywords(searchTerm, StringUtils.UPPER_CASE);
 		
 		// collection which we are supposed to return
 		GlossaryList terms = new GlossaryList();
@@ -128,7 +128,7 @@ public class GlossaryBean
 	{
 		
 		// parse keywords
-		String[] keywords = StringUtils.extractQueryKeywords(searchTerm, true);
+		String[] keywords = StringUtils.extractQueryKeywords(searchTerm, StringUtils.UPPER_CASE);
 		
 		// open connection
 		Session sess = HibernateUtil.getSession();

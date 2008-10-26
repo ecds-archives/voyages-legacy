@@ -159,7 +159,7 @@ public class SlavesQuery implements Cloneable
 		
 		if (!StringUtils.isNullOrEmpty(this.slaveName, true))
 		{
-			String[] s = StringUtils.extractQueryKeywords(this.slaveName, true);
+			String[] s = StringUtils.extractQueryKeywords(this.slaveName, StringUtils.UPPER_CASE);
 			for (int i = 0; i < s.length; i++)
 			{
 				c.addCondition(slaveNameUpperAttr, "%" + s[i] + "%", TastDbConditions.OP_LIKE);
@@ -178,7 +178,7 @@ public class SlavesQuery implements Cloneable
 		
 		if (!StringUtils.isNullOrEmpty(this.shipName, true))
 		{
-			String[] s = StringUtils.extractQueryKeywords(this.shipName, true);
+			String[] s = StringUtils.extractQueryKeywords(this.shipName, StringUtils.UPPER_CASE);
 			for (int i = 0; i < s.length; i++)
 			{
 				c.addCondition(shipNameUpperAttr, "%" + s[i] + "%", TastDbConditions.OP_LIKE);
