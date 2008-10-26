@@ -40,7 +40,7 @@ public class SearchableAttributeSimpleText extends SearchableAttributeSimple
 			return true;
 		
 		// consider only alfanum and digits
-		String[] keywords = StringUtils.extractQueryKeywords(queryConditionText.getValue(), true);
+		String[] keywords = StringUtils.extractQueryKeywords(queryConditionText.getValue(), StringUtils.UPPER_CASE);
 		if (keywords.length == 0)
 			return false;
 
@@ -55,6 +55,8 @@ public class SearchableAttributeSimpleText extends SearchableAttributeSimple
 			for (int i = 0; i < keywords.length; i++)
 			{
 				String keyword = "%" + keywords[i] + "%";
+				
+//				Attribute attr = attributes[j];
 				
 				FunctionAttribute attr =
 					new FunctionAttribute("remove_accents", new Attribute[] {

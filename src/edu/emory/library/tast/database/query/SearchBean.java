@@ -264,6 +264,7 @@ public class SearchBean
 		// of this function with the following.
 		//
 		// numberOfResults = 100;
+		// numberOfResultsValid = true;
 		
 		// long start = System.currentTimeMillis();
 		
