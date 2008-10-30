@@ -165,10 +165,10 @@ public class TableBean
 			CellVariable.createSinglePercentageAverage("Average percentage of slaves embarked who died during voyage", "vymrtrat"),
 			CellVariable.createSingleCount("Number of voyages - percentage of slaves embarked who died during voyage", "vymrtrat"),
 				
-			CellVariable.createSinglePercentageAverage("Average middle passage (days)", "voy2imp"),
+			CellVariable.createSingleAverage("Average middle passage (days)", "voy2imp"),
 			CellVariable.createSingleCount("Number of voyages - middle passage (days)", "voy2imp"),
 
-			CellVariable.createSinglePercentageAverage("Average standarized tonnage", "tonmod"),
+			CellVariable.createSingleAverage("Average standarized tonnage", "tonmod"),
 			CellVariable.createSingleCount("Number of voyages - standarized tonnage", "tonmod"),
 
 			CellVariable.createSingleAverage("Sterling cash price in Jamaica", "jamcaspr"),
@@ -319,6 +319,7 @@ public class TableBean
 		
 		// and the real values depending on the selection
 		int noOfDataColumns = 0;
+		
 		for (int i = 0; i < tableBuilders.length; i++)
 		{
 			Attribute[] attributes = tableBuilders[i].getAttributes();
@@ -326,13 +327,15 @@ public class TableBean
 			for (int j = 0; j < attributes.length; j++)
 			{
 				query.addPopulatedAttribute(attributes[j]);
+			
 			}
 		}
 
 		// row extra attributes
 		Attribute[] rowExtraAttributes = rowGrouper.addExtraAttributes(2 + noOfDataColumns);
-		for (int i = 0; i < rowExtraAttributes.length; i++)
-			query.addPopulatedAttribute(rowExtraAttributes[i]);
+		for (int i = 0; i < rowExtraAttributes.length; i++){
+			query.addPopulatedAttribute(rowExtraAttributes[i]);		
+		}
 
 		// col extra attributes
 		Attribute[] colExtraAttributes = rowGrouper.addExtraAttributes(2 + noOfDataColumns + rowExtraAttributes.length);
@@ -359,10 +362,11 @@ public class TableBean
 		int headerLeftColsCount = rowGrouper.getBreakdownDepth();
 		int totalRows = headerTopRowsCount + extraHeaderRows + dataRowCount + 1;
 		int totalCols = headerLeftColsCount + subCols * (dataColCount + 1);
-
+		
+		
 		// create table
 		table = new SimpleTableCell[totalRows][totalCols];
-
+		
 		// (0,0) cell
 		SimpleTableCell topLeftCell = new SimpleTableCell("");
 		topLeftCell.setColspan(headerLeftColsCount);
@@ -396,7 +400,7 @@ public class TableBean
 			TableUtils.addRowLabel(table, rowLabels[i], rowIdx, 0, 1, headerLeftColsCount, CSS_CLASS_TD_LABEL);
 			rowIdx += rowLabels[i].getLeavesCount();
 		}
-
+		
 		// extra second row with labels 
 		if (extraHeaderRows != 0)
 		{
