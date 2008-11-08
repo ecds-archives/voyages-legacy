@@ -147,11 +147,8 @@ function QueryBuilder(builderId, formName, attributesFieldName, updateTotalField
 QueryBuilder.prototype.updateTotal = function(delay)
 {
 
-	if (!ajaxAnywhere) return;
-	
-	// set to true when submit
-	// so that the component can fire an event
-	var flagField = document.forms[this.formName].elements[this.updateTotalFieldName];
+	if (!ajaxAnywhere || !document.getElementById(this.updateTotalFieldName))
+		return;
 	
 	// delay
 	if (delay > 0)
