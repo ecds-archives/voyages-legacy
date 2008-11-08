@@ -9,9 +9,10 @@ import java.sql.Statement;
 import java.util.HashSet;
 import java.util.Set;
 
+import edu.emory.library.tast.util.SqlUtils;
 import edu.emory.library.tast.util.StringUtils;
 
-public class BuildPosgreSQLFullTextIndexes
+public class BuildTSVectors
 {
 	
 	private static final String DB_CONN_STRING = "jdbc:postgresql://localhost/tast";
@@ -21,36 +22,6 @@ public class BuildPosgreSQLFullTextIndexes
 	private static char[] oldChars = "\u00C1\u00C2\u00C3\u00C7\u00C9\u00CD\u00D3\u00DA\u00E1\u00E2\u00E3\u0103\u00E6\u00E7\u010D\u00E8\u00E9\u00EA\u00EB\u0119\u00ED\u00EE\u00EF\u00F1\u00F3\u00F4\u00F5\u00F6\u00FA\u00FC".toCharArray();
 	private static char[] newChars = "AAACEIOUaaaaacceeeeeiiinoooouu".toCharArray();
 	
-	private static boolean checkColumnExists(Connection conn, String table, String column) throws SQLException
-	{
-		
-		String sql = 	
-			"SELECT" +
-			"	count(a.attname) " +
-			"FROM" +
-			"	pg_catalog.pg_stat_user_tables AS t," +
-			"	pg_catalog.pg_attribute a " +
-			"WHERE" +
-			"	t.relid = a.attrelid AND " +
-			"	t.schemaname = 'public' AND " +
-			"	t.relname = ? AND " +
-			"	a.attname = ?";
-		
-		PreparedStatement st = conn.prepareStatement(sql);
-		st.setString(1, table);
-		st.setString(2, column);
-		
-		ResultSet rs = st.executeQuery();
-		rs.next();
-		boolean exists = rs.getLong(1) != 0;
-		
-		rs.close();
-		st.close();
-		
-		return exists;
-		
-	}
-	
 	private static void createIndex(Connection conn, int revision, String[] columns, String indexColumn) throws SQLException
 	{
 		
@@ -59,16 +30,9 @@ public class BuildPosgreSQLFullTextIndexes
 		int totalKeywords = 0;
 		int maxKeywordsPerVoyage = 0;
 		
-		if (checkColumnExists(conn, "voyages", indexColumn))
+		if (SqlUtils.columnExists(conn, "voyages", indexColumn))
 		{
-			
-			String sqlDropIndexColumn =
-				"ALTER TABLE voyages " +
-				"DROP COLUMN " + indexColumn;
-			
-			Statement statementDropColumn = conn.createStatement();
-			statementDropColumn.execute(sqlDropIndexColumn);
-			
+			SqlUtils.dropColumn(conn, indexColumn);
 		}
 		
 		String sqlAddIndexColumn =
@@ -143,13 +107,6 @@ public class BuildPosgreSQLFullTextIndexes
 		stSetKeyword.executeBatch();
 
 		rs.close();
-		
-		String sqlAddSqlIndex =
-			"CREATE INDEX " + indexColumn + " " + 
-			"ON voyages USING gin(" + indexColumn + ")";
-		
-		Statement statementAddSqlIndex = conn.createStatement();
-		statementAddSqlIndex.execute(sqlAddSqlIndex);
 		
 		System.out.println();
 		System.out.println("Total number of keywords = " + totalKeywords);

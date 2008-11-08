@@ -15,13 +15,19 @@
 		<property name="suggestion" />
 		<property name="revision"  />
 		
-		
 		<property name="shipname" column="shipname" />
+		<property name="captaina" column="captaina" />
+		<property name="captainb" column="captainb" />
+		<property name="captainc" column="captainc" />
+		
+		<many-to-one name="natinimp" column="natinimp" class="edu.emory.library.tast.dm.Nation" />
+		<many-to-one name="national" column="national" class="edu.emory.library.tast.dm.Nation" />
+
 		<many-to-one name="placcons" column="placcons" class="edu.emory.library.tast.dm.Port" />
 		<property name="yrcons" column="yrcons" />
 		<many-to-one name="placreg" column="placreg" class="edu.emory.library.tast.dm.Port" />
 		<property name="yrreg" column="yrreg" />
-		<many-to-one name="natinimp" column="natinimp" class="edu.emory.library.tast.dm.Nation" />
+
 		<many-to-one name="rig" column="rig" class="edu.emory.library.tast.dm.VesselRig" />
 		<property name="tonnage" column="tonnage" />
 		<property name="tonmod" column="tonmod" />
@@ -83,9 +89,7 @@
 		<property name="dateend" column="dateend" />
 		<property name="voy1imp" column="voy1imp" />
 		<property name="voy2imp" column="voy2imp" />
-		<property name="captaina" column="captaina" />
-		<property name="captainb" column="captainb" />
-		<property name="captainc" column="captainc" />
+		
 		<property name="crew1" column="crew1" />
 		<property name="crew3" column="crew3" />
 		<property name="crewdied" column="crewdied" />
@@ -98,8 +102,10 @@
 		<property name="slas32" column="slas32" />
 		<property name="slas36" column="slas36" />
 		<property name="slas39" column="slas39" />
+		
 		<property name="slaximp" column="slaximp" />
 		<property name="slamimp" column="slamimp" />
+		
 		<property name="menrat7" column="menrat7" />
 		<property name="womrat7" column="womrat7" />
 		<property name="boyrat7" column="boyrat7" />
@@ -109,6 +115,7 @@
 		<property name="jamcaspr" column="jamcaspr" />
 		<property name="vymrtimp" column="vymrtimp" />
 		<property name="vymrtrat" column="vymrtrat" />
+
 		<property name="sourcea" column="sourcea" />
 		<property name="sourceb" column="sourceb" />
 		<property name="sourcec" column="sourcec" />
@@ -132,12 +139,11 @@
 		<many-to-one name="e_majbyimp" column="e_majbyimp" class="edu.emory.library.tast.dm.EstimatesExportRegion" />
 		<many-to-one name="e_mjselimp" column="e_mjselimp" class="edu.emory.library.tast.dm.EstimatesImportRegion" />
 
-
-
 		<many-to-one name="embport" column="embport" class="edu.emory.library.tast.dm.Port" />
 		<many-to-one name="arrport" column="arrport" class="edu.emory.library.tast.dm.Port" />
 		<many-to-one name="embport2" column="embport2" class="edu.emory.library.tast.dm.Port" />
 		<many-to-one name="arrport2" column="arrport2" class="edu.emory.library.tast.dm.Port" />
+
 		<property name="tontype" />
 		<property name="sladamer" />
 		<property name="saild1" />
@@ -216,7 +222,6 @@
 		<property name="tslavesp" />
 		<property name="sladvoy" />
 		<property name="npprior" />
-		<many-to-one name="national" column="national" class="edu.emory.library.tast.dm.Nation" />
 		<property name="slinten2" />
 		<property name="ndesert" />
 		<property name="sladafri" />
