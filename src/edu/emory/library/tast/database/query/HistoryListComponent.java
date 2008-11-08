@@ -17,8 +17,8 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import edu.emory.library.tast.database.query.searchables.ListItemsSource;
-import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.TastResource;
+import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.JsfUtils;
 import edu.emory.library.tast.util.StringUtils;
 

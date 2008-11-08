@@ -76,7 +76,7 @@ public class TableBuilderAverage extends TableBuilder
 			int rowIdx = rowGrouper.lookupIndex(dataRow);
 			int colIdx = colGrouper.lookupIndex(dataRow);
 
-			Long cntObj = (Long) dataRow[dataIdxCol + COUNT_DATA_COLUMN_IDX];
+			Number cntObj = (Number) dataRow[dataIdxCol + COUNT_DATA_COLUMN_IDX];
 			Number valObj = (Number) dataRow[dataIdxCol + SUM_DATA_COLUMN_IDX];
 
 			long cnt = cntObj == null ? 0 : cntObj.longValue();

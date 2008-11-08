@@ -50,18 +50,22 @@ public class DirectValueAttribute extends Attribute
 		return this.getHQLSelectPath(bindings);
 	}
 
-	public String getHQLParamName()
-	{
-		return getName();
-	}
-
 	public String getHQLOuterJoinPath(Map bindings)
 	{
 		return null;
 	}
 
-	public Object getValueToCondition(Object value)
+	public String getSQLReference(String masterTable, Map tablesIndexes, Map existingJoins, StringBuffer sqlFrom)
 	{
-		return value;
+		StringBuffer buffer = new StringBuffer();
+		if (this.value instanceof String)
+		{
+			buffer.append("'").append(value).append("'");
+		}
+		else
+		{
+			buffer.append(value);
+		}
+		return buffer.toString();
 	}
 }

@@ -7,6 +7,7 @@ import java.text.NumberFormat;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import edu.emory.library.tast.AppConfig;
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.common.SimpleTableCell;
 import edu.emory.library.tast.database.query.SearchBean;
@@ -116,15 +117,20 @@ public class StatisticBean
 	 */
 	private void prepareEstimate(int i, String attribute, TastDbConditions conditions, boolean showTotal, boolean percent)
 	{
+
 		TastDbConditions cond2 = (TastDbConditions) conditions.clone();
 		cond2.addCondition(Voyage.getAttribute(attribute), null, TastDbConditions.OP_IS_NOT);
-
+		
 		NumberFormat format = DecimalFormat.getInstance();
+
+		boolean useSQL = AppConfig.getConfiguration().getBoolean(AppConfig.DATABASE_USE_SQL);
 		TastDbQuery query = new TastDbQuery(new String[] { "Voyage" }, new String[] { "v" }, cond2);
 		query.addPopulatedAttribute(new FunctionAttribute("sum", new Attribute[] { Voyage.getAttribute(attribute) }));
 		query.addPopulatedAttribute(new FunctionAttribute("count", new Attribute[] { Voyage.getAttribute("iid") }));
 		query.addPopulatedAttribute(new FunctionAttribute("stddev", new Attribute[] { Voyage.getAttribute(attribute) }));
-		Object[] results = query.executeQuery();
+		
+		Object[] results = query.executeQuery(useSQL);
+
 		if (results.length > 0)
 		{
 			Object[] row = (Object[]) results[0];

@@ -21,8 +21,8 @@ import edu.emory.library.tast.database.query.searchables.SearchableAttribute;
 import edu.emory.library.tast.database.query.searchables.SearchableAttributeSimpleDate;
 import edu.emory.library.tast.database.query.searchables.SearchableAttributeSimpleRange;
 import edu.emory.library.tast.database.query.searchables.Searchables;
-import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.TastResource;
+import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.JsfUtils;
 import edu.emory.library.tast.util.StringUtils;
 

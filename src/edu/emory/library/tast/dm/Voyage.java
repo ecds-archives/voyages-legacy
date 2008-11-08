@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
@@ -29,13 +30,14 @@ import edu.emory.library.tast.dm.attributes.RegionAttribute;
 import edu.emory.library.tast.dm.attributes.ResistanceAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
 import edu.emory.library.tast.dm.attributes.VesselRigAttribute;
-import edu.emory.library.tast.util.HibernateConnector;
+import edu.emory.library.tast.util.HibernateUtil;
 
 /**
  * Voyage object.
  * 
  */
-public class Voyage extends AbstractDescriptiveObject {
+public class Voyage extends AbstractDescriptiveObject
+{
 
 	/**
 	 * ID of voyage.
@@ -47,32 +49,23 @@ public class Voyage extends AbstractDescriptiveObject {
 	 */
 	private static List attributes = new ArrayList();
 	static {
-		attributes.add(new NumericAttribute("iid", "Voyage",
-				NumericAttribute.TYPE_LONG, null));
-		attributes.add(new NumericAttribute("voyageid", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "voyageid"));
+		attributes.add(new NumericAttribute("iid", "Voyage", NumericAttribute.TYPE_LONG, null));
+		attributes.add(new NumericAttribute("voyageid", "Voyage", NumericAttribute.TYPE_INTEGER, "voyageid"));
 		attributes.add(new BooleanAttribute("suggestion", "Voyage", null));
-		attributes.add(new NumericAttribute("revision", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "revision"));
-		attributes.add(new NumericAttribute("iid", "Voyage",
-				NumericAttribute.TYPE_LONG, null));
-		attributes.add(new NumericAttribute("iid", "Voyage",
-				NumericAttribute.TYPE_LONG, null));
+		attributes.add(new NumericAttribute("revision", "Voyage", NumericAttribute.TYPE_INTEGER, "revision"));
+		attributes.add(new NumericAttribute("iid", "Voyage", NumericAttribute.TYPE_LONG, null));
+		attributes.add(new NumericAttribute("iid", "Voyage", NumericAttribute.TYPE_LONG, null));
 		attributes.add(new StringAttribute("shipname", "Voyage", "shipname"));
+		attributes.add(new StringAttribute("shipname_index", "Voyage", "shipname_index"));
 		attributes.add(new PortAttribute("placcons", "Voyage", "placcons"));
-		attributes.add(new NumericAttribute("yrcons", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "yrcons"));
+		attributes.add(new NumericAttribute("yrcons", "Voyage", NumericAttribute.TYPE_INTEGER, "yrcons"));
 		attributes.add(new PortAttribute("placreg", "Voyage", "placreg"));
-		attributes.add(new NumericAttribute("yrreg", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "yrreg"));
+		attributes.add(new NumericAttribute("yrreg", "Voyage", NumericAttribute.TYPE_INTEGER, "yrreg"));
 		attributes.add(new NationAttribute("natinimp", "Voyage", "natinimp"));
 		attributes.add(new VesselRigAttribute("rig", "Voyage", "rig"));
-		attributes.add(new NumericAttribute("tonnage", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "tonnage"));
-		attributes.add(new NumericAttribute("tonmod", "Voyage",
-				NumericAttribute.TYPE_FLOAT, "tonmod"));
-		attributes.add(new NumericAttribute("guns", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "guns"));
+		attributes.add(new NumericAttribute("tonnage", "Voyage", NumericAttribute.TYPE_INTEGER, "tonnage"));
+		attributes.add(new NumericAttribute("tonmod", "Voyage", NumericAttribute.TYPE_FLOAT, "tonmod"));
+		attributes.add(new NumericAttribute("guns", "Voyage", NumericAttribute.TYPE_INTEGER, "guns"));
 		attributes.add(new StringAttribute("ownera", "Voyage", "ownera"));
 		attributes.add(new StringAttribute("ownerb", "Voyage", "ownerb"));
 		attributes.add(new StringAttribute("ownerc", "Voyage", "ownerc"));
@@ -89,15 +82,14 @@ public class Voyage extends AbstractDescriptiveObject {
 		attributes.add(new StringAttribute("ownern", "Voyage", "ownern"));
 		attributes.add(new StringAttribute("ownero", "Voyage", "ownero"));
 		attributes.add(new StringAttribute("ownerp", "Voyage", "ownerp"));
+		attributes.add(new StringAttribute("owners_index", "Voyage", "owners_index"));
 		attributes.add(new FateAttribute("fate", "Voyage", "fate"));
 		attributes.add(new FateSlavesAttribute("fate2", "Voyage", "fate2"));
 		attributes.add(new FateVesselAttribute("fate3", "Voyage", "fate3"));
 		attributes.add(new FateOwnerAttribute("fate4", "Voyage", "fate4"));
-		attributes.add(new ResistanceAttribute("resistance", "Voyage",
-				"resistance"));
+		attributes.add(new ResistanceAttribute("resistance", "Voyage", "resistance"));
 		attributes.add(new PortAttribute("ptdepimp", "Voyage", "ptdepimp"));
-		attributes
-				.add(new RegionAttribute("deptregimp", "Voyage", "deptregimp"));
+		attributes.add(new RegionAttribute("deptregimp", "Voyage", "deptregimp"));
 		attributes.add(new PortAttribute("plac1tra", "Voyage", "plac1tra"));
 		attributes.add(new PortAttribute("plac2tra", "Voyage", "plac2tra"));
 		attributes.add(new PortAttribute("plac3tra", "Voyage", "plac3tra"));
@@ -118,70 +110,44 @@ public class Voyage extends AbstractDescriptiveObject {
 		attributes.add(new RegionAttribute("mjselimp", "Voyage", "mjselimp"));
 		attributes.add(new PortAttribute("portret", "Voyage", "portret"));
 		attributes.add(new RegionAttribute("retrnreg", "Voyage", "retrnreg"));
-		attributes.add(new NumericAttribute("yearam", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "yearam"));
+		attributes.add(new NumericAttribute("yearam", "Voyage", NumericAttribute.TYPE_INTEGER, "yearam"));
 		attributes.add(new DateAttribute("datedep", "Voyage", "date_dep"));
 		attributes.add(new DateAttribute("datebuy", "Voyage", "date_buy"));
-		attributes.add(new DateAttribute("dateleftafr", "Voyage",
-				"date_leftafr"));
+		attributes.add(new DateAttribute("dateleftafr", "Voyage", "date_leftafr"));
 		attributes.add(new DateAttribute("dateland1", "Voyage", "date_land1"));
 		attributes.add(new DateAttribute("dateland2", "Voyage", "date_land2"));
 		attributes.add(new DateAttribute("dateland3", "Voyage", "date_land3"));
 		attributes.add(new DateAttribute("datedepam", "Voyage", "date_depam"));
 		attributes.add(new DateAttribute("dateend", "Voyage", "date_end"));
-		attributes.add(new NumericAttribute("voy1imp", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "voy1imp"));
-		attributes.add(new NumericAttribute("voy2imp", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "voy2imp"));
+		attributes.add(new NumericAttribute("voy1imp", "Voyage", NumericAttribute.TYPE_INTEGER, "voy1imp"));
+		attributes.add(new NumericAttribute("voy2imp", "Voyage", NumericAttribute.TYPE_INTEGER, "voy2imp"));
 		attributes.add(new StringAttribute("captaina", "Voyage", "captaina"));
 		attributes.add(new StringAttribute("captainb", "Voyage", "captainb"));
 		attributes.add(new StringAttribute("captainc", "Voyage", "captainc"));
-		attributes.add(new NumericAttribute("crew1", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "crew1"));
-		attributes.add(new NumericAttribute("crew3", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "crew3"));
-		attributes.add(new NumericAttribute("crewdied", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "crewdied"));
-		attributes.add(new NumericAttribute("slintend", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "slintend"));
-		attributes.add(new NumericAttribute("ncar13", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "ncar13"));
-		attributes.add(new NumericAttribute("ncar15", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "ncar15"));
-		attributes.add(new NumericAttribute("ncar17", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "ncar17"));
-		attributes.add(new NumericAttribute("tslavesd", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "tslavesd"));
-		attributes.add(new NumericAttribute("slaarriv", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "slaarriv"));
-		attributes.add(new NumericAttribute("slas32", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "slas32"));
-		attributes.add(new NumericAttribute("slas36", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "slas36"));
-		attributes.add(new NumericAttribute("slas39", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "slas39"));
-		attributes.add(new NumericAttribute("slaximp", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "slaximp"));
-		attributes.add(new NumericAttribute("slamimp", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "slamimp"));
-		attributes.add(new NumericAttribute("menrat7", "Voyage",
-				NumericAttribute.TYPE_FLOAT, "menrat7"));
-		attributes.add(new NumericAttribute("womrat7", "Voyage",
-				NumericAttribute.TYPE_FLOAT, "womrat7"));
-		attributes.add(new NumericAttribute("boyrat7", "Voyage",
-				NumericAttribute.TYPE_FLOAT, "boyrat7"));
-		attributes.add(new NumericAttribute("girlrat7", "Voyage",
-				NumericAttribute.TYPE_FLOAT, "girlrat7"));
-		attributes.add(new NumericAttribute("malrat7", "Voyage",
-				NumericAttribute.TYPE_FLOAT, "malrat7"));
-		attributes.add(new NumericAttribute("chilrat7", "Voyage",
-				NumericAttribute.TYPE_FLOAT, "chilrat7"));
-		attributes.add(new NumericAttribute("jamcaspr", "Voyage",
-				NumericAttribute.TYPE_FLOAT, "jamcaspr"));
-		attributes.add(new NumericAttribute("vymrtimp", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "vymrtimp"));
-		attributes.add(new NumericAttribute("vymrtrat", "Voyage",
-				NumericAttribute.TYPE_FLOAT, "vymrtrat"));
+		attributes.add(new StringAttribute("captains_index", "Voyage", "captains_index"));
+		attributes.add(new NumericAttribute("crew1", "Voyage", NumericAttribute.TYPE_INTEGER, "crew1"));
+		attributes.add(new NumericAttribute("crew3", "Voyage", NumericAttribute.TYPE_INTEGER, "crew3"));
+		attributes.add(new NumericAttribute("crewdied", "Voyage", NumericAttribute.TYPE_INTEGER, "crewdied"));
+		attributes.add(new NumericAttribute("slintend", "Voyage", NumericAttribute.TYPE_INTEGER, "slintend"));
+		attributes.add(new NumericAttribute("ncar13", "Voyage", NumericAttribute.TYPE_INTEGER, "ncar13"));
+		attributes.add(new NumericAttribute("ncar15", "Voyage", NumericAttribute.TYPE_INTEGER, "ncar15"));
+		attributes.add(new NumericAttribute("ncar17", "Voyage", NumericAttribute.TYPE_INTEGER, "ncar17"));
+		attributes.add(new NumericAttribute("tslavesd", "Voyage", NumericAttribute.TYPE_INTEGER, "tslavesd"));
+		attributes.add(new NumericAttribute("slaarriv", "Voyage", NumericAttribute.TYPE_INTEGER, "slaarriv"));
+		attributes.add(new NumericAttribute("slas32", "Voyage", NumericAttribute.TYPE_INTEGER, "slas32"));
+		attributes.add(new NumericAttribute("slas36", "Voyage", NumericAttribute.TYPE_INTEGER, "slas36"));
+		attributes.add(new NumericAttribute("slas39", "Voyage", NumericAttribute.TYPE_INTEGER, "slas39"));
+		attributes.add(new NumericAttribute("slaximp", "Voyage", NumericAttribute.TYPE_INTEGER, "slaximp"));
+		attributes.add(new NumericAttribute("slamimp", "Voyage", NumericAttribute.TYPE_INTEGER, "slamimp"));
+		attributes.add(new NumericAttribute("menrat7", "Voyage", NumericAttribute.TYPE_FLOAT, "menrat7"));
+		attributes.add(new NumericAttribute("womrat7", "Voyage", NumericAttribute.TYPE_FLOAT, "womrat7"));
+		attributes.add(new NumericAttribute("boyrat7", "Voyage", NumericAttribute.TYPE_FLOAT, "boyrat7"));
+		attributes.add(new NumericAttribute("girlrat7", "Voyage", NumericAttribute.TYPE_FLOAT, "girlrat7"));
+		attributes.add(new NumericAttribute("malrat7", "Voyage", NumericAttribute.TYPE_FLOAT, "malrat7"));
+		attributes.add(new NumericAttribute("chilrat7", "Voyage", NumericAttribute.TYPE_FLOAT, "chilrat7"));
+		attributes.add(new NumericAttribute("jamcaspr", "Voyage", NumericAttribute.TYPE_FLOAT, "jamcaspr"));
+		attributes.add(new NumericAttribute("vymrtimp", "Voyage", NumericAttribute.TYPE_INTEGER, "vymrtimp"));
+		attributes.add(new NumericAttribute("vymrtrat", "Voyage", NumericAttribute.TYPE_FLOAT, "vymrtrat"));
 		attributes.add(new StringAttribute("sourcea", "Voyage", "sourcea"));
 		attributes.add(new StringAttribute("sourceb", "Voyage", "sourceb"));
 		attributes.add(new StringAttribute("sourcec", "Voyage", "sourcec"));
@@ -200,178 +166,95 @@ public class Voyage extends AbstractDescriptiveObject {
 		attributes.add(new StringAttribute("sourcep", "Voyage", "sourcep"));
 		attributes.add(new StringAttribute("sourceq", "Voyage", "sourceq"));
 		attributes.add(new StringAttribute("sourcer", "Voyage", "sourcer"));
-		attributes.add(new EstimatesNationAttribute("e_natinimp", "Voyage",
-				"e_natinimp"));
-		attributes.add(new EstimatesExportRegionAttribute("e_majbyimp",
-				"Voyage", "e_majbyimp"));
-		attributes.add(new EstimatesImportRegionAttribute("e_mjselimp",
-				"Voyage", "e_mjselimp"));
-		
-		attributes.add(new NumericAttribute("tontype", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "tontype"));
-		attributes.add(new NumericAttribute("sladamer", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "sladamer"));
-		attributes.add(new NumericAttribute("saild1", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "saild1"));
-		attributes.add(new NumericAttribute("saild2", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "saild2"));
-		attributes.add(new NumericAttribute("saild3", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "saild3"));
-		attributes.add(new NumericAttribute("saild4", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "saild4"));
-		attributes.add(new NumericAttribute("saild5", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "saild5"));
-		attributes.add(new NumericAttribute("voyage", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "voyage"));
-		attributes.add(new NumericAttribute("child2", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "child2"));
-		attributes.add(new NumericAttribute("child3", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "child3"));
-		attributes.add(new NumericAttribute("crew4", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "crew4"));
-		attributes.add(new NumericAttribute("crew5", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "crew5"));
-		attributes.add(new NumericAttribute("adult1", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "adult1"));
-		attributes.add(new NumericAttribute("child1", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "child1"));
-		attributes.add(new NumericAttribute("female1", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "female1"));
-		attributes.add(new NumericAttribute("male1", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "male1"));
-		attributes.add(new NumericAttribute("men1", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "men1"));
-		attributes.add(new NumericAttribute("women1", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "women1"));
-		attributes.add(new NumericAttribute("boy1", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "boy1"));
-		attributes.add(new NumericAttribute("girl1", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "girl1"));
-		attributes.add(new NumericAttribute("adult2", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "adult2"));
-		attributes.add(new NumericAttribute("female2", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "female2"));
-		attributes.add(new NumericAttribute("male2", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "male2"));
-		attributes.add(new NumericAttribute("men2", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "men2"));
-		attributes.add(new NumericAttribute("women2", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "women2"));
-		attributes.add(new NumericAttribute("boy2", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "boy2"));
-		attributes.add(new NumericAttribute("girl2", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "girl2"));
-		attributes.add(new NumericAttribute("adult3", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "adult3"));
-		attributes.add(new NumericAttribute("female3", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "female3"));
-		attributes.add(new NumericAttribute("male3", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "male3"));
-		attributes.add(new NumericAttribute("men3", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "men3"));
-		attributes.add(new NumericAttribute("women3", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "women3"));
-		attributes.add(new NumericAttribute("boy3", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "boy3"));
-		attributes.add(new NumericAttribute("girl3", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "girl3"));
-		attributes.add(new NumericAttribute("child4", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "child4"));
-		attributes.add(new NumericAttribute("female4", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "female4"));
-		attributes.add(new NumericAttribute("male4", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "male4"));
-		attributes.add(new NumericAttribute("men4", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "men4"));
-		attributes.add(new NumericAttribute("women4", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "women4"));
-		attributes.add(new NumericAttribute("boy4", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "boy4"));
-		attributes.add(new NumericAttribute("girl4", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "girl4"));
-		attributes.add(new NumericAttribute("child6", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "child6"));
-		attributes.add(new NumericAttribute("female6", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "female6"));
-		attributes.add(new NumericAttribute("male6", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "male6"));
-		attributes.add(new NumericAttribute("men6", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "men6"));
-		attributes.add(new NumericAttribute("women6", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "women6"));
-		attributes.add(new NumericAttribute("boy6", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "boy6"));
-		attributes.add(new NumericAttribute("girl6", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "girl6"));
-		attributes.add(new NumericAttribute("adult6", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "adult6"));
-		attributes.add(new NumericAttribute("crew2", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "crew2"));
-		attributes.add(new NumericAttribute("infantm3", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "infantm3"));
-		attributes.add(new NumericAttribute("infantf3", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "infantf3"));
-		attributes.add(new NumericAttribute("sladied1", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "sladied1"));
-		attributes.add(new NumericAttribute("sladied2", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "sladied2"));
-		attributes.add(new NumericAttribute("sladied3", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "sladied3"));
-		attributes.add(new NumericAttribute("sladied4", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "sladied4"));
-		attributes.add(new NumericAttribute("sladied5", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "sladied5"));
-		attributes.add(new NumericAttribute("sladied6", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "sladied6"));
-		attributes.add(new NumericAttribute("insurrec", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "insurrec"));
-		attributes.add(new BooleanAttribute("evgreen", "Voyage","evgreen"));
-		attributes.add(new NumericAttribute("female5", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "female5"));
-		attributes.add(new NumericAttribute("male5", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "male5"));
-		attributes.add(new NumericAttribute("child5", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "child5"));
-		attributes.add(new NumericAttribute("men5", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "men5"));
-		attributes.add(new NumericAttribute("women5", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "women5"));
-		attributes.add(new NumericAttribute("boy5", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "boy5"));
-		attributes.add(new NumericAttribute("girl5", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "girl5"));
-		attributes.add(new NumericAttribute("infant3", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "infant3"));
-		attributes.add(new NumericAttribute("infant1", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "infant1"));
-		attributes.add(new NumericAttribute("adult5", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "adult5"));
-		attributes.add(new NumericAttribute("adult4", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "adult4"));
-		attributes.add(new NumericAttribute("infant4", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "infant4"));
-		attributes.add(new NumericAttribute("crew", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "crew"));
+		attributes.add(new StringAttribute("sources_index", "Voyage", "sources_index"));
+		attributes.add(new EstimatesNationAttribute("e_natinimp", "Voyage", "e_natinimp"));
+		attributes.add(new EstimatesExportRegionAttribute("e_majbyimp", "Voyage", "e_majbyimp"));
+		attributes.add(new EstimatesImportRegionAttribute("e_mjselimp", "Voyage", "e_mjselimp"));
+		attributes.add(new NumericAttribute("tontype", "Voyage", NumericAttribute.TYPE_INTEGER, "tontype"));
+		attributes.add(new NumericAttribute("sladamer", "Voyage", NumericAttribute.TYPE_INTEGER, "sladamer"));
+		attributes.add(new NumericAttribute("saild1", "Voyage", NumericAttribute.TYPE_INTEGER, "saild1"));
+		attributes.add(new NumericAttribute("saild2", "Voyage", NumericAttribute.TYPE_INTEGER, "saild2"));
+		attributes.add(new NumericAttribute("saild3", "Voyage", NumericAttribute.TYPE_INTEGER, "saild3"));
+		attributes.add(new NumericAttribute("saild4", "Voyage", NumericAttribute.TYPE_INTEGER, "saild4"));
+		attributes.add(new NumericAttribute("saild5", "Voyage", NumericAttribute.TYPE_INTEGER, "saild5"));
+		attributes.add(new NumericAttribute("voyage", "Voyage", NumericAttribute.TYPE_INTEGER, "voyage"));
+		attributes.add(new NumericAttribute("child2", "Voyage", NumericAttribute.TYPE_INTEGER, "child2"));
+		attributes.add(new NumericAttribute("child3", "Voyage", NumericAttribute.TYPE_INTEGER, "child3"));
+		attributes.add(new NumericAttribute("crew4", "Voyage", NumericAttribute.TYPE_INTEGER, "crew4"));
+		attributes.add(new NumericAttribute("crew5", "Voyage", NumericAttribute.TYPE_INTEGER, "crew5"));
+		attributes.add(new NumericAttribute("adult1", "Voyage", NumericAttribute.TYPE_INTEGER, "adult1"));
+		attributes.add(new NumericAttribute("child1", "Voyage", NumericAttribute.TYPE_INTEGER, "child1"));
+		attributes.add(new NumericAttribute("female1", "Voyage", NumericAttribute.TYPE_INTEGER, "female1"));
+		attributes.add(new NumericAttribute("male1", "Voyage", NumericAttribute.TYPE_INTEGER, "male1"));
+		attributes.add(new NumericAttribute("men1", "Voyage", NumericAttribute.TYPE_INTEGER, "men1"));
+		attributes.add(new NumericAttribute("women1", "Voyage", NumericAttribute.TYPE_INTEGER, "women1"));
+		attributes.add(new NumericAttribute("boy1", "Voyage", NumericAttribute.TYPE_INTEGER, "boy1"));
+		attributes.add(new NumericAttribute("girl1", "Voyage", NumericAttribute.TYPE_INTEGER, "girl1"));
+		attributes.add(new NumericAttribute("adult2", "Voyage", NumericAttribute.TYPE_INTEGER, "adult2"));
+		attributes.add(new NumericAttribute("female2", "Voyage", NumericAttribute.TYPE_INTEGER, "female2"));
+		attributes.add(new NumericAttribute("male2", "Voyage", NumericAttribute.TYPE_INTEGER, "male2"));
+		attributes.add(new NumericAttribute("men2", "Voyage", NumericAttribute.TYPE_INTEGER, "men2"));
+		attributes.add(new NumericAttribute("women2", "Voyage", NumericAttribute.TYPE_INTEGER, "women2"));
+		attributes.add(new NumericAttribute("boy2", "Voyage", NumericAttribute.TYPE_INTEGER, "boy2"));
+		attributes.add(new NumericAttribute("girl2", "Voyage", NumericAttribute.TYPE_INTEGER, "girl2"));
+		attributes.add(new NumericAttribute("adult3", "Voyage", NumericAttribute.TYPE_INTEGER, "adult3"));
+		attributes.add(new NumericAttribute("female3", "Voyage", NumericAttribute.TYPE_INTEGER, "female3"));
+		attributes.add(new NumericAttribute("male3", "Voyage", NumericAttribute.TYPE_INTEGER, "male3"));
+		attributes.add(new NumericAttribute("men3", "Voyage", NumericAttribute.TYPE_INTEGER, "men3"));
+		attributes.add(new NumericAttribute("women3", "Voyage", NumericAttribute.TYPE_INTEGER, "women3"));
+		attributes.add(new NumericAttribute("boy3", "Voyage", NumericAttribute.TYPE_INTEGER, "boy3"));
+		attributes.add(new NumericAttribute("girl3", "Voyage", NumericAttribute.TYPE_INTEGER, "girl3"));
+		attributes.add(new NumericAttribute("child4", "Voyage", NumericAttribute.TYPE_INTEGER, "child4"));
+		attributes.add(new NumericAttribute("female4", "Voyage", NumericAttribute.TYPE_INTEGER, "female4"));
+		attributes.add(new NumericAttribute("male4", "Voyage", NumericAttribute.TYPE_INTEGER, "male4"));
+		attributes.add(new NumericAttribute("men4", "Voyage", NumericAttribute.TYPE_INTEGER, "men4"));
+		attributes.add(new NumericAttribute("women4", "Voyage", NumericAttribute.TYPE_INTEGER, "women4"));
+		attributes.add(new NumericAttribute("boy4", "Voyage", NumericAttribute.TYPE_INTEGER, "boy4"));
+		attributes.add(new NumericAttribute("girl4", "Voyage", NumericAttribute.TYPE_INTEGER, "girl4"));
+		attributes.add(new NumericAttribute("child6", "Voyage", NumericAttribute.TYPE_INTEGER, "child6"));
+		attributes.add(new NumericAttribute("female6", "Voyage", NumericAttribute.TYPE_INTEGER, "female6"));
+		attributes.add(new NumericAttribute("male6", "Voyage", NumericAttribute.TYPE_INTEGER, "male6"));
+		attributes.add(new NumericAttribute("men6", "Voyage", NumericAttribute.TYPE_INTEGER, "men6"));
+		attributes.add(new NumericAttribute("women6", "Voyage", NumericAttribute.TYPE_INTEGER, "women6"));
+		attributes.add(new NumericAttribute("boy6", "Voyage", NumericAttribute.TYPE_INTEGER, "boy6"));
+		attributes.add(new NumericAttribute("girl6", "Voyage", NumericAttribute.TYPE_INTEGER, "girl6"));
+		attributes.add(new NumericAttribute("adult6", "Voyage", NumericAttribute.TYPE_INTEGER, "adult6"));
+		attributes.add(new NumericAttribute("crew2", "Voyage", NumericAttribute.TYPE_INTEGER, "crew2"));
+		attributes.add(new NumericAttribute("infantm3", "Voyage", NumericAttribute.TYPE_INTEGER, "infantm3"));
+		attributes.add(new NumericAttribute("infantf3", "Voyage", NumericAttribute.TYPE_INTEGER, "infantf3"));
+		attributes.add(new NumericAttribute("sladied1", "Voyage", NumericAttribute.TYPE_INTEGER, "sladied1"));
+		attributes.add(new NumericAttribute("sladied2", "Voyage", NumericAttribute.TYPE_INTEGER, "sladied2"));
+		attributes.add(new NumericAttribute("sladied3", "Voyage", NumericAttribute.TYPE_INTEGER, "sladied3"));
+		attributes.add(new NumericAttribute("sladied4", "Voyage", NumericAttribute.TYPE_INTEGER, "sladied4"));
+		attributes.add(new NumericAttribute("sladied5", "Voyage", NumericAttribute.TYPE_INTEGER, "sladied5"));
+		attributes.add(new NumericAttribute("sladied6", "Voyage", NumericAttribute.TYPE_INTEGER, "sladied6"));
+		attributes.add(new NumericAttribute("insurrec", "Voyage", NumericAttribute.TYPE_INTEGER, "insurrec"));
+		attributes.add(new BooleanAttribute("evgreen", "Voyage", "evgreen"));
+		attributes.add(new NumericAttribute("female5", "Voyage", NumericAttribute.TYPE_INTEGER, "female5"));
+		attributes.add(new NumericAttribute("male5", "Voyage", NumericAttribute.TYPE_INTEGER, "male5"));
+		attributes.add(new NumericAttribute("child5", "Voyage", NumericAttribute.TYPE_INTEGER, "child5"));
+		attributes.add(new NumericAttribute("men5", "Voyage", NumericAttribute.TYPE_INTEGER, "men5"));
+		attributes.add(new NumericAttribute("women5", "Voyage", NumericAttribute.TYPE_INTEGER, "women5"));
+		attributes.add(new NumericAttribute("boy5", "Voyage", NumericAttribute.TYPE_INTEGER, "boy5"));
+		attributes.add(new NumericAttribute("girl5", "Voyage", NumericAttribute.TYPE_INTEGER, "girl5"));
+		attributes.add(new NumericAttribute("infant3", "Voyage", NumericAttribute.TYPE_INTEGER, "infant3"));
+		attributes.add(new NumericAttribute("infant1", "Voyage", NumericAttribute.TYPE_INTEGER, "infant1"));
+		attributes.add(new NumericAttribute("adult5", "Voyage", NumericAttribute.TYPE_INTEGER, "adult5"));
+		attributes.add(new NumericAttribute("adult4", "Voyage", NumericAttribute.TYPE_INTEGER, "adult4"));
+		attributes.add(new NumericAttribute("infant4", "Voyage", NumericAttribute.TYPE_INTEGER, "infant4"));
+		attributes.add(new NumericAttribute("crew", "Voyage", NumericAttribute.TYPE_INTEGER, "crew"));
 		attributes.add(new PortAttribute("embport", "Voyage", "embport"));
 		attributes.add(new PortAttribute("embport2", "Voyage", "embport2"));
 		attributes.add(new PortAttribute("arrport", "Voyage", "arrport"));
 		attributes.add(new PortAttribute("arrport2", "Voyage", "arrport2"));
-		
-		attributes.add(new NumericAttribute("nppretra", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "nppretra"));
-		attributes.add(new NumericAttribute("tslavesp", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "tslavesp"));
-		attributes.add(new NumericAttribute("sladvoy", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "sladvoy"));
-		attributes.add(new NumericAttribute("npprior", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "npprior"));
+		attributes.add(new NumericAttribute("nppretra", "Voyage", NumericAttribute.TYPE_INTEGER, "nppretra"));
+		attributes.add(new NumericAttribute("tslavesp", "Voyage", NumericAttribute.TYPE_INTEGER, "tslavesp"));
+		attributes.add(new NumericAttribute("sladvoy", "Voyage", NumericAttribute.TYPE_INTEGER, "sladvoy"));
+		attributes.add(new NumericAttribute("npprior", "Voyage", NumericAttribute.TYPE_INTEGER, "npprior"));
 		attributes.add(new NationAttribute("national", "Voyage", "national"));
-		attributes.add(new NumericAttribute("slinten2", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "slinten2"));
-		attributes.add(new NumericAttribute("ndesert", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "ndesert"));
-		attributes.add(new NumericAttribute("sladafri", "Voyage",
-				NumericAttribute.TYPE_INTEGER, "sladafri"));
+		attributes.add(new NumericAttribute("slinten2", "Voyage", NumericAttribute.TYPE_INTEGER, "slinten2"));
+		attributes.add(new NumericAttribute("ndesert", "Voyage", NumericAttribute.TYPE_INTEGER, "ndesert"));
+		attributes.add(new NumericAttribute("sladafri", "Voyage", NumericAttribute.TYPE_INTEGER, "sladafri"));
 		
 	}
 
@@ -558,16 +441,12 @@ public class Voyage extends AbstractDescriptiveObject {
 	 * Saves voyage to DB.
 	 * 
 	 */
-	public void save() {
-		HibernateConnector.getConnector().saveObject(this);
-//		// Prepare VoyageIndex
-//		VoyageIndex vIndex = new VoyageIndex();
-//		vIndex.setVoyage(this);
-//		vIndex.setVoyageId(this.getVoyageid());
-//		vIndex.setRevisionDate(new Date(System.currentTimeMillis()));
-//
-//		// Save to DB (or update...)
-//		HibernateConnector.getConnector().createVoyage(vIndex);
+	public void save()
+	{
+		Session session = HibernateUtil.getSession();
+		Transaction transaction = session.beginTransaction();
+		session.save(this);
+		transaction.commit();
 	}
 
 	/**
@@ -599,7 +478,10 @@ public class Voyage extends AbstractDescriptiveObject {
 	}
 
 	public void saveOrUpdate() {
-		HibernateConnector.getConnector().saveOrUpdateObject(this);
+		Session session = HibernateUtil.getSession();
+		Transaction transaction = session.beginTransaction();
+		session.saveOrUpdate(this);
+		transaction.commit();
 	}
 
 	public void saveOrUpdate(Session sess) {

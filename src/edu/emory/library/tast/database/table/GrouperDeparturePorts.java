@@ -54,7 +54,7 @@ public class GrouperDeparturePorts extends GrouperSimpleDictionary
 		{
 			for (int i = 0; i < dataTable.length; i++)
 			{
-				Object regionId = ((Object[]) dataTable[i])[resultIndex];
+				Long regionId = getRowId(((Object[]) dataTable[i]));
 				portsIdsInTable.add(regionId);
 			}
 		}
@@ -113,7 +113,7 @@ public class GrouperDeparturePorts extends GrouperSimpleDictionary
 
 	public int lookupIndex(Object[] dataRow)
 	{
-		Object portId = dataRow[resultIndex];
+		Long portId = getRowId(dataRow);
 		if (lookupTable.get(portId) == null) return 0;
 		return ((Integer) lookupTable.get(portId)).intValue();
 	}

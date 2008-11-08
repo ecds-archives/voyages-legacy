@@ -12,6 +12,9 @@ public class AppConfig
 	
 	public static final String SITE_URL = "site.url";
 	
+	public static final String DEFAULT_REVISION = "database.defaultrevision";
+	public static final String DATABASE_USE_SQL = "database.usesql";
+
 	public static final String FORMAT_DATE = "format.date.cvs";
 	public static final String FORMAT_DATE_CVS = "format.date.cvs";
 
@@ -31,7 +34,6 @@ public class AppConfig
 	public static final String IMAGES_SOURCE_MAXLEN = "images.source.maxlen";
 	public static final String IMAGES_REFERENCES_MAXLEN = "images.references.maxlen";
 	public static final String IMAGES_EMORYLOCATION_MAXLEN = "images.emorylocation.maxlen";
-	public static final String DEFAULT_REVISION = "database.defaultrevision";
 
 	public static final String SLAVES_SIERRA_LEONE_ID = "slaves.sierra_leone.id";
 	public static final String SLAVES_HAVANA_ID = "slaves.havana.id";

@@ -8,6 +8,7 @@ import javax.faces.model.SelectItem;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import edu.emory.library.tast.AppConfig;
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.common.SimpleTableCell;
 import edu.emory.library.tast.common.table.Grouper;
@@ -343,7 +344,9 @@ public class TableBean
 			query.addPopulatedAttribute(colExtraAttributes[i]);
 
 		// finally query the database
-		Object[] result = query.executeQuery(sess);
+		boolean useSQL = AppConfig.getConfiguration().getBoolean(AppConfig.DATABASE_USE_SQL);
+		System.out.println(query.toSQLStringWithParams().conditionString.toString());
+		Object[] result = query.executeQuery(sess, useSQL);
 
 		// init groupers
 		rowGrouper.initSlots(result);

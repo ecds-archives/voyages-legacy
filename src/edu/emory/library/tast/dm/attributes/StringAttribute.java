@@ -83,9 +83,9 @@ public class StringAttribute extends ImportableAttribute
 		return null;
 	}
 
-	public Object getValueToCondition(Object value) {
-//		StringBuffer buffer = new StringBuffer();
-//		buffer.append("'").append(value.toString()).append("'");
-		return value;
+	public String getSQLReference(String masterTable, Map tablesIndexes, Map existingJoins, StringBuffer sqlFrom)
+	{
+		return masterTable + "." + getName();
 	}
+
 }

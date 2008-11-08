@@ -9,6 +9,8 @@ import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpServletRequest;
 
 import org.ajaxanywhere.AAUtils;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import edu.emory.library.tast.AppConfig;
 import edu.emory.library.tast.TastResource;
@@ -30,6 +32,7 @@ import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.Group;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
+import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.JsfUtils;
 import edu.emory.library.tast.util.StringUtils;
 
@@ -272,11 +275,19 @@ public class SearchBean
 		dbConds.addCondition(Voyage.getAttribute("revision"), new Integer(this.selectedRevision), TastDbConditions.OP_EQUALS);
 		workingQuery.addToDbConditions(false, dbConds);
 		
+		boolean useSQL = AppConfig.getConfiguration().getBoolean(AppConfig.DATABASE_USE_SQL);
+		
+		Session session = HibernateUtil.getSession();
+		Transaction transaction = session.beginTransaction();		
+		
 		TastDbQuery query = new TastDbQuery("Voyage", dbConds);
 		query.addPopulatedAttribute(new FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("iid")}));		
-		Object[] ret = query.executeQuery();
-		numberOfResults = ((Number)ret[0]).intValue();
+		Number ret = (Number) query.getQuery(session, useSQL).list().get(0);
+		numberOfResults = ret.intValue();
 		numberOfResultsValid = true;
+		
+		transaction.commit();
+		session.close();
 
 		// long end = System.currentTimeMillis();
 		// System.out.println("count = " + (end - start));

@@ -22,5 +22,5 @@ public class ConditionResponse {
 	/**
 	 * Map of mappings between parameters in string above and their exact values.
 	 */
-	public HashMap properties = new HashMap();
+	public HashMap parameters = new HashMap();
 }

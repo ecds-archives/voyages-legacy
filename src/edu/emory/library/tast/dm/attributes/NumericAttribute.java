@@ -179,11 +179,7 @@ public class NumericAttribute extends ImportableAttribute
 	public String getHQLOuterJoinPath(Map bindings) {
 		return null;
 	}
-
-	public Object getValueToCondition(Object value) {
-		return value;
-	}
-
+	
 	public boolean isPercentage()
 	{
 		return percentage;
@@ -193,4 +189,10 @@ public class NumericAttribute extends ImportableAttribute
 	{
 		this.percentage = percentage;
 	}
+
+	public String getSQLReference(String masterTable, Map tablesIndexes, Map existingJoins, StringBuffer sqlFrom)
+	{
+		return masterTable + "." + getName();
+	}
+
 }

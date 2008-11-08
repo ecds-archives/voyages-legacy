@@ -476,5 +476,32 @@ public class StringUtils
 		return substrings;
 		
 	}
+	
+	public static String replaceChars(String str, char[] oldChars, char[] newChars)
+	{
+		if (str == null) return null;
+		boolean changed = false;
+		char[] strChars = str.toCharArray();
+		for (int i = 0; i < strChars.length; i++)
+		{
+			for (int j = 0; j < oldChars.length; j++)
+			{
+				if (strChars[i] == oldChars[j])
+				{
+					strChars[i] = newChars[j];
+					changed = true;
+					break;
+				}
+			}
+		}
+		if (changed)
+		{
+			return new String(strChars);
+		}
+		else
+		{
+			return str;
+		}
+	}
 
 }

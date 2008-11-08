@@ -39,16 +39,14 @@ public class CaseNullToZeroAttribute extends Attribute {
 	public String getHQLWherePath(Map bindings) {
 		return this.getHQLSelectPath(bindings);
 	}
-
-	public String getHQLParamName() {
-		return this.attribute.getName();
-	}
 	
 	public String getHQLOuterJoinPath(Map bindings) {
 		return attribute.getHQLOuterJoinPath(bindings);
 	}
 
-	public Object getValueToCondition(Object value) {
-		return attribute.getValueToCondition(value);
+	public String getSQLReference(String masterTable, Map tablesIndexes, Map existingJoins, StringBuffer sqlFrom)
+	{
+		return null;
 	}
+
 }

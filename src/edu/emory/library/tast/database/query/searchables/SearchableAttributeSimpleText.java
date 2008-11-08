@@ -4,9 +4,11 @@ import java.util.Map;
 
 import org.hibernate.Session;
 
+import edu.emory.library.tast.AppConfig;
 import edu.emory.library.tast.database.query.QueryCondition;
 import edu.emory.library.tast.database.query.QueryConditionText;
 import edu.emory.library.tast.db.TastDbConditions;
+import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.util.StringUtils;
@@ -14,9 +16,12 @@ import edu.emory.library.tast.util.StringUtils;
 public class SearchableAttributeSimpleText extends SearchableAttributeSimple
 {
 	
-	public SearchableAttributeSimpleText(String id, String userLabel, UserCategories userCategories, Attribute[] attributes, String spssName, String listDescription, boolean inEstimates)
+	private String textIndexColumn;
+	
+	public SearchableAttributeSimpleText(String id, String userLabel, UserCategories userCategories, Attribute[] attributes, String spssName, String listDescription, boolean inEstimates, String textIndexColumn)
 	{
 		super(id, userLabel, userCategories, attributes, spssName, listDescription, inEstimates);
+		this.textIndexColumn = textIndexColumn;
 	}
 
 	public QueryCondition createQueryCondition()
@@ -40,36 +45,48 @@ public class SearchableAttributeSimpleText extends SearchableAttributeSimple
 			return true;
 		
 		// consider only alfanum and digits
-		String[] keywords = StringUtils.extractQueryKeywords(queryConditionText.getValue(), StringUtils.UPPER_CASE);
+		String[] keywords = StringUtils.extractQueryKeywords(queryConditionText.getValue(), StringUtils.LOWER_CASE);
 		if (keywords.length == 0)
 			return false;
-
-		// add keywords to query
-		TastDbConditions attrCond = new TastDbConditions(TastDbConditions.OR);
-		Attribute[] attributes = getAttributes();
-		for (int j = 0; j < attributes.length; j++)
+	
+		if (AppConfig.getConfiguration().getBoolean(AppConfig.DATABASE_USE_SQL) && textIndexColumn != null)
 		{
 			
-			TastDbConditions keywordCond = new TastDbConditions(TastDbConditions.AND);
+			conditions.addCondition(
+					Voyage.getAttribute(textIndexColumn),
+					StringUtils.joinNonEmpty(" & ", keywords),
+					TastDbConditions.OP_TEXT_SEARCH);
 			
-			for (int i = 0; i < keywords.length; i++)
-			{
-				String keyword = "%" + keywords[i] + "%";
-				
-//				Attribute attr = attributes[j];
-				
-				FunctionAttribute attr =
-					new FunctionAttribute("remove_accents", new Attribute[] {
-								new FunctionAttribute("upper", new Attribute[]{attributes[j]})});
-				
-				keywordCond.addCondition(attr, keyword, TastDbConditions.OP_LIKE);
-
-			}
-			
-			attrCond.addCondition(keywordCond);
-
 		}
-		conditions.addCondition(attrCond);
+		else
+		{
+		
+			// add keywords to query
+			TastDbConditions attrCond = new TastDbConditions(TastDbConditions.OR);
+			Attribute[] attributes = getAttributes();
+			for (int j = 0; j < attributes.length; j++)
+			{
+				
+				TastDbConditions keywordCond = new TastDbConditions(TastDbConditions.AND);
+			
+				for (int i = 0; i < keywords.length; i++)
+				{
+					String keyword = "%" + keywords[i] + "%";
+					
+					FunctionAttribute attr =
+						new FunctionAttribute("remove_accents", new Attribute[] {
+									new FunctionAttribute("upper", new Attribute[]{attributes[j]})});
+					
+					keywordCond.addCondition(attr, keyword, TastDbConditions.OP_LIKE);
+	
+				}
+				
+				attrCond.addCondition(keywordCond);
+	
+			}
+			conditions.addCondition(attrCond);
+		
+		}
 		
 		// all OK
 		return true;

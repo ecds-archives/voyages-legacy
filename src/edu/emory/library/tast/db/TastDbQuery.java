@@ -9,9 +9,10 @@ import java.util.Map;
 import org.hibernate.Query;
 import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import edu.emory.library.tast.dm.attributes.Attribute;
-import edu.emory.library.tast.util.HibernateConnector;
+import edu.emory.library.tast.util.HibernateUtil;
 
 /**
  * Class that represents query built for hibernate.
@@ -109,7 +110,7 @@ public class TastDbQuery {
 	private boolean cacheable = false;
 
 	/**
-	 * SELECT distincs
+	 * SELECT distinct
 	 */
 	private boolean distinct = false;
 
@@ -177,56 +178,19 @@ public class TastDbQuery {
 		this.firstResult = FIRST_NO_FIRST;
 		for (int i = 0; i < aliases.length; i++) {
 			this.bindings.put(objTypes[i], aliases[i]);
-//			System.out.println(objects[i].toString()+"*****DEBUG******"+aliases[i]);
 		}
 	}
-
+	
 	/**
-	 * Sets limit of result.
-	 * @param limit
+	 * Adds new populated attribute.
+	 * @param p_attrName attribute name
+	 * @param dictionary true  if attribute is dictionary
 	 */
-	public void setLimit(int limit) {
-		this.limit = limit;
-	}
-
-	/**
-	 * Sets first retrieved row.
-	 * @param first
-	 */
-	public void setFirstResult(int first) {
-		this.firstResult = first;
-	}
-
-	/**
-	 * Sets order.
-	 * @param order
-	 */
-	public void setOrder(int order) {
-		this.order = order;
-	}
-
-	/**
-	 * Sets group by columns.
-	 * @param groupBy
-	 */
-	public void setGroupBy(Attribute[] groupBy) {
-		this.groupBy = groupBy;
-	}
-
-	/**
-	 * Sets order by columns.
-	 * @param orderBy
-	 */
-	public void setOrderBy(Attribute[] orderBy) {
-		this.orderBy = orderBy;
-	}
-
-	/**
-	 * Sets cinditions used in query.
-	 * @param cond
-	 */
-	public void setConditions(TastDbConditions cond) {
-		this.conditions = cond;
+	public void addPopulatedAttribute(Attribute p_attr) {
+		if (this.populateValues == null) {
+			this.populateValues = new ArrayList();
+		}
+		this.populateValues.add(p_attr);
 	}
 
 	/**
@@ -283,11 +247,11 @@ public class TastDbQuery {
 		
 
 		//Create where clause
-		ConditionResponse response = this.conditions.getConditionHQL(this.bindings);
+		ConditionResponse response = this.conditions.createWhereForHQL(this.bindings);
 		if (!response.conditionString.toString().trim().equals("")) {
 			buf.append(" where ").append(response.conditionString);
 		}
-		allProperties.putAll(response.properties);
+		allProperties.putAll(response.parameters);
 
 		//Set group by clause
 		if (groupBy != null) {
@@ -327,105 +291,231 @@ public class TastDbQuery {
 		//Prepare return value
 		ConditionResponse res = new ConditionResponse();
 		res.conditionString = buf;
-		res.properties = allProperties;
+		res.parameters = allProperties;
 		return res;
 	}
-
+	
 	/**
-	 * Adds new populated attribute.
-	 * @param p_attrName attribute name
-	 * @param dictionary true  if attribute is dictionary
+	 * Creates SQL query for Hibernate. This is not a general purpose functionality.
+	 * It has been created only for. .. 
+	 * @return ConditionResponse object with HQL parametrised query and map of parameters.
 	 */
-	public void addPopulatedAttribute(Attribute p_attr) {
-		if (this.populateValues == null) {
-			this.populateValues = new ArrayList();
+	public ConditionResponse toSQLStringWithParams()
+	{
+		
+		if (objects == null)
+		{
+			throw new RuntimeException("objects is null");			
+		}		
+		
+		if (objects.length != 1)
+		{
+			throw new RuntimeException("more than one objects not supported");			
 		}
-		this.populateValues.add(p_attr);
+		
+		// master table and master alias
+		String masterTable = HibernateUtil.getTableName("edu.emory.library.tast.dm." + objects[0]);
+
+		// indexes of tables to avoid duplicates
+		Map tablesIndexes = new HashMap();
+		
+		// the list of already existing joins (to avoid unnecessary number of them)
+		Map existingJoins = new HashMap(); 
+		
+		// start the FROM part
+		StringBuffer sqlFrom = new StringBuffer();
+		sqlFrom.append(masterTable).append("\n");
+		
+		// start the SELECT part
+		int selectItemsCount = 0;
+		StringBuffer sqlSelect = new StringBuffer();
+
+		// generate the SELECT part
+		if (this.populateValues != null)
+		{
+			int colIdx = 0;
+			for (Iterator iterator = populateValues.iterator(); iterator.hasNext();)
+			{
+				Attribute attr = (Attribute) iterator.next();
+				if (selectItemsCount > 0) sqlSelect.append(",\n    ");
+				sqlSelect.append(attr.getSQLReference(masterTable, tablesIndexes, existingJoins, sqlFrom));
+				sqlSelect.append(" AS col_").append(colIdx++);
+				selectItemsCount++;
+			}
+		}
+		
+		// start the WHERE part
+		StringBuffer sqlWhere = new StringBuffer();
+		HashMap parameters = null;
+		if (!conditions.isEmpty())
+		{
+			ConditionResponse whereRes = conditions.createWhereForSQL(masterTable, tablesIndexes, existingJoins, sqlFrom);
+			sqlWhere = whereRes.conditionString;
+			parameters = whereRes.parameters;
+		}
+		
+		// group by
+		StringBuffer sqlGroupBy = new StringBuffer();
+		if (groupBy != null && groupBy.length != 0)
+		{
+			for (int i = 0; i < groupBy.length; i++)
+			{
+				if (i > 0) sqlGroupBy.append(",\n    ");
+				sqlGroupBy.append(groupBy[i].getSQLReference(masterTable, tablesIndexes, existingJoins, sqlFrom));
+			}
+		}
+		
+		// generate the ORDER BY
+		StringBuffer sqlOrderBy = new StringBuffer();
+		if (orderBy != null && orderBy.length != 0 && order != ORDER_DEFAULT)
+		{
+			for (int i = 0; i < orderBy.length; i++)
+			{
+				if (i > 0) sqlOrderBy.append(",\n    ");
+				sqlOrderBy.append(orderBy[i].getSQLReference(masterTable, tablesIndexes, existingJoins, sqlFrom));
+				sqlOrderBy.append(" ").append(order == ORDER_ASC ? "ASC" : "DESC");
+			}
+		}
+		
+		// the entire query
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT\n    ").append(sqlSelect).append("\n");
+		sql.append("FROM\n    ").append(sqlFrom);
+		if (sqlWhere.length() > 0) sql.append("WHERE ").append(sqlWhere).append("\n");
+		if (sqlGroupBy.length() > 0) sql.append("GROUP BY ").append(sqlGroupBy).append("\n");
+		if (sqlOrderBy.length() > 0) sql.append("ORDER BY ").append(sqlOrderBy).append("\n");
+		if (this.limit != LIMIT_NO_LIMIT) sql.append("LIMIT ").append(this.limit).append("\n");
+		if (this.limit != FIRST_NO_FIRST) sql.append("OFFSET ").append(this.firstResult);
+		
+		//Prepare return value
+		ConditionResponse res = new ConditionResponse();
+		res.conditionString = sql;
+		res.parameters = parameters;
+		return res;
+		
+	}
+	
+	public Query getQuery(Session session)
+	{
+		return getQuery(session, false);
 	}
 
-	/**
-	 * Gets HQL query.
-	 * @param session session context.
-	 * @return
-	 */
-	public Query getQuery(Session session) {
-		//Get HQL query
-		ConditionResponse response = toStringWithParams();
+	public Query getQuery(Session session, boolean useSQL)
+	{
 		
-		//System.out.println(response.conditionString.toString());
+		ConditionResponse response;
+		Query query;
 		
-		Query q = session.createQuery(response.conditionString.toString());
-		//Set properties of query
-		Iterator iter = response.properties.keySet().iterator();
-		while (iter.hasNext()) {
+		if (!useSQL)
+		{
+			response = toStringWithParams();
+			query = session.createQuery(response.conditionString.toString());
+		}
+		else
+		{
+			response = toSQLStringWithParams();
+			query = session.createSQLQuery(response.conditionString.toString());
+		}
+		
+		Iterator iter = response.parameters.keySet().iterator();
+		while (iter.hasNext())
+		{
 			String param = iter.next().toString();
-			q.setParameter(param, response.properties.get(param));
-		}
-
-		//Set bounds of query results.
-		if (this.limit != LIMIT_NO_LIMIT) {
-			q.setMaxResults(this.limit);
-		}
-		if (this.firstResult != FIRST_NO_FIRST) {
-			q.setFirstResult(this.firstResult);
+			query.setParameter(param, response.parameters.get(param));
 		}
 		
-		//Set cache info
-		q.setCacheable(this.isCacheable());	
+		if (!useSQL)
+		{
+
+			if (this.limit != LIMIT_NO_LIMIT)
+			{
+				query.setMaxResults(this.limit);
+			}
+			
+			if (this.firstResult != FIRST_NO_FIRST)
+			{
+				query.setFirstResult(this.firstResult);
+			}
+			
+		}
 		
-		return q;
-	}
+		query.setCacheable(this.isCacheable());	
+		
+		return query;
 
-	/**
-	 * Executes query.
-	 * @return query results
-	 */
-	public Object[] executeQuery() {
-		return HibernateConnector.getConnector().loadObjects(this);
-	}
-
-	/**
-	 * Executes query.
-	 * @return query results
-	 */
-	public List executeQueryList() {
-		return HibernateConnector.getConnector().loadObjectList(this);
 	}
 	
-	/**
-	 * Executes query.
-	 * @return query results
-	 */
-	public List executeQueryList(Session p_session) {
-		return HibernateConnector.getConnector().loadObjectList(p_session, this);
-	}
-
-	/**
-	 * Executes query.
-	 * @param p_session session context
-	 * @return query results
-	 */
-	public Object[] executeQuery(Session p_session) {
-		return HibernateConnector.getConnector().loadObjects(p_session, this);
+	public Object[] executeQuery()
+	{
+		return executeQuery(false);
 	}
 	
-	public ScrollableResults executeScrollableQuery(Session p_session) {
-		return HibernateConnector.getConnector().loadScroll(p_session, this);
+	public Object[] executeQuery(boolean usqSQL)
+	{
+		Session session = HibernateUtil.getSession();
+		Transaction transaction = session.beginTransaction();
+		Object[] ret = executeQuery(session, usqSQL);
+		transaction.commit();
+		session.close();
+		return ret;
+	}	
+
+	public Object[] executeQuery(Session session)
+	{
+		return executeQuery(session, false);
+	}
+	
+	public Object[] executeQuery(Session session, boolean useSQL)
+	{
+		List list = executeQueryList(session, useSQL);
+		if (list.size() != 0)
+		{
+			return list.toArray();
+		}
+		else
+		{
+			return new Object[] {};
+		}
+	}
+	
+	public List executeQueryList()
+	{
+		return executeQueryList(false);
 	}
 
-	/**
-	 * Sets cache usage for query cache.
-	 * @return
-	 */
-	public boolean isCacheable() {
+	public List executeQueryList(boolean usqSQL)
+	{
+		Session session = HibernateUtil.getSession();
+		Transaction transaction = session.beginTransaction();
+		List list = executeQueryList(session, usqSQL);
+		transaction.commit();
+		session.close();
+		return list;
+	}
+	
+	public List executeQueryList(Session session)
+	{
+		return this.getQuery(session).list();
+	}
+
+	public List executeQueryList(Session session, boolean useSQL)
+	{
+		return this.getQuery(session, useSQL).list();
+	}
+
+	public ScrollableResults executeScrollableQuery(Session session)
+	{
+		ScrollableResults list = this.getQuery(session).scroll();
+		return list;
+	}
+
+	public boolean isCacheable()
+	{
 		return cacheable;
 	}
 
-	/**
-	 * Checks query useage for query cache.
-	 * @param cacheable
-	 */
-	public void setCacheable(boolean cacheable) {
+	public void setCacheable(boolean cacheable)
+	{
 		this.cacheable = cacheable;
 	}
 
@@ -439,7 +529,39 @@ public class TastDbQuery {
 		this.distinct = distinct;
 	}
 
-	public Attribute[] getPopulatedAttributes() {
+	public void setLimit(int limit)
+	{
+		this.limit = limit;
+	}
+
+	public void setFirstResult(int first)
+	{
+		this.firstResult = first;
+	}
+
+	public void setOrder(int order)
+	{
+		this.order = order;
+	}
+
+	public void setGroupBy(Attribute[] groupBy)
+	{
+		this.groupBy = groupBy;
+	}
+
+	public void setOrderBy(Attribute[] orderBy)
+	{
+		this.orderBy = orderBy;
+	}
+
+	public void setConditions(TastDbConditions cond)
+	{
+		this.conditions = cond;
+	}
+
+	public Attribute[] getPopulatedAttributes()
+	{
 		return (Attribute[]) this.populateValues.toArray(new Attribute[] {});
 	}
+
 }

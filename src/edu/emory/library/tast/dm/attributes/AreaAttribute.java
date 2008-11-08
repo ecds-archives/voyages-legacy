@@ -44,5 +44,5 @@ public class AreaAttribute extends DictionaryAttribute
 	{
 		return Area.class;
 	}
-
+	
 }

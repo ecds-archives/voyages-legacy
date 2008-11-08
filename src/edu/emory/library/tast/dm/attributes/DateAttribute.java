@@ -54,7 +54,7 @@ public class DateAttribute extends ImportableAttribute
 	public boolean isOuterjoinable() {
 		return false;
 	}
-
+	
 	public String getHQLSelectPath(Map bindings) {
 		if (!bindings.containsKey(this.getObjectType())) {
 			return this.getName();
@@ -77,14 +77,15 @@ public class DateAttribute extends ImportableAttribute
 	public String getHQLOuterJoinPath(Map bindings) {
 		return null;
 	}
-
-	public Object getValueToCondition(Object value) {
-		return value;
-	}
 	
 	public int getImportType()
 	{
 		return STSchemaVariable.TYPE_DATE;
+	}
+
+	public String getSQLReference(String masterTable, Map tablesIndexes, Map existingJoins, StringBuffer sqlFrom)
+	{
+		return masterTable + "." + getName();
 	}
 
 }

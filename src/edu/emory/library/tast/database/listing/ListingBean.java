@@ -32,7 +32,6 @@ import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.DictionaryAttribute;
 import edu.emory.library.tast.dm.attributes.Group;
-import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.util.CSVUtils;
 import edu.emory.library.tast.util.HibernateUtil;
@@ -204,15 +203,18 @@ public class ListingBean {
 		
 		// long timeSt = System.currentTimeMillis();
 
-		TastDbQuery qValue = getQuery(subCondition, dataTable, start, length, returnBasicInfo);
-
+		TastDbQuery query = getQuery(subCondition, dataTable, start, length, returnBasicInfo);
+		
 		Session session = HibernateUtil.getSession();
 		Transaction t = session.beginTransaction();
 		
 		SourceInformationLookup sourceInfoUtils = SourceInformationLookup.createSourceInformationUtils(session);
 		
+		// System.out.println(query.toSQLStringWithParams().conditionString.toString());
+		
 		// Execute query
-		Object[] ret = qValue.executeQuery();
+		boolean useSQL = AppConfig.getConfiguration().getBoolean(AppConfig.DATABASE_USE_SQL);
+		Object[] ret = query.getQuery(session, useSQL).list().toArray();
 		dataTable.setData(ret);
 
 		//get additional info for sources
@@ -255,12 +257,12 @@ public class ListingBean {
 			localCond.addCondition(subCondition);
 		}
 		// Build query
-		TastDbQuery qValue = new TastDbQuery("Voyage", localCond);
+		TastDbQuery query = new TastDbQuery("Voyage", localCond);
 		if (length != -1) {
-			qValue.setLimit(length);
+			query.setLimit(length);
 		}
 		if (start != -1) {
-			qValue.setFirstResult(start);
+			query.setFirstResult(start);
 		}
 
 		// Dictionaries - list of columns with dictionaries.
@@ -271,7 +273,7 @@ public class ListingBean {
 		if (populatedAttributes != null) {
 			for (int i = 0; i < populatedAttributes.length; i++) {
 				if (populatedAttributes[i] != null) {
-					qValue.addPopulatedAttribute(populatedAttributes[i]);
+					query.addPopulatedAttribute(populatedAttributes[i]);
 				}
 			}
 		}
@@ -280,17 +282,17 @@ public class ListingBean {
 		Attribute[] populatedAdditionalAttributes = dataTable.getAdditionalAttributesForQuery();
 		if (populatedAdditionalAttributes != null) {
 			for (int i = 0; i < populatedAdditionalAttributes.length; i++) {
-				qValue.addPopulatedAttribute(populatedAdditionalAttributes[i]);
+				query.addPopulatedAttribute(populatedAdditionalAttributes[i]);
 			}
 		}
 
 		if (returnBasicInfo) {
-			qValue.addPopulatedAttribute(VisibleAttribute.getAttribute("voyageid").getAttributes()[0]);
+			query.addPopulatedAttribute(VisibleAttribute.getAttribute("voyageid").getAttributes()[0]);
 		}
 
 		VisibleAttributeInterface vattr = dataTable.getOrderByColumn();
 		if (dataTable.getOrderByColumn() == null) {
-			qValue.setOrderBy(new Attribute[] { Voyage.getAttribute("voyageid") });
+			query.setOrderBy(new Attribute[] { Voyage.getAttribute("voyageid") });
 		} else {
 
 			Attribute[] attr = vattr.getAttributes();
@@ -304,11 +306,11 @@ public class ListingBean {
 						order[i] = new SequenceAttribute(new Attribute[] {attr[i], ((DictionaryAttribute)attr[i]).getAttribute("name")});
 					}
 				}
-				qValue.setOrderBy(order);
-				qValue.setOrder(dataTable.getOrder());
+				query.setOrderBy(order);
+				query.setOrder(dataTable.getOrder());
 			}
 		}
-		return qValue;
+		return query;
 	}
 
 
@@ -918,27 +920,6 @@ public class ListingBean {
 
 	public void setSearchBean(SearchBean searchBean) {
 		this.searchBean = searchBean;
-	}
-
-	/**
-	 * Checks current number of results.
-	 * 
-	 */
-	private void setNumberOfResults()
-	{
-		
-		// It seems that PostgreSQL is not very good in running COUNT(*) queries.
-		// To check the performance avoiding COUNT(*) queries, replace the content
-		// of this function with the following:
-		//
-		// this.linkManager.setResultsNumber(100);
-
-		TastDbConditions localCond = (TastDbConditions) this.searchBean.getSearchParameters().getConditions().clone();
-		TastDbQuery qValue = new TastDbQuery("Voyage", localCond);
-		qValue.addPopulatedAttribute(new  FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("iid")}));
-		Object[] ret = qValue.executeQuery();
-		this.linkManager.setResultsNumber(((Number) ret[0]).intValue());
-
 	}
 
 	public TableLinkManager getTableManager() {

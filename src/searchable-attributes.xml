@@ -18,7 +18,8 @@
 	subType (general|year|ratio) #IMPLIED
 	spssName CDATA #IMPLIED
 	inEstimates (true|false) #IMPLIED
-	listDescription CDATA #IMPLIED>
+	listDescription CDATA #IMPLIED
+	textIndexColumn CDATA #IMPLIED>
 
 <!ATTLIST port
 	port CDATA #REQUIRED
@@ -60,7 +61,8 @@
 	<searchable-attribute
 		type="simple"
 		id="shipname"
-		userLabel="Vessel name">
+		userLabel="Vessel name"
+		textIndexColumn="shipname_index">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -200,7 +202,8 @@
 		type="simple"
 		id="anyowner"
 		userLabel="Vessel owners"
-		spssName="owner">
+		spssName="owner"
+		textIndexColumn="owners_index">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -580,7 +583,8 @@
 		type="simple"
 		id="anycaptain"
 		userLabel="Captain's name"
-		spssName="captain">
+		spssName="captain"
+		textIndexColumn="captains_index">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />
@@ -902,7 +906,8 @@
 		type="simple"
 		id="anysource"
 		userLabel="Sources"
-		spssName="source">
+		spssName="source"
+		textIndexColumn="sources_index">
 		<user-categories>
 			<category name="beginners" />
 			<category name="general" />

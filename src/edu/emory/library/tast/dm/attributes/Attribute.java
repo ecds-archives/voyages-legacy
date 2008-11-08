@@ -36,17 +36,6 @@ public abstract class Attribute  {
 	public String encodeToString() {
 		return "Attribute_" + this.getName();
 	}
-	/*
-	public Object parse(String value) throws InvalidNumberOfValuesException, InvalidNumberException, InvalidDateException, StringTooLongException
-	{
-		return parse(new String[] { value }, 0);
-	}
-
-	public Object parse(String[] values) throws InvalidNumberOfValuesException, InvalidNumberException, InvalidDateException, StringTooLongException
-	{
-		return parse(values, 0);
-	}
-	*/
 
 	public String getUserLabel() {
 		return userLabel;
@@ -55,6 +44,11 @@ public abstract class Attribute  {
 	public void setUserLabel(String userLabel) {
 		this.userLabel = userLabel;
 	}
+	
+	public String getObjectType()
+	{
+		return objectType;
+	}	
 
 	public String getName() {
 		return name;
@@ -109,11 +103,6 @@ public abstract class Attribute  {
 	
 	public abstract String getHQLOuterJoinPath(Map bindings);
 	
-	public abstract String getHQLParamName();
+	public abstract String getSQLReference(String masterTable, Map tablesIndexes, Map existingJoins, StringBuffer sqlFrom);
 	
-	public abstract Object getValueToCondition(Object value);
-
-	public String getObjectType() {
-		return objectType;
-	}
 }

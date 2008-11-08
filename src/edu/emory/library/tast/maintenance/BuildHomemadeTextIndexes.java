@@ -12,7 +12,7 @@ import java.util.TreeSet;
 
 import edu.emory.library.tast.util.StringUtils;
 
-public class CreateTextIndexes
+public class BuildHomemadeTextIndexes
 {
 	
 	private static final String DB_CONN_STRING = "jdbc:postgresql://localhost/tast";

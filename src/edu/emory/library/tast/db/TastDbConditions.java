@@ -22,35 +22,24 @@ public class TastDbConditions {
 	 * to connect attributes/subconditions.
 	 */
 	public static final int AND = 1;
-
 	public static final int OR = 2;
-
 	public static final int NOT = 0;
 
 	/**
 	 * OP_ operators are operators (like == or != etc.)
 	 */
 	public static final int OP_EQUALS = 1;
-
 	public static final int OP_NOT_EQUALS = 2;
-
 	public static final int OP_GREATER = 3;
-
 	public static final int OP_GREATER_OR_EQUAL = 4;
-
 	public static final int OP_SMALLER = 5;
-
 	public static final int OP_SMALLER_OR_EQUAL = 6;
-
 	public static final int OP_LIKE = 7;
-	
-	public static final int OP_ILIKE = 11;
-
-	public static final int OP_IS = 8;
-
-	public static final int OP_IS_NOT = 9;
-
-	public static final int OP_IN = 10;
+	public static final int OP_ILIKE = 8;
+	public static final int OP_IS = 9;
+	public static final int OP_IS_NOT = 10;
+	public static final int OP_IN = 11;
+	public static final int OP_TEXT_SEARCH = 12;
 
 	/**
 	 * Operator used to join conditions/subconditions
@@ -74,7 +63,8 @@ public class TastDbConditions {
 	 * @author Pawel Jurczyk
 	 * 
 	 */
-	private class Condition {
+	private class Condition
+	{
 
 		/**
 		 * Operator in condition.
@@ -101,40 +91,19 @@ public class TastDbConditions {
 		 * @param val
 		 *            value
 		 */
-		public Condition(Attribute attr, String op, Object val) {
+		public Condition(Attribute attr, String op, Object val)
+		{
 			this.op = op;
 			this.value = val;
 			this.attribute = attr;
 		}
 
 	}
-
-	// /**
-	// * Gets attribute from given expression (expression can be e.g. SQL
-	// function.)
-	// * @param exp expression containing attribute
-	// * @return attribute name
-	// */
-	// private String getAttribute(String attributeString) {
-	//		
-	// //Use appropriate dialect - the same as hibernate
-	// Dialect dialect =
-	// ((SessionFactoryImpl)HibernateUtil.getSessionFactory()).getSettings().getDialect();
-	//		
-	// //Check registered functions
-	// Map functions = dialect.getFunctions();
-	// for (Iterator iter = functions.values().iterator(); iter.hasNext();) {
-	// SQLFunction element = (SQLFunction) iter.next();
-	// if (attributeString.startsWith(element.toString())) {
-	// //If we have SQL function, extract attribute
-	// return attributeString.substring(attributeString.indexOf(",") + 1,
-	// attributeString.indexOf(")")).trim();
-	// }
-	// }
-	//		
-	// //No function - passed just attribute
-	// return attributeString;
-	// }
+	
+	private class NextParamIndex
+	{
+		public int index = 0;
+	}
 
 	/**
 	 * Constructor. Uses by default JOIN_AND.
@@ -191,19 +160,22 @@ public class TastDbConditions {
 			opStr = " <= ";
 			break;
 		case OP_LIKE:
-			opStr = " like ";
+			opStr = " LIKE ";
 			break;
 		case OP_ILIKE:
-			opStr = " ilike ";
+			opStr = " ILIKE ";
 			break;
 		case OP_IS:
-			opStr = " is ";
+			opStr = " IS ";
 			break;
 		case OP_IS_NOT:
-			opStr = " is not ";
+			opStr = " IS NOT ";
 			break;
 		case OP_IN:
-			opStr = " in ";
+			opStr = " IN ";
+			break;
+		case OP_TEXT_SEARCH:
+			opStr = " @@ ";
 			break;
 		default:
 			throw new RuntimeException("Wrong operand!");
@@ -225,13 +197,27 @@ public class TastDbConditions {
 		this.subConditions.add(subCond);
 	}
 
-	public ConditionResponse getConditionHQL(Map bindings)
+	public ConditionResponse createWhereForHQL(Map bindings)
 	{
-		Map usedParamNames = new HashMap();
-		return getConditionHQL(bindings, usedParamNames);
+		
+		NextParamIndex paramIndex = new NextParamIndex();
+		paramIndex.index = 0;
+		
+		return createWhere(true, paramIndex, bindings, null, null, null, null);
+
+	}
+	
+	public ConditionResponse createWhereForSQL(String masterTable, Map tablesIndexes, Map existingJoins, StringBuffer sqlFrom)
+	{
+		
+		NextParamIndex paramIndex = new NextParamIndex();
+		paramIndex.index = 0;
+		
+		return createWhere(false, paramIndex, new HashMap(), masterTable, existingJoins, tablesIndexes, sqlFrom);
+
 	}
 
-	public ConditionResponse getConditionHQL(Map bindings, Map usedParamNames)
+	private ConditionResponse createWhere(boolean hql, NextParamIndex paramIndex, Map bindings, String masterTable, Map existingJoins, Map tablesIndexes, StringBuffer sqlFrom)
 	{
 
 		// Check the number of items.
@@ -248,8 +234,7 @@ public class TastDbConditions {
 
 		if (this.joinCondition == NOT && size != 1)
 		{
-			throw new RuntimeException(
-					"With JOIN_NOT only one condition allowable!");
+			throw new RuntimeException("NOT allows only one condition");
 		}
 
 		int processed = 0;
@@ -258,49 +243,46 @@ public class TastDbConditions {
 		// Handle not
 		if (this.joinCondition == NOT)
 		{
-			ret.append("not (");
+			ret.append("NOT (");
 		}
 
 		HashMap retMap = new HashMap();
 
 		// Handle simple conditions.
 		Iterator iter = this.conditions.iterator();
-		while (iter.hasNext()) {
+		while (iter.hasNext())
+		{
 			Condition c = (Condition) iter.next();
+			
+			// something OP NULL
 			if (c.value == null)
 			{
-				// Handle null request
-				String attr = c.attribute.getHQLWherePath(bindings);
-				processed++;
+				String attr = hql ? c.attribute.getHQLWherePath(bindings) :  c.attribute.getSQLReference(masterTable, tablesIndexes, existingJoins, sqlFrom);
 				ret.append(attr);
 				ret.append(c.op);
-				ret.append("null");
+				ret.append("NULL");
+				processed++;
 			}
-			else if (c.op.equals(" in "))
+			
+			// something IN (...)
+			else if (c.op.equals(" IN "))
 			{
-				// Handle in request
 				
 				Attribute attr = c.attribute;
-				
-				String paramName = attr.getHQLParamName();
-				Integer nextSuffix = (Integer) usedParamNames.get(paramName);
-				if (nextSuffix == null) nextSuffix = new Integer(0);
-				nextSuffix = new Integer(nextSuffix.intValue() + 1);
-				usedParamNames.put(paramName, nextSuffix);
-				paramName += "_" + nextSuffix; 
+				String paramName = "p_" + (paramIndex.index ++);
 
 				if (c.value instanceof Object[])
 				{
 					Object[] values = (Object[]) c.value;
 					processed++;
 					ret.append(attr.getHQLWherePath(bindings));
-					ret.append(c.op);
+					ret.append(" IN ");
 					ret.append("(");
 					for (int i = 0; i < values.length; i++)
 					{
-						ret.append(" :");
+						ret.append(":");
 						ret.append(paramName + "_" + i);
-						retMap.put(paramName + "_" + i, attr.getValueToCondition(values[i]));
+						retMap.put(paramName + "_" + i, values[i]);
 						if (i < values.length - 1) ret.append(", ");
 					}
 					ret.append(") ");
@@ -311,69 +293,78 @@ public class TastDbConditions {
 					Attribute attribute2 = (Attribute) c.value;
 					processed++;
 					ret.append(attribute1.getHQLWherePath(bindings));
-					ret.append(c.op);
+					ret.append(" IN ");
 					ret.append(attribute2.getHQLWherePath(bindings));
 				}
 			}
-			else if (!(c.value instanceof DirectValue))
+			
+			// text search
+			else if (c.op.equals(" @@ "))
 			{
-				// Handle anything except direct value - avoid using :param
-				// notation.
-				Attribute attr = c.attribute;
-				
-				String paramName = attr.getHQLParamName();
-				Integer nextSuffix = (Integer) usedParamNames.get(paramName);
-				if (nextSuffix == null) nextSuffix = new Integer(0);
-				nextSuffix = new Integer(nextSuffix.intValue() + 1);
-				usedParamNames.put(paramName, nextSuffix);
-				paramName += "_" + nextSuffix; 
-				
+
+				String paramName = "p_" + (paramIndex.index ++);
 				Object value = c.value;
 				processed++;
-				ret.append(attr.getHQLWherePath(bindings));
+				
+				ret.append(hql ? c.attribute.getHQLWherePath(bindings) :  c.attribute.getSQLReference(masterTable, tablesIndexes, existingJoins, sqlFrom));
 				ret.append(c.op);
-				ret.append(" :");
-				ret.append(paramName);
-				retMap.put(paramName, attr.getValueToCondition(value));
+				ret.append(" CAST(");
+				ret.append(":").append(paramName);
+				ret.append(" AS tsquery)");
+
+				retMap.put(paramName, value);
 
 			}
+			
+			// anything else
 			else
 			{
-				// Handle direct value - avoid using :param notation.
+
+				String paramName = "p_" + (paramIndex.index ++);
+				Object value = c.value;
 				processed++;
-				ret.append(c.attribute.getHQLWherePath(bindings));
+				
+				ret.append(hql ? c.attribute.getHQLWherePath(bindings) :  c.attribute.getSQLReference(masterTable, tablesIndexes, existingJoins, sqlFrom));
 				ret.append(c.op);
-				ret.append(((DirectValue) c.value).toString(bindings));
+				ret.append(":");
+				ret.append(paramName);
+
+				retMap.put(paramName, value);
+
 			}
+			
 			if (processed < size)
 			{
-				ret.append(this.joinCondition == AND ? " and " : " or ");
+				ret.append(this.joinCondition == AND ? " AND " : " OR ");
 			}
+
 		}
 
-		// Handle subconditions
+		// Handle sub-conditions
 		iter = this.subConditions.iterator();
 		while (iter.hasNext())
 		{
 			processed++;
-			ConditionResponse child = ((TastDbConditions) iter.next()).getConditionHQL(bindings, usedParamNames);
+			ConditionResponse child = ((TastDbConditions) iter.next()).createWhere(hql, paramIndex, bindings, masterTable, existingJoins, tablesIndexes, sqlFrom);
 			ret.append("(").append(child.conditionString).append(")");
-			retMap.putAll(child.properties);
+			retMap.putAll(child.parameters);
 			if (processed < size)
 			{
-				ret.append(this.joinCondition == AND ? " and " : " or ");
+				ret.append(this.joinCondition == AND ? " AND " : " OR ");
 			}
 		}
 
-		if (this.joinCondition == NOT) {
+		if (this.joinCondition == NOT)
+		{
 			ret.append(")");
 		}
 
-		// Return result.
+		// return result
 		ConditionResponse res = new ConditionResponse();
 		res.conditionString = ret;
-		res.properties = retMap;
+		res.parameters = retMap;
 		return res;
+
 	}
 
 	/**
@@ -401,54 +392,18 @@ public class TastDbConditions {
 		return newC;
 	}
 
-	// /**
-	// * Creates new Conditions object. It has the same subconditions but all
-	// the attributes
-	// * have added specific prefix.
-	// */
-	// public Conditions addAttributesPrefix(String prefix) {
-	// Conditions newC = new Conditions();
-	// ArrayList conditions = new ArrayList();
-	// //Handle simple conditions
-	// for (Iterator iter = this.conditions.iterator(); iter.hasNext();) {
-	// Condition condition = (Condition) iter.next();
-	// Condition newCondition;
-	// if (condition.attribute.startsWith("date_")) {
-	// String attribute = getAttribute(condition.attribute);
-	// newCondition = new Condition(condition.attribute.replaceAll(attribute,
-	// prefix + attribute), condition.op, condition.value);
-	// } else {
-	// newCondition = new Condition(prefix + condition.attribute, condition.op,
-	// condition.value);
-	// }
-	// conditions.add(newCondition);
-	// }
-	// //Handle subconditions.
-	// ArrayList newSubconditions = new ArrayList();
-	// for (Iterator iter = this.subConditions.iterator(); iter.hasNext();) {
-	// Conditions subConditions = (Conditions) iter.next();
-	// newSubconditions.add(subConditions.addAttributesPrefix(prefix));
-	// }
-	//		
-	// //Set values in new query.
-	// newC.conditions = conditions;
-	// newC.subConditions = newSubconditions;
-	// newC.joinCondition = this.joinCondition;
-	// return newC;
-	// }
-
 	/**
 	 * Gets String representation of query.
 	 */
 	public String toString() {
-		ConditionResponse response = this.getConditionHQL(new HashMap());
+		ConditionResponse response = this.createWhereForHQL(new HashMap());
 		String out = response.conditionString.toString();
-		Iterator iter = response.properties.keySet().iterator();
+		Iterator iter = response.parameters.keySet().iterator();
 		while (iter.hasNext()) {
 			String key = iter.next().toString();
 			// System.out.println("Replacing " + key + " by " +
 			// response.properties.get(key).toString());
-			out = out.replaceAll(":" + key, response.properties.get(key)
+			out = out.replaceAll(":" + key, response.parameters.get(key)
 					.toString());
 		}
 		return out;
@@ -458,20 +413,4 @@ public class TastDbConditions {
 		return this.conditions.isEmpty() && this.subConditions.isEmpty();
 	}
 
-	// /**
-	// * Gets all attributes that are present in conditions.
-	// * @return
-	// */
-	// public List getConditionedAttributes() {
-	// ArrayList list = new ArrayList();
-	// for (Iterator iter = this.conditions.iterator(); iter.hasNext();) {
-	// Condition element = (Condition) iter.next();
-	// list.add(element.attribute);
-	// }
-	// for (Iterator iter = this.subConditions.iterator(); iter.hasNext();) {
-	// Conditions element = (Conditions) iter.next();
-	// list.addAll(element.getConditionedAttributes());
-	// }
-	// return list;
-	// }
 }

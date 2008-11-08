@@ -45,6 +45,11 @@ public class GrouperImportRegionsWithBreakdowns extends Grouper
 		return new Attribute[] {};
 	}
 	
+	private Long getRowId(Object[] dataRow)
+	{
+		return new Long(((Number)dataRow[resultIndex]).longValue());
+	}
+
 	public void initSlots(Object[] dataTable)
 	{
 
@@ -53,8 +58,8 @@ public class GrouperImportRegionsWithBreakdowns extends Grouper
 		{
 			for (int i = 0; i < dataTable.length; i++)
 			{
-				Object regionId = ((Object[]) dataTable[i])[resultIndex];
-				regionsIdsInTable.add(regionId);
+				Long id = getRowId((Object[]) dataTable[i]);
+				regionsIdsInTable.add(id);
 			}
 		}
 		
@@ -113,10 +118,8 @@ public class GrouperImportRegionsWithBreakdowns extends Grouper
 
 	public int lookupIndex(Object[] dataRow)
 	{
-		Object regionId = dataRow[resultIndex];
-		if (lookupTable.get(regionId) == null) {
-			return 0;
-		}
+		Long regionId = getRowId(dataRow);
+		if (lookupTable.get(regionId) == null) return 0;
 		return ((Integer) lookupTable.get(regionId)).intValue();
 	}
 

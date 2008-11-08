@@ -1,5 +1,7 @@
 package edu.emory.library.tast.db;
 
+import java.sql.Types;
+
 import org.hibernate.Hibernate;
 import org.hibernate.dialect.PostgreSQLDialect;
 import org.hibernate.dialect.function.StandardSQLFunction;
@@ -10,6 +12,8 @@ public class TastPostgreSQLDialect extends PostgreSQLDialect
 	public TastPostgreSQLDialect()
 	{
 		super();
+		
+		registerHibernateType(Types.REAL, "double");
 
 		registerFunction("date_trunc", new StandardSQLFunction("date_trunc", Hibernate.TIMESTAMP));
 		registerFunction("date_part", new StandardSQLFunction("date_part", Hibernate.INTEGER));

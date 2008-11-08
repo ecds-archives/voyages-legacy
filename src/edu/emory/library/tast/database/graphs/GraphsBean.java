@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import org.jfree.chart.JFreeChart;
 
+import edu.emory.library.tast.AppConfig;
 import edu.emory.library.tast.database.query.SearchBean;
 import edu.emory.library.tast.db.TastDbConditions;
 import edu.emory.library.tast.db.TastDbQuery;
@@ -248,23 +249,24 @@ public class GraphsBean
 		
 		localConditions.addCondition(indepVar.getSelectAttribute(), null, TastDbConditions.OP_IS_NOT);
 		
-		TastDbQuery qValue = new TastDbQuery(new String[] {"Voyage"}, new String[] {"v"}, localConditions);
+		TastDbQuery query = new TastDbQuery(new String[] {"Voyage"}, new String[] {"voyage"}, localConditions);
 		
-		qValue.addPopulatedAttribute(indepVar.getSelectAttribute());
+		query.addPopulatedAttribute(indepVar.getSelectAttribute());
 		
 		for (Iterator iter = selectedGraph.getDataSeries().iterator(); iter.hasNext();)
 		{
 			DataSeries ser = (DataSeries) iter.next();
-			qValue.addPopulatedAttribute(ser.getVariable().getSelectAttribute());
+			query.addPopulatedAttribute(ser.getVariable().getSelectAttribute());
 		}
 		
-		qValue.setGroupBy(indepVar.getGroupByAttributes());
+		query.setGroupBy(indepVar.getGroupByAttributes());
 		
-		qValue.setOrderBy(new Attribute[] {indepVar.getOrderAttribute()});
-		qValue.setOrder(TastDbQuery.ORDER_ASC);
+		query.setOrderBy(new Attribute[] {indepVar.getOrderAttribute()});
+		query.setOrder(TastDbQuery.ORDER_ASC);
 		
 		// query db
-		Object[] data = qValue.executeQuery();
+		boolean useSQL = AppConfig.getConfiguration().getBoolean(AppConfig.DATABASE_USE_SQL);
+		Object[] data = query.executeQuery(useSQL);
 
 		// create graph
 		JFreeChart chart = selectedGraph.createChart(data);

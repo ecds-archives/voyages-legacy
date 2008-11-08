@@ -54,17 +54,6 @@ public class FunctionAttribute extends Attribute {
 		return this.getHQLSelectPath(bindings);
 	}
 
-	public String getHQLParamName() {
-		StringBuffer buffer = new StringBuffer();
-		for (int i = 0; i < this.attributes.length; i++) {
-			if (i > 0) {
-				buffer.append("_");
-			}
-			buffer.append(attributes[i].getHQLParamName());
-		}
-		return buffer.toString();
-	}
-	
 	public String getHQLOuterJoinPath(Map bindings) {
 		StringBuffer buffer = new StringBuffer();
 		
@@ -77,16 +66,26 @@ public class FunctionAttribute extends Attribute {
 			}
 			buffer.append(attributes[i].getHQLOuterJoinPath(bindings));
 		}
-		//buffer.append(")");
 		
 		return buffer.toString().equals("") ? null : buffer.toString();
 	}
 
-	public Object getValueToCondition(Object value) {
-		return value;
-	}
-
-	public String getFunctionName() {
+	public String getFunctionName()
+	{
 		return functionName;
 	}
+
+	public String getSQLReference(String masterTable, Map tablesIndexes, Map existingJoins, StringBuffer sqlFrom)
+	{
+		StringBuffer buffer = new StringBuffer();
+		buffer.append(this.functionName).append("(");
+		for (int i = 0; i < this.attributes.length; i++)
+		{
+			if (i > 0) buffer.append(", ");
+			buffer.append(attributes[i].getSQLReference(masterTable, tablesIndexes, null, sqlFrom));
+		}
+		buffer.append(")");
+		return buffer.toString();	
+	}
+
 }

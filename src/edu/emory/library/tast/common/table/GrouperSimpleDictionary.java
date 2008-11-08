@@ -27,19 +27,24 @@ public abstract class GrouperSimpleDictionary extends Grouper
 	{
 		return new Attribute[] {};
 	}
+	
+	protected Long getRowId(Object[] dataRow)
+	{
+		return new Long(((Number)dataRow[resultIndex]).longValue());
+	}
 
 	public void initSlots(Object[] dataTable)
 	{
 
-		Set listedNationIds = new HashSet();
+		Set idsInDataTable = new HashSet();
 		for (int i = 0; i < dataTable.length; i++)
 		{
-			Object nationId = ((Object[]) dataTable[i])[resultIndex];
-			listedNationIds.add(nationId);
+			Long id = getRowId((Object[])dataTable[i]);
+			idsInDataTable.add(id);
 		}
 		
 		int noOfDictItems = omitEmpty ? 
-				listedNationIds.size() :
+				idsInDataTable.size() :
 					dictionary.size();
 
 		lookupTable = new HashMap();
@@ -48,12 +53,12 @@ public abstract class GrouperSimpleDictionary extends Grouper
 		int i = 0;
 		for (Iterator iter = dictionary.iterator(); iter.hasNext();)
 		{
-			DictionaryOrdered nation = (DictionaryOrdered) iter.next();
-			Long nationId = nation.getId();
-			if (!omitEmpty || listedNationIds.contains(nationId))
+			DictionaryOrdered dictItem = (DictionaryOrdered) iter.next();
+			Long id = dictItem.getId();
+			if (!omitEmpty || idsInDataTable.contains(id))
 			{
-				labels[i] = new Label(nation.getName());
-				lookupTable.put(nationId, new Integer(i));
+				labels[i] = new Label(dictItem.getName());
+				lookupTable.put(id, new Integer(i));
 				i++;
 			}
 		}
@@ -62,11 +67,9 @@ public abstract class GrouperSimpleDictionary extends Grouper
 
 	public int lookupIndex(Object[] dataRow)
 	{
-		Long nationId = (Long) dataRow[resultIndex];
-		if (nationId == null || lookupTable.get(nationId) == null) {
-			return 0;
-		}
-		return ((Integer) lookupTable.get(nationId)).intValue();
+		Long id = getRowId(dataRow);
+		if (id == null || lookupTable.get(id) == null) return 0;
+		return ((Integer) lookupTable.get(id)).intValue();
 	}
 
 	public int getLeafLabelsCount()

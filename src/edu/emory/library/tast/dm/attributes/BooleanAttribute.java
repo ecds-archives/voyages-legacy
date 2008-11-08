@@ -54,11 +54,6 @@ public class BooleanAttribute extends ImportableAttribute
 		return "Boolean";
 	}
 
-	public Object getValueToCondition(Object value)
-	{
-		return value;
-	}
-
 	public boolean isOuterjoinable()
 	{
 		return false;
@@ -72,6 +67,11 @@ public class BooleanAttribute extends ImportableAttribute
 	public int getImportType()
 	{
 		return STSchemaVariable.TYPE_NUMERIC;
+	}
+
+	public String getSQLReference(String masterTable, Map tablesIndexes, Map existingJoins, StringBuffer sqlFrom)
+	{
+		return masterTable + "." + getName();
 	}
 	
 }

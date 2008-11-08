@@ -15,6 +15,7 @@ public class HibernateUtil {
 	 * Used session factory.
 	 */
     private static SessionFactory sessionFactory = null;
+    private static Configuration configuration = null;
     
     private static void ensureSessionFactory()
     {
@@ -23,7 +24,8 @@ public class HibernateUtil {
 	        try
 	        {
 	            // Create the SessionFactory from hibernate.cfg.xml
-	            sessionFactory = new Configuration().configure().buildSessionFactory();
+	        	configuration = new Configuration().configure();
+	            sessionFactory = configuration.buildSessionFactory();
 	            
 	        } catch (Throwable ex)
 	        {
@@ -33,21 +35,30 @@ public class HibernateUtil {
 	        }
     	}
     }
+    
+    public synchronized static Configuration getConfiguration()
+    {
+    	ensureSessionFactory();
+    	return configuration;
+    }
+    
+    public static String getTableName(String className)
+    {
+    	ensureSessionFactory();
+    	return configuration.getClassMapping(className).getTable().getName();
+    }
 
-    /**
-     * Gets session that can be used.
-     * @return
-     */
+    public static String getTableName(Class clazz)
+    {
+    	return getTableName(clazz.getCanonicalName());
+    }
+
     public synchronized static Session getSession()
     {
     	ensureSessionFactory();
     	return sessionFactory.openSession();
     }
     
-	/**
-     * Gets session factory.
-     * @return
-     */
     public static SessionFactory getSessionFactory()
     {
     	ensureSessionFactory();

@@ -168,7 +168,7 @@ public class Searchables
 						}
 						attrs[j] = attr;
 					}
-	
+					
 					// create the corresponding searchable attribute
 					if (firstAttr instanceof DictionaryAttribute)
 					{
@@ -179,10 +179,14 @@ public class Searchables
 					}
 					else if (firstAttr instanceof StringAttribute) 
 					{
+						String textIndexColumn = null;
+						Node xmTtextIndex = xmlSearchableAttr.getAttributes().getNamedItem("textIndexColumn");
+						if (xmTtextIndex != null) textIndexColumn = xmTtextIndex.getNodeValue();
 						searchableAttribute =
 							new SearchableAttributeSimpleText(
 								id, userLabel, userCats, attrs,
-								spssName, listDescription, inEstimates);
+								spssName, listDescription, inEstimates,
+								textIndexColumn);
 					}
 					else if (firstAttr instanceof NumericAttribute) 
 					{

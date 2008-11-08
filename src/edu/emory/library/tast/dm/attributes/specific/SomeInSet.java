@@ -17,10 +17,6 @@ public class SomeInSet extends Attribute {
 		return attribute.getHQLOuterJoinPath(bindings);
 	}
 
-	public String getHQLParamName() {
-		return attribute.getHQLParamName();
-	}
-
 	public String getHQLSelectPath(Map bindings) {
 		return attribute.getHQLSelectPath(bindings);
 	}
@@ -37,12 +33,13 @@ public class SomeInSet extends Attribute {
 		return null;
 	}
 
-	public Object getValueToCondition(Object value) {
-		return attribute.getValueToCondition(value);
-	}
-
 	public boolean isOuterjoinable() {
 		return attribute.isOuterjoinable();
 	}
 
+	public String getSQLReference(String masterTable, Map tablesIndexes, Map existingJoins, StringBuffer sqlFrom)
+	{
+		return null;
+	}
+	
 }
