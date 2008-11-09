@@ -1,5 +1,6 @@
 package edu.emory.library.tast.database.query;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -199,6 +200,20 @@ public class QueryConditionList extends QueryCondition
 			newQueryCondition.addId((String) iterDict.next());
 		
 		return newQueryCondition;
+	}
+
+	public int hashCode()
+	{
+		String[] idsArr = new String[selectedIds.size()];
+		Arrays.sort(idsArr);
+		final int prime = 31;
+		int result = 1;
+		for (int i = 0; i < idsArr.length; i++)
+		{
+			String id = idsArr[i];
+			result = prime * result + ((id == null) ? 0 : id.hashCode());			
+		}
+		return result;
 	}
 	
 }

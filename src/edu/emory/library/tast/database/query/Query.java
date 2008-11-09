@@ -20,10 +20,11 @@ public class Query implements Cloneable
 	private static final long serialVersionUID = 6693392749775025817L;
 
 	private QueryBuilderQuery builderQuery = new QueryBuilderQuery();
-
 	private String yearFrom;
-
 	private String yearTo;
+	
+	private boolean cachedHashCodeValid = false;
+	private int cachedHashCode = 0;
 
 	public QueryBuilderQuery getBuilderQuery()
 	{
@@ -60,6 +61,8 @@ public class Query implements Cloneable
 		}
 
 		builderQuery.addCondition(queryCondition);
+		
+		cachedHashCodeValid = false;
 
 	}
 	
@@ -70,6 +73,8 @@ public class Query implements Cloneable
 			return;
 		
 		builderQuery.addCondition(queryCondition);
+		
+		cachedHashCodeValid = false;
 		
 	}
 
@@ -205,6 +210,7 @@ public class Query implements Cloneable
 	public void setBuilderQuery(QueryBuilderQuery builderQuery)
 	{
 		this.builderQuery = builderQuery;
+		this.cachedHashCodeValid = false;  
 	}
 
 	public String getYearFrom()
@@ -215,6 +221,7 @@ public class Query implements Cloneable
 	public void setYearFrom(String yearFrom)
 	{
 		this.yearFrom = yearFrom;
+		this.cachedHashCodeValid = false;  
 	}
 
 	public String getYearTo()
@@ -225,6 +232,7 @@ public class Query implements Cloneable
 	public void setYearTo(String yearTo)
 	{
 		this.yearTo = yearTo;
+		this.cachedHashCodeValid = false;  
 	}
 
 	protected Object clone() throws CloneNotSupportedException
@@ -233,11 +241,45 @@ public class Query implements Cloneable
 		newQuery.setYearFrom(yearFrom);
 		newQuery.setYearTo(yearTo);
 		newQuery.setBuilderQuery((QueryBuilderQuery) builderQuery.clone());
+		newQuery.cachedHashCodeValid = this.cachedHashCodeValid;
+		newQuery.cachedHashCode = this.cachedHashCode;
 		return newQuery;
+	}
+	
+	private int computeHashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((builderQuery == null) ? 0 : builderQuery.hashCode());
+		result = prime * result + ((yearFrom == null) ? 0 : yearFrom.hashCode());
+		result = prime * result + ((yearTo == null) ? 0 : yearTo.hashCode());
+		return result;
+	}
+	
+	/*
+	 * An attempt to make cache the number of voyages for each query across all users.
+	 * It's not fully finished yet. This hash function was supposed to be used as a
+	 * lookup key in the cache. To make it really meaningful, it would be good
+	 * to make the hash functions of all query conditions cached as well. Also, it
+	 * would be good to make the hash of a query independent on the order of conditions
+	 * in it. 
+	 */
+	public int hashCode()
+	{
+		if (!cachedHashCodeValid)
+		{
+			synchronized (this)
+			{
+				cachedHashCode = computeHashCode();
+				cachedHashCodeValid = true;
+			}
+		}
+		return cachedHashCode;
 	}
 
 	public boolean equals(Object obj)
 	{
+		
 		if (!(obj instanceof Query))
 			return false;
 
@@ -248,9 +290,17 @@ public class Query implements Cloneable
 
 		if (!StringUtils.compareStrings(that.yearTo, yearTo))
 			return false;
+		
+		if (that.builderQuery == null && this.builderQuery != null)
+			return false;
 
-		if ((that.builderQuery == null && this.builderQuery == null) ||
-				!that.builderQuery.equals(this.builderQuery))
+		if (that.builderQuery != null && this.builderQuery == null)
+			return false;
+		
+		if (that.builderQuery == null && this.builderQuery == null)
+			return false;
+
+		if (!that.builderQuery.equals(this.builderQuery))
 			return false;
 
 		return true;

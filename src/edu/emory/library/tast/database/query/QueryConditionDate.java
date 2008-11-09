@@ -476,5 +476,35 @@ public class QueryConditionDate extends QueryConditionRange
 		
 		return newQueryCondition;
 	}
+
+	private static int hashCode(boolean[] array)
+	{
+		final int prime = 31;
+		if (array == null) return 0;
+		int result = 1;
+		for (int index = 0; index < array.length; index++)
+		{
+			result = prime * result + (array[index] ? 1231 : 1237);
+		}
+		return result;
+	}
 	
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((eqMonth == null) ? 0 : eqMonth.hashCode());
+		result = prime * result + ((eqYear == null) ? 0 : eqYear.hashCode());
+		result = prime * result + ((fromMonth == null) ? 0 : fromMonth.hashCode());
+		result = prime * result + ((fromYear == null) ? 0 : fromYear.hashCode());
+		result = prime * result + ((geMonth == null) ? 0 : geMonth.hashCode());
+		result = prime * result + ((geYear == null) ? 0 : geYear.hashCode());
+		result = prime * result + ((leMonth == null) ? 0 : leMonth.hashCode());
+		result = prime * result + ((leYear == null) ? 0 : leYear.hashCode());
+		result = prime * result + QueryConditionDate.hashCode(selectedMonths);
+		result = prime * result + ((toMonth == null) ? 0 : toMonth.hashCode());
+		result = prime * result + ((toYear == null) ? 0 : toYear.hashCode());
+		return result;
+	}
+
 }

@@ -154,5 +154,18 @@ public class QueryConditionNumeric extends QueryConditionRange
 		newQueryCondition.setEq(eq);
 		return newQueryCondition;
 	}
+
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + type;
+		result = prime * result + ((from == null) ? 0 : from.hashCode());
+		result = prime * result + ((to == null) ? 0 : to.hashCode());
+		result = prime * result + ((le == null) ? 0 : le.hashCode());
+		result = prime * result + ((ge == null) ? 0 : ge.hashCode());
+		result = prime * result + ((eq == null) ? 0 : eq.hashCode());
+		return result;
+	}
 	
 }

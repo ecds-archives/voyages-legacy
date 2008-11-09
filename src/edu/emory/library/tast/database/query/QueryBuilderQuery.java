@@ -23,10 +23,9 @@ public class QueryBuilderQuery implements Cloneable
 	private static final long serialVersionUID = 5986829888479480030L;
 
 	private List conditions = new ArrayList();
-
 	private transient Map conditionsByAttributes = null;
 	
-	private void ensureMap()
+	private synchronized void ensureMap()
 	{
 		if (conditionsByAttributes == null)
 		{
@@ -115,6 +114,11 @@ public class QueryBuilderQuery implements Cloneable
 		}
 		
 		return true;
+	}	
+
+	public int hashCode()
+	{
+		return (conditions == null) ? 0 : conditions.hashCode();
 	}
 
 }

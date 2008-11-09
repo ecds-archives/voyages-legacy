@@ -56,5 +56,10 @@ public class QueryConditionText extends QueryCondition
 	{
 		return new UrlParam[] {new UrlParam(getSearchableAttributeId(), value)};
 	}
+
+	public int hashCode()
+	{
+		return (value == null) ? 0 : value.hashCode();
+	}
 	
 }
