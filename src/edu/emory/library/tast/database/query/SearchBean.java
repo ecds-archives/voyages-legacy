@@ -451,11 +451,11 @@ public class SearchBean
 		return workingQuery.getBuilderQuery();
 	}
 
-	public void setWorkingQuery(QueryBuilderQuery newWorkingQuery)
+	public void setWorkingQuery(QueryBuilderQuery query)
 	{
-		if (!this.workingQuery.equals(newWorkingQuery))
+		if (!this.workingQuery.getBuilderQuery().equals(query))
 		{
-			this.workingQuery.setBuilderQuery(newWorkingQuery);
+			this.workingQuery.setBuilderQuery(query);
 			numberOfResultsValid = false;
 		}
 	}
@@ -507,7 +507,7 @@ public class SearchBean
 		return workingQuery.getYearFrom();
 	}
 
-	public void setYearFrom(String  yearFrom)
+	public void setYearFrom(String yearFrom)
 	{
 		if (!StringUtils.compareStrings(yearFrom, workingQuery.getYearFrom()))
 		{
