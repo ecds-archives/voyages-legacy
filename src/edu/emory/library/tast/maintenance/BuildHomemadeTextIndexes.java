@@ -19,6 +19,8 @@ public class BuildHomemadeTextIndexes
 	private static final String DB_USER = "tast";
 	private static final String DB_PASS = "tast";
 
+	private static final int DB_REVISION = 1;
+
 	private static void createIndex(Connection conn, int revision, String table, String[] columns) throws SQLException
 	{
 		
@@ -121,17 +123,15 @@ public class BuildHomemadeTextIndexes
 	
 	public static void main(String[] args) throws ClassNotFoundException, SQLException
 	{
-		
-		int revision = 1;
-		
+
 		Class.forName("org.postgresql.Driver");
 		
 		Connection conn = DriverManager.getConnection(DB_CONN_STRING, DB_USER, DB_PASS);
 		
-		createIndex(conn, revision, "voyages_index_shipnames", new String[] {"shipname"});
-		createIndex(conn, revision, "voyages_index_captains", new String[] {"captaina", "captainb", "captainc"});
-		createIndex(conn, revision, "voyages_index_owners", new String[] {"ownera", "ownerb", "ownerc", "ownerd", "ownere", "ownerf", "ownerg", "ownerh", "owneri", "ownerj", "ownerk", "ownerl", "ownerm", "ownern", "ownero", "ownerp" });
-		createIndex(conn, revision, "voyages_index_sources", new String[] {"sourcea", "sourceb", "sourcec", "sourced", "sourcee", "sourcef", "sourceg", "sourceh", "sourcei", "sourcej", "sourcek", "sourcel", "sourcem", "sourcen", "sourceo", "sourcep", "sourceq", "sourcer" });
+		createIndex(conn, DB_REVISION, "voyages_index_shipnames", new String[] {"shipname"});
+		createIndex(conn, DB_REVISION, "voyages_index_captains", new String[] {"captaina", "captainb", "captainc"});
+		createIndex(conn, DB_REVISION, "voyages_index_owners", new String[] {"ownera", "ownerb", "ownerc", "ownerd", "ownere", "ownerf", "ownerg", "ownerh", "owneri", "ownerj", "ownerk", "ownerl", "ownerm", "ownern", "ownero", "ownerp" });
+		createIndex(conn, DB_REVISION, "voyages_index_sources", new String[] {"sourcea", "sourceb", "sourcec", "sourced", "sourcee", "sourcef", "sourceg", "sourceh", "sourcei", "sourcej", "sourcek", "sourcel", "sourcem", "sourcen", "sourceo", "sourcep", "sourceq", "sourcer" });
 		
 		conn.close();
 		

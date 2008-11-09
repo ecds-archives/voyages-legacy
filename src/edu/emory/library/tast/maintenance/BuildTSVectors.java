@@ -18,6 +18,8 @@ public class BuildTSVectors
 	private static final String DB_CONN_STRING = "jdbc:postgresql://localhost/tast";
 	private static final String DB_USER = "tast";
 	private static final String DB_PASS = "tast";
+
+	private static final int DB_REVISION = 1;
 	
 	private static char[] oldChars = "\u00C1\u00C2\u00C3\u00C7\u00C9\u00CD\u00D3\u00DA\u00E1\u00E2\u00E3\u0103\u00E6\u00E7\u010D\u00E8\u00E9\u00EA\u00EB\u0119\u00ED\u00EE\u00EF\u00F1\u00F3\u00F4\u00F5\u00F6\u00FA\u00FC".toCharArray();
 	private static char[] newChars = "AAACEIOUaaaaacceeeeeiiinoooouu".toCharArray();
@@ -117,15 +119,13 @@ public class BuildTSVectors
 	public static void main(String[] args) throws ClassNotFoundException, SQLException
 	{
 		
-		int revision = 1;
-		
 		Class.forName("org.postgresql.Driver");
 		Connection conn = DriverManager.getConnection(DB_CONN_STRING, DB_USER, DB_PASS);
 		
-		createIndex(conn, revision, new String[] {"shipname"}, "shipname_index");
-		createIndex(conn, revision, new String[] {"captaina", "captainb", "captainc"}, "captains_index");
-		createIndex(conn, revision, new String[] {"ownera", "ownerb", "ownerc", "ownerd", "ownere", "ownerf", "ownerg", "ownerh", "owneri", "ownerj", "ownerk", "ownerl", "ownerm", "ownern", "ownero", "ownerp" }, "owners_index");
-		createIndex(conn, revision, new String[] {"sourcea", "sourceb", "sourcec", "sourced", "sourcee", "sourcef", "sourceg", "sourceh", "sourcei", "sourcej", "sourcek", "sourcel", "sourcem", "sourcen", "sourceo", "sourcep", "sourceq", "sourcer" }, "sources_index");
+		createIndex(conn, DB_REVISION, new String[] {"shipname"}, "shipname_index");
+		createIndex(conn, DB_REVISION, new String[] {"captaina", "captainb", "captainc"}, "captains_index");
+		createIndex(conn, DB_REVISION, new String[] {"ownera", "ownerb", "ownerc", "ownerd", "ownere", "ownerf", "ownerg", "ownerh", "owneri", "ownerj", "ownerk", "ownerl", "ownerm", "ownern", "ownero", "ownerp" }, "owners_index");
+		createIndex(conn, DB_REVISION, new String[] {"sourcea", "sourceb", "sourcec", "sourced", "sourcee", "sourcef", "sourceg", "sourceh", "sourcei", "sourcej", "sourcek", "sourcel", "sourcem", "sourcen", "sourceo", "sourcep", "sourceq", "sourcer" }, "sources_index");
 		
 		conn.close();
 		
