@@ -351,7 +351,7 @@ public class SubmissionBean
 					for (int k = 0; k < toBeFormatted.length; k++) {
 						toBeFormatted[k] = old.getAttrValue(attribute.getAttribute()[k].getName());
 					}
-					Value value = attribute.getValue(session, toBeFormatted, sourceInformationUtils);
+//					Value value = attribute.getValue(session, toBeFormatted, sourceInformationUtils);
 //					slaveValues.setValue(SLAVE_CHAR_COLS[i], SLAVE_CHAR_ROWS[j] + "_" + element.getVoyageId(), value);
 				}
 			}
