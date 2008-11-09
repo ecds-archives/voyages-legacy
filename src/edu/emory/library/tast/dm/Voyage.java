@@ -56,7 +56,6 @@ public class Voyage extends AbstractDescriptiveObject
 		attributes.add(new NumericAttribute("iid", "Voyage", NumericAttribute.TYPE_LONG, null));
 		attributes.add(new NumericAttribute("iid", "Voyage", NumericAttribute.TYPE_LONG, null));
 		attributes.add(new StringAttribute("shipname", "Voyage", "shipname"));
-		attributes.add(new StringAttribute("shipname_index", "Voyage", "shipname_index"));
 		attributes.add(new PortAttribute("placcons", "Voyage", "placcons"));
 		attributes.add(new NumericAttribute("yrcons", "Voyage", NumericAttribute.TYPE_INTEGER, "yrcons"));
 		attributes.add(new PortAttribute("placreg", "Voyage", "placreg"));
@@ -82,7 +81,6 @@ public class Voyage extends AbstractDescriptiveObject
 		attributes.add(new StringAttribute("ownern", "Voyage", "ownern"));
 		attributes.add(new StringAttribute("ownero", "Voyage", "ownero"));
 		attributes.add(new StringAttribute("ownerp", "Voyage", "ownerp"));
-		attributes.add(new StringAttribute("owners_index", "Voyage", "owners_index"));
 		attributes.add(new FateAttribute("fate", "Voyage", "fate"));
 		attributes.add(new FateSlavesAttribute("fate2", "Voyage", "fate2"));
 		attributes.add(new FateVesselAttribute("fate3", "Voyage", "fate3"));
@@ -124,7 +122,6 @@ public class Voyage extends AbstractDescriptiveObject
 		attributes.add(new StringAttribute("captaina", "Voyage", "captaina"));
 		attributes.add(new StringAttribute("captainb", "Voyage", "captainb"));
 		attributes.add(new StringAttribute("captainc", "Voyage", "captainc"));
-		attributes.add(new StringAttribute("captains_index", "Voyage", "captains_index"));
 		attributes.add(new NumericAttribute("crew1", "Voyage", NumericAttribute.TYPE_INTEGER, "crew1"));
 		attributes.add(new NumericAttribute("crew3", "Voyage", NumericAttribute.TYPE_INTEGER, "crew3"));
 		attributes.add(new NumericAttribute("crewdied", "Voyage", NumericAttribute.TYPE_INTEGER, "crewdied"));
@@ -166,7 +163,6 @@ public class Voyage extends AbstractDescriptiveObject
 		attributes.add(new StringAttribute("sourcep", "Voyage", "sourcep"));
 		attributes.add(new StringAttribute("sourceq", "Voyage", "sourceq"));
 		attributes.add(new StringAttribute("sourcer", "Voyage", "sourcer"));
-		attributes.add(new StringAttribute("sources_index", "Voyage", "sources_index"));
 		attributes.add(new EstimatesNationAttribute("e_natinimp", "Voyage", "e_natinimp"));
 		attributes.add(new EstimatesExportRegionAttribute("e_majbyimp", "Voyage", "e_majbyimp"));
 		attributes.add(new EstimatesImportRegionAttribute("e_mjselimp", "Voyage", "e_mjselimp"));
@@ -255,6 +251,68 @@ public class Voyage extends AbstractDescriptiveObject
 		attributes.add(new NumericAttribute("slinten2", "Voyage", NumericAttribute.TYPE_INTEGER, "slinten2"));
 		attributes.add(new NumericAttribute("ndesert", "Voyage", NumericAttribute.TYPE_INTEGER, "ndesert"));
 		attributes.add(new NumericAttribute("sladafri", "Voyage", NumericAttribute.TYPE_INTEGER, "sladafri"));
+		
+		attributes.add(new StringAttribute("shipname_index", "Voyage", "shipname_index"));
+		attributes.add(new StringAttribute("owners_index", "Voyage", "owners_index"));
+		attributes.add(new StringAttribute("captains_index", "Voyage", "captains_index"));
+		attributes.add(new StringAttribute("sources_index", "Voyage", "sources_index"));
+	
+		attributes.add(new NumericAttribute("placcons_port", "Voyage", NumericAttribute.TYPE_LONG, "placcons_port"));
+		attributes.add(new NumericAttribute("placreg_port", "Voyage", NumericAttribute.TYPE_LONG, "placreg_port"));
+		attributes.add(new NumericAttribute("ptdepimp_port", "Voyage", NumericAttribute.TYPE_LONG, "ptdepimp_port"));
+		attributes.add(new NumericAttribute("plac1tra_port", "Voyage", NumericAttribute.TYPE_LONG, "plac1tra_port"));
+		attributes.add(new NumericAttribute("plac2tra_port", "Voyage", NumericAttribute.TYPE_LONG, "plac2tra_port"));
+		attributes.add(new NumericAttribute("plac3tra_port", "Voyage", NumericAttribute.TYPE_LONG, "plac3tra_port"));
+		attributes.add(new NumericAttribute("mjbyptimp_port", "Voyage", NumericAttribute.TYPE_LONG, "mjbyptimp_port"));
+		attributes.add(new NumericAttribute("npafttra_port", "Voyage", NumericAttribute.TYPE_LONG, "npafttra_port"));
+		attributes.add(new NumericAttribute("sla1port_port", "Voyage", NumericAttribute.TYPE_LONG, "sla1port_port"));
+		attributes.add(new NumericAttribute("adpsale1_port", "Voyage", NumericAttribute.TYPE_LONG, "adpsale1_port"));
+		attributes.add(new NumericAttribute("adpsale2_port", "Voyage", NumericAttribute.TYPE_LONG, "adpsale2_port"));
+		attributes.add(new NumericAttribute("mjslptimp_port", "Voyage", NumericAttribute.TYPE_LONG, "mjslptimp_port"));
+		attributes.add(new NumericAttribute("portret_port", "Voyage", NumericAttribute.TYPE_LONG, "portret_port"));
+		attributes.add(new NumericAttribute("portdep_port", "Voyage", NumericAttribute.TYPE_LONG, "portdep_port"));
+		attributes.add(new NumericAttribute("embport_port", "Voyage", NumericAttribute.TYPE_LONG, "embport_port"));
+		attributes.add(new NumericAttribute("arrport_port", "Voyage", NumericAttribute.TYPE_LONG, "arrport_port"));
+		attributes.add(new NumericAttribute("embport2_port", "Voyage", NumericAttribute.TYPE_LONG, "embport2_port"));
+		attributes.add(new NumericAttribute("arrport2_port", "Voyage", NumericAttribute.TYPE_LONG, "arrport2_port"));
+		
+		attributes.add(new NumericAttribute("placcons_region", "Voyage", NumericAttribute.TYPE_LONG, "placcons_region"));
+		attributes.add(new NumericAttribute("placreg_region", "Voyage", NumericAttribute.TYPE_LONG, "placreg_region"));
+		attributes.add(new NumericAttribute("ptdepimp_region", "Voyage", NumericAttribute.TYPE_LONG, "ptdepimp_region"));
+		attributes.add(new NumericAttribute("plac1tra_region", "Voyage", NumericAttribute.TYPE_LONG, "plac1tra_region"));
+		attributes.add(new NumericAttribute("plac2tra_region", "Voyage", NumericAttribute.TYPE_LONG, "plac2tra_region"));
+		attributes.add(new NumericAttribute("plac3tra_region", "Voyage", NumericAttribute.TYPE_LONG, "plac3tra_region"));
+		attributes.add(new NumericAttribute("mjbyptimp_region", "Voyage", NumericAttribute.TYPE_LONG, "mjbyptimp_region"));
+		attributes.add(new NumericAttribute("npafttra_region", "Voyage", NumericAttribute.TYPE_LONG, "npafttra_region"));
+		attributes.add(new NumericAttribute("sla1port_region", "Voyage", NumericAttribute.TYPE_LONG, "sla1port_region"));
+		attributes.add(new NumericAttribute("adpsale1_region", "Voyage", NumericAttribute.TYPE_LONG, "adpsale1_region"));
+		attributes.add(new NumericAttribute("adpsale2_region", "Voyage", NumericAttribute.TYPE_LONG, "adpsale2_region"));
+		attributes.add(new NumericAttribute("mjslptimp_region", "Voyage", NumericAttribute.TYPE_LONG, "mjslptimp_region"));
+		attributes.add(new NumericAttribute("portret_region", "Voyage", NumericAttribute.TYPE_LONG, "portret_region"));
+		attributes.add(new NumericAttribute("portdep_region", "Voyage", NumericAttribute.TYPE_LONG, "portdep_region"));
+		attributes.add(new NumericAttribute("embport_region", "Voyage", NumericAttribute.TYPE_LONG, "embport_region"));
+		attributes.add(new NumericAttribute("arrport_region", "Voyage", NumericAttribute.TYPE_LONG, "arrport_region"));
+		attributes.add(new NumericAttribute("embport2_region", "Voyage", NumericAttribute.TYPE_LONG, "embport2_region"));
+		attributes.add(new NumericAttribute("arrport2_region", "Voyage", NumericAttribute.TYPE_LONG, "arrport2_region"));
+		
+		attributes.add(new NumericAttribute("placcons_area", "Voyage", NumericAttribute.TYPE_LONG, "placcons_area"));
+		attributes.add(new NumericAttribute("placreg_area", "Voyage", NumericAttribute.TYPE_LONG, "placreg_area"));
+		attributes.add(new NumericAttribute("ptdepimp_area", "Voyage", NumericAttribute.TYPE_LONG, "ptdepimp_area"));
+		attributes.add(new NumericAttribute("plac1tra_area", "Voyage", NumericAttribute.TYPE_LONG, "plac1tra_area"));
+		attributes.add(new NumericAttribute("plac2tra_area", "Voyage", NumericAttribute.TYPE_LONG, "plac2tra_area"));
+		attributes.add(new NumericAttribute("plac3tra_area", "Voyage", NumericAttribute.TYPE_LONG, "plac3tra_area"));
+		attributes.add(new NumericAttribute("mjbyptimp_area", "Voyage", NumericAttribute.TYPE_LONG, "mjbyptimp_area"));
+		attributes.add(new NumericAttribute("npafttra_area", "Voyage", NumericAttribute.TYPE_LONG, "npafttra_area"));
+		attributes.add(new NumericAttribute("sla1port_area", "Voyage", NumericAttribute.TYPE_LONG, "sla1port_area"));
+		attributes.add(new NumericAttribute("adpsale1_area", "Voyage", NumericAttribute.TYPE_LONG, "adpsale1_area"));
+		attributes.add(new NumericAttribute("adpsale2_area", "Voyage", NumericAttribute.TYPE_LONG, "adpsale2_area"));
+		attributes.add(new NumericAttribute("mjslptimp_area", "Voyage", NumericAttribute.TYPE_LONG, "mjslptimp_area"));
+		attributes.add(new NumericAttribute("portret_area", "Voyage", NumericAttribute.TYPE_LONG, "portret_area"));
+		attributes.add(new NumericAttribute("portdep_area", "Voyage", NumericAttribute.TYPE_LONG, "portdep_area"));
+		attributes.add(new NumericAttribute("embport_area", "Voyage", NumericAttribute.TYPE_LONG, "embport_area"));
+		attributes.add(new NumericAttribute("arrport_area", "Voyage", NumericAttribute.TYPE_LONG, "arrport_area"));
+		attributes.add(new NumericAttribute("embport2_area", "Voyage", NumericAttribute.TYPE_LONG, "embport2_area"));
+		attributes.add(new NumericAttribute("arrport2_area", "Voyage", NumericAttribute.TYPE_LONG, "arrport2_area"));	
 		
 	}
 

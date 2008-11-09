@@ -12,7 +12,7 @@ import java.util.Set;
 import edu.emory.library.tast.util.SqlUtils;
 import edu.emory.library.tast.util.StringUtils;
 
-public class BuildTSVectors
+public class RecreateNormalizedlTextColumns
 {
 	
 	private static final String DB_CONN_STRING = "jdbc:postgresql://localhost/tast";
@@ -32,10 +32,7 @@ public class BuildTSVectors
 		int totalKeywords = 0;
 		int maxKeywordsPerVoyage = 0;
 		
-		if (SqlUtils.columnExists(conn, "voyages", indexColumn))
-		{
-			SqlUtils.dropColumn(conn, indexColumn);
-		}
+		SqlUtils.dropColumnIfExists(conn, "voyages", indexColumn);
 		
 		String sqlAddIndexColumn =
 			"ALTER TABLE voyages " +

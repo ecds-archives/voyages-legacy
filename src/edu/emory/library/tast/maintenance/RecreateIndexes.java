@@ -4,9 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Set;
 
-import edu.emory.library.tast.util.SqlUtils;
 import edu.emory.library.tast.util.StringUtils;
 
 public class RecreateIndexes
@@ -15,24 +13,6 @@ public class RecreateIndexes
 	private static final String DB_CONN_STRING = "jdbc:postgresql://localhost/tast";
 	private static final String DB_USER = "tast";
 	private static final String DB_PASS = "tast";
-	
-	private static void dropAllIndexes(Connection conn, String table, String[] exceptions) throws SQLException
-	{
-		
-		System.out.println("Deleting all indexes from '" + table + "' ...");
-		
-		Set exceptionsLookup = StringUtils.toStringSet(exceptions);
-
-		String[] indexes = SqlUtils.getIndexes(conn, table);
-		for (int i = 0; i < indexes.length; i++)
-		{
-			if (!exceptionsLookup.contains(indexes[i]))
-			{
-				SqlUtils.dropIndex(conn, indexes[i]);
-			}
-		}
-		
-	}
 	
 	private static void createIndex(Connection conn, String indexName, String table, String column) throws SQLException
 	{
@@ -71,7 +51,7 @@ public class RecreateIndexes
 		Class.forName("org.postgresql.Driver");
 		Connection conn = DriverManager.getConnection(DB_CONN_STRING, DB_USER, DB_PASS);
 		
-		dropAllIndexes(conn, "voyages", new String[] {"voyage_iid"});
+		DropIndexes.dropAllIndexes(conn, "voyages", new String[] {"voyage_iid"});
 		
 		String[] indexedColumns = new String[] {
 				"revision",
@@ -140,8 +120,44 @@ public class RecreateIndexes
 				"adpsale1",
 				"adpsale2",
 				"mjslptimp",
-				"portret" };
-		
+				"portret",
+				"placcons_region",
+				"placcons_area",
+				"placreg_region",
+				"placreg_area",
+				"ptdepimp_region",
+				"ptdepimp_area",
+				"plac1tra_region",
+				"plac1tra_area",
+				"plac2tra_region",
+				"plac2tra_area",
+				"plac3tra_region",
+				"plac3tra_area",
+				"mjbyptimp_region",
+				"mjbyptimp_area",
+				"npafttra_region",
+				"npafttra_area",
+				"sla1port_region",
+				"sla1port_area",
+				"adpsale1_region",
+				"adpsale1_area",
+				"adpsale2_region",
+				"adpsale2_area",
+				"mjslptimp_region",
+				"mjslptimp_area",
+				"portret_region",
+				"portret_area",
+				"portdep_region",
+				"portdep_area",
+				"embport_region",
+				"embport_area",
+				"arrport_region",
+				"arrport_area",
+				"embport2_region",
+				"embport2_area",
+				"arrport2_region",
+				"arrport2_area" };
+
 		createIndex(conn, "voyages_index_iid", "voyages", "iid", true);
 
 		for (int i = 0; i < indexedColumns.length; i++)

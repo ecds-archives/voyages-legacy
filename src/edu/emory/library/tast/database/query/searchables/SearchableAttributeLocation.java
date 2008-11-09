@@ -18,6 +18,7 @@ import edu.emory.library.tast.db.TastDbConditions;
 import edu.emory.library.tast.dm.Area;
 import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.dm.Region;
+import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.util.StringUtils;
@@ -26,6 +27,8 @@ public class SearchableAttributeLocation extends SearchableAttribute implements 
 {
 
 	private Location[] locations;
+	
+	private static final boolean USE_DENORMALIZED_COLUMNS = false;
 
 	public SearchableAttributeLocation(String id, String userLabel, UserCategories userCategories, Location[] locations, String spssName, String listDescription, boolean inEstimates)
 	{
@@ -148,39 +151,69 @@ public class SearchableAttributeLocation extends SearchableAttribute implements 
 			{
 				for (int j = 0; j < locations.length; j++)
 				{
-					subCond.addCondition(
-							new SequenceAttribute(new Attribute[] {
-									locations[j].getPort(),
-									Port.getAttribute("region"),
-									Region.getAttribute("area"),
-									Area.getAttribute("id")}),
-									idComponents[0],
-									TastDbConditions.OP_EQUALS);
+					if (!USE_DENORMALIZED_COLUMNS)
+					{
+						subCond.addCondition(
+								new SequenceAttribute(new Attribute[] {
+										locations[j].getPort(),
+										Port.getAttribute("region"),
+										Region.getAttribute("area"),
+										Area.getAttribute("id")}),
+										idComponents[0],
+										TastDbConditions.OP_EQUALS);
+					}
+					else
+					{
+						subCond.addCondition(
+								Voyage.getAttribute(locations[j].getPort().getName() + "_area"),
+								idComponents[0],
+								TastDbConditions.OP_EQUALS);						
+					}
 				}
 			}
 			else if (idComponents != null && idComponents.length == 2)
 			{
 				for (int j = 0; j < locations.length; j++)
 				{
-					subCond.addCondition(
-							new SequenceAttribute(new Attribute[] {
-									locations[j].getPort(),
-									Port.getAttribute("region"),
-									Region.getAttribute("id")}),
-									idComponents[1],
-									TastDbConditions.OP_EQUALS);
+					if (!USE_DENORMALIZED_COLUMNS)
+					{
+						subCond.addCondition(
+								new SequenceAttribute(new Attribute[] {
+										locations[j].getPort(),
+										Port.getAttribute("region"),
+										Region.getAttribute("id")}),
+										idComponents[1],
+										TastDbConditions.OP_EQUALS);
+					}
+					else
+					{
+						subCond.addCondition(
+								Voyage.getAttribute(locations[j].getPort().getName() + "_region"),
+								idComponents[1],
+								TastDbConditions.OP_EQUALS);						
+					}
 				}
 			}
 			else if (idComponents != null && idComponents.length == 3)
 			{
 				for (int j = 0; j < locations.length; j++)
 				{
-					subCond.addCondition(
-							new SequenceAttribute(new Attribute[] {
-									locations[j].getPort(),
-									Port.getAttribute("id")}),
-									idComponents[2],
-									TastDbConditions.OP_EQUALS);
+					if (!USE_DENORMALIZED_COLUMNS)
+					{
+						subCond.addCondition(
+								new SequenceAttribute(new Attribute[] {
+										locations[j].getPort(),
+										Port.getAttribute("id")}),
+										idComponents[2],
+										TastDbConditions.OP_EQUALS);
+					}
+					else
+					{
+						subCond.addCondition(
+								Voyage.getAttribute(locations[j].getPort().getName() + "_port"),
+								idComponents[2],
+								TastDbConditions.OP_EQUALS);						
+					}
 				}
 			}
 		}

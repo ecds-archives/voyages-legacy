@@ -40,14 +40,22 @@ public class SqlUtils
 		
 	}
 	
-	public static void dropColumn(Connection conn, String indexColumn) throws SQLException
+	public static void dropColumn(Connection conn, String table, String column) throws SQLException
 	{
-		String sqlDropIndexColumn =
-			"ALTER TABLE voyages " +
-			"DROP COLUMN " + indexColumn;
+		String sqlDropColumn =
+			"ALTER TABLE " + table + " " +
+			"DROP COLUMN " + column;
 		
 		Statement statementDropColumn = conn.createStatement();
-		statementDropColumn.execute(sqlDropIndexColumn);
+		statementDropColumn.execute(sqlDropColumn);
+	}
+	
+	public static void dropColumnIfExists(Connection conn, String table, String column) throws SQLException
+	{
+		if (columnExists(conn, table, column))
+		{
+			dropColumn(conn, table, column);
+		}
 	}
 	
 	public static String[] getIndexes(Connection conn, String table) throws SQLException

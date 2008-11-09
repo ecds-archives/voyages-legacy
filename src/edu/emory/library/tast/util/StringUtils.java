@@ -1,6 +1,7 @@
 package edu.emory.library.tast.util;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -170,7 +171,7 @@ public class StringUtils
 		return compareStringArrays(a1, a2, false);
 	}
 
-	public static String join(String sep, Set objects)
+	public static String join(String sep, Collection objects)
 	{
 		if (objects == null) return "";
 		StringBuffer res = new StringBuffer();
