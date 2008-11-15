@@ -21,7 +21,7 @@ import edu.emory.library.tast.util.StringUtils;
 public class SearchableAttributeSimpleDictionary extends SearchableAttributeSimple implements ListItemsSource
 {
 	
-	private static final boolean USE_SQL_IN = true;
+	private static final boolean USE_IN_OPERATOR = false;
 
 	public SearchableAttributeSimpleDictionary(String id, String userLabel, UserCategories userCategories, Attribute[] attributes, String spssName, String listDescription, boolean inEstimates)
 	{
@@ -50,7 +50,7 @@ public class SearchableAttributeSimpleDictionary extends SearchableAttributeSimp
 		// testing, I found that there is almost no difference. But I would like
 		// to keep it here just for record.
 
-		if (USE_SQL_IN)
+		if (USE_IN_OPERATOR)
 		{
 		
 			Attribute[] attributes = getAttributes();

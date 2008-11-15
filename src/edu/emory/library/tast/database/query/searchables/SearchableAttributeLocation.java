@@ -29,6 +29,7 @@ public class SearchableAttributeLocation extends SearchableAttribute implements 
 	private Location[] locations;
 	
 	private static final boolean USE_DENORMALIZED_COLUMNS = false;
+	private static final boolean USE_IN_OPERATOR = true;
 
 	public SearchableAttributeLocation(String id, String userLabel, UserCategories userCategories, Location[] locations, String spssName, String listDescription, boolean inEstimates)
 	{
@@ -139,80 +140,173 @@ public class SearchableAttributeLocation extends SearchableAttribute implements 
 			return true;
 		
 		// extra just the minimal set to create reasonable queries
-		Set minimalSelectedIds = queryConditionList.getSelectedIds();
-		
+		Set minimalSelectedIds = queryConditionList.getMinimalSelectedIds();
+
 		// add locations to the query
 		TastDbConditions subCond = new TastDbConditions(TastDbConditions.OR);
-		for (Iterator iter = minimalSelectedIds.iterator(); iter.hasNext();)
+		if (USE_IN_OPERATOR)
 		{
-			String fullId = (String) iter.next();
-			Long[] idComponents = extractLocationIds(fullId);
-			if (idComponents != null && idComponents.length == 1)
+			
+			ArrayList portIdsList = new ArrayList();
+			ArrayList regionIdsList = new ArrayList();
+			ArrayList areaIdsList = new ArrayList();
+			
+			for (Iterator iter = minimalSelectedIds.iterator(); iter.hasNext();)
 			{
-				for (int j = 0; j < locations.length; j++)
+				String fullId = (String) iter.next();
+				Long[] idComponents = extractLocationIds(fullId);
+				if (idComponents != null && idComponents.length == 3)
 				{
-					if (!USE_DENORMALIZED_COLUMNS)
-					{
-						subCond.addCondition(
-								new SequenceAttribute(new Attribute[] {
-										locations[j].getPort(),
-										Port.getAttribute("region"),
-										Region.getAttribute("area"),
-										Area.getAttribute("id")}),
-										idComponents[0],
-										TastDbConditions.OP_EQUALS);
-					}
-					else
-					{
+					portIdsList.add(idComponents[2]);
+				}
+				else if (idComponents != null && idComponents.length == 2)
+				{
+					regionIdsList.add(idComponents[1]);
+				}
+				else if (idComponents != null && idComponents.length == 1)
+				{
+					areaIdsList.add(idComponents[0]);
+				}
+			}
+			
+			Long[] portIds = new Long[portIdsList.size()];
+			Long[] regionIds = new Long[regionIdsList.size()];
+			Long[] areaIds = new Long[areaIdsList.size()];
+
+			portIdsList.toArray(portIds);
+			regionIdsList.toArray(regionIds);
+			areaIdsList.toArray(areaIds);
+			
+			for (int j = 0; j < locations.length; j++)
+			{
+				
+				if (!USE_DENORMALIZED_COLUMNS)
+				{
+				
+					subCond.addCondition(
+							new SequenceAttribute(new Attribute[] {
+									locations[j].getPort(),
+									Port.getAttribute("region"),
+									Region.getAttribute("area"),
+									Area.getAttribute("id")}),
+									areaIds,
+									TastDbConditions.OP_IN);
+					
+					subCond.addCondition(
+							new SequenceAttribute(new Attribute[] {
+									locations[j].getPort(),
+									Port.getAttribute("region"),
+									Region.getAttribute("id")}),
+									regionIds,
+									TastDbConditions.OP_IN);
+					
+					subCond.addCondition(
+							new SequenceAttribute(new Attribute[] {
+									locations[j].getPort(),
+									Port.getAttribute("id")}),
+									areaIds,
+									TastDbConditions.OP_IN);
+					
+				}
+				else
+				{
+					
+					if (areaIds.length != 0)
 						subCond.addCondition(
 								Voyage.getAttribute(locations[j].getPort().getName() + "_area"),
-								idComponents[0],
-								TastDbConditions.OP_EQUALS);						
-					}
-				}
-			}
-			else if (idComponents != null && idComponents.length == 2)
-			{
-				for (int j = 0; j < locations.length; j++)
-				{
-					if (!USE_DENORMALIZED_COLUMNS)
-					{
-						subCond.addCondition(
-								new SequenceAttribute(new Attribute[] {
-										locations[j].getPort(),
-										Port.getAttribute("region"),
-										Region.getAttribute("id")}),
-										idComponents[1],
-										TastDbConditions.OP_EQUALS);
-					}
-					else
-					{
+								areaIds,
+								TastDbConditions.OP_IN);					
+					
+					if (regionIds.length != 0)
 						subCond.addCondition(
 								Voyage.getAttribute(locations[j].getPort().getName() + "_region"),
-								idComponents[1],
-								TastDbConditions.OP_EQUALS);						
-					}
-				}
-			}
-			else if (idComponents != null && idComponents.length == 3)
-			{
-				for (int j = 0; j < locations.length; j++)
-				{
-					if (!USE_DENORMALIZED_COLUMNS)
-					{
-						subCond.addCondition(
-								new SequenceAttribute(new Attribute[] {
-										locations[j].getPort(),
-										Port.getAttribute("id")}),
-										idComponents[2],
-										TastDbConditions.OP_EQUALS);
-					}
-					else
-					{
+								regionIds,
+								TastDbConditions.OP_IN);
+					
+					if (portIds.length != 0)
 						subCond.addCondition(
 								Voyage.getAttribute(locations[j].getPort().getName() + "_port"),
-								idComponents[2],
-								TastDbConditions.OP_EQUALS);						
+								portIds,
+								TastDbConditions.OP_IN);						
+					
+				}
+
+			}
+
+		}
+		else
+		{
+			for (Iterator iter = minimalSelectedIds.iterator(); iter.hasNext();)
+			{
+				String fullId = (String) iter.next();
+				Long[] idComponents = extractLocationIds(fullId);
+				if (idComponents != null && idComponents.length == 1)
+				{
+					for (int j = 0; j < locations.length; j++)
+					{
+						if (!USE_DENORMALIZED_COLUMNS)
+						{
+							subCond.addCondition(
+									new SequenceAttribute(new Attribute[] {
+											locations[j].getPort(),
+											Port.getAttribute("region"),
+											Region.getAttribute("area"),
+											Area.getAttribute("id")}),
+											idComponents[0],
+											TastDbConditions.OP_EQUALS);
+						}
+						else
+						{
+							subCond.addCondition(
+									Voyage.getAttribute(locations[j].getPort().getName() + "_area"),
+									idComponents[0],
+									TastDbConditions.OP_EQUALS);						
+						}
+					}
+				}
+				else if (idComponents != null && idComponents.length == 2)
+				{
+					for (int j = 0; j < locations.length; j++)
+					{
+						if (!USE_DENORMALIZED_COLUMNS)
+						{
+							subCond.addCondition(
+									new SequenceAttribute(new Attribute[] {
+											locations[j].getPort(),
+											Port.getAttribute("region"),
+											Region.getAttribute("id")}),
+											idComponents[1],
+											TastDbConditions.OP_EQUALS);
+						}
+						else
+						{
+							subCond.addCondition(
+									Voyage.getAttribute(locations[j].getPort().getName() + "_region"),
+									idComponents[1],
+									TastDbConditions.OP_EQUALS);						
+						}
+					}
+				}
+				else if (idComponents != null && idComponents.length == 3)
+				{
+					for (int j = 0; j < locations.length; j++)
+					{
+						if (!USE_DENORMALIZED_COLUMNS)
+						{
+							subCond.addCondition(
+									new SequenceAttribute(new Attribute[] {
+											locations[j].getPort(),
+											Port.getAttribute("id")}),
+											idComponents[2],
+											TastDbConditions.OP_EQUALS);
+						}
+						else
+						{
+							subCond.addCondition(
+									Voyage.getAttribute(locations[j].getPort().getName() + "_port"),
+									idComponents[2],
+									TastDbConditions.OP_EQUALS);						
+						}
 					}
 				}
 			}
