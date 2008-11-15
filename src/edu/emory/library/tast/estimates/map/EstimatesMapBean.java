@@ -7,6 +7,7 @@ import org.hibernate.Transaction;
 
 import edu.emory.library.tast.AppConfig;
 import edu.emory.library.tast.TastResource;
+import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.db.TastDbConditions;
 import edu.emory.library.tast.estimates.map.mapimpl.EstimateMapDataTransformer;
 import edu.emory.library.tast.estimates.map.mapimpl.EstimateMapQueryHolder;
@@ -17,7 +18,6 @@ import edu.emory.library.tast.maps.component.PointOfInterest;
 import edu.emory.library.tast.maps.component.StandardMaps;
 import edu.emory.library.tast.maps.component.ZoomLevel;
 import edu.emory.library.tast.maps.component.StandardMaps.ChosenMap;
-import edu.emory.library.tast.util.HibernateUtil;
 
 /**
  * Backing bean for map tab in estimates.
@@ -81,7 +81,7 @@ public class EstimatesMapBean {
 	private void setData()
 	{
 		
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		
 		//Check whether query is required

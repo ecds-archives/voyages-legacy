@@ -13,7 +13,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import edu.emory.library.tast.Languages;
-import edu.emory.library.tast.util.HibernateUtil;
+import edu.emory.library.tast.db.HibernateConn;
 
 public class Image implements Comparable
 {
@@ -316,7 +316,7 @@ public class Image implements Comparable
 
 	public static Image loadById(int imageId)
 	{
-		Session sess = HibernateUtil.getSession();
+		Session sess = HibernateConn.getSession();
 		Transaction transaction = sess.beginTransaction();
 		Image image = loadById(imageId, sess);
 		transaction.commit();
@@ -326,7 +326,7 @@ public class Image implements Comparable
 	
 	public static Image loadByExternalId(String imageExternalId)
 	{
-		Session sess = HibernateUtil.getSession();
+		Session sess = HibernateConn.getSession();
 		Transaction transaction = sess.beginTransaction();
 		Image image = loadByExternalId(imageExternalId, sess);
 		transaction.commit();
@@ -414,7 +414,7 @@ public class Image implements Comparable
 		Integer testImageId = new Integer(711844);
 		Integer testVoyageId = new Integer(666);
 		
-		Session sess = HibernateUtil.getSession();
+		Session sess = HibernateConn.getSession();
 		Transaction transaction = sess.beginTransaction();
 		
 		List images = sess.createCriteria(Image.class).add(Restrictions.eq("id", testImageId)).list();

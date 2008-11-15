@@ -18,11 +18,11 @@ import edu.emory.library.tast.AppConfig;
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.common.SelectItem;
 import edu.emory.library.tast.common.voyage.VoyageDetailBean;
+import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.dm.Image;
 import edu.emory.library.tast.dm.ImageCategory;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.images.GalleryImage;
-import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.StringUtils;
 
 public class ImagesBean
@@ -85,7 +85,7 @@ public class ImagesBean
 		if (categories != null)
 			return;
 
-		Session sess = HibernateUtil.getSession();
+		Session sess = HibernateConn.getSession();
 		Transaction transaction = sess.beginTransaction();
 
 		String hql =
@@ -159,7 +159,7 @@ public class ImagesBean
 		List samples = new LinkedList();
 		homepageGallerySamples = new ListDataModel(samples);
 		
-		Session sess = HibernateUtil.getSession();
+		Session sess = HibernateConn.getSession();
 		Transaction trans = sess.beginTransaction();
 		
 		
@@ -286,7 +286,7 @@ public class ImagesBean
 		String imagesBaseUrl = AppConfig.getConfiguration().getString(AppConfig.IMAGES_URL);
 		imagesBaseUrl = StringUtils.trimEnd(imagesBaseUrl, '/');
 
-		Session sess = HibernateUtil.getSession();
+		Session sess = HibernateConn.getSession();
 		Transaction transaction = sess.beginTransaction();
 
 		Image img = imageId != null ?
@@ -379,7 +379,7 @@ public class ImagesBean
 	private void loadList()
 	{
 
-		Session sess = HibernateUtil.getSession();
+		Session sess = HibernateConn.getSession();
 		Transaction transaction = sess.beginTransaction();
 
 		StringBuffer hqlWhere = new StringBuffer();

@@ -10,6 +10,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
+import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.db.TastDbConditions;
 import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.attributes.Attribute;
@@ -30,7 +31,6 @@ import edu.emory.library.tast.dm.attributes.RegionAttribute;
 import edu.emory.library.tast.dm.attributes.ResistanceAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
 import edu.emory.library.tast.dm.attributes.VesselRigAttribute;
-import edu.emory.library.tast.util.HibernateUtil;
 
 /**
  * Voyage object.
@@ -501,7 +501,7 @@ public class Voyage extends AbstractDescriptiveObject
 	 */
 	public void save()
 	{
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction transaction = session.beginTransaction();
 		session.save(this);
 		transaction.commit();
@@ -536,7 +536,7 @@ public class Voyage extends AbstractDescriptiveObject
 	}
 
 	public void saveOrUpdate() {
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction transaction = session.beginTransaction();
 		session.saveOrUpdate(this);
 		transaction.commit();

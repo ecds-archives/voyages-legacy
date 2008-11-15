@@ -8,7 +8,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import edu.emory.library.tast.util.HibernateUtil;
+import edu.emory.library.tast.db.HibernateConn;
 
 public class QueryTest
 {
@@ -16,7 +16,7 @@ public class QueryTest
 	public static void thisAlwaysUsesSelects()
 	{
 		
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction transaction = session.beginTransaction();
 		Query query = session.createQuery("from Book");
 		
@@ -34,7 +34,7 @@ public class QueryTest
 	public static void avoidingSelectsInCode()
 	{
 		
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction transaction = session.beginTransaction();
 		
 		List list = session.createCriteria(Book.class).setFetchMode("permissions", FetchMode.JOIN).list();
@@ -51,7 +51,7 @@ public class QueryTest
 	public static void avoidingSelectsInHSQL()
 	{
 		
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction transaction = session.beginTransaction();
 		Query query = session.createQuery("from Book as book left join fetch book.author as a");
 		

@@ -6,12 +6,12 @@ import java.util.Map;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.EstimatesExportRegionAttribute;
 import edu.emory.library.tast.dm.attributes.EstimatesImportRegionAttribute;
 import edu.emory.library.tast.dm.attributes.EstimatesNationAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
-import edu.emory.library.tast.util.HibernateUtil;
 
 public class Estimate {
 
@@ -116,7 +116,7 @@ public class Estimate {
 	}
 
 	public void save() {
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction transaction = session.beginTransaction();
 		session.save(this);
 		transaction.commit();

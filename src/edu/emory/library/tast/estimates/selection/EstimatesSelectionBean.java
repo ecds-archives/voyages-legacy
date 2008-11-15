@@ -17,6 +17,7 @@ import edu.emory.library.tast.SimpleCache;
 import edu.emory.library.tast.common.PopupComponent;
 import edu.emory.library.tast.common.SelectItem;
 import edu.emory.library.tast.common.SelectItemWithImage;
+import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.db.TastDbConditions;
 import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.Estimate;
@@ -30,7 +31,6 @@ import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.util.ConversionUtils;
-import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.StringUtils;
 
 
@@ -139,7 +139,7 @@ public class EstimatesSelectionBean
 	private void initDefaultValues(boolean firstTime)
 	{
 
-		Session sess = HibernateUtil.getSession();
+		Session sess = HibernateConn.getSession();
 		Transaction transaction = sess.beginTransaction();
 
 		checkAllNationsAndRegions(sess);
@@ -673,7 +673,7 @@ public class EstimatesSelectionBean
 		if (areasUi == null)
 		{
 		
-			Session sess = HibernateUtil.getSession();
+			Session sess = HibernateConn.getSession();
 			Transaction transaction = sess.beginTransaction();
 	
 			List regionsDb = isImpRegions ?
@@ -771,7 +771,7 @@ public class EstimatesSelectionBean
 		if (nationsUi == null)
 		{
 		
-			Session sess = HibernateUtil.getSession();
+			Session sess = HibernateConn.getSession();
 			Transaction transaction = sess.beginTransaction();
 	
 			List nationsDb = EstimatesNation.loadAll(sess);

@@ -9,6 +9,7 @@ import org.hibernate.Transaction;
 import edu.emory.library.tast.common.GridColumn;
 import edu.emory.library.tast.common.GridOpenRowEvent;
 import edu.emory.library.tast.common.GridRow;
+import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.db.TastDbConditions;
 import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.Submission;
@@ -21,7 +22,6 @@ import edu.emory.library.tast.submission.sources.SourceArticle;
 import edu.emory.library.tast.submission.sources.SourceBook;
 import edu.emory.library.tast.submission.sources.SourceOther;
 import edu.emory.library.tast.submission.sources.SourcePrimary;
-import edu.emory.library.tast.util.HibernateUtil;
 
 public class SourcesBean {
 
@@ -138,7 +138,7 @@ public class SourcesBean {
 	}
 	
 	public String deleteSource() {
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		try {
 			SubmissionSource source = SubmissionSource.loadById(session, this.editedId);
@@ -169,7 +169,7 @@ public class SourcesBean {
 	}
 	
 	private void addNewPrimary(boolean update) {
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		SubmissionSourcePrimary primary;
 		try {
@@ -200,7 +200,7 @@ public class SourcesBean {
 	}
 
 	private void addNewOther(boolean update) {
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		SubmissionSourceOther other;
 		try {
@@ -229,7 +229,7 @@ public class SourcesBean {
 	}
 
 	private void addNewBook(boolean update) {
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		SubmissionSourceBook book;
 		try {
@@ -277,7 +277,7 @@ public class SourcesBean {
 	}
 
 	private void addNewArticle(boolean update) {
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		SubmissionSourcePaper paper;
 		try {
@@ -433,7 +433,7 @@ public class SourcesBean {
 
 	public void submit() {
 		this.submission.setSubmitted(true);
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		try {
 			session.update(this.submission);
@@ -461,7 +461,7 @@ public class SourcesBean {
 	
 	public void openRow(GridOpenRowEvent event) {
 		this.editedId = new Long(event.getRowId());
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		
 		SubmissionSource source = SubmissionSource.loadById(session, this.editedId);

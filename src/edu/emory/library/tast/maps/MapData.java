@@ -6,8 +6,8 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.maps.component.PointOfInterest;
-import edu.emory.library.tast.util.HibernateUtil;
 
 /**
  * Data of map.
@@ -54,7 +54,7 @@ public class MapData {
 	public void setMapData(AbstractTransformerQueryHolder data, AbstractDataTransformer transformer)
 	{
 		
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		
 		//Transform data

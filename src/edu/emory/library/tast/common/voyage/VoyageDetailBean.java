@@ -21,6 +21,7 @@ import edu.emory.library.tast.database.listing.formatters.SimpleDateAttributeFor
 import edu.emory.library.tast.database.query.SearchBean;
 import edu.emory.library.tast.database.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;
+import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.db.TastDbConditions;
 import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.Image;
@@ -36,7 +37,6 @@ import edu.emory.library.tast.maps.component.Line;
 import edu.emory.library.tast.maps.component.PointOfInterest;
 import edu.emory.library.tast.maps.component.StandardMaps;
 import edu.emory.library.tast.maps.component.ZoomLevel;
-import edu.emory.library.tast.util.HibernateUtil;
 
 /**
  * Bean which features functionality for details of given voyage.
@@ -84,7 +84,7 @@ public class VoyageDetailBean
 	private void loadVoyage(boolean loadByIid, long iid, int voyageId)
 	{
 		
-		Session sess = HibernateUtil.getSession();
+		Session sess = HibernateConn.getSession();
 		Transaction transaction = sess.beginTransaction();
 		
 		Voyage voyage = loadByIid ?

@@ -10,12 +10,12 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import edu.emory.library.tast.AppConfig;
+import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.dm.AbstractDescriptiveObject;
 import edu.emory.library.tast.dm.AbstractDescriptiveObjectFactory;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.VoyageFactory;
 import edu.emory.library.tast.dm.attributes.ImportableAttribute;
-import edu.emory.library.tast.util.HibernateUtil;
 
 public class Import
 {
@@ -150,7 +150,7 @@ public class Import
 		int recordNo = 0;
 		Record voyageRecord = null;
 
-		Session sess = HibernateUtil.getSession();
+		Session sess = HibernateConn.getSession();
 		Transaction transaction = sess.beginTransaction();
 		
 		while ((voyageRecord = voyagesRdr.readRecord()) != null)

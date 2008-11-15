@@ -11,6 +11,7 @@ import edu.emory.library.tast.common.listing.links.TableLinkManager;
 import edu.emory.library.tast.database.listing.formatters.AbstractAttributeFormatter;
 import edu.emory.library.tast.database.tabscommon.VisibleAttrEstimate;
 import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;
+import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.db.TastDbConditions;
 import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.Estimate;
@@ -18,7 +19,6 @@ import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.estimates.selection.EstimatesSelectionBean;
 import edu.emory.library.tast.util.CSVUtils;
-import edu.emory.library.tast.util.HibernateUtil;
 /**
   * Backing bean for table visible in estimates.
   * This bean fills in TableData object with current 
@@ -211,7 +211,7 @@ public class EstimateListingBean {
 	}
 	
 	public String getFileCurrentData() {
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		
 		TastDbQuery q = getQuery(this.linkManager.getCurrentFirstRecord(), this.linkManager.getStep());;
@@ -224,7 +224,7 @@ public class EstimateListingBean {
 	
 	
 	public String getFileAllData() {	
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		
 		TastDbQuery q = getQuery(0, -1);

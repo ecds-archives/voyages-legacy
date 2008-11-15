@@ -25,6 +25,7 @@ import edu.emory.library.tast.database.query.searchables.SearchableAttribute;
 import edu.emory.library.tast.database.query.searchables.UserCategory;
 import edu.emory.library.tast.database.table.TableBean;
 import edu.emory.library.tast.database.timeline.TimelineBean;
+import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.db.TastDbConditions;
 import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.Revision;
@@ -32,7 +33,6 @@ import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.Group;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
-import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.JsfUtils;
 import edu.emory.library.tast.util.StringUtils;
 
@@ -277,7 +277,7 @@ public class SearchBean
 		
 		boolean useSQL = AppConfig.getConfiguration().getBoolean(AppConfig.DATABASE_USE_SQL);
 		
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction transaction = session.beginTransaction();		
 		
 		TastDbQuery query = new TastDbQuery("Voyage", dbConds);

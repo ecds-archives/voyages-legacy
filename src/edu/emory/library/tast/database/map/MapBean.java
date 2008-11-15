@@ -11,6 +11,7 @@ import edu.emory.library.tast.database.map.mapimpl.GlobalMapDataTransformer;
 import edu.emory.library.tast.database.map.mapimpl.GlobalMapQueryHolder;
 import edu.emory.library.tast.database.query.SearchBean;
 import edu.emory.library.tast.database.query.SearchParameters;
+import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.db.TastDbConditions;
 import edu.emory.library.tast.maps.LegendItemsGroup;
 import edu.emory.library.tast.maps.MapData;
@@ -18,7 +19,6 @@ import edu.emory.library.tast.maps.component.PointOfInterest;
 import edu.emory.library.tast.maps.component.StandardMaps;
 import edu.emory.library.tast.maps.component.ZoomLevel;
 import edu.emory.library.tast.maps.component.StandardMaps.ChosenMap;
-import edu.emory.library.tast.util.HibernateUtil;
 
 /**
  * The bean provides support for map tab in the database part of the system. It is used
@@ -83,7 +83,7 @@ public class MapBean
 		
 		TastDbConditions conditions = (TastDbConditions) this.conditions.clone();
 
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();		
 
 		GlobalMapQueryHolder queryHolder = new GlobalMapQueryHolder(conditions);

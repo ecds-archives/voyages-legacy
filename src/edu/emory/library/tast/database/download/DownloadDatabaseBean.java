@@ -5,12 +5,12 @@ import javax.faces.model.SelectItem;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.db.TastDbConditions;
 import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.Revision;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.util.CSVUtils;
-import edu.emory.library.tast.util.HibernateUtil;
 
 public class DownloadDatabaseBean {
 	
@@ -51,7 +51,7 @@ public class DownloadDatabaseBean {
 	
 	public String getFileAllData() {
 		
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		
 		TastDbQuery q = this.getQuery();

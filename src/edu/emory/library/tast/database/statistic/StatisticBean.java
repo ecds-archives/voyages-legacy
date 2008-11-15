@@ -11,13 +11,13 @@ import edu.emory.library.tast.AppConfig;
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.common.SimpleTableCell;
 import edu.emory.library.tast.database.query.SearchBean;
+import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.db.TastDbConditions;
 import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.util.CSVUtils;
-import edu.emory.library.tast.util.HibernateUtil;
 
 /**
  * The bean is used to generate statistic table for voyages. It is used in
@@ -183,7 +183,7 @@ public class StatisticBean
 
 	public String getFileAllData()
 	{
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 
 		String[][] data = new String[this.cells.length][this.cells[0].length];

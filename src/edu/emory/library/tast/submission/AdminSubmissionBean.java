@@ -24,6 +24,7 @@ import edu.emory.library.tast.common.grideditor.ColumnActionEvent;
 import edu.emory.library.tast.common.grideditor.Row;
 import edu.emory.library.tast.common.grideditor.RowGroup;
 import edu.emory.library.tast.common.grideditor.Values;
+import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.db.TastDbConditions;
 import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.EditedVoyage;
@@ -40,7 +41,6 @@ import edu.emory.library.tast.dm.SubmissionSourcePrimary;
 import edu.emory.library.tast.dm.User;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
-import edu.emory.library.tast.util.HibernateUtil;
 
 /**
  * The bean that is responsible for requests administration/user administration and new revisions publishingl.
@@ -305,7 +305,7 @@ public class AdminSubmissionBean {
 	public GridRow[] getRequestRows() {
 
 		List l = new ArrayList();
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 
 		TastDbConditions c = new TastDbConditions();
@@ -530,7 +530,7 @@ public class AdminSubmissionBean {
 	}
 
 	public String submit() {
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		Submission lSubmission = Submission.loadById(session, this.applier.getSubmissionId());
 		if (lSubmission instanceof SubmissionMerge && !deleteApproved) {
@@ -646,7 +646,7 @@ public class AdminSubmissionBean {
 			return null;
 		}
 		
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 
 		try {
@@ -756,7 +756,7 @@ public class AdminSubmissionBean {
 	}
 	
 	public String applyAddEditor() {
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 
 		try {
@@ -809,7 +809,7 @@ public class AdminSubmissionBean {
 	}
 	
 	public SourceData[] getSourceData() {
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		List dataItems = new ArrayList();
 		try {

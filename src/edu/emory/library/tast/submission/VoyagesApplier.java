@@ -20,6 +20,7 @@ import edu.emory.library.tast.common.grideditor.Value;
 import edu.emory.library.tast.common.grideditor.Values;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxIntegerAdapter;
 import edu.emory.library.tast.database.SourceInformationLookup;
+import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.db.TastDbConditions;
 import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.EditedVoyage;
@@ -32,7 +33,6 @@ import edu.emory.library.tast.dm.User;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
-import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.StringUtils;
 
 public class VoyagesApplier
@@ -161,7 +161,7 @@ public class VoyagesApplier
 
 	private void fillInValues()
 	{
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		
 		SourceInformationLookup sourceInformationUtils = SourceInformationLookup.createSourceInformationUtils(session);
@@ -471,7 +471,7 @@ public class VoyagesApplier
 	public Column[] getColumns()
 	{
 		Column[] cols = null;
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		Submission lSubmisssion = Submission.loadById(session,
 				this.submissionId);
@@ -505,7 +505,7 @@ public class VoyagesApplier
 
 	private Column[] getMergeColumns(SubmissionMerge submission, boolean editor)
 	{
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		Column[] cols;
 		try
@@ -648,7 +648,7 @@ public class VoyagesApplier
 		{
 			Long editorId = new Long(event.getActionName().substring(
 					REMOVE_EDITOR_ACTION.length() + 1));
-			Session session = HibernateUtil.getSession();
+			Session session = HibernateConn.getSession();
 			Transaction t = session.beginTransaction();
 			try
 			{
@@ -684,7 +684,7 @@ public class VoyagesApplier
 	{
 		Row[] rows = null;
 		int groupsNumber;
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		try
 		{
@@ -766,7 +766,7 @@ public class VoyagesApplier
 
 	public RowGroup[] getRowGroupsSlave()
 	{
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		try
 		{
@@ -918,7 +918,7 @@ public class VoyagesApplier
 	public void newRequestId(GridOpenRowEvent e)
 	{
 
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 
 		TastDbConditions c = new TastDbConditions();
@@ -984,7 +984,7 @@ public class VoyagesApplier
 	public Boolean getRejectAvailable()
 	{
 		Boolean avail = null;
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		Submission lSubmisssion = Submission.loadById(session,
 				this.submissionId);
@@ -1000,7 +1000,7 @@ public class VoyagesApplier
 	 */
 	public String rejectSubmission()
 	{
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		Submission lSubmisssion = Submission.loadById(session,
 				this.submissionId);
@@ -1032,7 +1032,7 @@ public class VoyagesApplier
 
 	public String submit()
 	{
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		Map newValues = vals.getColumnValues(DECIDED_VOYAGE);
 		Submission lSubmission = Submission
@@ -1149,7 +1149,7 @@ public class VoyagesApplier
 	 */
 	public String save()
 	{
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		Submission lSubmisssion = Submission.loadById(session,
 				this.submissionId);

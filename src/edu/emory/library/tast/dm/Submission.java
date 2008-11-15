@@ -10,6 +10,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
+import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.db.TastDbConditions;
 import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.attributes.Attribute;
@@ -19,7 +20,6 @@ import edu.emory.library.tast.dm.attributes.EditedVoyageAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
 import edu.emory.library.tast.dm.attributes.UserAttribute;
-import edu.emory.library.tast.util.HibernateUtil;
 
 public abstract class Submission
 {
@@ -94,7 +94,7 @@ public abstract class Submission
 	public static void main(String[] args)
 	{
 		
-		Session sess = HibernateUtil.getSession(); 
+		Session sess = HibernateConn.getSession(); 
 		Transaction	transaction = sess.beginTransaction();
 		
 		Voyage v1 = (Voyage) sess.createCriteria(Voyage.class).add(Restrictions.eq("id", new Long(1311700))).list().get(0);

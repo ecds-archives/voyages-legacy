@@ -11,13 +11,13 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import edu.emory.library.tast.util.CSVUtils;
-import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.common.EventLineEvent;
 import edu.emory.library.tast.common.EventLineGraph;
 import edu.emory.library.tast.common.EventLineLabel;
 import edu.emory.library.tast.common.EventLineZoomLevel;
 import edu.emory.library.tast.database.query.SearchBean;
+import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.db.TastDbConditions;
 import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.Voyage;
@@ -313,7 +313,7 @@ public class TimelineBean {
 		//Check if we can construct chart
 		if ((this.needQuery || this.attributesChanged) && this.searchBean.getSearchParameters().getConditions() != null) {
 
-			Session sess = HibernateUtil.getSession();
+			Session sess = HibernateConn.getSession();
 			Transaction tran = sess.beginTransaction();
 
 			TastDbQuery qValue = new TastDbQuery(new String[] {"Voyage"}, new String[] {"v"}, this.searchBean.getSearchParameters().getConditions());
@@ -478,7 +478,7 @@ public class TimelineBean {
 	 * @return
 	 */
 	public String getFileAllData() {	
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		
 		String[][] data = new String[this.graph.getX().length + 1][2];

@@ -8,12 +8,12 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 
 import edu.emory.library.tast.database.tabscommon.VisibleAttribute;
+import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.db.TastDbConditions;
 import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.VoyageIndex;
 import edu.emory.library.tast.dm.attributes.Group;
-import edu.emory.library.tast.util.HibernateUtil;
 
 public class HibernateTest {
 
@@ -104,7 +104,7 @@ public class HibernateTest {
 //				System.out.println(query.list());
 				
 				
-				Session session = HibernateUtil.getSession();
+				Session session = HibernateConn.getSession();
 				Query query = session.createQuery("from Image as i left outer join i.people where 455129 in i.people.id");
 				System.out.println(query.list());
 				

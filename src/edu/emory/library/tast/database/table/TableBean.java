@@ -20,6 +20,7 @@ import edu.emory.library.tast.common.table.TableBuilderBreakdown;
 import edu.emory.library.tast.common.table.TableBuilderSimple;
 import edu.emory.library.tast.common.table.TableUtils;
 import edu.emory.library.tast.database.query.SearchBean;
+import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.db.TastDbConditions;
 import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.Area;
@@ -30,7 +31,6 @@ import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.util.CSVUtils;
-import edu.emory.library.tast.util.HibernateUtil;
 
 public class TableBean
 {
@@ -271,7 +271,7 @@ public class TableBean
 		conditions = newConditions;
 
 		// open db
-		Session sess = HibernateUtil.getSession();
+		Session sess = HibernateConn.getSession();
 		Transaction transaction = sess.beginTransaction();
 
 		// ugly!
@@ -617,7 +617,7 @@ public class TableBean
 	 * @return
 	 */
 	public String getFileAllData() {
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 
 		String[][] data = new String[this.table.length][this.table[0].length];

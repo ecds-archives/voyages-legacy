@@ -11,6 +11,7 @@ import edu.emory.library.tast.common.SimpleTableCell;
 import edu.emory.library.tast.common.table.Grouper;
 import edu.emory.library.tast.common.table.Label;
 import edu.emory.library.tast.common.table.TableUtils;
+import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.db.TastDbConditions;
 import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.Estimate;
@@ -18,7 +19,6 @@ import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.estimates.selection.EstimatesSelectionBean;
 import edu.emory.library.tast.util.CSVUtils;
-import edu.emory.library.tast.util.HibernateUtil;
 
 /**
  * This bean is responsible for managing the cross-table in the estimates. It
@@ -139,7 +139,7 @@ public class EstimatesTableBean
 		conditions = newConditions;
 		
 		// open db
-		Session sess = HibernateUtil.getSession();
+		Session sess = HibernateConn.getSession();
 		Transaction transaction = sess.beginTransaction();
 		
 		// from select bean
@@ -504,7 +504,7 @@ public class EstimatesTableBean
 	}
 	
 	public String getFileAllData() {	
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		
 		String[][] data = new String[this.table.length][this.table[0].length];

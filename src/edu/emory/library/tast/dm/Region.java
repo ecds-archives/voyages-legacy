@@ -12,12 +12,12 @@ import java.util.Set;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.dm.attributes.AreaAttribute;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.BooleanAttribute;
 import edu.emory.library.tast.dm.attributes.NumericAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
-import edu.emory.library.tast.util.HibernateUtil;
 
 public class Region extends LocationWithImages
 {
@@ -149,7 +149,7 @@ public class Region extends LocationWithImages
 	public static void main(String[] args)
 	{
 		
-		Session sess = HibernateUtil.getSession();
+		Session sess = HibernateConn.getSession();
 		Transaction transaction = sess.beginTransaction();
 		
 		Region africa = Region.loadById(sess, 60000);

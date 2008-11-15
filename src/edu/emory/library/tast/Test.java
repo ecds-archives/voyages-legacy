@@ -3,7 +3,7 @@ package edu.emory.library.tast;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import edu.emory.library.tast.util.HibernateUtil;
+import edu.emory.library.tast.db.HibernateConn;
 
 public class Test
 {
@@ -21,7 +21,7 @@ public class Test
 		
 		System.out.println(sql);
 		
-		Session sess = HibernateUtil.getSession();
+		Session sess = HibernateConn.getSession();
 		Transaction tran = sess.beginTransaction();
 		
 		sess.createSQLQuery(sql);

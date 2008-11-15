@@ -20,6 +20,7 @@ import edu.emory.library.tast.common.grideditor.Value;
 import edu.emory.library.tast.common.grideditor.Values;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxIntegerAdapter;
 import edu.emory.library.tast.database.SourceInformationLookup;
+import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.db.TastDbConditions;
 import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.EditedVoyage;
@@ -31,7 +32,6 @@ import edu.emory.library.tast.dm.SubmissionSource;
 import edu.emory.library.tast.dm.User;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
-import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.JsfUtils;
 
 public class SubmissionBean
@@ -119,7 +119,7 @@ public class SubmissionBean
 	/////////////////////////////////////////////////////////////////////////////////
 	
 	public String selectTypeNew() {
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		try {
 			cleanSubmission(session);
@@ -136,7 +136,7 @@ public class SubmissionBean
 	}
 
 	public String selectTypeEdit() {
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		try {
 			cleanSubmission(session);
@@ -160,7 +160,7 @@ public class SubmissionBean
 	}
 
 	public String selectTypeMerge() {
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		try {
 			cleanSubmission(session);
@@ -280,7 +280,7 @@ public class SubmissionBean
 		gridValues = new Values();
 		slaveValues = new Values();
 		
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction trans = session.beginTransaction();
 		
 		SourceInformationLookup sourceInformationUtils =
@@ -320,7 +320,7 @@ public class SubmissionBean
 		gridValues = new Values();
 		slaveValues = new Values();
 		
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction trans = session.beginTransaction();
 		
 		SourceInformationLookup sourceInformationUtils =
@@ -396,7 +396,7 @@ public class SubmissionBean
 		if (this.submission == null) {
 			return false;
 		}
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		
 		SourceInformationLookup sourceInformationUtils =
@@ -520,7 +520,7 @@ public class SubmissionBean
 		if (lookupVoyageId == null)
 			return null;
 		
-		Session sess = HibernateUtil.getSession();
+		Session sess = HibernateConn.getSession();
 		Transaction trans = sess.beginTransaction();
 		
 		TastDbConditions cond = new TastDbConditions();
@@ -761,7 +761,7 @@ public class SubmissionBean
 	}
 	
 	private Submission createSubmission(String phase) {
-		Session sess = HibernateUtil.getSession();
+		Session sess = HibernateConn.getSession();
 		Transaction trans = sess.beginTransaction();
 		Submission submission = null;
 		
@@ -971,7 +971,7 @@ public class SubmissionBean
 
 	
 	private boolean updateSubmission(String phase) {
-		Session sess = HibernateUtil.getSession();
+		Session sess = HibernateConn.getSession();
 		Transaction trans = sess.beginTransaction();
 
 		try {
@@ -1046,7 +1046,7 @@ public class SubmissionBean
 	}
 
 	public void setSubmission(Submission submission) {
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		try {
 		this.submission = submission;

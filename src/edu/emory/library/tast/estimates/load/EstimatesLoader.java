@@ -8,6 +8,7 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.db.TastDbConditions;
 import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.Estimate;
@@ -20,7 +21,6 @@ import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.DirectValueAttribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
-import edu.emory.library.tast.util.HibernateUtil;
 
 
 /**
@@ -125,7 +125,7 @@ public class EstimatesLoader {
 	private int handleConditionValue(EstimatesPosition position,
 			String positionFormula, boolean imported, int prevWiggleRoom) {
 		
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		
 		double sum = 0.0;
@@ -225,7 +225,7 @@ public class EstimatesLoader {
 		EstimateResponse response = this.getFixedValueQuery(position, voyageAttribute,
 				imported, prevWiggleRoom, Double.parseDouble(position.getExportFormula()));
 		
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		
 		//Execute query 
@@ -345,7 +345,7 @@ public class EstimatesLoader {
 	private EstimateResponse getFixedValueQuery(EstimatesPosition position,
 			String field, boolean imported, int prevWiggleRoom, double slaves) {
 		// get wiggle room for year
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		
 		//Calculate wiggle room (or use previous one if possible)
@@ -438,7 +438,7 @@ public class EstimatesLoader {
 	private EstimateResponse getFunctValueQuery(EstimatesPosition position,
 			String field, boolean imported, boolean useWiggleRoom, int prevWiggleRoom, double slaves) {
 		// prepare conditions
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		
 		//Get appropriate wiggle room (if should use one).
@@ -530,7 +530,7 @@ public class EstimatesLoader {
 		int currentWiggleRoom = -1;
 		int currentResults = 0;
 
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		
 		//Get minimal number of voyages for current number of slaves. 

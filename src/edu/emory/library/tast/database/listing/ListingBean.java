@@ -25,6 +25,7 @@ import edu.emory.library.tast.database.query.SearchParameters;
 import edu.emory.library.tast.database.tabscommon.MemorizedAction;
 import edu.emory.library.tast.database.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;
+import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.db.TastDbConditions;
 import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.Source;
@@ -34,7 +35,6 @@ import edu.emory.library.tast.dm.attributes.DictionaryAttribute;
 import edu.emory.library.tast.dm.attributes.Group;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 import edu.emory.library.tast.util.CSVUtils;
-import edu.emory.library.tast.util.HibernateUtil;
 
 /**
  * Backing bean for table results presented in web interface.
@@ -205,7 +205,7 @@ public class ListingBean {
 
 		TastDbQuery query = getQuery(subCondition, dataTable, start, length, returnBasicInfo);
 		
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		
 		SourceInformationLookup sourceInfoUtils = SourceInformationLookup.createSourceInformationUtils(session);
@@ -939,7 +939,7 @@ public class ListingBean {
 	public String getFileCurrentData()
 	{
 
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		
 		TastDbQuery q = this.getQuery(this.conditions, this.data, this.linkManager.getCurrentFirstRecord(), this.linkManager.getStep(), false);
@@ -953,7 +953,7 @@ public class ListingBean {
 	}
 	
 	public String getFileAllData() {	
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		
 		TastDbQuery q = this.getQuery(this.conditions, this.data, 0, -1, false);

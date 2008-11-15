@@ -7,7 +7,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
-import edu.emory.library.tast.util.HibernateUtil;
+import edu.emory.library.tast.db.HibernateConn;
 
 
 
@@ -70,7 +70,7 @@ public abstract class Dictionary
 		Transaction transaction = null;
 		if (!sessionProvided)
 		{
-			sess = HibernateUtil.getSession();
+			sess = HibernateConn.getSession();
 			transaction = sess.beginTransaction();
 		}
 		
@@ -114,7 +114,7 @@ public abstract class Dictionary
 		Transaction transaction = null;
 		if (!sessionProvided)
 		{
-			sess = HibernateUtil.getSession();
+			sess = HibernateConn.getSession();
 			transaction = sess.beginTransaction();
 		}
 
@@ -137,7 +137,7 @@ public abstract class Dictionary
 		Transaction transaction = null;
 		if (!sessionProvided)
 		{
-			sess = HibernateUtil.getSession();
+			sess = HibernateConn.getSession();
 			transaction = sess.beginTransaction();
 		}
 

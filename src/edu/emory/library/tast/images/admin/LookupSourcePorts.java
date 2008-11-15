@@ -13,8 +13,8 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import edu.emory.library.tast.common.LookupSource;
+import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.dm.Port;
-import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.StringUtils;
 
 public class LookupSourcePorts implements LookupSource
@@ -60,7 +60,7 @@ public class LookupSourcePorts implements LookupSource
 		Long[] ids = StringUtils.parseLongArray(idsStr);
 
 		// open db
-		Session sess = HibernateUtil.getSession();
+		Session sess = HibernateConn.getSession();
 		Transaction transaction = sess.beginTransaction();
 		
 		// load 
@@ -88,7 +88,7 @@ public class LookupSourcePorts implements LookupSource
 	{
 
 		// open db
-		Session sess = HibernateUtil.getSession();
+		Session sess = HibernateConn.getSession();
 		Transaction transaction = sess.beginTransaction();
 		
 		// load all ports

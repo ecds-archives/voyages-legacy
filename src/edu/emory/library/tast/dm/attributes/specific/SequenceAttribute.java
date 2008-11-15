@@ -2,10 +2,10 @@ package edu.emory.library.tast.dm.attributes.specific;
 
 import java.util.Map;
 
+import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.DictionaryAttribute;
 import edu.emory.library.tast.util.EmptyMap;
-import edu.emory.library.tast.util.HibernateUtil;
 
 public class SequenceAttribute extends Attribute {
 
@@ -79,7 +79,7 @@ public class SequenceAttribute extends Attribute {
 				
 				// get the name of the table and the column
 				DictionaryAttribute dictAttr = (DictionaryAttribute) attributes[i];
-				String table = HibernateUtil.getTableName(dictAttr.getDictionayClass());
+				String table = HibernateConn.getTableName(dictAttr.getDictionayClass());
 				String column = dictAttr.getName();
 				
 				// get a new index for this table

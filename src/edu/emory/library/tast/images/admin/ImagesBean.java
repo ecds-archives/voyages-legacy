@@ -31,11 +31,11 @@ import edu.emory.library.tast.AppConfig;
 import edu.emory.library.tast.Language;
 import edu.emory.library.tast.Languages;
 import edu.emory.library.tast.common.LookupSources;
+import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.dm.Image;
 import edu.emory.library.tast.dm.ImageCategory;
 import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.dm.Region;
-import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.StringUtils;
 import edu.emory.library.tast.util.UidGenerator;
 
@@ -170,7 +170,7 @@ public class ImagesBean
 	{
 		
 		// open db
-		Session sess = HibernateUtil.getSession();
+		Session sess = HibernateConn.getSession();
 		Transaction transaction = sess.beginTransaction();
 
 		// basic query
@@ -268,7 +268,7 @@ public class ImagesBean
 		saveScrollPosition();
 		
 		// open db
-		Session sess = HibernateUtil.getSession();
+		Session sess = HibernateConn.getSession();
 		Transaction transaction = sess.beginTransaction();
 		
 		// load image itself
@@ -490,7 +490,7 @@ public class ImagesBean
 		{
 
 			// open db
-			sess = HibernateUtil.getSession();
+			sess = HibernateConn.getSession();
 			transaction = sess.beginTransaction();
 			
 			// load image
@@ -645,7 +645,7 @@ public class ImagesBean
 	public String deleteImage()
 	{
 
-		Session sess = HibernateUtil.getSession();
+		Session sess = HibernateConn.getSession();
 		Transaction transaction = sess.beginTransaction();
 		
 		Image image = Image.loadById(Integer.parseInt(selectedImageId));
@@ -689,7 +689,7 @@ public class ImagesBean
 	private SelectItem[] loadCategories(boolean includeAll)
 	{
 		
-		Session sess = HibernateUtil.getSession();;
+		Session sess = HibernateConn.getSession();;
 		Transaction transaction = sess.beginTransaction();
 		
 		int extraItem = includeAll ? 1 : 0;

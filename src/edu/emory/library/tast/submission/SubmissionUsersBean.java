@@ -13,6 +13,7 @@ import edu.emory.library.tast.common.GridColumn;
 import edu.emory.library.tast.common.GridColumnClickEvent;
 import edu.emory.library.tast.common.GridOpenRowEvent;
 import edu.emory.library.tast.common.GridRow;
+import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.db.TastDbConditions;
 import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.Submission;
@@ -20,7 +21,6 @@ import edu.emory.library.tast.dm.SubmissionEditor;
 import edu.emory.library.tast.dm.User;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
-import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.StringUtils;
 
 public class SubmissionUsersBean {
@@ -333,7 +333,7 @@ public class SubmissionUsersBean {
 	}
 
 	public String enterEditUser() {
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		User user = User.loadById(session, this.checkedUserId);
 		if (user == null) {
@@ -362,7 +362,7 @@ public class SubmissionUsersBean {
 	}
 
 	public String deleteUser() {
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		User user = User.loadById(session, this.checkedUserId);
 		if (user.getSubmissions().size() != 0) {
@@ -377,7 +377,7 @@ public class SubmissionUsersBean {
 	
 	public String updateUser() {
 
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		User user = User.loadById(session, this.checkedUserId);
 		if (user == null) {
@@ -564,7 +564,7 @@ public class SubmissionUsersBean {
 			return null;
 		}
 
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		
 		User existingUser = User.loadByName(session, this.newUserName);
@@ -664,7 +664,7 @@ public class SubmissionUsersBean {
 	}
 
 	public SelectItem[] getEditorUsers() {
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		try {
 			Long id = this.adminSubmissionBean.getSubmissionId();

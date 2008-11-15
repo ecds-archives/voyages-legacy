@@ -7,9 +7,9 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.dm.FAQ;
 import edu.emory.library.tast.dm.FAQCategory;
-import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.StringUtils;
 
 public class FAQBean
@@ -58,7 +58,7 @@ public class FAQBean
 		faqList.setKeywords(keywords);
 		
 		// open connection
-		Session sess = HibernateUtil.getSession();
+		Session sess = HibernateConn.getSession();
 		Transaction transaction = sess.beginTransaction();
 
 		// create main query

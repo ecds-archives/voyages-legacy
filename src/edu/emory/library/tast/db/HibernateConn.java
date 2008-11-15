@@ -1,4 +1,4 @@
-package edu.emory.library.tast.util;
+package edu.emory.library.tast.db;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -9,7 +9,7 @@ import org.hibernate.cfg.Configuration;
  * @author Pawel Jurczyk
  *
  */
-public class HibernateUtil {
+public class HibernateConn {
 	
 	/**
 	 * Used session factory.

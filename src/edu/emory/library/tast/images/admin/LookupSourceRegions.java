@@ -13,8 +13,8 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import edu.emory.library.tast.common.LookupSource;
+import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.dm.Region;
-import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.StringUtils;
 
 public class LookupSourceRegions implements LookupSource
@@ -61,7 +61,7 @@ public class LookupSourceRegions implements LookupSource
 		Long[] ids = StringUtils.parseLongArray(idsStr);
 
 		// open db
-		Session sess = HibernateUtil.getSession();
+		Session sess = HibernateConn.getSession();
 		Transaction transaction = sess.beginTransaction();
 		
 		// prepare query
@@ -89,7 +89,7 @@ public class LookupSourceRegions implements LookupSource
 	{
 
 		// open db
-		Session sess = HibernateUtil.getSession();
+		Session sess = HibernateConn.getSession();
 		Transaction transaction = sess.beginTransaction();
 
 		// prepare query

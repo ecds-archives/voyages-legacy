@@ -11,6 +11,7 @@ import edu.emory.library.tast.common.EventLineEvent;
 import edu.emory.library.tast.common.EventLineGraph;
 import edu.emory.library.tast.common.EventLineLabel;
 import edu.emory.library.tast.common.EventLineZoomLevel;
+import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.db.TastDbConditions;
 import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.Estimate;
@@ -18,7 +19,6 @@ import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.estimates.selection.EstimatesSelectionBean;
 import edu.emory.library.tast.util.CSVUtils;
-import edu.emory.library.tast.util.HibernateUtil;
 
 public class EstimatesTimelineBean
 {
@@ -237,7 +237,7 @@ public class EstimatesTimelineBean
 	}
 	
 	public String getFileAllData() {	
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		
 		String[][] data = new String[this.graphImp.getX().length + 1][3];

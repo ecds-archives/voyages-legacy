@@ -12,7 +12,6 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import edu.emory.library.tast.dm.attributes.Attribute;
-import edu.emory.library.tast.util.HibernateUtil;
 
 /**
  * Class that represents query built for hibernate.
@@ -314,7 +313,7 @@ public class TastDbQuery {
 		}
 		
 		// master table and master alias
-		String masterTable = HibernateUtil.getTableName("edu.emory.library.tast.dm." + objects[0]);
+		String masterTable = HibernateConn.getTableName("edu.emory.library.tast.dm." + objects[0]);
 
 		// indexes of tables to avoid duplicates
 		Map tablesIndexes = new HashMap();
@@ -452,7 +451,7 @@ public class TastDbQuery {
 	
 	public Object[] executeQuery(boolean usqSQL)
 	{
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction transaction = session.beginTransaction();
 		Object[] ret = executeQuery(session, usqSQL);
 		transaction.commit();
@@ -485,7 +484,7 @@ public class TastDbQuery {
 
 	public List executeQueryList(boolean usqSQL)
 	{
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction transaction = session.beginTransaction();
 		List list = executeQueryList(session, usqSQL);
 		transaction.commit();

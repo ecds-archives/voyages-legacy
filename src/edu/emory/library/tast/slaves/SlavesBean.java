@@ -23,6 +23,7 @@ import edu.emory.library.tast.common.listing.links.TableLinkManager;
 import edu.emory.library.tast.common.voyage.VoyageDetailBean;
 import edu.emory.library.tast.database.listing.formatters.AbstractAttributeFormatter;
 import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;
+import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.db.TastDbConditions;
 import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.Area;
@@ -35,7 +36,6 @@ import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.util.CSVUtils;
-import edu.emory.library.tast.util.HibernateUtil;
 
 /**
  * This bean coordinates everything in the names database. It is a session scope
@@ -162,7 +162,7 @@ public class SlavesBean {
 
 		this.firstVisibleRecord = this.pager.getCurrentFirstRecord();
 
-		Session sess = HibernateUtil.getSession();
+		Session sess = HibernateConn.getSession();
 		Transaction tran = sess.beginTransaction();
 		
 		if (refreshText) querySummary = new ArrayList();
@@ -218,7 +218,7 @@ public class SlavesBean {
 	 */
 	private void updateExpectedCount() {
 
-		Session sess = HibernateUtil.getSession();
+		Session sess = HibernateConn.getSession();
 		Transaction tran = sess.beginTransaction();
 
 		TastDbConditions conditions = workingQuery.createConditions(sess, null);
@@ -348,7 +348,7 @@ public class SlavesBean {
 
 		String hsql = "from Country c " + "where c in (select s.country from Slave s group by s.country) " + "order by c.name";
 
-		Session sess = HibernateUtil.getSession();
+		Session sess = HibernateConn.getSession();
 		Transaction tran = sess.beginTransaction();
 
 		Query query = sess.createQuery(hsql);
@@ -382,7 +382,7 @@ public class SlavesBean {
 			"where p in (select s.majbuypt from Slave s group by s.majbuypt) " +
 			"order by p.region.area.order, p.region.order, p.order";
 
-		Session sess = HibernateUtil.getSession();
+		Session sess = HibernateConn.getSession();
 		Transaction tran = sess.beginTransaction();
 
 		Query query = sess.createQuery(hsql);
@@ -461,7 +461,7 @@ public class SlavesBean {
 	public String showDetails(ShowDetailsEvent event)
 	{
 		
-		Session sess = HibernateUtil.getSession();
+		Session sess = HibernateConn.getSession();
 		Transaction transaction = sess.beginTransaction();
 		
 		Voyage voyage = Voyage.loadByVoyageId(sess, event.getVoyageId().intValue());
@@ -601,7 +601,7 @@ public class SlavesBean {
 	 * @return
 	 */
 	public String getFileCurrentData() {
-		Session sess = HibernateUtil.getSession();
+		Session sess = HibernateConn.getSession();
 		Transaction t = sess.beginTransaction();
 		TastDbConditions conditions = currentQuery.createConditions(sess, null);
 		TastDbQuery q = this.getQuery(conditions, this.pager.getCurrentFirstRecord(), this.pager.getStep());
@@ -616,7 +616,7 @@ public class SlavesBean {
 	 * @return
 	 */
 	public String getFileAllData() {
-		Session sess = HibernateUtil.getSession();
+		Session sess = HibernateConn.getSession();
 		Transaction t = sess.beginTransaction();
 		TastDbConditions conditions = currentQuery.createConditions(sess, null);
 		TastDbQuery q = this.getQuery(conditions, 0, -1);

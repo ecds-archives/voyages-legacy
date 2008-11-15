@@ -5,10 +5,10 @@ import java.util.Map;
 
 import org.hibernate.Session;
 
+import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.dm.Dictionary;
 import edu.emory.library.tast.spss.LogWriter;
 import edu.emory.library.tast.spss.STSchemaVariable;
-import edu.emory.library.tast.util.HibernateUtil;
 
 public abstract class DictionaryAttribute extends ImportableAttribute
 {
@@ -110,7 +110,7 @@ public abstract class DictionaryAttribute extends ImportableAttribute
 	{
 
 		// get the name of the table
-		String table = HibernateUtil.getTableName(this.getDictionayClass().getCanonicalName());
+		String table = HibernateConn.getTableName(this.getDictionayClass().getCanonicalName());
 		
 		// get a new index for this table
 		int thisIdx = 0;

@@ -7,6 +7,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.Area;
 import edu.emory.library.tast.dm.Port;
@@ -14,7 +15,6 @@ import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
-import edu.emory.library.tast.util.HibernateUtil;
 
 public class Test
 {
@@ -22,7 +22,7 @@ public class Test
 	public static void main(String[] args)
 	{
 		
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction trans = session.beginTransaction();
 		
 		//order by v.mjbyptimp.order

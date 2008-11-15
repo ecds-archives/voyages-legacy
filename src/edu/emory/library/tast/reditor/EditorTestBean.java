@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.dm.Area;
 import edu.emory.library.tast.dm.Dictionary;
 import edu.emory.library.tast.dm.Fate;
@@ -32,7 +33,6 @@ import edu.emory.library.tast.dm.attributes.RegionAttribute;
 import edu.emory.library.tast.dm.attributes.ResistanceAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
 import edu.emory.library.tast.dm.attributes.VesselRigAttribute;
-import edu.emory.library.tast.util.HibernateUtil;
 
 public class EditorTestBean
 {
@@ -185,7 +185,7 @@ public class EditorTestBean
 		
 		Schema schema = new Schema();
 		
-		Session sess = HibernateUtil.getSession();
+		Session sess = HibernateConn.getSession();
 		Transaction tran = sess.beginTransaction();
 		
 		registerDictionary(LIST_NATIONS_NAME, schema, sess, Nation.loadAll(sess, "id"));
@@ -283,7 +283,7 @@ public class EditorTestBean
 
 		Schema schema = new Schema();
 		
-		Session sess = HibernateUtil.getSession();
+		Session sess = HibernateConn.getSession();
 		Transaction tran = sess.beginTransaction();
 		
 		registerListOfNations(schema, sess);
@@ -320,7 +320,7 @@ public class EditorTestBean
 
 		Schema schema = new Schema();
 		
-		Session sess = HibernateUtil.getSession();
+		Session sess = HibernateConn.getSession();
 		Transaction tran = sess.beginTransaction();
 		
 		registerListOfFates(schema, sess);
@@ -351,7 +351,7 @@ public class EditorTestBean
 
 		Schema schema = new Schema();
 		
-		Session sess = HibernateUtil.getSession();
+		Session sess = HibernateConn.getSession();
 		Transaction tran = sess.beginTransaction();
 		
 		registerAreas(schema, sess, Area.loadAll(sess));

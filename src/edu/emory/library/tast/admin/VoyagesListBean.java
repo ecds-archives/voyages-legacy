@@ -11,6 +11,7 @@ import org.hibernate.Transaction;
 
 import edu.emory.library.tast.common.GridColumn;
 import edu.emory.library.tast.common.GridRow;
+import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.db.TastDbConditions;
 import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.Nation;
@@ -19,7 +20,6 @@ import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
-import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.StringUtils;
 
 public class VoyagesListBean
@@ -88,7 +88,7 @@ public class VoyagesListBean
 		dataValid = true;
 
 		// open db
-		Session sess = HibernateUtil.getSession();
+		Session sess = HibernateConn.getSession();
 		Transaction tran = sess.beginTransaction();
 		
 		// prepare conditions

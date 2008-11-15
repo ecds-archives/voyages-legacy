@@ -14,11 +14,11 @@ import edu.emory.library.tast.common.grideditor.RowGroup;
 import edu.emory.library.tast.common.grideditor.Value;
 import edu.emory.library.tast.common.grideditor.Values;
 import edu.emory.library.tast.database.SourceInformationLookup;
+import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.submission.SubmissionAttribute;
 import edu.emory.library.tast.submission.SubmissionAttributes;
 import edu.emory.library.tast.submission.SubmissionDictionaries;
-import edu.emory.library.tast.util.HibernateUtil;
 
 /**
  * 
@@ -97,7 +97,7 @@ public class VoyageBean {
 
 	public Values getValues() {
 		if (values == null) {
-			Session session = HibernateUtil.getSession();
+			Session session = HibernateConn.getSession();
 			Transaction t = session.beginTransaction();
 			
 			SourceInformationLookup sourceInfoUtils = SourceInformationLookup.createSourceInformationUtils(session);
@@ -134,7 +134,7 @@ public class VoyageBean {
 	
 	public String save() {		
 		boolean wasError = false;		
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		Voyage vNew = Voyage.loadById(session, this.rowId);		
 		if (vNew == null) {
@@ -171,7 +171,7 @@ public class VoyageBean {
 	
 	public String delete() {
 		
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		Voyage vNew = Voyage.loadById(session, this.rowId);	
 		if (vNew == null) {

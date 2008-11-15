@@ -12,8 +12,8 @@ import edu.emory.library.tast.AppConfig;
 import edu.emory.library.tast.common.SimpleTableCell;
 import edu.emory.library.tast.database.query.searchables.SearchableAttribute;
 import edu.emory.library.tast.database.query.searchables.UserCategory;
+import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.dm.attributes.Group;
-import edu.emory.library.tast.util.HibernateUtil;
 
 public class VariableListBean
 {
@@ -52,7 +52,7 @@ public class VariableListBean
 		hql.append(" WHERE v.revision = ");
 		hql.append(AppConfig.getConfiguration().getString(AppConfig.DEFAULT_REVISION));
 		
-		Session sess = HibernateUtil.getSession();
+		Session sess = HibernateConn.getSession();
 		Transaction transaction = sess.beginTransaction();
 		
 		List result = sess.createSQLQuery(hql.toString()).list();

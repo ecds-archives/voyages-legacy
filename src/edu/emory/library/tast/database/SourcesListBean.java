@@ -14,8 +14,8 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import edu.emory.library.tast.common.SimpleTableCell;
+import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.dm.Source;
-import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.StringUtils;
 
 class SouceTypeDescriptor
@@ -373,7 +373,7 @@ public class SourcesListBean
 	public SimpleTableCell[][] getSources()
 	{
 
-		Session sess = HibernateUtil.getSession();
+		Session sess = HibernateConn.getSession();
 		Transaction trans = sess.beginTransaction();
 		
 		SimpleTableCell[][] sources;

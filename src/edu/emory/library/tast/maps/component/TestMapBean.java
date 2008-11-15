@@ -6,8 +6,8 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.dm.Port;
-import edu.emory.library.tast.util.HibernateUtil;
 
 public class TestMapBean
 {
@@ -26,7 +26,7 @@ public class TestMapBean
 	{
 		
 		
-		Session sess = HibernateUtil.getSession();
+		Session sess = HibernateConn.getSession();
 		Transaction trans = sess.beginTransaction();
 		
 		List ports = Port.loadAll(sess);

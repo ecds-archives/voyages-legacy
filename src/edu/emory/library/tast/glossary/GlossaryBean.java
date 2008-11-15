@@ -8,8 +8,8 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.dm.GlossaryTerm;
-import edu.emory.library.tast.util.HibernateUtil;
 import edu.emory.library.tast.util.StringUtils;
 
 public class GlossaryBean
@@ -59,7 +59,7 @@ public class GlossaryBean
 		terms.setKeywords(keywords);
 
 		// open connection
-		Session sess = HibernateUtil.getSession();
+		Session sess = HibernateConn.getSession();
 		Transaction transaction = sess.beginTransaction();
 		
 		// create main query
@@ -131,7 +131,7 @@ public class GlossaryBean
 		String[] keywords = StringUtils.extractQueryKeywords(searchTerm, StringUtils.UPPER_CASE);
 		
 		// open connection
-		Session sess = HibernateUtil.getSession();
+		Session sess = HibernateConn.getSession();
 		Transaction transaction = sess.beginTransaction();
 		
 		// create query for the all

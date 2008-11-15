@@ -23,6 +23,7 @@ import edu.emory.library.tast.common.grideditor.textbox.TextboxIntegerAdapter;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxIntegerFieldType;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxLongAdapter;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxLongFieldType;
+import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.dm.Area;
 import edu.emory.library.tast.dm.Dictionary;
 import edu.emory.library.tast.dm.Fate;
@@ -33,7 +34,6 @@ import edu.emory.library.tast.dm.Nation;
 import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.dm.VesselRig;
-import edu.emory.library.tast.util.HibernateUtil;
 
 public class SubmissionDictionaries {
 
@@ -64,7 +64,7 @@ public class SubmissionDictionaries {
 	public static ListItem[] boolItems;
 	
 	static {
-		Session session = HibernateUtil.getSession();
+		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction(); 
 		List areasL = Area.loadAll(session);
 		areas = new ListItem[areasL.size() + 1];
