@@ -504,5 +504,24 @@ public class StringUtils
 			return str;
 		}
 	}
+	
+	public static Long[] toLongArray(Set stringSet)
+	{
+		Long[] longs = new Long[stringSet.size()];
+		int i = 0;
+		for (Iterator iterator = stringSet.iterator(); iterator.hasNext();)
+		{
+			String valueStr = (String) iterator.next();
+			try
+			{
+				longs[i++] = new Long(valueStr);
+			}
+			catch (NumberFormatException nfe)
+			{
+				return null;
+			}
+		}
+		return longs;
+	}
 
 }

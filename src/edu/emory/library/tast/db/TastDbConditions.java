@@ -268,14 +268,13 @@ public class TastDbConditions {
 			else if (c.op.equals(" IN "))
 			{
 				
-				Attribute attr = c.attribute;
 				String paramName = "p_" + (paramIndex.index ++);
 
 				if (c.value instanceof Object[])
 				{
 					Object[] values = (Object[]) c.value;
 					processed++;
-					ret.append(attr.getHQLWherePath(bindings));
+					ret.append(hql ? c.attribute.getHQLWherePath(bindings) :  c.attribute.getSQLReference(masterTable, tablesIndexes, existingJoins, sqlFrom));
 					ret.append(" IN ");
 					ret.append("(");
 					for (int i = 0; i < values.length; i++)

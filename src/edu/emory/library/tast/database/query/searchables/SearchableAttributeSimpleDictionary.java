@@ -21,6 +21,8 @@ import edu.emory.library.tast.util.StringUtils;
 public class SearchableAttributeSimpleDictionary extends SearchableAttributeSimple implements ListItemsSource
 {
 	
+	private static final boolean USE_SQL_IN = true;
+
 	public SearchableAttributeSimpleDictionary(String id, String userLabel, UserCategories userCategories, Attribute[] attributes, String spssName, String listDescription, boolean inEstimates)
 	{
 		super(id, userLabel, userCategories, attributes, spssName, listDescription, inEstimates);
@@ -38,23 +40,51 @@ public class SearchableAttributeSimpleDictionary extends SearchableAttributeSimp
 		if (queryConditionList.getSelectedIdsCount() == 0)
 			return true;
 		
-		TastDbConditions subCond = new TastDbConditions(TastDbConditions.OR);
+		Long[] idsArray = StringUtils.toLongArray(queryConditionList.getSelectedIds());
+		if (idsArray == null)
+			return false;
 		
-		for (Iterator iter = queryConditionList.getSelectedIds().iterator(); iter.hasNext();)
+		// Jan Zich, November 15, 2008
+		// This is to experiment with "... column IN (1, 2, 3) ... " versus
+		// "... column = 1 OR column = 2 OR column = 3 ...". By some rudimentary
+		// testing, I found that there is almost no difference. But I would like
+		// to keep it here just for record.
+
+		if (USE_SQL_IN)
 		{
-
-			Long id = new Long((String) iter.next());
-
+		
 			Attribute[] attributes = getAttributes();
 			for (int i = 0; i < attributes.length; i++)
 			{
 				DictionaryAttribute attribute = (DictionaryAttribute) attributes[i];
 				NumericAttribute idAttr = attribute.getIdAttribute();
-				subCond.addCondition(new SequenceAttribute(new Attribute[] {attribute, idAttr}), id, TastDbConditions.OP_EQUALS);
+				conditions.addCondition(
+						new SequenceAttribute(new Attribute[] {attribute, idAttr}),
+						idsArray, TastDbConditions.OP_IN);
 			}
+		
+		}
+		else
+		{
+		
+			TastDbConditions subCond = new TastDbConditions(TastDbConditions.OR);
+			for (int j = 0; j < idsArray.length; j++)
+			{
+	
+				Attribute[] attributes = getAttributes();
+				for (int i = 0; i < attributes.length; i++)
+				{
+					DictionaryAttribute attribute = (DictionaryAttribute) attributes[i];
+					NumericAttribute idAttr = attribute.getIdAttribute();
+					subCond.addCondition(
+							new SequenceAttribute(new Attribute[] {attribute, idAttr}),
+							idsArray[j], TastDbConditions.OP_EQUALS);
+				}
+				
+			}
+			conditions.addCondition(subCond);
 			
 		}
-		conditions.addCondition(subCond);
 		
 		return true;
 	}
