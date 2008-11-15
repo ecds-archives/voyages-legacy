@@ -35,7 +35,7 @@ public class FateVesselAttribute extends DictionaryAttribute
 		return FateVessel.loadAll(sess);
 	}
 	
-	public NumericAttribute getItAttribute()
+	public NumericAttribute getIdAttribute()
 	{
 		return (NumericAttribute) FateVessel.getAttribute("id");
 	}

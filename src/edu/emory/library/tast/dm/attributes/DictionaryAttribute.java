@@ -22,7 +22,7 @@ public abstract class DictionaryAttribute extends ImportableAttribute
 		super(name, objectType, importName);
 	}
 	
-	public abstract NumericAttribute getItAttribute(); 
+	public abstract NumericAttribute getIdAttribute(); 
 	
 	public int getImportType()
 	{

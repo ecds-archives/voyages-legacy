@@ -35,7 +35,7 @@ public class PortAttribute extends DictionaryAttribute
 		return Port.loadAll(sess);
 	}
 	
-	public NumericAttribute getItAttribute()
+	public NumericAttribute getIdAttribute()
 	{
 		return (NumericAttribute) Port.getAttribute("id");
 	}

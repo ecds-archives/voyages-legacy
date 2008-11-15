@@ -19,7 +19,7 @@ public class SubmissionAttribute extends DictionaryAttribute {
 		return null;
 	}
 
-	public NumericAttribute getItAttribute() {
+	public NumericAttribute getIdAttribute() {
 		return null;
 	}
 

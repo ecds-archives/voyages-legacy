@@ -35,7 +35,7 @@ public class FateAttribute extends DictionaryAttribute
 		return Fate.loadAll(sess);
 	}
 
-	public NumericAttribute getItAttribute()
+	public NumericAttribute getIdAttribute()
 	{
 		return (NumericAttribute) Fate.getAttribute("id");
 	}

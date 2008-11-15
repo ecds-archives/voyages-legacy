@@ -36,7 +36,7 @@ public class CategoryAttribute extends DictionaryAttribute
 		return ImageCategory.loadAll(sess);
 	}
 	
-	public NumericAttribute getItAttribute()
+	public NumericAttribute getIdAttribute()
 	{
 		return (NumericAttribute) Port.getAttribute("id");
 	}

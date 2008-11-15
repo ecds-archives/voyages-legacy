@@ -35,7 +35,7 @@ public class RegionAttribute extends DictionaryAttribute
 		return Region.loadAll(sess);
 	}
 	
-	public NumericAttribute getItAttribute()
+	public NumericAttribute getIdAttribute()
 	{
 		return (NumericAttribute) Region.getAttribute("id");
 	}

@@ -35,7 +35,7 @@ public class ResistanceAttribute extends DictionaryAttribute
 		return Resistance.loadAll(sess);
 	}
 
-	public NumericAttribute getItAttribute()
+	public NumericAttribute getIdAttribute()
 	{
 		return (NumericAttribute) Resistance.getAttribute("id");
 	}

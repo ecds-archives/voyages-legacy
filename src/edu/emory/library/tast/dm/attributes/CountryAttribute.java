@@ -17,7 +17,7 @@ public class CountryAttribute extends DictionaryAttribute {
 		return Country.getAttribute(name);
 	}
 
-	public NumericAttribute getItAttribute() {
+	public NumericAttribute getIdAttribute() {
 		return (NumericAttribute) Country.getAttribute("id");
 	}
 

@@ -49,7 +49,7 @@ public class SearchableAttributeSimpleDictionary extends SearchableAttributeSimp
 			for (int i = 0; i < attributes.length; i++)
 			{
 				DictionaryAttribute attribute = (DictionaryAttribute) attributes[i];
-				NumericAttribute idAttr = attribute.getItAttribute();
+				NumericAttribute idAttr = attribute.getIdAttribute();
 				subCond.addCondition(new SequenceAttribute(new Attribute[] {attribute, idAttr}), id, TastDbConditions.OP_EQUALS);
 			}
 			

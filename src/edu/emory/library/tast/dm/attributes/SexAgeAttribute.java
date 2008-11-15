@@ -17,7 +17,7 @@ public class SexAgeAttribute extends DictionaryAttribute {
 		return SexAge.getAttribute(name);
 	}
 
-	public NumericAttribute getItAttribute() {
+	public NumericAttribute getIdAttribute() {
 		return (NumericAttribute) SexAge.getAttribute("id");
 	}
 

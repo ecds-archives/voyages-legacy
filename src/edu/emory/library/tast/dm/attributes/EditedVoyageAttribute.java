@@ -24,7 +24,7 @@ public class EditedVoyageAttribute extends DictionaryAttribute {
 		return null;
 	}
 	
-	public NumericAttribute getItAttribute()
+	public NumericAttribute getIdAttribute()
 	{
 		return (NumericAttribute) Voyage.getAttribute("iid");
 	}
