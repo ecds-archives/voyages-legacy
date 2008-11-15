@@ -3,7 +3,6 @@ package edu.emory.library.tast.maintenance;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import edu.emory.library.tast.util.SqlUtils;
 
@@ -49,37 +48,42 @@ public class RecreateLocationColumns
 			
 			System.out.println("Creating region and area columns for '" + portColumns[i] + "' ...");
 			
-			String portColumn = portColumns[i];
+			String portColumn = portColumns[i] + "_port";
 			String regionColumn = portColumn + "_region";
 			String areaColumn = portColumn + "_area";
 			
+			SqlUtils.dropColumnIfExists(conn, "voyages", portColumn);
 			SqlUtils.dropColumnIfExists(conn, "voyages", regionColumn);
 			SqlUtils.dropColumnIfExists(conn, "voyages", areaColumn);
+
+			String sqlAddPortColumn =
+				"ALTER TABLE voyages " +
+				"ADD COLUMN " + portColumn + " bigint";
+			
 			
 			String sqlAddRegionColumn =
 				"ALTER TABLE voyages " +
 				"ADD COLUMN " + regionColumn + " bigint";
 			
-			Statement stAddRegionColumn = conn.createStatement();
-			stAddRegionColumn.execute(sqlAddRegionColumn);
-			
 			String sqlAddAreaColumn =
 				"ALTER TABLE voyages " +
 				"ADD COLUMN " + areaColumn + " bigint";
 			
-			Statement stAddAreaColumn = conn.createStatement();
-			stAddAreaColumn.execute(sqlAddAreaColumn);
+			conn.createStatement().execute(sqlAddPortColumn);
+			conn.createStatement().execute(sqlAddRegionColumn);
+			conn.createStatement().execute(sqlAddAreaColumn);
 			
 			String sqlPopulateNewColumns =
 				"UPDATE " +
 				"	voyages " +
 				"SET " +
+				"	" + portColumn + " = ports.id, " +
 				"	" + regionColumn + " = regions.id, " +
 				" 	" + areaColumn + " = areas.id " +
 				"FROM " +
 				"	ports, regions, areas " +
 				"WHERE " +
-				"	ports.id = voyages." + portColumn + " AND " +
+				"	ports.id = voyages." + portColumns[i] + " AND " +
 				"	regions.id = ports.region_id AND " +
 				"	areas.id = regions.area_id AND " +
 				"	voyages.revision = " + DB_REVISION;
