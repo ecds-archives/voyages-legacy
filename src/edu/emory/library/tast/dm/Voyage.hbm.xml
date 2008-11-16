@@ -150,7 +150,7 @@
 		<property name="vymrtrat" column="vymrtrat" />
 		
 		<!--  the properties below don't seem to be used on the public website -->
-
+		
 		<property name="saild1" column="saild1" />
 		<property name="saild2" column="saild2" />
 		<property name="saild3" column="saild3" />
@@ -221,7 +221,6 @@
 		<property name="adult5" column="adult5" />
 		<property name="adult4" column="adult4" />
 		<property name="infant4" column="infant4" />
-		
 		<property name="nppretra" column="nppretra" />
 		<property name="tslavesp" column="tslavesp" />
 		<property name="sladvoy" column="sladvoy" />
