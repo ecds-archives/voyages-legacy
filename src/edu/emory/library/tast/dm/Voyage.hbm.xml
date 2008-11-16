@@ -12,8 +12,8 @@
 		</id>
 
 		<property name="voyageid" column="voyageid"/>
-		<property name="suggestion" />
-		<property name="revision"  />
+		<property name="suggestion" column="suggestion" />
+		<property name="revision" column="revision" />
 		
 		<property name="shipname" column="shipname" />
 		<property name="captaina" column="captaina" />
@@ -32,6 +32,7 @@
 		<property name="tonnage" column="tonnage" />
 		<property name="tonmod" column="tonmod" />
 		<property name="guns" column="guns" />
+		<property name="tontype" column="tontype" />
 		
 		<property name="ownera" column="ownera" />
 		<property name="ownerb" column="ownerb" />
@@ -54,7 +55,9 @@
 		<many-to-one name="fate2" column="fate2" class="edu.emory.library.tast.dm.FateSlaves" />
 		<many-to-one name="fate3" column="fate3" class="edu.emory.library.tast.dm.FateVessel" />
 		<many-to-one name="fate4" column="fate4" class="edu.emory.library.tast.dm.FateOwner" />
+		
 		<many-to-one name="resistance" column="resistance" class="edu.emory.library.tast.dm.Resistance" />
+		
 		<many-to-one name="ptdepimp" column="ptdepimp" class="edu.emory.library.tast.dm.Port" />
 		<many-to-one name="deptregimp" column="deptregimp" class="edu.emory.library.tast.dm.Region" />
 		<many-to-one name="plac1tra" column="plac1tra" class="edu.emory.library.tast.dm.Port" />
@@ -77,6 +80,10 @@
 		<many-to-one name="portret" column="portret" class="edu.emory.library.tast.dm.Port" />
 		<many-to-one name="portdep" column="portdep" class="edu.emory.library.tast.dm.Port" />
 		<many-to-one name="retrnreg" column="retrnreg" class="edu.emory.library.tast.dm.Region" />
+		<many-to-one name="embport" column="embport" class="edu.emory.library.tast.dm.Port" />
+		<many-to-one name="arrport" column="arrport" class="edu.emory.library.tast.dm.Port" />
+		<many-to-one name="embport2" column="embport2" class="edu.emory.library.tast.dm.Port" />
+		<many-to-one name="arrport2" column="arrport2" class="edu.emory.library.tast.dm.Port" />
 		
 		<property name="yearam" column="yearam" />
 		<property name="datedep" column="datedep" />
@@ -90,6 +97,7 @@
 		<property name="voy1imp" column="voy1imp" />
 		<property name="voy2imp" column="voy2imp" />
 		
+		<property name="crew" column="crew" />
 		<property name="crew1" column="crew1" />
 		<property name="crew3" column="crew3" />
 		<property name="crewdied" column="crewdied" />
@@ -106,16 +114,6 @@
 		<property name="slaximp" column="slaximp" />
 		<property name="slamimp" column="slamimp" />
 		
-		<property name="menrat7" column="menrat7" />
-		<property name="womrat7" column="womrat7" />
-		<property name="boyrat7" column="boyrat7" />
-		<property name="girlrat7" column="girlrat7" />
-		<property name="malrat7" column="malrat7" />
-		<property name="chilrat7" column="chilrat7" />
-		<property name="jamcaspr" column="jamcaspr" />
-		<property name="vymrtimp" column="vymrtimp" />
-		<property name="vymrtrat" column="vymrtrat" />
-
 		<property name="sourcea" column="sourcea" />
 		<property name="sourceb" column="sourceb" />
 		<property name="sourcec" column="sourcec" />
@@ -139,92 +137,99 @@
 		<many-to-one name="e_majbyimp" column="e_majbyimp" class="edu.emory.library.tast.dm.EstimatesExportRegion" />
 		<many-to-one name="e_mjselimp" column="e_mjselimp" class="edu.emory.library.tast.dm.EstimatesImportRegion" />
 
-		<many-to-one name="embport" column="embport" class="edu.emory.library.tast.dm.Port" />
-		<many-to-one name="arrport" column="arrport" class="edu.emory.library.tast.dm.Port" />
-		<many-to-one name="embport2" column="embport2" class="edu.emory.library.tast.dm.Port" />
-		<many-to-one name="arrport2" column="arrport2" class="edu.emory.library.tast.dm.Port" />
+		<property name="jamcaspr" column="jamcaspr" />
 
-		<property name="tontype" />
-		<property name="sladamer" />
-		<property name="saild1" />
-		<property name="saild2" />
-		<property name="saild3" />
-		<property name="saild4" />
-		<property name="saild5" />
-		<property name="voyage" />
-		<property name="child2" />
-		<property name="child3" />
-		<property name="crew4" />
-		<property name="crew5" />
-		<property name="adult1" />
-		<property name="child1" />
-		<property name="female1" />
-		<property name="male1" />
-		<property name="men1" />
-		<property name="women1" />
-		<property name="boy1" />
-		<property name="girl1" />
-		<property name="adult2" />
-		<property name="female2" />
-		<property name="male2" />
-		<property name="men2" />
-		<property name="women2" />
-		<property name="boy2" />
-		<property name="girl2" />
-		<property name="adult3" />
-		<property name="female3" />
-		<property name="male3" />
-		<property name="men3" />
-		<property name="women3" />
-		<property name="boy3" />
-		<property name="girl3" />
-		<property name="child4" />
-		<property name="female4" />
-		<property name="male4" />
-		<property name="men4" />
-		<property name="women4" />
-		<property name="boy4" />
-		<property name="girl4" />
-		<property name="child6" />
-		<property name="female6" />
-		<property name="male6" />
-		<property name="men6" />
-		<property name="women6" />
-		<property name="boy6" />
-		<property name="girl6" />
-		<property name="adult6" />
-		<property name="crew2" />
-		<property name="infantm3" />
-		<property name="infantf3" />
-		<property name="sladied1" />
-		<property name="sladied2" />
-		<property name="sladied3" />
-		<property name="sladied4" />
-		<property name="sladied5" />
-		<property name="sladied6" />
-		<property name="insurrec" />
-		<property name="evgreen" />
-		<property name="female5" />
-		<property name="male5" />
-		<property name="child5" />
-		<property name="men5" />
-		<property name="women5" />
-		<property name="boy5" />
-		<property name="girl5" />
-		<property name="infant3" />
-		<property name="infant1" />
-		<property name="adult5" />
-		<property name="adult4" />
-		<property name="infant4" />
-		<property name="crew" />
+		<property name="menrat7" column="menrat7" />
+		<property name="womrat7" column="womrat7" />
+		<property name="boyrat7" column="boyrat7" />
+		<property name="girlrat7" column="girlrat7" />
+		<property name="malrat7" column="malrat7" />
+		<property name="chilrat7" column="chilrat7" />
+
+		<property name="vymrtimp" column="vymrtimp" />
+		<property name="vymrtrat" column="vymrtrat" />
 		
-		<property name="nppretra" />
-		<property name="tslavesp" />
-		<property name="sladvoy" />
-		<property name="npprior" />
-		<property name="slinten2" />
-		<property name="ndesert" />
-		<property name="sladafri" />
+		<!--  the properties below don't seem to be used on the public website -->
+
+		<property name="saild1" column="saild1" />
+		<property name="saild2" column="saild2" />
+		<property name="saild3" column="saild3" />
+		<property name="saild4" column="saild4" />
+		<property name="saild5" column="saild5" />
+		<property name="voyage" column="voyage" />
+		<property name="child2" column="child2" />
+		<property name="child3" column="child3" />
+		<property name="crew4" column="crew4" />
+		<property name="crew5" column="crew5" />
+		<property name="adult1" column="adult1" />
+		<property name="child1" column="child1" />
+		<property name="female1" column="female1" />
+		<property name="male1" column="male1" />
+		<property name="men1" column="men1" />
+		<property name="women1" column="women1" />
+		<property name="boy1" column="boy1" />
+		<property name="girl1" column="girl1" />
+		<property name="adult2" column="adult2" />
+		<property name="female2" column="female2" />
+		<property name="male2" column="male2" />
+		<property name="men2" column="men2" />
+		<property name="women2" column="women2" />
+		<property name="boy2" column="boy2" />
+		<property name="girl2" column="girl2" />
+		<property name="adult3" column="adult3" />
+		<property name="female3" column="female3" />
+		<property name="male3" column="male3" />
+		<property name="men3" column="men3" />
+		<property name="women3" column="women3" />
+		<property name="boy3" column="boy3" />
+		<property name="girl3" column="girl3" />
+		<property name="child4" column="child4" />
+		<property name="female4" column="female4" />
+		<property name="male4" column="male4" />
+		<property name="men4" column="men4" />
+		<property name="women4" column="women4" />
+		<property name="boy4" column="boy4" />
+		<property name="girl4" column="girl4" />
+		<property name="child6" column="child6" />
+		<property name="female6" column="female6" />
+		<property name="male6" column="male6" />
+		<property name="men6" column="men6" />
+		<property name="women6" column="women6" />
+		<property name="boy6" column="boy6" />
+		<property name="girl6" column="girl6" />
+		<property name="adult6" column="adult6" />
+		<property name="crew2" column="crew2" />
+		<property name="infantm3" column="infantm3" />
+		<property name="infantf3" column="infantf3" />
+		<property name="sladied1" column="sladied1" />
+		<property name="sladied2" column="sladied2" />
+		<property name="sladied3" column="sladied3" />
+		<property name="sladied4" column="sladied4" />
+		<property name="sladied5" column="sladied5" />
+		<property name="sladied6" column="sladied6" />
+		<property name="insurrec" column="insurrec" />
+		<property name="evgreen" column="evgreen" />
+		<property name="female5" column="female5" />
+		<property name="male5" column="male5" />
+		<property name="child5" column="child5" />
+		<property name="men5" column="men5" />
+		<property name="women5" column="women5" />
+		<property name="boy5" column="boy5" />
+		<property name="girl5" column="girl5" />
+		<property name="infant3" column="infant3" />
+		<property name="infant1" column="infant1" />
+		<property name="adult5" column="adult5" />
+		<property name="adult4" column="adult4" />
+		<property name="infant4" column="infant4" />
+		
+		<property name="nppretra" column="nppretra" />
+		<property name="tslavesp" column="tslavesp" />
+		<property name="sladvoy" column="sladvoy" />
+		<property name="npprior" column="npprior" />
+		<property name="slinten2" column="slinten2" />
+		<property name="ndesert" column="ndesert" />
+		<property name="sladafri" column="sladafri" />
+		<property name="sladamer" column="sladamer" />
 		
 	</class>
 </hibernate-mapping>

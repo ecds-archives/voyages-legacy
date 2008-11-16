@@ -3,7 +3,10 @@ package edu.emory.library.tast.dm;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -48,12 +51,12 @@ public class Voyage extends AbstractDescriptiveObject
 	 * Object's attributes
 	 */
 	private static List attributes = new ArrayList();
+	private static Map attributesLookup = new HashMap();
 	static {
 		attributes.add(new NumericAttribute("iid", "Voyage", NumericAttribute.TYPE_LONG, null));
 		attributes.add(new NumericAttribute("voyageid", "Voyage", NumericAttribute.TYPE_INTEGER, "voyageid"));
 		attributes.add(new BooleanAttribute("suggestion", "Voyage", null));
 		attributes.add(new NumericAttribute("revision", "Voyage", NumericAttribute.TYPE_INTEGER, "revision"));
-		attributes.add(new NumericAttribute("iid", "Voyage", NumericAttribute.TYPE_LONG, null));
 		attributes.add(new NumericAttribute("iid", "Voyage", NumericAttribute.TYPE_LONG, null));
 		attributes.add(new StringAttribute("shipname", "Voyage", "shipname"));
 		attributes.add(new PortAttribute("placcons", "Voyage", "placcons"));
@@ -312,7 +315,13 @@ public class Voyage extends AbstractDescriptiveObject
 		attributes.add(new NumericAttribute("embport_area", "Voyage", NumericAttribute.TYPE_LONG, "embport_area"));
 		attributes.add(new NumericAttribute("arrport_area", "Voyage", NumericAttribute.TYPE_LONG, "arrport_area"));
 		attributes.add(new NumericAttribute("embport2_area", "Voyage", NumericAttribute.TYPE_LONG, "embport2_area"));
-		attributes.add(new NumericAttribute("arrport2_area", "Voyage", NumericAttribute.TYPE_LONG, "arrport2_area"));	
+		attributes.add(new NumericAttribute("arrport2_area", "Voyage", NumericAttribute.TYPE_LONG, "arrport2_area"));
+		
+		for (Iterator iterator = attributes.iterator(); iterator.hasNext();)
+		{
+			Attribute attr = (Attribute) iterator.next();
+			attributesLookup.put(attr.getName(), attr);
+		}
 		
 	}
 
@@ -336,13 +345,17 @@ public class Voyage extends AbstractDescriptiveObject
 	 * @param name
 	 * @return attribute, null if there is no attribute with given name
 	 */
-	public static Attribute getAttribute(String name) {
-		for (int i = 0; i < attributes.size(); i++) {
-			if (((Attribute) attributes.get(i)).getName().equals(name)) {
-				return (Attribute) attributes.get(i);
-			}
+	public static Attribute getAttribute(String name)
+	{
+		Attribute attr = (Attribute) attributesLookup.get(name);
+		if (name == null)
+		{
+			throw new RuntimeException("Attribute " + name + " is not defined in Voyage");
 		}
-		throw new RuntimeException("Attribute " + name + " is not defined in Voyage");
+		else
+		{
+			return attr;
+		}
 	}
 
 	/**
@@ -350,9 +363,11 @@ public class Voyage extends AbstractDescriptiveObject
 	 * 
 	 * @return
 	 */
-	public static String[] getAllAttrNames() {
+	public static String[] getAllAttrNames()
+	{
 		String[] attrsName = new String[attributes.size()];
-		for (int i = 0; i < attrsName.length; i++) {
+		for (int i = 0; i < attrsName.length; i++)
+		{
 			attrsName[i] = ((Attribute) attributes.get(i)).getName();
 		}
 		return attrsName;
@@ -364,48 +379,6 @@ public class Voyage extends AbstractDescriptiveObject
 	public Voyage() {
 	}
 
-//	/**
-//	 * 
-//	 * Loads voyage
-//	 * 
-//	 * @param voyage
-//	 *            voyage providing voyage ID
-//	 * @param option
-//	 *            option
-//	 * @return loaded voyage
-//	 */
-//	private static Voyage loadInternal(Voyage voyage, int option) {
-//		Voyage localVoyage = null;
-//
-//		Session session = HibernateUtil.getSession();
-//
-//		// Load voyage from DB
-//		VoyageIndex[] voyageIndex = HibernateConnector.getConnector()
-//				.getVoyageIndexByVoyage(session, voyage, option);
-//
-//		// Prepare result
-//		if (voyageIndex.length != 0) {
-//			localVoyage = voyageIndex[0].getVoyage();
-//		}
-//		session.close();
-//
-//		return localVoyage;
-//	}
-
-//	/**
-//	 * Loads Active (most recent active) voyage with given ID.
-//	 * 
-//	 * @param voyageId
-//	 *            voyuage ID
-//	 * @return voyage object, null if there is no desired Voyage in DB
-//	 */
-//	public static Voyage loadActive(Long voyageId) {
-//		Voyage localVoyage = new Voyage();
-//		localVoyage.setVoyageid(voyageId);
-//		return loadInternal(localVoyage, HibernateConnector.APPROVED
-//				& HibernateConnector.WITHOUT_HISTORY);
-//	}
-	
 	public static int getCurrentRevision()
 	{
 		return 1;
