@@ -6,45 +6,66 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class SqlUtils
 {
 	
-	public static boolean columnExists(Connection conn, String table, String column) throws SQLException
+	public static ArrayList getColumns(Connection conn, String table) throws SQLException
 	{
 		
 		String sql = 	
 			"SELECT" +
-			"	count(a.attname) " +
+			"	a.attname " +
 			"FROM" +
 			"	pg_catalog.pg_stat_user_tables AS t," +
 			"	pg_catalog.pg_attribute a " +
 			"WHERE" +
+			"	a.attnum > 0 AND " +
+			"	a.atttypid <> 0 AND " +
 			"	t.relid = a.attrelid AND " +
 			"	t.schemaname = 'public' AND " +
-			"	t.relname = ? AND " +
-			"	a.attname = ?";
+			"	t.relname = ?";
 		
 		PreparedStatement st = conn.prepareStatement(sql);
 		st.setString(1, table);
-		st.setString(2, column);
 		
 		ResultSet rs = st.executeQuery();
-		rs.next();
-		boolean exists = rs.getLong(1) != 0;
+		ArrayList columns = new ArrayList();
+		while (rs.next())
+		{
+			columns.add(rs.getString(1));
+		}
 		
 		rs.close();
 		st.close();
 		
-		return exists;
+		return columns;
 		
+	}
+	
+	public static boolean columnExists(Connection conn, String table, String column) throws SQLException
+	{
+		
+		ArrayList columns = getColumns(conn, table);
+		for (Iterator iterator = columns.iterator(); iterator.hasNext();)
+		{
+			String thisColumn = (String) iterator.next();
+			if (EqualsUtil.areEqual(thisColumn, column))
+			{
+				return true;
+			}
+		}
+		
+		return false;
+
 	}
 	
 	public static void dropColumn(Connection conn, String table, String column) throws SQLException
 	{
 		String sqlDropColumn =
 			"ALTER TABLE " + table + " " +
-			"DROP COLUMN " + column;
+			"DROP COLUMN \"" + column + "\"";
 		
 		Statement statementDropColumn = conn.createStatement();
 		statementDropColumn.execute(sqlDropColumn);
