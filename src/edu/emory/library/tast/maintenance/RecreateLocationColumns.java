@@ -49,8 +49,8 @@ public class RecreateLocationColumns
 			System.out.println("Creating region and area columns for '" + portColumns[i] + "' ...");
 			
 			String portColumn = portColumns[i] + "_port";
-			String regionColumn = portColumn + "_region";
-			String areaColumn = portColumn + "_area";
+			String regionColumn = portColumns[i] + "_region";
+			String areaColumn = portColumns[i] + "_area";
 			
 			SqlUtils.dropColumnIfExists(conn, "voyages", portColumn);
 			SqlUtils.dropColumnIfExists(conn, "voyages", regionColumn);
@@ -59,7 +59,6 @@ public class RecreateLocationColumns
 			String sqlAddPortColumn =
 				"ALTER TABLE voyages " +
 				"ADD COLUMN " + portColumn + " bigint";
-			
 			
 			String sqlAddRegionColumn =
 				"ALTER TABLE voyages " +
