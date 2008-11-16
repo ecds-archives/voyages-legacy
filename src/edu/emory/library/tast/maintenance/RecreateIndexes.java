@@ -48,6 +48,8 @@ public class RecreateIndexes
 	public static void main(String[] args) throws ClassNotFoundException, SQLException
 	{
 		
+		long timeStart = System.currentTimeMillis();
+		
 		Class.forName("org.postgresql.Driver");
 		Connection conn = DriverManager.getConnection(DB_CONN_STRING, DB_USER, DB_PASS);
 		
@@ -172,6 +174,9 @@ public class RecreateIndexes
 
 		conn.close();
 		
+		long timeEnd = System.currentTimeMillis();
+		System.out.println("Done in " + (timeEnd - timeStart) + " ms.");
+
 	}
 
 }
