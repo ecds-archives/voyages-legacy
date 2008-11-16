@@ -3,6 +3,7 @@ package edu.emory.library.tast;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -148,4 +149,14 @@ public class Languages
 //		
 //	}
 
+}
+
+class LanguageComparator implements Comparator
+{
+	public int compare(Object arg0, Object arg1)
+	{
+		Language lang0 = (Language) arg0;
+		Language lang1 = (Language) arg1;
+		return lang0.getName().compareToIgnoreCase(lang1.getName());
+	}
 }
