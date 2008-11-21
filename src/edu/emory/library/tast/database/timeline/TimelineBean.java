@@ -267,6 +267,12 @@ public class TimelineBean {
 				"{0,number,#,###,##0.0}%",
 				true));
 		
+		this.availableStats.add(new TimelineVariable(
+				new FunctionAttribute("SUM", new Attribute[] {Voyage.getAttribute("resistance")}),
+				TastResource.getText("components_timeline_stat_resistance"),
+				"{0,number,#,###,##0.0}",
+				true));
+		
 		resetToDefault();
 
 	}
