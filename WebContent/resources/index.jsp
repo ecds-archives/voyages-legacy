@@ -75,7 +75,6 @@
 			</table>
 		</div>
 
-	</div>
 
 </h:form>
 </f:view>
