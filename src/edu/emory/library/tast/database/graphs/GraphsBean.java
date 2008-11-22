@@ -11,7 +11,6 @@ import javax.servlet.http.HttpSession;
 
 import org.jfree.chart.JFreeChart;
 
-import edu.emory.library.tast.AppConfig;
 import edu.emory.library.tast.database.query.SearchBean;
 import edu.emory.library.tast.db.TastDbConditions;
 import edu.emory.library.tast.db.TastDbQuery;
@@ -52,7 +51,7 @@ public class GraphsBean
 		DependentVariable.createCount("iid", "Number of voyages", "iid"),
 		DependentVariable.createAvg("voy1imp", "Average voyage length, home port to slaves landing (days)*", "voy1imp"),
 		DependentVariable.createAvg("voy2imp", "Average middle passage (days)*", "voy2imp"),
-		DependentVariable.createSum("tonmod", "Standardized tonnage*", "tonmod"),
+		DependentVariable.createAvg("tonmod", "Standardized tonnage*", "tonmod"),
 		DependentVariable.createAvg("crew1-avg", "Average crew at voyage outset", "crew1"),
 		DependentVariable.createAvg("crew3-avg", "Average crew at first landing of slaves", "crew3"),
 		DependentVariable.createSum("crew1-sum", "Total crew at voyage outset", "crew1"),
@@ -122,7 +121,7 @@ public class GraphsBean
 		DependentVariable.createPercentage("chilrat7", "Percentage children*", "chilrat7"),
 		DependentVariable.createPercentage("malrat7", "Percentage male*", "chilrat7"),
 		DependentVariable.createAvg("jamcaspr", "Sterling cash price in Jamaica*", "jamcaspr"),
-		DependentVariable.createCustomAvg("resistance-rate", "Rate of resistance", new FunctionAttribute("coalesce_to_0_100", Voyage.getAttribute("resistance"))),
+		//DependentVariable.createCustomAvg("resistance-rate", "Rate of resistance", new FunctionAttribute("coalesce_to_0_100", Voyage.getAttribute("resistance"))),
 		DependentVariable.createPercentage("vymrtrat", "Percentage of slaves embarked who died during voyage*", "vymrtrat")
 	};
 	
@@ -249,24 +248,23 @@ public class GraphsBean
 		
 		localConditions.addCondition(indepVar.getSelectAttribute(), null, TastDbConditions.OP_IS_NOT);
 		
-		TastDbQuery query = new TastDbQuery(new String[] {"Voyage"}, new String[] {"voyage"}, localConditions);
+		TastDbQuery qValue = new TastDbQuery(new String[] {"Voyage"}, new String[] {"v"}, localConditions);
 		
-		query.addPopulatedAttribute(indepVar.getSelectAttribute());
+		qValue.addPopulatedAttribute(indepVar.getSelectAttribute());
 		
 		for (Iterator iter = selectedGraph.getDataSeries().iterator(); iter.hasNext();)
 		{
 			DataSeries ser = (DataSeries) iter.next();
-			query.addPopulatedAttribute(ser.getVariable().getSelectAttribute());
+			qValue.addPopulatedAttribute(ser.getVariable().getSelectAttribute());
 		}
 		
-		query.setGroupBy(indepVar.getGroupByAttributes());
+		qValue.setGroupBy(indepVar.getGroupByAttributes());
 		
-		query.setOrderBy(new Attribute[] {indepVar.getOrderAttribute()});
-		query.setOrder(TastDbQuery.ORDER_ASC);
+		qValue.setOrderBy(new Attribute[] {indepVar.getOrderAttribute()});
+		qValue.setOrder(TastDbQuery.ORDER_ASC);
 		
 		// query db
-		boolean useSQL = AppConfig.getConfiguration().getBoolean(AppConfig.DATABASE_USE_SQL);
-		Object[] data = query.executeQuery(useSQL);
+		Object[] data = qValue.executeQuery();
 
 		// create graph
 		JFreeChart chart = selectedGraph.createChart(data);
