@@ -38,7 +38,9 @@
 			<td valign="top" id="main-content">
 				<s:simpleBox>
 			
-				<h1>Contribute</h1>
+				<h1>Contribute </h1>
+				
+				<p style="font-weight: bold;">(This page is still under development.)</p>
 				
 				<p>The Contribute section of the Voyages website contains data entry forms by which users 
 				of the website can supply revise existing information in the Voyages Database or supply 
@@ -81,15 +83,18 @@
 					<tr>
 						<td></td>
 						<td>
-							<h:commandButton value="Sign in" action="#{SubmissionUsersBean.auth}"/>&nbsp;&nbsp;
-							<h:outputText style="font-weight: bold;" value="#{SubmissionUsersBean.errorMessage}"/>
+						<!-- 	<h:commandButton value="Sign in" action="#{SubmissionUsersBean.auth}"/>&nbsp;&nbsp; 
+     							<h:outputText style="font-weight: bold;" value="#{SubmissionUsersBean.errorMessage}"/>-->
+							<h:commandButton value="Sign in" action="#"/>
+
 						</td>
 					</tr>
 					</table>
 				
 				</div>
 				
-				<p>If you don't have an account, <a href="new-user.faces">click here</a>.</p>
+<!-- 				<p>If you don't have an account, <a href="new-user.faces">click here</a>.</p> -->
+				<p>If you don't have an account, <a href="#">click here</a>.</p>
 		
 				</s:simpleBox>
 			</td>

@@ -134,7 +134,7 @@
 		
 					<h3>Download:</h3>
 					<ul>
-						<li>2008 Estimates, Excel: <a href="#">2008-Estimates.xls</a></li>
+						<li>2008 Estimates, Excel: <a href="#">2008-Estimates.xls</a> (This file will be available later.)</li>
 					</ul>
 		
 					Questions about downloading or using these datasets? Please contact 
