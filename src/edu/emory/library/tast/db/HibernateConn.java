@@ -1,8 +1,11 @@
 package edu.emory.library.tast.db;
 
+import java.util.Iterator;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.mapping.Column;
 
 /**
  * Class helper to operate with Hibernate.
@@ -41,7 +44,22 @@ public class HibernateConn {
     	ensureSessionFactory();
     	return configuration;
     }
+
+    public static String getColumnName(String className, String property)
+    {
+    	ensureSessionFactory();
+    	for (Iterator iterator = configuration.getClassMapping(className).getProperty(property).getColumnIterator(); iterator.hasNext();)
+		{
+    		return ((Column)iterator.next()).getName();
+		}
+    	return null;
+    }
     
+    public static String getColumnName(Class clazz, String property)
+    {
+    	return getColumnName(clazz.getCanonicalName(), property);
+    }
+
     public static String getTableName(String className)
     {
     	ensureSessionFactory();

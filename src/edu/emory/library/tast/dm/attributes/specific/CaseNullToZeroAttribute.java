@@ -46,7 +46,13 @@ public class CaseNullToZeroAttribute extends Attribute {
 
 	public String getSQLReference(String masterTable, Map tablesIndexes, Map existingJoins, StringBuffer sqlFrom)
 	{
-		return null;
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("CASE WHEN ");
+		buffer.append(attribute.getSQLReference(masterTable, tablesIndexes, existingJoins, sqlFrom));
+		buffer.append(" IS NULL THEN 0 ELSE ");
+		buffer.append(attribute.getSQLReference(masterTable, tablesIndexes, existingJoins, sqlFrom));
+		buffer.append(" END");
+		return buffer.toString();
 	}
 
 }

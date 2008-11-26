@@ -80,7 +80,7 @@ public class SequenceAttribute extends Attribute {
 				// get the name of the table and the column
 				DictionaryAttribute dictAttr = (DictionaryAttribute) attributes[i];
 				String table = HibernateConn.getTableName(dictAttr.getDictionayClass());
-				String column = dictAttr.getName();
+				String column = HibernateConn.getColumnName("edu.emory.library.tast.dm." + dictAttr.getObjectType(), dictAttr.getName());
 				
 				// get a new index for this table
 				int thisIdx = 0;
@@ -98,7 +98,7 @@ public class SequenceAttribute extends Attribute {
 				sqlFrom.append(" ON ");
 				sqlFrom.append(tableAlias).append(".").append("id");
 				sqlFrom.append(" = ");					
-				sqlFrom.append(prevTableAlias).append(".").append(column).append(prevTableAlias.startsWith("ports_") || prevTableAlias.startsWith("regions_") ? "_id" : "");
+				sqlFrom.append(prevTableAlias).append(".").append(column); //.append(prevTableAlias.startsWith("ports_") || prevTableAlias.startsWith("regions_") ? "_id" : "");
 				sqlFrom.append("\n");
 				
 				// remember for the next round
@@ -112,7 +112,8 @@ public class SequenceAttribute extends Attribute {
 		}
 		
 		// the alias of the last table
-		return alias + "." + attributes[attributes.length - 1].getName();
+		Attribute lastAttr = attributes[attributes.length - 1];
+		return alias + "." + HibernateConn.getColumnName("edu.emory.library.tast.dm." + lastAttr.getObjectType(), lastAttr.getName());
 		
 	}
 	

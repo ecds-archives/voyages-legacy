@@ -28,7 +28,7 @@ public class SearchableAttributeLocation extends SearchableAttribute implements 
 
 	private Location[] locations;
 	
-	private static final boolean USE_DENORMALIZED_COLUMNS = false;
+	private static final boolean USE_DENORMALIZED_COLUMNS = true;
 	private static final boolean USE_IN_OPERATOR = true;
 
 	public SearchableAttributeLocation(String id, String userLabel, UserCategories userCategories, Location[] locations, String spssName, String listDescription, boolean inEstimates)

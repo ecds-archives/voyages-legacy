@@ -111,7 +111,7 @@ public class GlobalMapDataTransformer extends AbstractDataTransformer {
 			int color = Integer.parseInt(row[2].toString());
 
 			// Get zoom
-			int showAtzoom = Integer.parseInt(((String) row[3]));
+			int showAtzoom = 0; //Integer.parseInt(((String) row[3]));
 
 			// Get valaue
 			Number value = (Number) ((Object[]) data[i])[1];

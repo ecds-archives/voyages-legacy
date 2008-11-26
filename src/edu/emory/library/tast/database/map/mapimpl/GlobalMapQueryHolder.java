@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 
+import edu.emory.library.tast.AppConfig;
 import edu.emory.library.tast.database.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.db.TastDbConditions;
 import edu.emory.library.tast.db.TastDbQuery;
@@ -52,8 +53,8 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 		TastDbQuery query1 = new TastDbQuery(new String[] {"Voyage"}, new String[] {"v"}, c);
 		query1.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjbyptimp"), Port.getAttribute("id")}));
 		query1.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slaximp")})));
-		query1.addPopulatedAttribute(new DirectValueAttribute("2"));
-		query1.addPopulatedAttribute(new DirectValueAttribute("2"));
+		query1.addPopulatedAttribute(new DirectValueAttribute(new Integer(2)));
+		query1.addPopulatedAttribute(new DirectValueAttribute(new Integer(2)));
 		query1.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjbyptimp"), Port.getAttribute("showAtZoom")}));
 		query1.setGroupBy(
 				new Attribute[] {
@@ -72,8 +73,8 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 		TastDbQuery query2 = new TastDbQuery(new String[] {"Voyage"}, new String[] {"v"}, c);
 		query2.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjslptimp"), Port.getAttribute("id")}));
 		query2.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slamimp")})));
-		query2.addPopulatedAttribute(new DirectValueAttribute("3"));
-		query2.addPopulatedAttribute(new DirectValueAttribute("2"));
+		query2.addPopulatedAttribute(new DirectValueAttribute(new Integer(3)));
+		query2.addPopulatedAttribute(new DirectValueAttribute(new Integer(2)));
 		query2.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjslptimp"), Port.getAttribute("showAtZoom")}));
 		query2.setGroupBy(
 				new Attribute[] {
@@ -94,8 +95,8 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 		query1 = new TastDbQuery(new String[] {"Voyage"}, new String[] {"v"}, c);
 		query1.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbyimp"), Region.getAttribute("id")}));
 		query1.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slaximp")})));
-		query1.addPopulatedAttribute(new DirectValueAttribute("2"));
-		query1.addPopulatedAttribute(new DirectValueAttribute("1"));
+		query1.addPopulatedAttribute(new DirectValueAttribute(new Integer(2)));
+		query1.addPopulatedAttribute(new DirectValueAttribute(new Integer(1)));
 		query1.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbyimp"), Region.getAttribute("showAtZoom")}));
 		query1.setGroupBy(
 				new Attribute[] {
@@ -114,8 +115,8 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 		query2 = new TastDbQuery(new String[] {"Voyage"}, new String[] {"v"}, c);
 		query2.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjselimp"), Region.getAttribute("id")}));
 		query2.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slamimp")})));
-		query2.addPopulatedAttribute(new DirectValueAttribute("3"));
-		query2.addPopulatedAttribute(new DirectValueAttribute("1"));
+		query2.addPopulatedAttribute(new DirectValueAttribute(new Integer(3)));
+		query2.addPopulatedAttribute(new DirectValueAttribute(new Integer(1)));
 		query2.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjselimp"), Region.getAttribute("showAtZoom")}));
 		query2.setGroupBy(
 				new Attribute[] {
@@ -136,8 +137,8 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 		query1 = new TastDbQuery(new String[] {"Voyage"}, new String[] {"v"}, c);
 		query1.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbyimp"), Region.getAttribute("area"), Area.getAttribute("id")}));
 		query1.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slaximp")})));
-		query1.addPopulatedAttribute(new DirectValueAttribute("2"));
-		query1.addPopulatedAttribute(new DirectValueAttribute("0"));
+		query1.addPopulatedAttribute(new DirectValueAttribute(new Integer(2)));
+		query1.addPopulatedAttribute(new DirectValueAttribute(new Integer(0)));
 		query1.setGroupBy(
 				new Attribute[] {
 						new SequenceAttribute(new Attribute[] {Voyage.getAttribute("majbyimp"), Region.getAttribute("area"), Area.getAttribute("id")})
@@ -154,8 +155,8 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 		query2 = new TastDbQuery(new String[] {"Voyage"}, new String[] {"v"}, c);
 		query2.addPopulatedAttribute(new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjselimp"), Region.getAttribute("area"), Area.getAttribute("id")}));
 		query2.addPopulatedAttribute(new CaseNullToZeroAttribute(new FunctionAttribute("sum", new Attribute[] {Voyage.getAttribute("slamimp")})));
-		query2.addPopulatedAttribute(new DirectValueAttribute("3"));
-		query2.addPopulatedAttribute(new DirectValueAttribute("0"));
+		query2.addPopulatedAttribute(new DirectValueAttribute(new Integer(3)));
+		query2.addPopulatedAttribute(new DirectValueAttribute(new Integer(0)));
 		query2.setGroupBy(
 				new Attribute[] {
 						new SequenceAttribute(new Attribute[] {Voyage.getAttribute("mjselimp"), Region.getAttribute("area"), Area.getAttribute("id")})
@@ -224,25 +225,28 @@ public class GlobalMapQueryHolder extends AbstractTransformerQueryHolder {
 	 * @param query
 	 * @param what
 	 */
-	private void executeMapQuery(Session session, List response, TastDbQuery query, int what) {
+	private void executeMapQuery(Session session, List response, TastDbQuery query, int what)
+	{
+		
+		boolean useSQL = AppConfig.getConfiguration().getBoolean(AppConfig.DATABASE_USE_SQL);
+		Object[] voyages = query.executeQuery(session, useSQL);
 
-		Object[] voyages = query.executeQuery(session);
 		if (what == 1) {
 			for (int i = 0; i < voyages.length; i++) {
 				if (((Object[])voyages[i])[0] != null) {
-					((Object[])voyages[i])[0] = Region.loadById(session, ((Long)((Object[])voyages[i])[0]).longValue());
+					((Object[])voyages[i])[0] = Region.loadById(session, ((Number)((Object[])voyages[i])[0]).longValue());
 				}
 			}
 		} else if (what == 0) {
 			for (int i = 0; i < voyages.length; i++) {
 				if (((Object[])voyages[i])[0] != null) {
-					((Object[])voyages[i])[0] = Port.loadById(session, ((Long)((Object[])voyages[i])[0]).longValue());
+					((Object[])voyages[i])[0] = Port.loadById(session, ((Number)((Object[])voyages[i])[0]).longValue());
 				}
 			}
 		} else {
 			for (int i = 0; i < voyages.length; i++) {
 				if (((Object[])voyages[i])[0] != null) {
-					((Object[])voyages[i])[0] = Area.loadById(session, ((Long)((Object[])voyages[i])[0]).longValue());
+					((Object[])voyages[i])[0] = Area.loadById(session, ((Number)((Object[])voyages[i])[0]).longValue());
 				}
 			}
 		}

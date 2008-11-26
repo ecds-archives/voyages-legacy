@@ -21,7 +21,7 @@ import edu.emory.library.tast.util.StringUtils;
 public class SearchableAttributeSimpleDictionary extends SearchableAttributeSimple implements ListItemsSource
 {
 	
-	private static final boolean USE_IN_OPERATOR = false;
+	private static final boolean USE_IN_OPERATOR = true;
 
 	public SearchableAttributeSimpleDictionary(String id, String userLabel, UserCategories userCategories, Attribute[] attributes, String spssName, String listDescription, boolean inEstimates)
 	{

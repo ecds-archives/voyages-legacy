@@ -13,7 +13,9 @@ public class TastPostgreSQLDialect extends PostgreSQLDialect
 	{
 		super();
 		
+		// registerColumnType(Types.OTHER, "number($p,$s)");
 		registerHibernateType(Types.REAL, "double");
+		// registerHibernateType(Types.OTHER, "double");
 
 		registerFunction("date_trunc", new StandardSQLFunction("date_trunc", Hibernate.TIMESTAMP));
 		registerFunction("date_part", new StandardSQLFunction("date_part", Hibernate.INTEGER));
