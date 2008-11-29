@@ -58,10 +58,7 @@ public class SearchBean
 
 	private boolean totalMinMaxYearDetermined = false;
 	private String totalMinYear;
-	private String totalmaxYear;
-	
-	private String minYear;
-	private String maxYear;
+	private String totalMaxYear;
 	
 	private UserCategory selectedCategory = UserCategory.General;
 	private String mainSectionId = TAB_ID_LISTING;
@@ -100,14 +97,14 @@ public class SearchBean
 	{
 		workingQuery = new Query();
 		numberOfResultsValid = false;
-		determineTimeFrameExtent();
+		setMaxTimeFrameExtent();
 	}
 	
 	/**
 	 * Finds the min a max year among all voyages in the database. The "yearam"
 	 * field is used.
 	 */
-	private void determineTimeFrameExtent()
+	private void setMaxTimeFrameExtent()
 	{
 		
 		if (!totalMinMaxYearDetermined)
@@ -128,7 +125,7 @@ public class SearchBean
 			{
 				Object[] row = (Object[]) ret.get(0);
 				totalMinYear = row[0] != null ? row[0].toString() : null;
-				totalmaxYear = row[1] != null ? row[1].toString() : null;
+				totalMaxYear = row[1] != null ? row[1].toString() : null;
 			}
 			
 			totalMinMaxYearDetermined = true;
@@ -136,18 +133,14 @@ public class SearchBean
 		}
 		
 		workingQuery.setYearFrom(totalMinYear);
-		workingQuery.setYearTo(totalmaxYear);
+		workingQuery.setYearTo(totalMaxYear);
 
 	}
 
 	public String restoreDefaultTimeFrameExtent()
 	{
-		
-		workingQuery.setYearFrom(minYear);
-		workingQuery.setYearTo(maxYear);
-		
+		setMaxTimeFrameExtent();
 		return null;
-
 	}
 	
 	/**
@@ -584,7 +577,7 @@ public class SearchBean
 	{
 		return			
 			"The full extent of time from the first to the last voyage is " +
-			minYear + " &ndash; " + maxYear;
+			totalMinYear + " &ndash; " + totalMaxYear;
 	}
 
 	public boolean isShowVoygeDetail()
