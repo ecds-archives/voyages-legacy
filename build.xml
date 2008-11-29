@@ -45,7 +45,12 @@
 				<include name="table-attributes.xml" />
 				<include name="submission-attributes.xml" />
 			</classes>
-			<fileset dir="${webdir}" />
+			<fileset dir="${webdir}">
+				<exclude name="tests/**" />
+				<exclude name="images-list.jsp" />
+				<exclude name="images-detail.jsp" />
+				<exclude name="lookup.jsp" />
+			</fileset>
 		</war>
 	</target>	
 	
