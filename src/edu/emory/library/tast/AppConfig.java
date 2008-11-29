@@ -37,6 +37,8 @@ public class AppConfig
 
 	public static final String SLAVES_SIERRA_LEONE_ID = "slaves.sierra_leone.id";
 	public static final String SLAVES_HAVANA_ID = "slaves.havana.id";
+	
+	public static final String GOOGLE_ANALYTICS = "google.analytics";
 
 	private static void load()
 	{

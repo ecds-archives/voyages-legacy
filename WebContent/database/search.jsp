@@ -214,5 +214,8 @@
 	<div id="debug"></div>
 
 </f:view>
+
+<%@ include file="../footer.jsp" %>
+
 </body>
 </html>

@@ -22,5 +22,8 @@
 		alt="Map 9: Volume and direction of the transatlantic slave trade from all African to all American regions" />
 </div>
 
+
+<%@ include file="../footer.jsp" %>
+
 </body>
 </html>

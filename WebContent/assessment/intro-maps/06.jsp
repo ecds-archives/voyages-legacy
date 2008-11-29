@@ -22,5 +22,8 @@
 		alt="Map 6: Countries and regions in the Atlantic World where slave voyages were organized, by share of captives carried off from Africa" />
 </div>
 
+
+<%@ include file="../footer.jsp" %>
+
 </body>
 </html>

@@ -22,5 +22,8 @@
 		alt="Map 3: Old World slave trade routes in the Atlantic before 1759" />
 </div>
 
+
+<%@ include file="../footer.jsp" %>
+
 </body>
 </html>

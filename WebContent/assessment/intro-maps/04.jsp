@@ -22,5 +22,8 @@
 		alt="Map 4: Wind and ocean currents of the Atlantic basins" />
 </div>
 
+
+<%@ include file="../footer.jsp" %>
+
 </body>
 </html>

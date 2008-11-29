@@ -22,5 +22,8 @@
 		alt="Map 2: Migration of sugar cultivation from Asia into the Atlantic" />
 </div>
 
+
+<%@ include file="../footer.jsp" %>
+
 </body>
 </html>

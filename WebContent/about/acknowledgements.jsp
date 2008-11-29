@@ -350,5 +350,8 @@
 </h:form>
 	
 </f:view>
+
+<%@ include file="../footer.jsp" %>
+
 </body>
 </html>
