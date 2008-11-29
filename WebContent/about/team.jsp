@@ -60,7 +60,7 @@
 								</li>
 								<li>
 									<span class="person">Martin Halbert</span> &ndash;
-									<span class="function">Digital Programs and Systems Division Chair</span>
+									<span class="function">Digital Programs and Systems Division</span>
 									<span class="place">(Woodruff Library, Emory University, Atlanta, Georgia, USA)</span>
 								</li>
 							</ul>
@@ -90,7 +90,8 @@
 								</li>
 								<li>
 									<span class="person">Peter Carter</span> &ndash;
-									<span class="function">Research Assistant (Victoria University of Wellington, New Zealand)</span>
+									<span class="function">Research Assistant</span>
+									<span class="place">(Victoria University of Wellington, New Zealand)</span>
 								</li>
 								<li>
 									<span class="person">Heather Dahl</span> &ndash;
@@ -98,7 +99,7 @@
 								</li>
 								<li>
 									<span class="person">Daniel B. Domingues da Silva</span> &ndash;
-									<span class="function">Image Coordinator </span>
+									<span class="function">Image Coordinator</span>
 								</li>
 								<li>
 									<span class="person">Erika Farr</span> &ndash;
@@ -106,7 +107,7 @@
 								</li>
 								<li>
 									<span class="person">Kyle Fenton</span> &ndash;
-									<span class="function">Unix Administration, Integration &amp Web Development Team Leader</span>
+									<span class="function">Unix Administration, Integration &amp; Web Development Team Leader</span>
 								</li>
 								<li>
 									<span class="person">Brian Hamilton</span> &ndash;
@@ -150,6 +151,11 @@
 									<span class="function">Project Manager</span>
 								</li>
 								<li>
+									<span class="person">Frank Owen</span> &ndash;
+									<span class="function">Systems Engineer</span>
+									<span class="place">(Owenworks, Inc., Blacksburg, Virginia USA)</span>
+								</li>
+								<li>
 									<span class="person">Brian Pitts</span> &ndash;
 									<span class="function">Programmer</span>
 								</li>
@@ -168,6 +174,10 @@
 									<span class="function">Applications Developer & Analyst</span>
 								</li>
 								<li>
+									<span class="person">Joan A. Smith</span> &ndash;
+									<span class="function">Deployment Director, Chief Technology Strategist</span>
+								</li>
+								<li>
 									<span class="person">Katherine Skinner</span> &ndash;
 									<span class="function">Digital Preservation Coordinator </span>
 								</li>								
@@ -183,7 +193,7 @@
 								</li>
 								<li>
 									<span class="person">Rik van Welie</span> &ndash;
-									<span class="function">Research Fellow </span>
+									<span class="function">Research Fellow</span>
 								</li>
 								<li>
 									<span class="person">Jan Zich</span> &ndash;
