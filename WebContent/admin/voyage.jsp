@@ -32,7 +32,7 @@
 <f:view>
 <h:form id="form">	
 
-	<f:loadBundle basename="SlaveTradeResources" var="res"/>
+	<f:loadBundle basename="resources" var="res"/>
 
 	
 	<div id="content">

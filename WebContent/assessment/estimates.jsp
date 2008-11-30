@@ -43,7 +43,7 @@
 <f:view>
 <h:form id="form">
 
-	<f:loadBundle basename="SlaveTradeResources" var="res"/>
+	<f:loadBundle basename="resources" var="res"/>
 
 	<s:siteHeader activeSectionId="assessment">
 		<h:outputLink value="../index.faces"><h:outputText value="Home"/></h:outputLink>

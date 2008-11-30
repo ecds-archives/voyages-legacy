@@ -8,7 +8,7 @@ public class TastResource {
 	
 	private static synchronized void init() {
 		if (resource == null) {
-			resource = PropertyResourceBundle.getBundle("SlaveTradeResources");
+			resource = PropertyResourceBundle.getBundle("resources");
 		}
 	}
 	

@@ -19,7 +19,7 @@
 <f:view>
 <h:form id="form">
 
-	<f:loadBundle basename="SlaveTradeResources" var="res"/>
+	<f:loadBundle basename="resources" var="res"/>
 	
 	<f:param value="demos" binding="#{HelpMenuBean.activeSectionParam}" />
 	<%@ include file="top-bar.jsp" %>
