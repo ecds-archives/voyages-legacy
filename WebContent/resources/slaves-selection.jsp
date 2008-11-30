@@ -192,17 +192,18 @@
 					action="#{SlavesBean.reset}" />
 		
 			</t:htmlTag>
-			<t:htmlTag value="td" style="padding: 5px 0px 5px 10px;" forceId="true" id="totalBoxBasicTd">
+			<t:htmlTag value="td" style="padding: 5px 0px 5px 10px;" forceId="true" id="totalBoxBasicTd" rendered="false">
 	
 				<aa:zoneJSF id="totalBoxBasic">
 					<h:outputText value="#{SlavesBean.numberOfExpectedResultsText}" />
 				</aa:zoneJSF>
 	
 			</t:htmlTag>
-			<t:htmlTag value="td" style="padding: 0px 0px 0px 5px; display: none;" id="totalUpdateIndicatorBoxBasic" forceId="true">
+			<t:htmlTag value="td" style="padding: 0px 0px 0px 5px; display: none;" id="totalUpdateIndicatorBoxBasic" forceId="true" rendered="false">
+			
 				<h:graphicImage url="../images/ajax-loader.gif" width="16" height="16" alt="" />
-			</t:htmlTag>
 
+			</t:htmlTag>
 		</t:htmlTag>
 		</t:htmlTag>
 	
@@ -238,16 +239,18 @@
 					action="#{SlavesBean.reset}" />
 		
 			</t:htmlTag>
-			<t:htmlTag value="td" style="padding: 5px 0px 5px 10px;" forceId="totalBoxCountryTd">
+			<t:htmlTag value="td" style="padding: 5px 0px 5px 10px;" forceId="totalBoxCountryTd" rendered="false">
 	
 				<aa:zoneJSF id="totalBoxCountry">
 					<h:outputText value="#{SlavesBean.numberOfExpectedResultsText}" />
 				</aa:zoneJSF>
 	
 			</t:htmlTag>
-			<t:htmlTag value="td" style="padding: 0px 0px 0px 5px; display: none;" id="totalUpdateIndicatorBoxCountry" forceId="true">
+			
+			<t:htmlTag value="td" style="padding: 0px 0px 0px 5px; display: none;" id="totalUpdateIndicatorBoxCountry" forceId="true" rendered="false">
 				<h:graphicImage url="../images/ajax-loader.gif" width="16" height="16" alt="" />
 			</t:htmlTag>
+			
 		</t:htmlTag>
 		</t:htmlTag>
 		
@@ -315,16 +318,17 @@
 					action="#{SlavesBean.reset}" />
 		
 			</t:htmlTag>
-			<t:htmlTag value="td" style="padding: 5px 0px 5px 10px;" forceId="true" id="totalBoxPlacesTd">
-	
+			
+			<t:htmlTag value="td" style="padding: 5px 0px 5px 10px;" forceId="true" id="totalBoxPlacesTd" rendered="false">
 				<aa:zoneJSF id="totalBoxPlaces">
 					<h:outputText value="#{SlavesBean.numberOfExpectedResultsText}" />
 				</aa:zoneJSF>
-	
 			</t:htmlTag>
-			<t:htmlTag value="td" style="padding: 0px 0px 0px 5px; display: none;" id="totalUpdateIndicatorBoxPlaces" forceId="true">
+			
+			<t:htmlTag value="td" style="padding: 0px 0px 0px 5px; display: none;" id="totalUpdateIndicatorBoxPlaces" forceId="true" rendered="false">
 				<h:graphicImage url="../images/ajax-loader.gif" width="16" height="16" alt="" />
 			</t:htmlTag>
+			
 		</t:htmlTag>
 		</t:htmlTag>
 
