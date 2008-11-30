@@ -22,8 +22,7 @@
 		alt="Map 5: Major regions and ports involved in the transatlantic slave trade, all years" />
 </div>
 
-
-<%@ include file="../footer.jsp" %>
+<%@ include file="../../google-analytics.jsp" %>
 
 </body>
 </html>

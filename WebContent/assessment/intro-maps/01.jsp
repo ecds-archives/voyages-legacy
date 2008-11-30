@@ -22,8 +22,7 @@
 		alt="Map 1: Overview of the slave trade out of Africa, 1500-1900" />
 </div>
 
-
-<%@ include file="../footer.jsp" %>
+<%@ include file="../../google-analytics.jsp" %>
 
 </body>
 </html>

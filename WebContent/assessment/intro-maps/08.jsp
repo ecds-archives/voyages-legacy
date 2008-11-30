@@ -22,8 +22,7 @@
 		alt="Map 8: Major regions where captives disembarked, all years" />
 </div>
 
-
-<%@ include file="../footer.jsp" %>
+<%@ include file="../../google-analytics.jsp" %>
 
 </body>
 </html>

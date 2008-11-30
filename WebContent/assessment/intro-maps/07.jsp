@@ -22,8 +22,7 @@
 		alt="Map 7: Major coastal regions from which captives left Africa, all years" />
 </div>
 
-
-<%@ include file="../footer.jsp" %>
+<%@ include file="../../google-analytics.jsp" %>
 
 </body>
 </html>
