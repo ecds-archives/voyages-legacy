@@ -40,9 +40,14 @@
 	<link href="../styles/popup.css" rel="stylesheet" type="text/css">
 	<link href="../styles/popup-permlink.css" rel="stylesheet" type="text/css">
 
+	<!-- 
 	<script src="../scripts/lib/prototype.js" type="text/javascript" language="javascript"></script>
 	<script src="../scripts/lib/scriptaculous.js" type="text/javascript" language="javascript"></script>
+	-->
+
+	<script src="../scripts/lib/jquery-1.2.6.min.js" type="text/javascript" language="javascript"></script>
 	<script src="../scripts/lib/aa.js" type="text/javascript" language="javascript"></script>
+
 	<script src="../scripts/utils.js" language="javascript" type="text/javascript"></script>
 	<script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>
 	<script src="../scripts/eventline.js" language="javascript" type="text/javascript"></script>

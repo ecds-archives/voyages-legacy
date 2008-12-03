@@ -187,11 +187,7 @@ QueryBuilder.prototype.moveConditionUp = function(attributeId)
 				attrs[i] = attrs[i-1];
 				attrs[i-1] = attributeId;
 				attrListField.value = attrs.join(',');
-				if (Scriptaculous)
-				{
-					Element.setOpacity(cond, 0);
-					Effect.Appear(cond, {duration: 0.5});
-				}
+				$(cond).hide().fadeIn();
 			}
 			return;
 		}
@@ -216,11 +212,7 @@ QueryBuilder.prototype.moveConditionDown = function(attributeId)
 				attrs[i] = attrs[i+1];
 				attrs[i+1] = attributeId;
 				attrListField.value = attrs.join(',');
-				if (Scriptaculous)
-				{
-					Element.setOpacity(cond, 0);
-					Effect.Appear(cond, {duration: 0.5});
-				}
+				$(cond).hide().fadeIn();
 			}
 			return;
 		}
@@ -240,21 +232,7 @@ QueryBuilder.prototype.deleteCondition = function(attributeId)
 			attrs.splice(i, 1);
 			delete this.conditions[attributeId];
 			attrListField.value = attrs.join(',');
-			if (Scriptaculous)
-			{
-				new Effect.Opacity(cond,
-				{
-					from: 1.0, to: 0.0, duration: 0.5,
-					afterFinishInternal: function(effect)
-					{
-						effect.element.parentNode.removeChild(effect.element);
-					}
-				});
-			}
-			else
-			{
-				cond.parentNode.removeChild(cond);
-			}
+			$(cond).fadeOut();
 			this.updateTotal(0);
 			return;
 		}
