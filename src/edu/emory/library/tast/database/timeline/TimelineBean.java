@@ -159,7 +159,7 @@ public class TimelineBean {
 				"{0,number,#,###,##0.0}"));
 		
 		this.availableStats.add(new TimelineVariable(
-				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("tonnage")}),
+				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("crew1")}),
 				TastResource.getText("components_timeline_stat_averagecrew"),
 				"{0,number,#,###,##0.0}"));
 		
