@@ -26,10 +26,6 @@ public class TableLinkManager {
 		//this.currentFirstRecord = 0;
 	}
 
-	public int getStep() {
-		return this.step;
-	}
-	
 	public void clicked(LinkElement element) {
 		int desiredStep = element.getFirstVisible();
 		this.currentFirstRecord = desiredStep;
@@ -82,6 +78,21 @@ public class TableLinkManager {
 		return (LinkElement[])list.toArray(new LinkElement[] {});
 	}
 
+	public int getStep()
+	{
+		return this.step;
+	}
+	
+	public String getStepStr()
+	{
+		return String.valueOf(this.step);
+	}
+
+	public void setStepStr(String val)
+	{
+		setStep(Integer.parseInt(val));
+	}
+	
 	public int getCurrentFirstRecord() {
 		return currentFirstRecord;
 	}

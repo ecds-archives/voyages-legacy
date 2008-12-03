@@ -35,7 +35,7 @@
 				<h:outputText value=" #{res.database_search_outof} " />
 				<h:outputText value="#{ListingBean.totalRows}" />
 				<h:outputText value="#{res.database_search_showandline}" />
-				<h:selectOneMenu onchange="submit()" value="#{ListingBean.tableManager.step}">
+				<h:selectOneMenu onchange="submit()" value="#{ListingBean.tableManager.stepStr}" id="pageSize">
 					<f:selectItem itemValue="10" itemLabel="10" />
 					<f:selectItem itemValue="15" itemLabel="15" />
 					<f:selectItem itemValue="20" itemLabel="20" />
@@ -73,7 +73,10 @@
 		</t:htmlTag>
 
 		<t:htmlTag value="div" style="margin-bottom: 5px; padding-bottom: 5px;">
-			<h:selectOneMenu style="width: 300px;" value="#{ListingBean.selectedGroupSet}" id="configure_groupSetCombo"
+			<h:selectOneMenu
+				style="width: 300px;"
+				value="#{ListingBean.selectedGroupSet}"
+				id="configure_groupSetCombo"
 				onchange="submit()">
 				<f:selectItems value="#{ListingBean.availableGroupSets}" />
 			</h:selectOneMenu>

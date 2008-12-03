@@ -168,7 +168,7 @@
 		
 								<t:htmlTag value="td" style="padding: 0px; vertical-align: top;">
 		
-									<s:map id="map"
+									<s:map id="mapVoyage"
 										zoomLevels="#{VoyageDetailBean.zoomLevels}"
 										pointsOfInterest="#{VoyageDetailBean.voyageMapPoints}"
 										lines="#{VoyageDetailBean.voyageMapLines}" miniMap="true"
