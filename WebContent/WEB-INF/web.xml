@@ -54,6 +54,16 @@
         </init-param>
     </filter>
 
+  <filter>
+    <filter-name>CompressFilter</filter-name>
+    <filter-class>com.jspbook.GZIPFilter</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>CompressFilter</filter-name>
+        <servlet-name>FacesServlet</servlet-name>
+  </filter-mapping>
+
     <filter-mapping>
         <filter-name>AjaxAnywhere</filter-name>
         <servlet-name>FacesServlet</servlet-name>
