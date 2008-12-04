@@ -1,9 +1,6 @@
+/*
 AjaxAnywhere.prototype.showLoadingMessage = function()
 {
-	// ElementUtils.hide(
-	// 	"totalBoxBasicTd",
-	// 	"totalBoxCountryTd",
-	// 	"totalBoxPlacesTd");
 	ElementUtils.show(
 		"totalUpdateIndicatorBoxBasic",
 		"totalUpdateIndicatorBoxCountry",
@@ -12,10 +9,6 @@ AjaxAnywhere.prototype.showLoadingMessage = function()
 
 AjaxAnywhere.prototype.hideLoadingMessage = function()
 {
-	// ElementUtils.show(
-	// 	"totalBoxBasicTd",
-	// 	"totalBoxCountryTd",
-	// 	"totalBoxPlacesTd");
 	ElementUtils.hide(
 		"totalUpdateIndicatorBoxBasic",
 		"totalUpdateIndicatorBoxCountry",
@@ -25,6 +18,7 @@ AjaxAnywhere.prototype.hideLoadingMessage = function()
 AjaxAnywhere.prototype.handlePrevousRequestAborted = function()
 {
 }
+*/
 
 var SlavesSearch = 
 {
@@ -47,7 +41,7 @@ var SlavesSearch =
 	search: function(postpone, buttonId)
 	{
 	
-		if (!ajaxAnywhere) return;
+		if (typeof(ajaxAnywhere) == "undefined") return;
 	
 		var button = document.getElementById(buttonId);
 		if (!button) return;

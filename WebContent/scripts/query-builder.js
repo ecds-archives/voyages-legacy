@@ -147,7 +147,7 @@ function QueryBuilder(builderId, formName, attributesFieldName, updateTotalField
 QueryBuilder.prototype.updateTotal = function(delay)
 {
 
-	if (!ajaxAnywhere || !document.getElementById(this.updateTotalFieldName))
+	if (typeof(ajaxAnywhere) == "undefined" || !document.getElementById(this.updateTotalFieldName))
 		return;
 	
 	// delay

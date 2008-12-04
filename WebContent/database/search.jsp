@@ -40,25 +40,25 @@
 	<link href="../styles/popup.css" rel="stylesheet" type="text/css">
 	<link href="../styles/popup-permlink.css" rel="stylesheet" type="text/css">
 
-	<!-- 
-	<script src="../scripts/lib/prototype.js" type="text/javascript" language="javascript"></script>
-	<script src="../scripts/lib/scriptaculous.js" type="text/javascript" language="javascript"></script>
-	-->
-
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js" type="text/javascript" language="javascript"></script>
+	<script src="../scripts/search-bundle.min.js" language="javascript" type="text/javascript"></script>
 
-	<!-- 
-	<script src="../scripts/lib/aa.js" type="text/javascript" language="javascript"></script>
-	 -->
+<%  
+	// AJAX disabled for launch
+	// <script src="../scripts/lib/aa.js" type="text/javascript" language="javascript"></script>
+%>
 
-	<script src="../scripts/utils.js" language="javascript" type="text/javascript"></script>
-	<script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>
-	<script src="../scripts/eventline.js" language="javascript" type="text/javascript"></script>
-	<script src="../scripts/map.js" language="javascript" type="text/javascript"></script>
-	<script src="../scripts/query-builder.js" language="javascript" type="text/javascript"></script>
-	<script src="../scripts/popup.js" language="javascript" type="text/javascript"></script>
-	<script src="../scripts/tooltip.js" language="javascript" type="text/javascript"></script>
-	<script src="../scripts/attributes-menu.js" language="javascript" type="text/javascript"></script>
+<% 
+	// replaced by search-bundle.min.js	
+	// <script src="../scripts/utils.js" language="javascript" type="text/javascript"></script>
+	// <script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>
+	// <script src="../scripts/eventline.js" language="javascript" type="text/javascript"></script>
+	// <script src="../scripts/map.js" language="javascript" type="text/javascript"></script>
+	// <script src="../scripts/query-builder.js" language="javascript" type="text/javascript"></script>
+	// <script src="../scripts/popup.js" language="javascript" type="text/javascript"></script>
+	// <script src="../scripts/tooltip.js" language="javascript" type="text/javascript"></script>
+	// <script src="../scripts/attributes-menu.js" language="javascript" type="text/javascript"></script>
+%>
 
 </head>
 <body>
