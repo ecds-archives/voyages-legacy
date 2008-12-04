@@ -21,8 +21,6 @@
 	
 	<link href="../styles/map.css" rel="stylesheet" type="text/css">
 	
-	<script src="../scripts/lib/prototype.js" type="text/javascript" language="javascript"></script>
-	<script src="../scripts/lib/scriptaculous.js" type="text/javascript" language="javascript"></script>
 	<script src="../scripts/utils.js" language="javascript" type="text/javascript"></script>
 	<script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>
 	<script src="../scripts/map.js" language="javascript" type="text/javascript"></script>
