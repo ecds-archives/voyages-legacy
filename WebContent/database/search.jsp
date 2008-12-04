@@ -45,8 +45,11 @@
 	<script src="../scripts/lib/scriptaculous.js" type="text/javascript" language="javascript"></script>
 	-->
 
-	<script src="../scripts/lib/jquery-1.2.6.min.js" type="text/javascript" language="javascript"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js" type="text/javascript" language="javascript"></script>
+
+	<!-- 
 	<script src="../scripts/lib/aa.js" type="text/javascript" language="javascript"></script>
+	 -->
 
 	<script src="../scripts/utils.js" language="javascript" type="text/javascript"></script>
 	<script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>

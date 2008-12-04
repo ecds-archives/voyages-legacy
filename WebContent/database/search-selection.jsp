@@ -147,26 +147,26 @@ function animateAttribute(menuItem, submitFunction)
 </s:expandableBox>
 
 </div>
+
 <br>
+<% /*
 <script type="text/javascript" language="javascript">
 
 AjaxAnywhere.prototype.showLoadingMessage = function()
 {
-	//document.getElementById("totalContainer").style.display = "none";
 	document.getElementById("totalUpdateIndicator").style.display = "";
 }
 
 AjaxAnywhere.prototype.hideLoadingMessage = function()
 {
-	//document.getElementById("totalContainer").style.display = "";
 	document.getElementById("totalUpdateIndicator").style.display = "none";
 }
 
 AjaxAnywhere.prototype.handlePrevousRequestAborted = function()
 {
 }
-
 </script>
+*/ %>
 
 <t:div rendered="#{SearchBean.showPermLinkTool}">
 
