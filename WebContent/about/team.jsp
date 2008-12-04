@@ -51,7 +51,7 @@
 
 					<ul id="team">
 
-						<li><div class="group">PRINCIPAL INVESTIGATORS</div>
+						<li><div class="group">NEH GRANT PRINCIPAL INVESTIGATORS</div>
 							<ul>
 								<li>
 									<span class="person">David Eltis</span> &ndash;
@@ -66,7 +66,7 @@
 							</ul>
 						</li>
 					
-						<li><div class="group">PROJECT TEAM</div>
+						<li><div class="group">DEVELOPMENT TEAM</div>
 							<ul>
 								<li>
 									<span class="person">Franky Abbott</span> &ndash;
@@ -171,16 +171,17 @@
 								</li>
 								<li>
 									<span class="person">Chris Roddy </span> &ndash;
-									<span class="function">Applications Developer & Analyst</span>
-								</li>
-								<li>
-									<span class="person">Joan A. Smith</span> &ndash;
-									<span class="function">Deployment Director, Chief Technology Strategist</span>
+									<span class="function">Lead Systems Administrator</span>
 								</li>
 								<li>
 									<span class="person">Katherine Skinner</span> &ndash;
 									<span class="function">Digital Preservation Coordinator </span>
 								</li>								
+								<li>
+									<span class="person">Joan A. Smith</span> &ndash;
+									<span class="function">Chief Technology Strategist</span>
+									<span class="place">(Emory Libraries)</span>
+								</li>
 								<li>
 									<span class="person">Kathleen Turaski</span> &ndash;
 									<span class="function">Web Design Consultant</span>
@@ -197,7 +198,7 @@
 								</li>
 								<li>
 									<span class="person">Jan Zich</span> &ndash;
-									<span class="function">Programmer</span>
+									<span class="function">Lead Programmer</span>
 								</li>
 							</ul>
 						</li>
