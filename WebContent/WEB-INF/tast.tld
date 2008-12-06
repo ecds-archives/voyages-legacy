@@ -205,56 +205,6 @@
 	</tag>
 	
 	<tag>
-		<name>sectionGroup</name>
-		<tag-class>
-			edu.emory.library.tast.common.SectionGroupTag
-		</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<name>id</name>
-		</attribute>
-		<attribute>
-			<name>binding</name>
-		</attribute>
-		<attribute>
-			<name>title</name>
-		</attribute>
-		<attribute>
-			<name>backgroundStyle</name>
-		</attribute>
-		<attribute>
-			<name>tabsStyle</name>
-		</attribute>
-		<attribute>
-			<name>buttonsStyle</name>
-		</attribute>
-		<attribute>
-			<name>buttonsStyle</name>
-		</attribute>
-		<attribute>
-			<name>selectedSectionId</name>
-		</attribute>
-	</tag>
-
-	<tag>
-		<name>section</name>
-		<tag-class>
-			edu.emory.library.tast.common.SectionTag
-		</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<name>id</name>
-		</attribute>
-		<attribute>
-			<name>title</name>
-		</attribute>
-		<attribute>
-			<name>sectionId</name>
-		</attribute>
-	</tag>
-	
-	
-	<tag>
 		<name>panelTabSet</name>
 		<tag-class>
 			edu.emory.library.tast.common.PanelTabSetTag
@@ -303,7 +253,7 @@
 	<tag>
 		<name>menuSlider</name>
 		<tag-class>
-			edu.emory.library.tast.database.query.MenuSliderTag
+			edu.emory.library.tast.common.MenuSliderTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -768,7 +718,7 @@
 	<tag>
 		<name>mainMenuBar</name>
 		<tag-class>
-			edu.emory.library.tast.common.MainMenuBarTag
+			edu.emory.library.tast.master.MainMenuBarTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
@@ -788,7 +738,7 @@
 	<tag>
 		<name>gallery</name>
 		<tag-class>
-			edu.emory.library.tast.common.images.GalleryTag
+			edu.emory.library.tast.images.GalleryTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
