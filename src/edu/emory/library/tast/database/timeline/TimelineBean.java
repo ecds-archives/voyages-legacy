@@ -11,6 +11,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import edu.emory.library.tast.util.CSVUtils;
+import edu.emory.library.tast.AppConfig;
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.common.EventLineEvent;
 import edu.emory.library.tast.common.EventLineGraph;
@@ -329,7 +330,8 @@ public class TimelineBean {
 			qValue.setOrderBy(new Attribute[] {Voyage.getAttribute("yearam")});
 			qValue.setOrder(TastDbQuery.ORDER_ASC);
 			
-			List ret = qValue.executeQueryList(sess);
+			boolean useSQL = AppConfig.getConfiguration().getBoolean(AppConfig.DATABASE_USE_SQL);
+			List ret = qValue.executeQueryList(sess, useSQL);
 			
 			MessageFormat fmt = new MessageFormat(chosenOption.formatString);
 			Object[] valueHolder = new Object[1];
