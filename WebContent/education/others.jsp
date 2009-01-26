@@ -222,6 +222,27 @@
 					</tr>
 					</table>
 					
+					<a name="comitedeliaison"></a>
+			
+					<div class="link-title">
+						COMITÉ DE LIAISON ET D'APPLICATION DES SOURCES HISTORIQUES  						
+					</div>
+					<table border="0" cellspacing="0" cellpadding="0" class="link-info">
+					<tr>
+						<td class="link-info-label">Content</td>
+						<td class="link-info">
+							Educational resources website dedicated to the history of Saint-Barthélemy (FWI) and focusing on the slave trade,<br> 
+							slavery and abolition and their impact on this island of the Lesser Antilles. 
+						</td>
+					</tr>
+					<tr>
+						<td class="link-info-label">WWW address</td>
+						<td class="link-info">
+							<a href="http://www.c-l-a-s-h.info">http://www.c-l-a-s-h.info</a>
+						</td>
+					</tr>
+					</table>
+					
 				</s:simpleBox>
 			</td>
 		</tr>
