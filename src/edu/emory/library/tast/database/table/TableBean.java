@@ -345,7 +345,7 @@ public class TableBean
 
 		// finally query the database
 		boolean useSQL = AppConfig.getConfiguration().getBoolean(AppConfig.DATABASE_USE_SQL);
-		System.out.println(query.toSQLStringWithParams().conditionString.toString());
+		// System.out.println(query.toSQLStringWithParams().conditionString.toString());
 		Object[] result = query.executeQuery(sess, useSQL);
 
 		// init groupers

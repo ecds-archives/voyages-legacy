@@ -33,7 +33,7 @@ public class CSVUtils {
 		public List attributes = new ArrayList();
 	}
 
-	private static DictionaryInfo[] getAllData(Session sess, TastDbQuery qValue, ZipOutputStream zipStream, boolean codes, String conditions) throws FileNotFoundException, IOException
+	private static DictionaryInfo[] getAllData(Session sess, TastDbQuery query, boolean useSQL, ZipOutputStream zipStream, boolean codes, String conditions) throws FileNotFoundException, IOException
 	{
 
 		SimpleDateFormat dateFormatter = new SimpleDateFormat(AppConfig.getConfiguration().getString(AppConfig.FORMAT_DATE_CVS));
@@ -45,9 +45,9 @@ public class CSVUtils {
 
 		try
 		{
-			queryResponse = qValue.executeScrollableQuery(sess);
+			queryResponse = query.executeScrollableQuery(sess, useSQL);
 
-			Attribute[] populatedAttrs = qValue.getPopulatedAttributes();
+			Attribute[] populatedAttrs = query.getPopulatedAttributes();
 
 			if (conditions != "")
 			{
@@ -155,17 +155,7 @@ public class CSVUtils {
 		}
 	}
 
-	public static void writeResponse(Session sess, TastDbQuery query, String conditions)
-	{
-		writeResponse(sess, query, false, conditions);
-	}
-	
-	public static void writeResponse(Session sess, TastDbQuery query)
-	{
-		writeResponse(sess, query, false, "");
-	}
-	
-	public static void writeResponse(Session sess, TastDbQuery query, boolean codes, String conditions)
+	public static void writeResponse(Session sess, TastDbQuery query, boolean useSQL, boolean codes, String conditions)
 	{
 		
 		ZipOutputStream zipOS = null;
@@ -183,7 +173,7 @@ public class CSVUtils {
 			zipOS = new ZipOutputStream(response.getOutputStream());
 			zipOS.putNextEntry(new ZipEntry("data.csv"));
 			
-			getAllData(sess, query, zipOS, codes,conditions);
+			getAllData(sess, query, useSQL, zipOS,codes, conditions);
 			
 			// zipOS.putNextEntry(new ZipEntry("codebook.csv"));
 			// getDictionaryInfo(zipOS, sess, dicts);

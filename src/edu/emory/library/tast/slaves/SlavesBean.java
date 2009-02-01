@@ -605,7 +605,7 @@ public class SlavesBean {
 		Transaction t = sess.beginTransaction();
 		TastDbConditions conditions = currentQuery.createConditions(sess, null);
 		TastDbQuery q = this.getQuery(conditions, this.pager.getCurrentFirstRecord(), this.pager.getStep());
-		CSVUtils.writeResponse(sess, q);
+		CSVUtils.writeResponse(sess, q, false, false, "");
 		t.commit();
 		sess.close();
 		return null;
@@ -620,7 +620,7 @@ public class SlavesBean {
 		Transaction t = sess.beginTransaction();
 		TastDbConditions conditions = currentQuery.createConditions(sess, null);
 		TastDbQuery q = this.getQuery(conditions, 0, -1);
-		CSVUtils.writeResponse(sess, q);
+		CSVUtils.writeResponse(sess, q, false, false, "");
 		t.commit();
 		sess.close();
 		return null;

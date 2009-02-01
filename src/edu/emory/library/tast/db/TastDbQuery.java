@@ -504,8 +504,12 @@ public class TastDbQuery {
 
 	public ScrollableResults executeScrollableQuery(Session session)
 	{
-		ScrollableResults list = this.getQuery(session).scroll();
-		return list;
+		return this.executeScrollableQuery(session, false);
+	}
+
+	public ScrollableResults executeScrollableQuery(Session session, boolean useSQL)
+	{
+		return this.getQuery(session, useSQL).scroll();
 	}
 
 	public boolean isCacheable()

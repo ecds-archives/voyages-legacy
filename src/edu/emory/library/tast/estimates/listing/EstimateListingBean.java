@@ -215,7 +215,7 @@ public class EstimateListingBean {
 		Transaction t = session.beginTransaction();
 		
 		TastDbQuery q = getQuery(this.linkManager.getCurrentFirstRecord(), this.linkManager.getStep());;
-		CSVUtils.writeResponse(session, q);
+		CSVUtils.writeResponse(session, q, false, false, "");
 		
 		t.commit();
 		session.close();
@@ -228,7 +228,7 @@ public class EstimateListingBean {
 		Transaction t = session.beginTransaction();
 		
 		TastDbQuery q = getQuery(0, -1);
-		CSVUtils.writeResponse(session, q);
+		CSVUtils.writeResponse(session, q, false, false, "");
 		
 		t.commit();
 		session.close();

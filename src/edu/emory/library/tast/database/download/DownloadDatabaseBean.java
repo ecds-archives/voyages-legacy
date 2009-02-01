@@ -55,7 +55,7 @@ public class DownloadDatabaseBean {
 		Transaction t = session.beginTransaction();
 		
 		TastDbQuery q = this.getQuery();
-		CSVUtils.writeResponse(session, q, !codes.booleanValue(), "");	
+		CSVUtils.writeResponse(session, q, false, !codes.booleanValue(), "");	
 		
 		t.commit();
 		session.close();

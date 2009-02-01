@@ -938,12 +938,14 @@ public class ListingBean {
 	
 	public String getFileCurrentData()
 	{
+		
+		boolean useSQL = AppConfig.getConfiguration().getBoolean(AppConfig.DATABASE_USE_SQL);
 
 		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		
 		TastDbQuery q = this.getQuery(this.conditions, this.data, this.linkManager.getCurrentFirstRecord(), this.linkManager.getStep(), false);
-		CSVUtils.writeResponse(session, q, this.conditions.toString());
+		CSVUtils.writeResponse(session, q, useSQL, false, this.conditions.toString());
 		
 		t.commit();
 		session.close();
@@ -952,15 +954,21 @@ public class ListingBean {
 		
 	}
 	
-	public String getFileAllData() {	
+	public String getFileAllData()
+	{
+		
+		boolean useSQL = AppConfig.getConfiguration().getBoolean(AppConfig.DATABASE_USE_SQL);
+		
 		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		
 		TastDbQuery q = this.getQuery(this.conditions, this.data, 0, -1, false);
-		CSVUtils.writeResponse(session, q,this.conditions.toString());	
+		CSVUtils.writeResponse(session, q, useSQL, false, this.conditions.toString());	
 		
 		t.commit();
 		session.close();
 		return null;
+		
 	}
+
 }
