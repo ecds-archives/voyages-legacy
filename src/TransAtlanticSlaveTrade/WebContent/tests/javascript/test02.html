@@ -1,0 +1,209 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Test</title>
+</head>
+<body>
+
+<script type="text/javascript" language="javascript">
+
+var Events =
+{
+	map: new Array(),
+
+	findRegistrationIndex: function(element, eventType)
+	{
+		for (var i=0; i<Events.map.length; i++)
+		{
+			var req = Events.map[i];
+			if (req.element == element && req.eventType == eventType)
+			{
+				return i;
+			}
+		}
+		return -1;
+	},
+
+	findRegistration: function(element, eventType)
+	{
+		var i = Events.findRegistrationIndex(element, eventType);
+		return i == -1 ? null : Events.map[i];
+	},
+
+	attach: function(element, eventType, object, handler)
+	{
+
+		if (element.attachEvent)
+		{
+			element.attachEvent("on" + eventType, Events.globalHandler);
+		}
+		else if (element.addEventListener)
+		{
+			element.addEventListener(eventType, Events.globalHandler, false);
+		}
+
+		var reg = Events.findRegistration(element, eventType);
+		if (reg == null)
+		{
+			reg = new Object();
+			this.map.push(reg);
+		}
+
+		if (object == null) object = window;
+		reg.element = element;
+		reg.object = object;
+		reg.eventType = eventType;
+		reg.handler = handler;
+
+	},
+
+	attachById: function(elementId, eventType, object, handler)
+	{
+		var element = document.getElementById(elementId);
+		this.attach(element, eventType, object, handler);
+	},
+	
+	detach: function(element, eventType)
+	{
+		var i = Events.findRegistrationIndex(element, eventType);
+		if (i != -1) Events.map.splice(i, 1);
+	},
+	
+	detachById: function(elementId, eventType)
+	{
+		var element = document.getElementById(elementId);
+		Events.detach(element, eventType);
+	},
+
+	globalHandler: function(event)
+	{
+		if (!event) event = window.event;
+		var element = event.srcElement ? event.srcElement : this;
+		var reg = Events.findRegistration(element, event.type);
+		if (reg != null) reg.object[reg.handler](event);
+	}
+
+}
+
+var Timer =
+{
+
+	map: new Array(),
+	nextId: 0,
+	
+	delayedCall: function(object, method, delay)
+	{
+	
+		var id = Timer.nextId;
+		Timer.nextId ++;
+	
+		if (object == null) object = window;
+		var reg = new Object();
+		reg.object = object;
+		reg.method = method;
+		reg.tid = window.setTimeout("Timer.globalHandler(" + id + ")", delay);
+		
+		Timer.map["call_" + id] = reg;
+		
+		return id;
+
+	},
+	
+	cancelCall: function(id)
+	{
+		var reg = Timer.map["call_" + id];
+		if (reg)
+		{
+			window.clearTimeout(reg.tid);
+			delete Timer.map["call_" + id];
+		}
+	},
+	
+	globalHandler: function(id)
+	{
+		var reg = Timer.map["call_" + id];
+		if (reg)
+		{
+			delete Timer.map["call_" + id];
+			reg.object[reg.method]();
+		}
+	}
+
+}
+
+var ObjectUtils = 
+{
+	printObject: function(obj)
+	{
+		if (!obj)
+		{
+			alert(obj);
+		}
+		else
+		{
+			var ret = "";
+			for (var k in obj) ret += k + " = " + obj[k] + "\n";
+			alert(ret);
+		}
+	}
+}
+
+var ABC =
+{
+	bbb: "256",
+	aaa: function()
+	{
+		alert(this.bbb);
+		Events.detachById("btn1", "click");
+	}
+}
+
+function abc()
+{
+	alert("abc");
+}
+
+function bcd()
+{
+	alert("bcd");
+}
+
+window.onload = function()
+{
+
+	Events.attachById("btn1", "click", ABC, "aaa");
+	Events.attachById("btn2", "click", null, "bcd");
+
+	ABC.bbb = "333";
+	
+	var callId = Timer.delayedCall(ABC, "aaa", 2000);
+	Timer.cancelCall(callId);
+	
+	/*
+
+	var btn1 = document.getElementById("btn1");
+	var btn2 = document.getElementById("btn2");
+
+	var x = new Array();
+
+	x[btn1] = "aaaaaaaa";
+	alert("x[btn1] = " + x[btn1]);
+	alert("x[btn2] = " + x[btn2]);
+
+	x[btn2] = "bbbbbbbb";
+	alert("x[btn1] = " + x[btn1]);
+	alert("x[btn2] = " + x[btn2]);
+	
+	*/
+}
+
+
+
+</script>
+
+<input type="button" id="btn1" value="Show abc" >
+<input type="button" id="btn2" value="Show bcd" >
+
+</body>
+</html>

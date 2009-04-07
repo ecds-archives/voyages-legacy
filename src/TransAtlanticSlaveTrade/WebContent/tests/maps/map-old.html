@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Map</title>
+<script language="javascript" type="text/javascript" src="map.js"></script>
+<script language="javascript" type="text/javascript" src="utils.js"></script>
+
+<style>
+
+body {
+	margin: 0px;
+	padding: 0px;
+	font-family: Verdana;
+	font-size: 8pt; }
+	
+input {
+	font-family: Verdana;
+	font-size: 8pt; }
+
+</style>
+
+</head>
+<body onload="map_init()">
+
+<div id="map-control" style="position: absolute;">
+
+	<div id="map-frm" style="position: absolute;"></div>
+
+	<!--  
+	<table border="0" cellspacing="0" cellpadding="0" id="map-tools-left" style="position: absolute; width: 30px; background-color: #EEEEEE;">
+	<tr>
+		<td></td>
+	</tr>
+	</table>
+	
+	<table border="0" cellspacing="0" cellpadding="0" id="map-tools-right" style="position: absolute; width: 30px; background-color: #EEEEEE;">
+	<tr>
+		<td></td>
+	</tr>
+	</table>
+	
+	<div id="map-tools-bottom" style="position: absolute; height: 30px; background-color: #EEEEEE"></div>
+
+	-->	
+	
+	<div id="map-tools-top" style="position: absolute; background-color: #DDDDDD; border-bottom: 1px solid #999999;">
+		<table border="0" cellspacing="10" cellpadding="0">
+		<tr>
+			<td><input type="button" onclick="map_mouse_mode = PAN;" value="Realtime pan"></td>
+			<td><input type="button" onclick="map_mouse_mode = ZOOM;" value="Realtime zoom"></td>
+			<td><input type="button" onclick="zoom_plus()" value="+"></td>
+			<td><input type="button" onclick="zoom_minus()" value="-"></td>
+		</tr>
+		</table>
+	</div>
+	
+</div>
+
+
+</body>
+</html>

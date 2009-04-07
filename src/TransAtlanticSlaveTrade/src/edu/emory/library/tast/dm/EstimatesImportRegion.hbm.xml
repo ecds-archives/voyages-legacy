@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping auto-import="false">
+
+	<class name="edu.emory.library.tast.dm.EstimatesImportRegion" table="estimates_import_regions">
+		
+		<!-- 
+		<cache usage="read-write" />
+		-->
+		
+		<id name="id" column="id">
+			<generator class="native"/>
+		</id>
+
+		<property name="latitude" />
+		<property name="longitude" />
+		<property name="name" column="name" />
+		<property name="order" column="order_num" />
+		<property name="showAtZoom" column="show_at_zoom" />
+		<property name="showOnMap" column="show_on_map" />
+		
+		<many-to-one name="area" column="area_id" />
+
+	</class>
+
+</hibernate-mapping>

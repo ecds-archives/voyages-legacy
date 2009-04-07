@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+	<class name="edu.emory.library.tas.test.Book" table="books">
+        <id name="id" column="id">
+        	<generator class="native"/>
+        </id>
+        <property name="name" />
+        <many-to-one name="author" class="edu.emory.library.tas.test.Author" column="author_id" fetch="join" lazy="false" />
+    </class>
+
+	<class name="edu.emory.library.tas.test.Author" table="authors">
+        <id name="id" column="id">
+        	<generator class="native"/>
+        </id>
+        <property name="name" />
+    </class>
+
+</hibernate-mapping>

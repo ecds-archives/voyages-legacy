@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+
+<style>
+
+body {
+	font-family: Arial;
+	font-size: 9pt; }
+
+</style>
+
+<script type="text/javascript" language="javascript">
+
+function showPopup()
+{
+
+	var vportWidth = document.documentElement.clientWidth;
+	var vportHeight = document.documentElement.clientHeight;
+	var vportTop = document.documentElement.scrollTop;
+	var vportLeft = document.documentElement.scrollLeft;
+
+//	alert(
+//		"document.documentElement.scrollHeight = " + document.documentElement.scrollHeight + "\n" +
+//		"document.body.scrollHeight = " + document.body.scrollHeight + "\n" +
+//		"document.documentElement.clientHeight = " + document.documentElement.clientHeight + "\n" +
+//		"document.body.clientHeight = " + document.body.clientHeight + "\n" +
+//		"document.documentElement.offsetHeight = " + document.documentElement.offsetHeight + "\n" +
+//		"document.body.offsetHeight = " + document.body.offsetHeight
+//		);
+	
+	var div = document.createElement("div");
+	div.style.position = "absolute";
+	div.style.left = vportLeft + "px";
+	div.style.top = vportTop + "px";
+	div.style.width = vportWidth + "px";
+	div.style.height = vportHeight + "px";
+	div.style.backgroundColor = "Red";
+
+	document.body.appendChild(div);
+
+	// alert(
+	//	"document.documentElement.offsetHeight = " + document.documentElement.offsetHeight + ", " +
+	//	"document.body.offsetHeight = " + document.body.offsetHeight );
+
+}
+
+</script>
+
+</head>
+<body>
+
+<h1>Lorem ipsum</h1>
+
+<input type="button" onclick="showPopup()" value="Show">
+
+<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Mauris ac magna ac metus condimentum tristique. Praesent lacus. Pellentesque placerat est at augue. Suspendisse condimentum libero vitae erat. Proin molestie, velit at condimentum molestie, velit risus auctor purus, quis iaculis metus augue eu purus. Nullam vulputate scelerisque libero. Phasellus suscipit. Nulla sem ante, placerat at, iaculis ut, varius id, tortor. Donec eu erat. Nulla facilisis convallis enim. Nulla mollis massa et ante. Nunc pede odio, commodo et, faucibus in, fringilla ultricies, tellus. Phasellus et augue eget magna sodales pharetra. Etiam diam. Sed odio risus, congue vitae, scelerisque eget, dictum sit amet, magna. Duis gravida.</p>
+
+<p>Nulla ut urna. Duis velit risus, ultrices eget, rhoncus pellentesque, tempor vel, pede. Donec dictum, turpis tempus venenatis consequat, metus tortor imperdiet purus, ac accumsan velit metus nec nunc. Duis tempus. In tempus eros sit amet tellus. Quisque aliquam pede a metus. Sed id enim id odio cursus lacinia. Sed pulvinar est tincidunt massa. Donec odio mi, lacinia eu, ultricies id, adipiscing eleifend, lectus. Suspendisse elementum tincidunt mi. Praesent accumsan mi non lectus. Pellentesque nec libero eget dolor pellentesque congue. Morbi scelerisque, risus vitae tempor cursus, velit sem sollicitudin libero, ac ultrices nisl tortor sed neque. Etiam interdum velit eget mi.</p>
+
+<p>Mauris rutrum. Praesent venenatis est. Vestibulum suscipit justo eu magna. Nullam tortor arcu, ultrices non, tincidunt vel, iaculis sit amet, enim. Proin sed augue. Etiam bibendum molestie sapien. Curabitur ultricies, ligula et sagittis ultrices, pede libero lobortis ligula, a consequat urna neque sit amet dolor. Cras elementum tellus pretium orci. Aliquam rutrum fermentum tortor. Integer aliquam pede scelerisque elit vulputate semper. Proin interdum porttitor leo. Vivamus et orci sit amet sem sodales interdum. Nunc mi. Quisque molestie, mauris quis lacinia semper, tellus nunc gravida ipsum, in fermentum pede leo quis ante. Aliquam erat volutpat. In ultricies libero ac dolor. In lobortis pulvinar arcu.</p>
+
+<p>Nunc purus. Nam consequat ligula sit amet tortor. Nam eu risus eget arcu ullamcorper tincidunt. Suspendisse enim enim, blandit ac, mollis at, tempus vitae, tortor. Aliquam ac mi. Morbi turpis massa, vestibulum id, rutrum sit amet, ullamcorper eu, erat. Mauris venenatis eros a quam. Donec dignissim dolor eu neque. Mauris sed libero sit amet purus aliquet dictum. Cras vel dui. Morbi vehicula tempor felis. Donec accumsan, tortor eu convallis pellentesque, lorem libero sagittis nunc, vel pretium purus nisl quis risus. Vestibulum et neque. Maecenas nec diam.</p>
+
+<p>Phasellus adipiscing pretium mauris. Nulla odio purus, volutpat id, posuere at, scelerisque id, mi. Praesent sit amet erat. Fusce pellentesque pede nec eros. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Mauris non risus eu enim molestie fringilla. Cras felis. Nam elit sem, consectetuer nec, consectetuer vel, sodales vel, dui. Mauris non elit. Proin ut mauris ornare neque porttitor ornare. Sed turpis lacus, laoreet nec, feugiat egestas, vehicula facilisis, velit. Proin mattis tristique lectus. Sed massa mi, ullamcorper in, placerat ut, consectetuer eget, magna. Pellentesque sit amet arcu aliquet ipsum malesuada condimentum.</p>
+
+<p>Nulla ut urna. Duis velit risus, ultrices eget, rhoncus pellentesque, tempor vel, pede. Donec dictum, turpis tempus venenatis consequat, metus tortor imperdiet purus, ac accumsan velit metus nec nunc. Duis tempus. In tempus eros sit amet tellus. Quisque aliquam pede a metus. Sed id enim id odio cursus lacinia. Sed pulvinar est tincidunt massa. Donec odio mi, lacinia eu, ultricies id, adipiscing eleifend, lectus. Suspendisse elementum tincidunt mi. Praesent accumsan mi non lectus. Pellentesque nec libero eget dolor pellentesque congue. Morbi scelerisque, risus vitae tempor cursus, velit sem sollicitudin libero, ac ultrices nisl tortor sed neque. Etiam interdum velit eget mi.</p>
+
+<p>Mauris rutrum. Praesent venenatis est. Vestibulum suscipit justo eu magna. Nullam tortor arcu, ultrices non, tincidunt vel, iaculis sit amet, enim. Proin sed augue. Etiam bibendum molestie sapien. Curabitur ultricies, ligula et sagittis ultrices, pede libero lobortis ligula, a consequat urna neque sit amet dolor. Cras elementum tellus pretium orci. Aliquam rutrum fermentum tortor. Integer aliquam pede scelerisque elit vulputate semper. Proin interdum porttitor leo. Vivamus et orci sit amet sem sodales interdum. Nunc mi. Quisque molestie, mauris quis lacinia semper, tellus nunc gravida ipsum, in fermentum pede leo quis ante. Aliquam erat volutpat. In ultricies libero ac dolor. In lobortis pulvinar arcu.</p>
+
+<p>Nulla ut urna. Duis velit risus, ultrices eget, rhoncus pellentesque, tempor vel, pede. Donec dictum, turpis tempus venenatis consequat, metus tortor imperdiet purus, ac accumsan velit metus nec nunc. Duis tempus. In tempus eros sit amet tellus. Quisque aliquam pede a metus. Sed id enim id odio cursus lacinia. Sed pulvinar est tincidunt massa. Donec odio mi, lacinia eu, ultricies id, adipiscing eleifend, lectus. Suspendisse elementum tincidunt mi. Praesent accumsan mi non lectus. Pellentesque nec libero eget dolor pellentesque congue. Morbi scelerisque, risus vitae tempor cursus, velit sem sollicitudin libero, ac ultrices nisl tortor sed neque. Etiam interdum velit eget mi.</p>
+
+<p>Mauris rutrum. Praesent venenatis est. Vestibulum suscipit justo eu magna. Nullam tortor arcu, ultrices non, tincidunt vel, iaculis sit amet, enim. Proin sed augue. Etiam bibendum molestie sapien. Curabitur ultricies, ligula et sagittis ultrices, pede libero lobortis ligula, a consequat urna neque sit amet dolor. Cras elementum tellus pretium orci. Aliquam rutrum fermentum tortor. Integer aliquam pede scelerisque elit vulputate semper. Proin interdum porttitor leo. Vivamus et orci sit amet sem sodales interdum. Nunc mi. Quisque molestie, mauris quis lacinia semper, tellus nunc gravida ipsum, in fermentum pede leo quis ante. Aliquam erat volutpat. In ultricies libero ac dolor. In lobortis pulvinar arcu.</p>
+
+<p>Nulla ut urna. Duis velit risus, ultrices eget, rhoncus pellentesque, tempor vel, pede. Donec dictum, turpis tempus venenatis consequat, metus tortor imperdiet purus, ac accumsan velit metus nec nunc. Duis tempus. In tempus eros sit amet tellus. Quisque aliquam pede a metus. Sed id enim id odio cursus lacinia. Sed pulvinar est tincidunt massa. Donec odio mi, lacinia eu, ultricies id, adipiscing eleifend, lectus. Suspendisse elementum tincidunt mi. Praesent accumsan mi non lectus. Pellentesque nec libero eget dolor pellentesque congue. Morbi scelerisque, risus vitae tempor cursus, velit sem sollicitudin libero, ac ultrices nisl tortor sed neque. Etiam interdum velit eget mi.</p>
+
+<p>Mauris rutrum. Praesent venenatis est. Vestibulum suscipit justo eu magna. Nullam tortor arcu, ultrices non, tincidunt vel, iaculis sit amet, enim. Proin sed augue. Etiam bibendum molestie sapien. Curabitur ultricies, ligula et sagittis ultrices, pede libero lobortis ligula, a consequat urna neque sit amet dolor. Cras elementum tellus pretium orci. Aliquam rutrum fermentum tortor. Integer aliquam pede scelerisque elit vulputate semper. Proin interdum porttitor leo. Vivamus et orci sit amet sem sodales interdum. Nunc mi. Quisque molestie, mauris quis lacinia semper, tellus nunc gravida ipsum, in fermentum pede leo quis ante. Aliquam erat volutpat. In ultricies libero ac dolor. In lobortis pulvinar arcu.</p>
+
+<p>Phasellus adipiscing pretium mauris. Nulla odio purus, volutpat id, posuere at, scelerisque id, mi. Praesent sit amet erat. Fusce pellentesque pede nec eros. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Mauris non risus eu enim molestie fringilla. Cras felis. Nam elit sem, consectetuer nec, consectetuer vel, sodales vel, dui. Mauris non elit. Proin ut mauris ornare neque porttitor ornare. Sed turpis lacus, laoreet nec, feugiat egestas, vehicula facilisis, velit. Proin mattis tristique lectus. Sed massa mi, ullamcorper in, placerat ut, consectetuer eget, magna. Pellentesque sit amet arcu aliquet ipsum malesuada condimentum.</p>
+
+<p>Nulla ut urna. Duis velit risus, ultrices eget, rhoncus pellentesque, tempor vel, pede. Donec dictum, turpis tempus venenatis consequat, metus tortor imperdiet purus, ac accumsan velit metus nec nunc. Duis tempus. In tempus eros sit amet tellus. Quisque aliquam pede a metus. Sed id enim id odio cursus lacinia. Sed pulvinar est tincidunt massa. Donec odio mi, lacinia eu, ultricies id, adipiscing eleifend, lectus. Suspendisse elementum tincidunt mi. Praesent accumsan mi non lectus. Pellentesque nec libero eget dolor pellentesque congue. Morbi scelerisque, risus vitae tempor cursus, velit sem sollicitudin libero, ac ultrices nisl tortor sed neque. Etiam interdum velit eget mi.</p>
+
+<p>Mauris rutrum. Praesent venenatis est. Vestibulum suscipit justo eu magna. Nullam tortor arcu, ultrices non, tincidunt vel, iaculis sit amet, enim. Proin sed augue. Etiam bibendum molestie sapien. Curabitur ultricies, ligula et sagittis ultrices, pede libero lobortis ligula, a consequat urna neque sit amet dolor. Cras elementum tellus pretium orci. Aliquam rutrum fermentum tortor. Integer aliquam pede scelerisque elit vulputate semper. Proin interdum porttitor leo. Vivamus et orci sit amet sem sodales interdum. Nunc mi. Quisque molestie, mauris quis lacinia semper, tellus nunc gravida ipsum, in fermentum pede leo quis ante. Aliquam erat volutpat. In ultricies libero ac dolor. In lobortis pulvinar arcu.</p>
+
+</body>
+</html>

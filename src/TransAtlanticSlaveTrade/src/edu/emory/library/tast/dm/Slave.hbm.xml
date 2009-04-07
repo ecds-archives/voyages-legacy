@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="edu.emory.library.tast.dm.Slave" table="slaves">
+
+		<!-- 
+		<cache usage="read-write" />
+		-->
+		
+		<id name="id" column="slaveid">
+			<generator class="native"/>
+		</id>
+		
+		<property name="voyageId" column="voyageid"/>
+		<property name="name" column="name"/>
+		<property name="shipname" column="shipname"/>
+		<property name="age"/>
+		<property name="height"/>
+		<property name="datearr"/>
+		<property name="source"/>
+		
+		<many-to-one name="country" column="country_id" class="edu.emory.library.tast.dm.Country" lazy="false"/>
+		<many-to-one name="sexage" class="edu.emory.library.tast.dm.SexAge" lazy="false"/>
+		<many-to-one name="majselpt" class="edu.emory.library.tast.dm.Port" lazy="false"/>
+		<many-to-one name="majbuypt" class="edu.emory.library.tast.dm.Port" lazy="false"/>
+		
+	</class>
+</hibernate-mapping>

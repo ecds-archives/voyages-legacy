@@ -1,0 +1,713 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE symbols [
+
+<!ELEMENT symbols (symbol*)>
+<!ELEMENT symbol EMPTY>
+
+<!ATTLIST symbol
+	name CDATA #REQUIRED
+	url CDATA #REQUIRED
+	width CDATA #REQUIRED
+	height CDATA #REQUIRED
+	centerX CDATA #REQUIRED
+	centerY CDATA #REQUIRED>
+
+]>
+<symbols>
+	<symbol
+		name="number-2-1"
+		url="/symbols/number-2-1.png"
+		width="16"
+		height="16"
+		centerX="8"
+		centerY="8" />
+	<symbol
+		name="circle-5-4"
+		url="/symbols/circle-5-4.png"
+		width="14"
+		height="14"
+		centerX="7"
+		centerY="7" />
+	<symbol
+		name="number-1-2-2"
+		url="/symbols/number-1-2-2.png"
+		width="35"
+		height="35"
+		centerX="17"
+		centerY="17" />
+	<symbol
+		name="circle-2-4"
+		url="/symbols/circle-2-4.png"
+		width="14"
+		height="14"
+		centerX="7"
+		centerY="7" />
+	<symbol
+		name="number-1-5-3"
+		url="/symbols/number-1-5-3.png"
+		width="35"
+		height="35"
+		centerX="17"
+		centerY="17" />
+	<symbol
+		name="number-2-2"
+		url="/symbols/number-2-2.png"
+		width="16"
+		height="16"
+		centerX="8"
+		centerY="8" />
+	<symbol
+		name="number-1-1-3"
+		url="/symbols/number-1-1-3.png"
+		width="35"
+		height="35"
+		centerX="17"
+		centerY="17" />
+	<symbol
+		name="circle-1-2"
+		url="/symbols/circle-1-2.png"
+		width="10"
+		height="10"
+		centerX="5"
+		centerY="5" />
+	<symbol
+		name="number-1-1-2"
+		url="/symbols/number-1-1-2.png"
+		width="35"
+		height="35"
+		centerX="17"
+		centerY="17" />
+	<symbol
+		name="number-1-3-4"
+		url="/symbols/number-1-3-4.png"
+		width="35"
+		height="35"
+		centerX="17"
+		centerY="17" />
+	<symbol
+		name="number-3-2"
+		url="/symbols/number-3-2.png"
+		width="16"
+		height="16"
+		centerX="8"
+		centerY="8" />
+	<symbol
+		name="number-1-2-3"
+		url="/symbols/number-1-2-3.png"
+		width="35"
+		height="35"
+		centerX="17"
+		centerY="17" />
+	<symbol
+		name="number-2-3"
+		url="/symbols/number-2-3.png"
+		width="16"
+		height="16"
+		centerX="8"
+		centerY="8" />
+	<symbol
+		name="number-1-4"
+		url="/symbols/number-1-4.png"
+		width="16"
+		height="16"
+		centerX="8"
+		centerY="8" />
+	<symbol
+		name="number-1-6-4"
+		url="/symbols/number-1-6-4.png"
+		width="35"
+		height="35"
+		centerX="17"
+		centerY="17" />
+	<symbol
+		name="number-4-1"
+		url="/symbols/number-4-1.png"
+		width="16"
+		height="16"
+		centerX="8"
+		centerY="8" />
+	<symbol
+		name="circle-2-5"
+		url="/symbols/circle-2-5.png"
+		width="17"
+		height="18"
+		centerX="8"
+		centerY="9" />
+	<symbol
+		name="number-3-5"
+		url="/symbols/number-3-5.png"
+		width="16"
+		height="16"
+		centerX="8"
+		centerY="8" />
+	<symbol
+		name="circle-5-3"
+		url="/symbols/circle-5-3.png"
+		width="11"
+		height="12"
+		centerX="5"
+		centerY="6" />
+	<symbol
+		name="circle-4-5"
+		url="/symbols/circle-4-5.png"
+		width="17"
+		height="18"
+		centerX="8"
+		centerY="9" />
+	<symbol
+		name="number-1-2"
+		url="/symbols/number-1-2.png"
+		width="16"
+		height="16"
+		centerX="8"
+		centerY="8" />
+	<symbol
+		name="number-1-5"
+		url="/symbols/number-1-5.png"
+		width="16"
+		height="16"
+		centerX="8"
+		centerY="8" />
+	<symbol
+		name="number-4-2"
+		url="/symbols/number-4-2.png"
+		width="16"
+		height="16"
+		centerX="8"
+		centerY="8" />
+	<symbol
+		name="circle-1-4"
+		url="/symbols/circle-1-4.png"
+		width="14"
+		height="14"
+		centerX="7"
+		centerY="7" />
+	<symbol
+		name="circle-1-5"
+		url="/symbols/circle-1-5.png"
+		width="17"
+		height="18"
+		centerX="8"
+		centerY="9" />
+	<symbol
+		name="number-1-5-4"
+		url="/symbols/number-1-5-4.png"
+		width="35"
+		height="35"
+		centerX="17"
+		centerY="17" />
+	<symbol
+		name="number-1-3-1"
+		url="/symbols/number-1-3-1.png"
+		width="35"
+		height="35"
+		centerX="17"
+		centerY="17" />
+	<symbol
+		name="circle-3-3"
+		url="/symbols/circle-3-3.png"
+		width="11"
+		height="12"
+		centerX="5"
+		centerY="6" />
+	<symbol
+		name="circle-5-1"
+		url="/symbols/circle-5-1.png"
+		width="5"
+		height="6"
+		centerX="2"
+		centerY="3" />
+	<symbol
+		name="number-2-6"
+		url="/symbols/number-2-6.png"
+		width="16"
+		height="16"
+		centerX="8"
+		centerY="8" />
+	<symbol
+		name="number-1-1"
+		url="/symbols/number-1-1.png"
+		width="16"
+		height="16"
+		centerX="8"
+		centerY="8" />
+	<symbol
+		name="number-3-1"
+		url="/symbols/number-3-1.png"
+		width="16"
+		height="16"
+		centerX="8"
+		centerY="8" />
+	<symbol
+		name="number-1-3-3"
+		url="/symbols/number-1-3-3.png"
+		width="35"
+		height="35"
+		centerX="17"
+		centerY="17" />
+	<symbol
+		name="number-1-3-2"
+		url="/symbols/number-1-3-2.png"
+		width="35"
+		height="35"
+		centerX="17"
+		centerY="17" />
+	<symbol
+		name="number-4-4"
+		url="/symbols/number-4-4.png"
+		width="16"
+		height="16"
+		centerX="8"
+		centerY="8" />
+	<symbol
+		name="number-1-6-3"
+		url="/symbols/number-1-6-3.png"
+		width="35"
+		height="35"
+		centerX="17"
+		centerY="17" />
+	<symbol
+		name="number-4-3"
+		url="/symbols/number-4-3.png"
+		width="16"
+		height="16"
+		centerX="8"
+		centerY="8" />
+	<symbol
+		name="number-1-1-4"
+		url="/symbols/number-1-1-4.png"
+		width="35"
+		height="35"
+		centerX="17"
+		centerY="17" />
+	<symbol
+		name="number-3-6"
+		url="/symbols/number-3-6.png"
+		width="16"
+		height="16"
+		centerX="8"
+		centerY="8" />
+	<symbol
+		name="circle-1-1"
+		url="/symbols/circle-1-1.png"
+		width="5"
+		height="6"
+		centerX="2"
+		centerY="3" />
+	<symbol
+		name="number-3-3"
+		url="/symbols/number-3-3.png"
+		width="16"
+		height="16"
+		centerX="8"
+		centerY="8" />
+	<symbol
+		name="number-1-3"
+		url="/symbols/number-1-3.png"
+		width="16"
+		height="16"
+		centerX="8"
+		centerY="8" />
+	<symbol
+		name="number-2-4"
+		url="/symbols/number-2-4.png"
+		width="16"
+		height="16"
+		centerX="8"
+		centerY="8" />
+	<symbol
+		name="number-1-5-2"
+		url="/symbols/number-1-5-2.png"
+		width="35"
+		height="35"
+		centerX="17"
+		centerY="17" />
+	<symbol
+		name="circle-4-1"
+		url="/symbols/circle-4-1.png"
+		width="5"
+		height="6"
+		centerX="2"
+		centerY="3" />
+	<symbol
+		name="circle-3-4"
+		url="/symbols/circle-3-4.png"
+		width="14"
+		height="14"
+		centerX="7"
+		centerY="7" />
+	<symbol
+		name="number-1-5-1"
+		url="/symbols/number-1-5-1.png"
+		width="35"
+		height="35"
+		centerX="17"
+		centerY="17" />
+	<symbol
+		name="circle-4-4"
+		url="/symbols/circle-4-4.png"
+		width="14"
+		height="14"
+		centerX="7"
+		centerY="7" />
+	<symbol
+		name="circle-3-1"
+		url="/symbols/circle-3-1.png"
+		width="5"
+		height="6"
+		centerX="2"
+		centerY="3" />
+	<symbol
+		name="number-1-4-3"
+		url="/symbols/number-1-4-3.png"
+		width="35"
+		height="35"
+		centerX="17"
+		centerY="17" />
+	<symbol
+		name="circle-3-2"
+		url="/symbols/circle-3-2.png"
+		width="10"
+		height="10"
+		centerX="5"
+		centerY="5" />
+	<symbol
+		name="circle-2-2"
+		url="/symbols/circle-2-2.png"
+		width="10"
+		height="10"
+		centerX="5"
+		centerY="5" />
+	<symbol
+		name="number-4-6"
+		url="/symbols/number-4-6.png"
+		width="16"
+		height="16"
+		centerX="8"
+		centerY="8" />
+	<symbol
+		name="number-1-6"
+		url="/symbols/number-1-6.png"
+		width="16"
+		height="16"
+		centerX="8"
+		centerY="8" />
+	<symbol
+		name="number-1-1-1"
+		url="/symbols/number-1-1-1.png"
+		width="35"
+		height="35"
+		centerX="17"
+		centerY="17" />
+	<symbol
+		name="circle-2-1"
+		url="/symbols/circle-2-1.png"
+		width="5"
+		height="6"
+		centerX="2"
+		centerY="3" />
+	<symbol
+		name="circle-4-2"
+		url="/symbols/circle-4-2.png"
+		width="10"
+		height="10"
+		centerX="5"
+		centerY="5" />
+	<symbol
+		name="number-1-2-1"
+		url="/symbols/number-1-2-1.png"
+		width="35"
+		height="35"
+		centerX="17"
+		centerY="17" />
+	<symbol
+		name="number-2-5"
+		url="/symbols/number-2-5.png"
+		width="16"
+		height="16"
+		centerX="8"
+		centerY="8" />
+	<symbol
+		name="circle-3-5"
+		url="/symbols/circle-3-5.png"
+		width="17"
+		height="18"
+		centerX="8"
+		centerY="9" />
+	<symbol
+		name="number-4-5"
+		url="/symbols/number-4-5.png"
+		width="16"
+		height="16"
+		centerX="8"
+		centerY="8" />
+	<symbol
+		name="circle-5-5"
+		url="/symbols/circle-5-5.png"
+		width="17"
+		height="18"
+		centerX="8"
+		centerY="9" />
+	<symbol
+		name="number-1-4-2"
+		url="/symbols/number-1-4-2.png"
+		width="35"
+		height="35"
+		centerX="17"
+		centerY="17" />
+	<symbol
+		name="circle-2-3"
+		url="/symbols/circle-2-3.png"
+		width="11"
+		height="12"
+		centerX="5"
+		centerY="6" />
+	<symbol
+		name="circle-1-3"
+		url="/symbols/circle-1-3.png"
+		width="11"
+		height="12"
+		centerX="5"
+		centerY="6" />
+	<symbol
+		name="circle-4-3"
+		url="/symbols/circle-4-3.png"
+		width="11"
+		height="12"
+		centerX="5"
+		centerY="6" />
+	<symbol
+		name="number-1-4-4"
+		url="/symbols/number-1-4-4.png"
+		width="35"
+		height="35"
+		centerX="17"
+		centerY="17" />
+	<symbol
+		name="number-1-6-1"
+		url="/symbols/number-1-6-1.png"
+		width="35"
+		height="35"
+		centerX="17"
+		centerY="17" />
+	<symbol
+		name="circle-5-2"
+		url="/symbols/circle-5-2.png"
+		width="10"
+		height="10"
+		centerX="5"
+		centerY="5" />
+	<symbol
+		name="number-1-6-2"
+		url="/symbols/number-1-6-2.png"
+		width="35"
+		height="35"
+		centerX="17"
+		centerY="17" />
+	<symbol
+		name="number-1-2-4"
+		url="/symbols/number-1-2-4.png"
+		width="35"
+		height="35"
+		centerX="17"
+		centerY="17" />
+	<symbol
+		name="number-1-4-1"
+		url="/symbols/number-1-4-1.png"
+		width="35"
+		height="35"
+		centerX="17"
+		centerY="17" />
+	<symbol
+		name="number-3-4"
+		url="/symbols/number-3-4.png"
+		width="16"
+		height="16"
+		centerX="8"
+		centerY="8" />
+
+	<symbol name="pin-blue-anchor" url="/symbols/pin-blue-anchor.png" width="30" height="30" centerX="16" centerY="16" />
+	<symbol name="pin-blue-anchor-circle" url="/symbols/pin-blue-anchor-circle.png" width="30" height="30" centerX="16" centerY="16" />
+	<symbol name="pin-blue-blank" url="/symbols/pin-blue-blank.png" width="30" height="30" centerX="16" centerY="16" />
+	<symbol name="pin-blue-blank-circle" url="/symbols/pin-blue-blank-circle.png" width="30" height="30" centerX="16" centerY="16" />
+	<symbol name="pin-blue-no1" url="/symbols/pin-blue-no1.png" width="30" height="30" centerX="16" centerY="16" />
+	<symbol name="pin-blue-no1-circle" url="/symbols/pin-blue-no1-circle.png" width="30" height="30" centerX="16" centerY="16" />
+	<symbol name="pin-blue-no2" url="/symbols/pin-blue-no2.png" width="30" height="30" centerX="16" centerY="16" />
+	<symbol name="pin-blue-no2-circle" url="/symbols/pin-blue-no2-circle.png" width="30" height="30" centerX="16" centerY="16" />
+	<symbol name="pin-blue-no3" url="/symbols/pin-blue-no3.png" width="30" height="30" centerX="16" centerY="16" />
+	<symbol name="pin-blue-no3-circle" url="/symbols/pin-blue-no3-circle.png" width="30" height="30" centerX="16" centerY="16" />
+	<symbol name="pin-green-anchor" url="/symbols/pin-green-anchor.png" width="30" height="30" centerX="16" centerY="16" />
+	<symbol name="pin-green-anchor-circle" url="/symbols/pin-green-anchor-circle.png" width="30" height="30" centerX="16" centerY="16" />
+	<symbol name="pin-green-blank" url="/symbols/pin-green-blank.png" width="30" height="30" centerX="16" centerY="16" />
+	<symbol name="pin-green-blank-circle" url="/symbols/pin-green-blank-circle.png" width="30" height="30" centerX="16" centerY="16" />
+	<symbol name="pin-green-no1" url="/symbols/pin-green-no1.png" width="30" height="30" centerX="16" centerY="16" />
+	<symbol name="pin-green-no1-circle" url="/symbols/pin-green-no1-circle.png" width="30" height="30" centerX="16" centerY="16" />
+	<symbol name="pin-green-no2" url="/symbols/pin-green-no2.png" width="30" height="30" centerX="16" centerY="16" />
+	<symbol name="pin-green-no2-circle" url="/symbols/pin-green-no2-circle.png" width="30" height="30" centerX="16" centerY="16" />
+	<symbol name="pin-green-no3" url="/symbols/pin-green-no3.png" width="30" height="30" centerX="16" centerY="16" />
+	<symbol name="pin-green-no3-circle" url="/symbols/pin-green-no3-circle.png" width="30" height="30" centerX="16" centerY="16" />
+	<symbol name="pin-red-anchor" url="/symbols/pin-red-anchor.png" width="30" height="30" centerX="16" centerY="16" />
+	<symbol name="pin-red-anchor-circle" url="/symbols/pin-red-anchor-circle.png" width="30" height="30" centerX="16" centerY="16" />
+	<symbol name="pin-red-blank" url="/symbols/pin-red-blank.png" width="30" height="30" centerX="16" centerY="16" />
+	<symbol name="pin-red-blank-circle" url="/symbols/pin-red-blank-circle.png" width="30" height="30" centerX="16" centerY="16" />
+	<symbol name="pin-red-no1" url="/symbols/pin-red-no1.png" width="30" height="30" centerX="16" centerY="16" />
+	<symbol name="pin-red-no1-circle" url="/symbols/pin-red-no1-circle.png" width="30" height="30" centerX="16" centerY="16" />
+	<symbol name="pin-red-no2" url="/symbols/pin-red-no2.png" width="30" height="30" centerX="16" centerY="16" />
+	<symbol name="pin-red-no2-circle" url="/symbols/pin-red-no2-circle.png" width="30" height="30" centerX="16" centerY="16" />
+	<symbol name="pin-red-no3" url="/symbols/pin-red-no3.png" width="30" height="30" centerX="16" centerY="16" />
+	<symbol name="pin-red-no3-circle" url="/symbols/pin-red-no3-circle.png" width="30" height="30" centerX="16" centerY="16" />
+	<symbol name="pin-yellow-anchor" url="/symbols/pin-yellow-anchor.png" width="30" height="30" centerX="16" centerY="16" />
+	<symbol name="pin-yellow-blank" url="/symbols/pin-yellow-blank.png" width="30" height="30" centerX="16" centerY="16" />
+	<symbol name="pin-yellow-blank-circle" url="/symbols/pin-yellow-blank-circle.png" width="30" height="30" centerX="16" centerY="16" />
+	<symbol name="pin-yellow-circle" url="/symbols/pin-yellow-circle.png" width="30" height="30" centerX="16" centerY="16" />
+	<symbol name="pin-yellow-no1" url="/symbols/pin-yellow-no1.png" width="30" height="30" centerX="16" centerY="16" />
+	<symbol name="pin-yellow-no1-circle" url="/symbols/pin-yellow-no1-circle.png" width="30" height="30" centerX="16" centerY="16" />
+	<symbol name="pin-yellow-no2" url="/symbols/pin-yellow-no2.png" width="30" height="30" centerX="16" centerY="16" />
+	<symbol name="pin-yellow-no2-circle" url="/symbols/pin-yellow-no2-circle.png" width="30" height="30" centerX="16" centerY="16" />
+	<symbol name="pin-yellow-no3" url="/symbols/pin-yellow-no3.png" width="30" height="30" centerX="16" centerY="16" />
+	<symbol name="pin-yellow-no3-circle" url="/symbols/pin-yellow-no3-circle.png" width="30" height="30" centerX="16" centerY="16" />
+	
+	<symbol name="pin-blue-1" url="/symbols/pin-blue-1.png" width="50" height="50" centerX="43" centerY="43" />
+	<symbol name="pin-blue-anchor-1" url="/symbols/pin-blue-anchor-1.png" width="50" height="50" centerX="43" centerY="43" />
+	<symbol name="pin-blue-anchor-circle-1" url="/symbols/pin-blue-anchor-circle-1.png" width="50" height="50" centerX="43" centerY="43" />
+	<symbol name="pin-blue-blank-1" url="/symbols/pin-blue-blank-1.png" width="50" height="50" centerX="43" centerY="43" />
+	<symbol name="pin-blue-blank-circle-1" url="/symbols/pin-blue-blank-circle-1.png" width="50" height="50" centerX="43" centerY="43" />
+	<symbol name="pin-blue-no1-1" url="/symbols/pin-blue-no1-1.png" width="50" height="50" centerX="43" centerY="43" />
+	<symbol name="pin-blue-no1-circle-1" url="/symbols/pin-blue-no1-circle-1.png" width="50" height="50" centerX="43" centerY="43" />
+	<symbol name="pin-blue-no2-1" url="/symbols/pin-blue-no2-1.png" width="50" height="50" centerX="43" centerY="43" />
+	<symbol name="pin-blue-no2-circle-1" url="/symbols/pin-blue-no2-circle-1.png" width="50" height="50" centerX="43" centerY="43" />
+	<symbol name="pin-blue-no3-1" url="/symbols/pin-blue-no3-1.png" width="50" height="50" centerX="43" centerY="43" />
+	<symbol name="pin-blue-no3-circle-1" url="/symbols/pin-blue-no3-circle-1.png" width="50" height="50" centerX="43" centerY="43" />
+	<symbol name="pin-green-1" url="/symbols/pin-green-1.png" width="50" height="50" centerX="43" centerY="43" />
+	<symbol name="pin-green-anchor-1" url="/symbols/pin-green-anchor-1.png" width="50" height="50" centerX="43" centerY="43" />
+	<symbol name="pin-green-anchor-circle-1" url="/symbols/pin-green-anchor-circle-1.png" width="50" height="50" centerX="43" centerY="43" />
+	<symbol name="pin-green-blank-1" url="/symbols/pin-green-blank-1.png" width="50" height="50" centerX="43" centerY="43" />
+	<symbol name="pin-green-blank-circle-1" url="/symbols/pin-green-blank-circle-1.png" width="50" height="50" centerX="43" centerY="43" />
+	<symbol name="pin-green-no1-1" url="/symbols/pin-green-no1-1.png" width="50" height="50" centerX="43" centerY="43" />
+	<symbol name="pin-green-no1-circle-1" url="/symbols/pin-green-no1-circle-1.png" width="50" height="50" centerX="43" centerY="43" />
+	<symbol name="pin-green-no2-1" url="/symbols/pin-green-no2-1.png" width="50" height="50" centerX="43" centerY="43" />
+	<symbol name="pin-green-no2-circle-1" url="/symbols/pin-green-no2-circle-1.png" width="50" height="50" centerX="43" centerY="43" />
+	<symbol name="pin-green-no3-1" url="/symbols/pin-green-no3-1.png" width="50" height="50" centerX="43" centerY="43" />
+	<symbol name="pin-green-no3-circle-1" url="/symbols/pin-green-no3-circle-1.png" width="50" height="50" centerX="43" centerY="43" />
+	<symbol name="pin-red-1" url="/symbols/pin-red-1.png" width="50" height="50" centerX="43" centerY="43" />
+	<symbol name="pin-red-anchor-1" url="/symbols/pin-red-anchor-1.png" width="50" height="50" centerX="43" centerY="43" />
+	<symbol name="pin-red-anchor-circle-1" url="/symbols/pin-red-anchor-circle-1.png" width="50" height="50" centerX="43" centerY="43" />
+	<symbol name="pin-red-blank-1" url="/symbols/pin-red-blank-1.png" width="50" height="50" centerX="43" centerY="43" />
+	<symbol name="pin-red-blank-circle-1" url="/symbols/pin-red-blank-circle-1.png" width="50" height="50" centerX="43" centerY="43" />
+	<symbol name="pin-red-no1-1" url="/symbols/pin-red-no1-1.png" width="50" height="50" centerX="43" centerY="43" />
+	<symbol name="pin-red-no1-circle-1" url="/symbols/pin-red-no1-circle-1.png" width="50" height="50" centerX="43" centerY="43" />
+	<symbol name="pin-red-no2-1" url="/symbols/pin-red-no2-1.png" width="50" height="50" centerX="43" centerY="43" />
+	<symbol name="pin-red-no2-circle-1" url="/symbols/pin-red-no2-circle-1.png" width="50" height="50" centerX="43" centerY="43" />
+	<symbol name="pin-red-no3-1" url="/symbols/pin-red-no3-1.png" width="50" height="50" centerX="43" centerY="43" />
+	<symbol name="pin-red-no3-circle-1" url="/symbols/pin-red-no3-circle-1.png" width="50" height="50" centerX="43" centerY="43" />
+	<symbol name="pin-yellow-1" url="/symbols/pin-yellow-1.png" width="50" height="50" centerX="43" centerY="43" />
+	<symbol name="pin-yellow-anchor-1" url="/symbols/pin-yellow-anchor-1.png" width="50" height="50" centerX="43" centerY="43" />
+	<symbol name="pin-yellow-anchor-circle-1" url="/symbols/pin-yellow-anchor-circle-1.png" width="50" height="50" centerX="43" centerY="43" />
+	<symbol name="pin-yellow-blank-1" url="/symbols/pin-yellow-blank-1.png" width="50" height="50" centerX="43" centerY="43" />
+	<symbol name="pin-yellow-blank-circle-1" url="/symbols/pin-yellow-blank-circle-1.png" width="50" height="50" centerX="43" centerY="43" />
+	<symbol name="pin-yellow-no1-1" url="/symbols/pin-yellow-no1-1.png" width="50" height="50" centerX="43" centerY="43" />
+	<symbol name="pin-yellow-no1-circle-1" url="/symbols/pin-yellow-no1-circle-1.png" width="50" height="50" centerX="43" centerY="43" />
+	<symbol name="pin-yellow-no2-1" url="/symbols/pin-yellow-no2-1.png" width="50" height="50" centerX="43" centerY="43" />
+	<symbol name="pin-yellow-no2-circle-1" url="/symbols/pin-yellow-no2-circle-1.png" width="50" height="50" centerX="43" centerY="43" />
+	<symbol name="pin-yellow-no3-1" url="/symbols/pin-yellow-no3-1.png" width="50" height="50" centerX="43" centerY="43" />
+	<symbol name="pin-yellow-no3-circle-1" url="/symbols/pin-yellow-no3-circle-1.png" width="50" height="50" centerX="43" centerY="43" />
+	
+	<symbol name="pin-blue-2" url="/symbols/pin-blue-2.png" width="30" height="60" centerX="14" centerY="53" />
+	<symbol name="pin-blue-anchor-2" url="/symbols/pin-blue-anchor-2.png" width="30" height="60" centerX="14" centerY="53" />
+	<symbol name="pin-blue-anchor-circle-2" url="/symbols/pin-blue-anchor-circle-2.png" width="30" height="60" centerX="14" centerY="53" />
+	<symbol name="pin-blue-blank-2" url="/symbols/pin-blue-blank-2.png" width="30" height="60" centerX="14" centerY="53" />
+	<symbol name="pin-blue-blank-circle-2" url="/symbols/pin-blue-blank-circle-2.png" width="30" height="60" centerX="14" centerY="53" />
+	<symbol name="pin-blue-no1-2" url="/symbols/pin-blue-no1-2.png" width="30" height="60" centerX="14" centerY="53" />
+	<symbol name="pin-blue-no1-circle-2" url="/symbols/pin-blue-no1-circle-2.png" width="30" height="60" centerX="14" centerY="53" />
+	<symbol name="pin-blue-no2-2" url="/symbols/pin-blue-no2-2.png" width="30" height="60" centerX="14" centerY="53" />
+	<symbol name="pin-blue-no2-circle-2" url="/symbols/pin-blue-no2-circle-2.png" width="30" height="60" centerX="14" centerY="53" />
+	<symbol name="pin-blue-no3-2" url="/symbols/pin-blue-no3-2.png" width="30" height="60" centerX="14" centerY="53" />
+	<symbol name="pin-blue-no3-circle-2" url="/symbols/pin-blue-no3-circle-2.png" width="30" height="60" centerX="14" centerY="53" />
+	<symbol name="pin-green-2" url="/symbols/pin-green-2.png" width="30" height="60" centerX="14" centerY="53" />
+	<symbol name="pin-green-anchor-2" url="/symbols/pin-green-anchor-2.png" width="30" height="60" centerX="14" centerY="53" />
+	<symbol name="pin-green-anchor-circle-2" url="/symbols/pin-green-anchor-circle-2.png" width="30" height="60" centerX="14" centerY="53" />
+	<symbol name="pin-green-blank-2" url="/symbols/pin-green-blank-2.png" width="30" height="60" centerX="14" centerY="53" />
+	<symbol name="pin-green-blank-circle-2" url="/symbols/pin-green-blank-circle-2.png" width="30" height="60" centerX="14" centerY="53" />
+	<symbol name="pin-green-no1-2" url="/symbols/pin-green-no1-2.png" width="30" height="60" centerX="14" centerY="53" />
+	<symbol name="pin-green-no1-circle-2" url="/symbols/pin-green-no1-circle-2.png" width="30" height="60" centerX="14" centerY="53" />
+	<symbol name="pin-green-no2-2" url="/symbols/pin-green-no2-2.png" width="30" height="60" centerX="14" centerY="53" />
+	<symbol name="pin-green-no2-circle-2" url="/symbols/pin-green-no2-circle-2.png" width="30" height="60" centerX="14" centerY="53" />
+	<symbol name="pin-green-no3-2" url="/symbols/pin-green-no3-2.png" width="30" height="60" centerX="14" centerY="53" />
+	<symbol name="pin-green-no3-circle-2" url="/symbols/pin-green-no3-circle-2.png" width="30" height="60" centerX="14" centerY="53" />
+	<symbol name="pin-red-2" url="/symbols/pin-red-2.png" width="30" height="60" centerX="14" centerY="53" />
+	<symbol name="pin-red-anchor-2" url="/symbols/pin-red-anchor-2.png" width="30" height="60" centerX="14" centerY="53" />
+	<symbol name="pin-red-anchor-circle-2" url="/symbols/pin-red-anchor-circle-2.png" width="30" height="60" centerX="14" centerY="53" />
+	<symbol name="pin-red-blank-2" url="/symbols/pin-red-blank-2.png" width="30" height="60" centerX="14" centerY="53" />
+	<symbol name="pin-red-blank-circle-2" url="/symbols/pin-red-blank-circle-2.png" width="30" height="60" centerX="14" centerY="53" />
+	<symbol name="pin-red-no1-2" url="/symbols/pin-red-no1-2.png" width="30" height="60" centerX="14" centerY="53" />
+	<symbol name="pin-red-no1-circle-2" url="/symbols/pin-red-no1-circle-2.png" width="30" height="60" centerX="14" centerY="53" />
+	<symbol name="pin-red-no2-2" url="/symbols/pin-red-no2-2.png" width="30" height="60" centerX="14" centerY="53" />
+	<symbol name="pin-red-no2-circle-2" url="/symbols/pin-red-no2-circle-2.png" width="30" height="60" centerX="14" centerY="53" />
+	<symbol name="pin-red-no3-2" url="/symbols/pin-red-no3-2.png" width="30" height="60" centerX="14" centerY="53" />
+	<symbol name="pin-red-no3-circle-2" url="/symbols/pin-red-no3-circle-2.png" width="30" height="60" centerX="14" centerY="53" />
+	<symbol name="pin-yellow-2" url="/symbols/pin-yellow-2.png" width="30" height="60" centerX="14" centerY="53" />
+	<symbol name="pin-yellow-anchor-2" url="/symbols/pin-yellow-anchor-2.png" width="30" height="60" centerX="14" centerY="53" />
+	<symbol name="pin-yellow-anchor-circle-2" url="/symbols/pin-yellow-anchor-circle-2.png" width="30" height="60" centerX="14" centerY="53" />
+	<symbol name="pin-yellow-blank-2" url="/symbols/pin-yellow-blank-2.png" width="30" height="60" centerX="14" centerY="53" />
+	<symbol name="pin-yellow-blank-circle-2" url="/symbols/pin-yellow-blank-circle-2.png" width="30" height="60" centerX="14" centerY="53" />
+	<symbol name="pin-yellow-no1-2" url="/symbols/pin-yellow-no1-2.png" width="30" height="60" centerX="14" centerY="53" />
+	<symbol name="pin-yellow-no1-circle-2" url="/symbols/pin-yellow-no1-circle-2.png" width="30" height="60" centerX="14" centerY="53" />
+	<symbol name="pin-yellow-no2-2" url="/symbols/pin-yellow-no2-2.png" width="30" height="60" centerX="14" centerY="53" />
+	<symbol name="pin-yellow-no2-circle-2" url="/symbols/pin-yellow-no2-circle-2.png" width="30" height="60" centerX="14" centerY="53" />
+	<symbol name="pin-yellow-no3-2" url="/symbols/pin-yellow-no3-2.png" width="30" height="60" centerX="14" centerY="53" />
+	<symbol name="pin-yellow-no3-circle-2" url="/symbols/pin-yellow-no3-circle-2.png" width="30" height="60" centerX="14" centerY="53" />
+
+	<symbol name="pin-blue-3" url="/symbols/pin-blue-3.png" width="50" height="50" centerX="7" centerY="43" />
+	<symbol name="pin-blue-anchor-3" url="/symbols/pin-blue-anchor-3.png" width="50" height="50" centerX="7" centerY="43" />
+	<symbol name="pin-blue-anchor-circle-3" url="/symbols/pin-blue-anchor-circle-3.png" width="50" height="50" centerX="7" centerY="43" />
+	<symbol name="pin-blue-blank-3" url="/symbols/pin-blue-blank-3.png" width="50" height="50" centerX="7" centerY="43" />
+	<symbol name="pin-blue-blank-circle-3" url="/symbols/pin-blue-blank-circle-3.png" width="50" height="50" centerX="7" centerY="43" />
+	<symbol name="pin-blue-no1-3" url="/symbols/pin-blue-no1-3.png" width="50" height="50" centerX="7" centerY="43" />
+	<symbol name="pin-blue-no1-circle-3" url="/symbols/pin-blue-no1-circle-3.png" width="50" height="50" centerX="7" centerY="43" />
+	<symbol name="pin-blue-no2-3" url="/symbols/pin-blue-no2-3.png" width="50" height="50" centerX="7" centerY="43" />
+	<symbol name="pin-blue-no2-circle-3" url="/symbols/pin-blue-no2-circle-3.png" width="50" height="50" centerX="7" centerY="43" />
+	<symbol name="pin-blue-no3-3" url="/symbols/pin-blue-no3-3.png" width="50" height="50" centerX="7" centerY="43" />
+	<symbol name="pin-blue-no3-circle-3" url="/symbols/pin-blue-no3-circle-3.png" width="50" height="50" centerX="7" centerY="43" />
+	<symbol name="pin-green-3" url="/symbols/pin-green-3.png" width="50" height="50" centerX="7" centerY="43" />
+	<symbol name="pin-green-anchor-3" url="/symbols/pin-green-anchor-3.png" width="50" height="50" centerX="7" centerY="43" />
+	<symbol name="pin-green-anchor-circle-3" url="/symbols/pin-green-anchor-circle-3.png" width="50" height="50" centerX="7" centerY="43" />
+	<symbol name="pin-green-blank-3" url="/symbols/pin-green-blank-3.png" width="50" height="50" centerX="7" centerY="43" />
+	<symbol name="pin-green-blank-circle-3" url="/symbols/pin-green-blank-circle-3.png" width="50" height="50" centerX="7" centerY="43" />
+	<symbol name="pin-green-no1-3" url="/symbols/pin-green-no1-3.png" width="50" height="50" centerX="7" centerY="43" />
+	<symbol name="pin-green-no1-circle-3" url="/symbols/pin-green-no1-circle-3.png" width="50" height="50" centerX="7" centerY="43" />
+	<symbol name="pin-green-no2-3" url="/symbols/pin-green-no2-3.png" width="50" height="50" centerX="7" centerY="43" />
+	<symbol name="pin-green-no2-circle-3" url="/symbols/pin-green-no2-circle-3.png" width="50" height="50" centerX="7" centerY="43" />
+	<symbol name="pin-green-no3-3" url="/symbols/pin-green-no3-3.png" width="50" height="50" centerX="7" centerY="43" />
+	<symbol name="pin-green-no3-circle-3" url="/symbols/pin-green-no3-circle-3.png" width="50" height="50" centerX="7" centerY="43" />
+	<symbol name="pin-red-3" url="/symbols/pin-red-3.png" width="50" height="50" centerX="7" centerY="43" />
+	<symbol name="pin-red-anchor-3" url="/symbols/pin-red-anchor-3.png" width="50" height="50" centerX="7" centerY="43" />
+	<symbol name="pin-red-anchor-circle-3" url="/symbols/pin-red-anchor-circle-3.png" width="50" height="50" centerX="7" centerY="43" />
+	<symbol name="pin-red-blank-3" url="/symbols/pin-red-blank-3.png" width="50" height="50" centerX="7" centerY="43" />
+	<symbol name="pin-red-blank-circle-3" url="/symbols/pin-red-blank-circle-3.png" width="50" height="50" centerX="7" centerY="43" />
+	<symbol name="pin-red-no1-3" url="/symbols/pin-red-no1-3.png" width="50" height="50" centerX="7" centerY="43" />
+	<symbol name="pin-red-no1-circle-3" url="/symbols/pin-red-no1-circle-3.png" width="50" height="50" centerX="7" centerY="43" />
+	<symbol name="pin-red-no2-3" url="/symbols/pin-red-no2-3.png" width="50" height="50" centerX="7" centerY="43" />
+	<symbol name="pin-red-no2-circle-3" url="/symbols/pin-red-no2-circle-3.png" width="50" height="50" centerX="7" centerY="43" />
+	<symbol name="pin-red-no3-3" url="/symbols/pin-red-no3-3.png" width="50" height="50" centerX="7" centerY="43" />
+	<symbol name="pin-red-no3-circle-3" url="/symbols/pin-red-no3-circle-3.png" width="50" height="50" centerX="7" centerY="43" />
+	<symbol name="pin-yellow-3" url="/symbols/pin-yellow-3.png" width="50" height="50" centerX="7" centerY="43" />
+	<symbol name="pin-yellow-anchor-3" url="/symbols/pin-yellow-anchor-3.png" width="50" height="50" centerX="7" centerY="43" />
+	<symbol name="pin-yellow-anchor-circle-3" url="/symbols/pin-yellow-anchor-circle-3.png" width="50" height="50" centerX="7" centerY="43" />
+	<symbol name="pin-yellow-blank-3" url="/symbols/pin-yellow-blank-3.png" width="50" height="50" centerX="7" centerY="43" />
+	<symbol name="pin-yellow-blank-circle-3" url="/symbols/pin-yellow-blank-circle-3.png" width="50" height="50" centerX="7" centerY="43" />
+	<symbol name="pin-yellow-no1-3" url="/symbols/pin-yellow-no1-3.png" width="50" height="50" centerX="7" centerY="43" />
+	<symbol name="pin-yellow-no1-circle-3" url="/symbols/pin-yellow-no1-circle-3.png" width="50" height="50" centerX="7" centerY="43" />
+	<symbol name="pin-yellow-no2-3" url="/symbols/pin-yellow-no2-3.png" width="50" height="50" centerX="7" centerY="43" />
+	<symbol name="pin-yellow-no2-circle-3" url="/symbols/pin-yellow-no2-circle-3.png" width="50" height="50" centerX="7" centerY="43" />
+	<symbol name="pin-yellow-no3-3" url="/symbols/pin-yellow-no3-3.png" width="50" height="50" centerX="7" centerY="43" />
+	<symbol name="pin-yellow-no3-circle-3" url="/symbols/pin-yellow-no3-circle-3.png" width="50" height="50" centerX="7" centerY="43" />
+
+	<symbol
+		name="path-dot"
+		url="/symbols/path-dot.png"
+		width="6"
+		height="6"
+		centerX="3"
+		centerY="3" />
+
+</symbols>

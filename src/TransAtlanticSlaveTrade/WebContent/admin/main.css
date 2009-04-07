@@ -1,0 +1,165 @@
+body, input, textarea, select {
+	font-family: Verdana, Arial, Helvetica, Bitstream Vera Sans, sans, sans-serif;
+	font-size: 8pt; }
+	
+body {
+	margin: 0px;
+	padding: 20px; }
+	
+/**********************************
+* grid
+***********************************/
+
+table.grid {
+	border-collapse: collapse; }
+
+table.grid td, 
+table.grid th {
+	text-align: left;
+	border-top: 1px solid #CCCCCC;
+	border-bottom: 1px solid #CCCCCC;
+	padding: 3px 10px 3px 3px; }
+
+table.grid td {
+	cursor: pointer; }
+
+table.grid tr.focused td {
+	background-color: #EEEEEE; }
+
+table.grid td.grid-sorted,
+table.grid th.grid-sorted {
+	background-color: #EEEEEE; }
+	
+table.grid th.grid-clickable {
+	cursor: pointer; }
+
+/**********************************
+* pager
+***********************************/
+	
+table.pager {
+	border-collapse: collapse; }
+	
+table.pager td {
+	border: 1px solid #CCCCCC;
+	padding: 3px 5px 3px 5px; }
+	
+table.pager td.pager-counter {
+	padding-right: 10px; }
+	
+table.pager td.pager-page,
+table.pager td.pager-previous-enabled,
+table.pager td.pager-next-enabled {
+	cursor: pointer; }
+
+table.pager td.pager-page-current {
+	background-color: #CCCCCC;
+	cursor: default; }
+
+table.pager td.pager-page:hover,
+table.pager td.pager-previous-enabled:hover,
+table.pager td.pager-next-enabled:hover {
+	background-color: #EEEEEE; }
+	
+div.grid-editor-column-actions {
+	font-weight: normal; }
+
+div.grid-editor-column-actions span {
+	color: #2288BB; }
+
+div.grid-editor-column-actions span:hover {
+	cursor: pointer;
+	color: White;
+	background-color: #2288BB; }
+
+
+div.grid-tooltip {
+    visibility: hidden; 
+    position: absolute; 
+    top: 0;  
+    left: 0; 
+    z-index: 2; 
+    font: normal 8pt sans-serif; 
+    
+}
+
+table.multiline-attr-table {
+}
+	
+table.multiline-attr-table td {
+	border: 0px !important;
+	padding: 0px !important;
+	white-space: nowrap;
+}
+
+table.bubble {
+	display: none;
+	position: absolute; 
+	border: none;}
+ 
+td.bubble-11 {
+	width: 32px;
+	height: 12px;
+	overflow: hidden;
+	background-repeat: no-repeat;
+	background-image: url(../images/bubble-11.png); }	
+	
+td.bubble-11 div {
+	width: 12px;
+	height: 12px; }
+	
+td.bubble-12 {
+	height: 12px;
+	overflow: hidden;
+	background-repeat: repeat-x;
+	background-image: url(../images/bubble-12.png); }	
+	
+td.bubble-13 {
+	width: 12px;
+	height: 12px;
+	overflow: hidden;
+	background-repeat: no-repeat;
+	background-image: url(../images/bubble-13.png); }	
+
+td.bubble-13 div {
+	width: 32px;
+	height: 12px; }
+
+td.bubble-21 {
+	width: 32px;
+	overflow: hidden;
+	background-repeat: repeat-y;
+	background-image: url(../images/bubble-21.png); }	
+	
+td.bubble-22 {
+	color: White;
+	padding-left: 5px;
+	padding-right: 5px;
+	background-image: url(../images/bubble-22.png); }	
+	
+td.bubble-23 {
+	width: 12px;
+	overflow: hidden;
+	background-repeat: repeat-y;
+	background-image: url(../images/bubble-23.png); }	
+	
+td.bubble-31 {
+	width: 32px;
+	height: 32px;
+	overflow: hidden;
+	background-repeat: no-repeat;
+	background-image: url(../images/bubble-31.png); }	
+	
+td.bubble-32 {
+	height: 32px;
+	overflow: hidden;
+	background-repeat: repeat-x;
+	background-image: url(../images/bubble-32.png); }	
+	
+td.bubble-33 {
+	width: 12px;
+	height: 32px;
+	overflow: hidden;
+	background-repeat: no-repeat;
+	background-image: url(../images/bubble-33.png); }
+	

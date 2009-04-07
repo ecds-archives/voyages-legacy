@@ -1,0 +1,937 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE searchable-attributes [
+
+<!ELEMENT searchable-attributes (searchable-attribute*)>
+<!ELEMENT searchable-attribute (user-categories, (attributes|ports))>
+<!ELEMENT user-categories (category+)>
+<!ELEMENT attributes (attribute+)>
+<!ELEMENT ports (port+)>
+<!ELEMENT attribute EMPTY>
+<!ELEMENT port EMPTY>
+<!ELEMENT category EMPTY>
+
+<!ATTLIST searchable-attribute
+	id CDATA #REQUIRED
+	userLabel CDATA #REQUIRED
+	type (simple|port|percent) #REQUIRED
+	defaultRangeSearchType (between|eq|le|ge) #IMPLIED
+	subType (general|year|ratio) #IMPLIED
+	spssName CDATA #IMPLIED
+	inEstimates (true|false) #IMPLIED
+	listDescription CDATA #IMPLIED
+	textIndexColumn CDATA #IMPLIED>
+
+<!ATTLIST port
+	port CDATA #REQUIRED
+	region CDATA #IMPLIED
+	area CDATA #IMPLIED>
+
+<!ATTLIST attribute name CDATA #REQUIRED>
+<!ATTLIST category name CDATA #REQUIRED>
+
+]>
+<searchable-attributes>
+
+	<searchable-attribute
+		type="simple"
+		id="voyageid"
+		defaultRangeSearchType="eq"
+		userLabel="Voyage identification number">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="voyageid" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="simple"
+		id="evgreen"
+		userLabel="Voyage in 1999 CD-ROM">
+		<user-categories>
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="evgreen" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="simple"
+		id="shipname"
+		userLabel="Vessel name"
+		textIndexColumn="shipname_index">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="shipname" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="simple"
+		id="national"
+		userLabel="Flag">
+		<user-categories>
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="national" />
+		</attributes>
+	</searchable-attribute>	
+	
+	<searchable-attribute
+		type="simple"
+		id="natinimp"
+		userLabel="Flag*"
+		inEstimates="true"
+		listDescription="Flag regrouped into seven major national carriers">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="natinimp" />
+		</attributes>
+	</searchable-attribute>
+	
+	<searchable-attribute
+		type="port"
+		id="placcons"
+		userLabel="Place constructed">
+		<user-categories>
+			<category name="general" />
+		</user-categories>
+		<ports>
+			<port port="placcons" />
+		</ports>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="simple"
+		subType="year"
+		id="yrcons"
+		userLabel="Year constructed">
+		<user-categories>
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="yrcons" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="port"
+		id="placreg"
+		userLabel="Place registered">
+		<user-categories>
+			<category name="general" />
+		</user-categories>
+		<ports>
+			<port port="placreg" />
+		</ports>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="simple"
+		subType="year"
+		id="yrreg"
+		userLabel="Year registered">
+		<user-categories>
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="yrreg" />
+		</attributes>
+	</searchable-attribute>
+	
+	<searchable-attribute
+		type="simple"
+		id="rig"
+		userLabel="Rig">
+		<user-categories>
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="rig" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="simple"
+		id="tonnage"
+		userLabel="Tonnage">
+		<user-categories>
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="tonnage" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="simple"
+		id="tonmod"
+		userLabel="Standardized tonnage*"
+		listDescription="Converted to pre-1786 British registered tons">
+		<user-categories>
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="tonmod" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="simple"
+		id="guns"
+		userLabel="Guns mounted">
+		<user-categories>
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="guns" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="simple"
+		id="anyowner"
+		userLabel="Vessel owners"
+		spssName="owner"
+		textIndexColumn="owners_index">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="ownera" />
+			<attribute name="ownerf" />
+			<attribute name="ownerb" />
+			<attribute name="ownerc" />
+			<attribute name="ownerd" />
+			<attribute name="ownere" />
+			<attribute name="ownerg" />
+			<attribute name="ownerh" />
+			<attribute name="owneri" />
+			<attribute name="ownerj" />
+			<attribute name="ownerk" />
+			<attribute name="ownerl" />
+			<attribute name="ownerm" />
+			<attribute name="ownern" />
+			<attribute name="ownero" />
+			<attribute name="ownerp" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="simple"
+		id="fate"
+		userLabel="Particular outcome of voyage">
+		<user-categories>
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="fate" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="simple"
+		id="fate2"
+		userLabel="Outcome of voyage for slaves*"
+		listDescription="Derived from particular outcome">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="fate2" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="simple"
+		id="fate3"
+		userLabel="Outcome of voyage if ship captured*"
+		listDescription="Derived from particular outcome">
+		<user-categories>
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="fate3" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="simple"
+		id="fate4"
+		userLabel="Outcome of voyage for owner*"
+		listDescription="Derived from particular outcome">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="fate4" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="simple"
+		id="resistance"
+		userLabel="African resistance">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="resistance" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="port"
+		id="ptdepimp"
+		userLabel="Place where voyage began*"
+		listDescription="Same as data variable in most cases, but derived from port of return for certain Brazilian voyages">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
+		<ports>
+			<port port="ptdepimp" region="deptregimp" />
+		</ports>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="port"
+		id="plac1tra"
+		userLabel="First place of slave purchase">
+		<user-categories>
+			<category name="general" />
+		</user-categories>
+		<ports>
+			<port port="plac1tra" region="regem1" />
+		</ports>
+	</searchable-attribute>
+	
+	<searchable-attribute
+		type="port"
+		id="plac2tra"
+		userLabel="Second place of slave purchase">
+		<user-categories>
+			<category name="general" />
+		</user-categories>
+		<ports>
+			<port port="plac2tra" region="regem2" />
+		</ports>
+	</searchable-attribute>
+	
+	<searchable-attribute
+		type="port"
+		id="plac3tra"
+		userLabel="Third place of slave purchase">
+		<user-categories>
+			<category name="general" />
+		</user-categories>
+		<ports>
+			<port port="plac3tra" region="regem3" />
+		</ports>
+	</searchable-attribute>
+	
+	<searchable-attribute
+		type="port"
+		id="mjbyptimp"
+		userLabel="Principal place of slave purchase*"
+		inEstimates="true"
+		listDescription="Place where largest number of captives embarked">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
+		<ports>
+			<port port="mjbyptimp" region="majbyimp" />
+		</ports>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="port"
+		id="npafttra"
+		userLabel="Places of call before Atlantic crossing">
+		<user-categories>
+			<category name="general" />
+		</user-categories>
+		<ports>
+			<port port="npafttra" />
+		</ports>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="port"
+		id="sla1port"
+		userLabel="First place of slave landing">
+		<user-categories>
+			<category name="general" />
+		</user-categories>
+		<ports>
+			<port port="sla1port" region="regdis1" />
+		</ports>
+	</searchable-attribute>
+	
+	<searchable-attribute
+		type="port"
+		id="adpsale1"
+		userLabel="Second place of slave landing">
+		<user-categories>
+			<category name="general" />
+		</user-categories>
+		<ports>
+			<port port="adpsale1" region="regdis2" />
+		</ports>
+	</searchable-attribute>
+	
+	<searchable-attribute
+		type="port"
+		id="adpsale2"
+		userLabel="Third place of slave landing">
+		<user-categories>
+			<category name="general" />
+		</user-categories>
+		<ports>
+			<port port="adpsale2" region="regdis3" />
+		</ports>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="port"
+		id="mjslptimp"
+		userLabel="Principal place of slave landing*"
+		inEstimates="true"
+		listDescription="Place where largest number of captives disembarked">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
+		<ports>
+			<port port="mjslptimp" region="mjselimp" />
+		</ports>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="port"
+		id="portret"
+		userLabel="Place where voyage ended">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
+		<ports>
+			<port port="portret" region="retrnreg"  />
+		</ports>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="simple"
+		subType="year"
+		id="yearam"
+		userLabel="Year arrived with slaves*"
+		inEstimates="true"
+		listDescription="Standard variable for classification by year of voyage">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="yearam" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="simple"
+		id="datedep"
+		userLabel="Date voyage began"
+		spssName="date_dep">
+		<user-categories>
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="datedep" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="simple"
+		id="datebuy"
+		userLabel="Date trade began in Africa"
+		spssName="date_buy">
+		<user-categories>
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="datebuy" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="simple"
+		id="dateleftafr"
+		userLabel="Date vessel departed Africa"
+		spssName="date_leftAfr">
+		<user-categories>
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="dateleftafr" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="simple"
+		id="dateland1"
+		userLabel="Date vessel arrived with slaves"
+		spssName="date_land1">
+		<user-categories>
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="dateland1" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="simple"
+		id="dateland2"
+		userLabel="Date of arrival at second place of landing">
+		<user-categories>
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="dateland2" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="simple"
+		id="dateland3"
+		userLabel="Date that slaves landed at third place">
+		<user-categories>
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="dateland3" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="simple"
+		id="datedepam"
+		userLabel="Date vessel departed for home port"
+		spssName="date_depam">
+		<user-categories>
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="datedepam" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="simple"
+		id="dateend"
+		userLabel="Date voyage completed"
+		spssName="date_end">
+		<user-categories>
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="dateend" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="simple"
+		id="voy1imp"
+		userLabel="Voyage length, home port to slaves landing (days)*"
+		listDescription="Difference between date voyage began and date vessel arrived with slaves">
+		<user-categories>
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="voy1imp" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="simple"
+		id="voy2imp"
+		userLabel="Middle passage (days)*"
+		listDescription="Difference between date vessel left Africa and date it arrived with slaves">
+		<user-categories>
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="voy2imp" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="simple"
+		id="anycaptain"
+		userLabel="Captain's name"
+		spssName="captain"
+		textIndexColumn="captains_index">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="captaina" />
+			<attribute name="captainb" />
+			<attribute name="captainc" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="simple"
+		id="crew1"
+		userLabel="Crew at voyage outset">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="crew1" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="simple"
+		id="crew3"
+		userLabel="Crew at first landing of slaves">
+		<user-categories>
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="crew3" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="simple"
+		id="crewdied"
+		userLabel="Crew deaths during voyage">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="crewdied" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="simple"
+		id="slintend"
+		userLabel="Number of slaves intended at first place of purchase">
+		<user-categories>
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="slintend" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="simple"
+		id="ncar13"
+		userLabel="Slaves carried from first port of purchase">
+		<user-categories>
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="ncar13" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="simple"
+		id="ncar15"
+		userLabel="Slaves carried from second port of purchase">
+		<user-categories>
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="ncar15" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="simple"
+		id="ncar17"
+		userLabel="Slaves carried from third port of purchase">
+		<user-categories>
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="ncar17" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="simple"
+		id="tslavesd"
+		userLabel="Total slaves embarked">
+		<user-categories>
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="tslavesd" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="simple"
+		id="slaarriv"
+		userLabel="Number of slaves arriving at first place of landing">
+		<user-categories>
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="slaarriv" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="simple"
+		id="slas32"
+		userLabel="Number of slaves disembarked at first place of landing">
+		<user-categories>
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="slas32" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="simple"
+		id="slas36"
+		userLabel="Number of slaves disembarked at second place of landing">
+		<user-categories>
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="slas36" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="simple"
+		id="slas39"
+		userLabel="Number of slaves disembarked at third place of landing">
+		<user-categories>
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="slas39" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="simple"
+		id="slaximp"
+		userLabel="Total slaves embarked*"
+		inEstimates="true"
+		listDescription="Estimated embarkations">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="slaximp" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="simple"
+		id="slamimp"
+		userLabel="Total slaves disembarked*"
+		inEstimates="true"
+		listDescription="Estimated disembarkations">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="slamimp" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="percent"
+		subType="ratio"
+		id="menrat7"
+		userLabel="Percentage men*"
+		listDescription="Captives identified by age and gender">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="menrat7" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="percent"
+		subType="ratio"
+		id="womrat7"
+		userLabel="Percentage women*"
+		listDescription="Captives identified by age and gender">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="womrat7" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="percent"
+		subType="ratio"
+		id="boyrat7"
+		userLabel="Percentage boys*"
+		listDescription="Captives identified by age and gender">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="boyrat7" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="percent"
+		subType="ratio"
+		id="girlrat7"
+		userLabel="Percentage girls*"
+		listDescription="Captives identified by age and gender">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="girlrat7" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="percent"
+		subType="ratio"
+		id="malrat7"
+		userLabel="Percentage male*"
+		listDescription="Captives identified by gender (males/females)">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="malrat7" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="percent"
+		subType="ratio"
+		id="chilrat7"
+		userLabel="Percentage children*"
+		listDescription="Captives identified by age group (adults/children)">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="chilrat7" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="simple"
+		id="jamcaspr"
+		userLabel="Sterling cash price in Jamaica*">
+		<user-categories>
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="jamcaspr" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="simple"
+		id="vymrtimp"
+		userLabel="Slave deaths during middle passage*"
+ 		listDescription="Documented or difference between embarked and disembarked captives (data variables)">
+		<user-categories>
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="vymrtimp" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="simple"
+		subType="ratio"
+		id="vymrtrat"
+		userLabel="Mortality rate*"
+		listDescription="Slave deaths during Middle Passage divided by number of captives leaving Africa">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="vymrtrat" />
+		</attributes>
+	</searchable-attribute>
+
+	<searchable-attribute
+		type="simple"
+		id="anysource"
+		userLabel="Sources"
+		spssName="source"
+		textIndexColumn="sources_index">
+		<user-categories>
+			<category name="beginners" />
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="sourceg" />
+			<attribute name="sourceh" />
+			<attribute name="sourcei" />
+			<attribute name="sourcej" />
+			<attribute name="sourcek" />
+			<attribute name="sourcel" />
+			<attribute name="sourcem" />
+			<attribute name="sourcen" />
+			<attribute name="sourceo" />
+			<attribute name="sourcep" />
+			<attribute name="sourceq" />
+			<attribute name="sourcer" />
+			<attribute name="sourcea" />
+			<attribute name="sourceb" />
+			<attribute name="sourcec" />
+			<attribute name="sourced" />
+			<attribute name="sourcee" />
+			<attribute name="sourcef" />
+		</attributes>
+	</searchable-attribute>
+
+</searchable-attributes>

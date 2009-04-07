@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Menu</title>
+<script language="javascript" type="text/javascript" src="../../utils.js"></script>
+
+<style>
+
+div.frame {
+	border: 1px solid Black; }
+
+</style>
+
+</head>
+<body>
+
+<script type="text/javascript">
+
+function test()
+{
+
+	var el = document.getElementById("el");
+	var dest = document.getElementById("dest");
+	
+	var x1 = ElementUtils.getOffsetLeft(el);
+	var y1 = ElementUtils.getOffsetTop(el);
+	var w1 = ElementUtils.getOffsetWidth(el);
+	var h1 = ElementUtils.getOffsetHeight(el);
+	
+	var x2 = ElementUtils.getOffsetLeft(dest);
+	var y2 = ElementUtils.getOffsetTop(dest);
+	var w2 = ElementUtils.getOffsetWidth(dest);
+	var h2 = ElementUtils.getOffsetHeight(dest);
+
+	var a = document.createElement("div");
+	a.style.position = "absolute";
+	a.style.left = x1 + "px";
+	a.style.top = y1 + "px";
+	a.style.width = w1 + "px";
+	a.style.height = h1 + "px";
+	a.style.border = "1px solid Black";
+	//a.style.backgroundColor = "#555555";
+	
+	document.body.appendChild(a);
+	
+	var anim = new Animation(a, x1, y1, w1, h1, 1, x2, y2, w2, h2, 0, 20, 300);
+	anim.start();
+	
+}
+
+</script>
+
+<div style="background-color: Silver; width: 100px;">
+	<div style="position: relative; background-color: Blue; width: 100px; left: 100px;">
+		<div style="background-color: Red; border: 10px solid Black;" id="el" onclick="test()">Menu item 1</div>
+		<div style="background-color: Green;">Menu item 2</div>
+	</div>
+	Test
+</div>
+
+<div style="width: 200px;" id="dest">Destination</div>
+
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+
+<script type="text/javascript">
+
+function X()
+{
+	
+	var o = document.createElement("option");
+	o.text = "aaa";
+	o.value = "aaa";
+
+	var s = document.forms["f"].elements["s"];
+	//s.add(o, null);
+	s.options.add(o);
+
+}
+
+</script>
+
+</head>
+<body onload="X()">
+
+<form name="f">
+	<select name="s">
+	</select>
+</form>
+
+
+</body>
+</html>
