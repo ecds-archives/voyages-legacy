@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+
+<hibernate-mapping>
+
+	<class name="edu.emory.library.tast.dm.VoyageIndex" table="voyages_index">
+	
+        <id name="id" column="voyage_index_id">
+        	<generator class="native"/>
+        </id>
+
+        <property name="revisionDate" column="revision_date"/>
+        <property name="flag" column="flag"/>
+        <property name="voyageId" column="vid"/>
+        <property name="revisionId" column="global_rev_id"/>
+        <property name="latest" column="latest"/>
+        <property name="latest_approved" column="latest_approved"/>
+        <property name="remoteVoyageId" column="r_voyage_iid" insert="false" update="false"/>
+        
+        <many-to-one name="voyage" class="edu.emory.library.tast.dm.Voyage" column="r_voyage_iid" lazy="false" />
+        
+        <!-- 
+        <set name="slaves" table="voyage_slaves" lazy="true">
+        	<key column="r_voyage_index_id"/>
+        	<many-to-many column="r_slave_id" class="edu.emory.library.tast.dm.Slave"/>
+    	</set>
+    	 -->
+        
+    </class>
+
+</hibernate-mapping>

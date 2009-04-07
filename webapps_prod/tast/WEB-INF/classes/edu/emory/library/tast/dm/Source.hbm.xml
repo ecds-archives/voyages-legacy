@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="edu.emory.library.tast.dm.Source" table="sources">
+		<id name="iid">
+			<generator class="native"/>
+		</id>
+		<property name="sourceId" column="id" />
+		<property name="name" />
+		<property name="type" />
+	</class>
+</hibernate-mapping>

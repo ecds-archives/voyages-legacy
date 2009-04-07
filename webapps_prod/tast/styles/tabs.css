@@ -1,0 +1,34 @@
+td.tabs-tab-left-selected,
+td.tabs-tab-left {
+	height: 32px;
+	width: 10px;
+	background-position: left top;
+	background-repeat: no-repeat;
+	overflow: hidden; }
+
+td.tabs-tab-middle-selected,
+td.tabs-tab-middle {
+	text-align: center;
+	vertical-align: bottom;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	background-repeat: repeat-x; }
+
+td.tabs-tab-middle,
+td.tabs-tab-left,
+td.tabs-tab-right {
+	cursor: pointer; }
+		
+td.tabs-tab-right-selected,
+td.tabs-tab-right {
+	height: 32px;
+	width: 10px;
+	background-position: right top;
+	background-repeat: no-repeat;
+	overflow: hidden; }
+
+td.tabs-tab-filler {
+	width: 5px; }
+
+td.tabs-tab-first-filler {
+	width: 10px; }

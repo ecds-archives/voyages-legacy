@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping auto-import="false">
+
+    <class name="edu.emory.library.tast.dm.Fate" table="fates">
+		<!-- 
+		<cache usage="read-write" />
+		-->
+        <id name="id">
+        	<generator class="native"/>
+        </id>
+        <property name="name" column="name"/>
+    </class>
+
+    <class name="edu.emory.library.tast.dm.FateOwner" table="fates_owner">
+		<!-- 
+		<cache usage="read-write" />
+		-->
+        <id name="id">
+        	<generator class="native"/>
+        </id>
+        <property name="name" column="name"/>
+    </class>
+    
+    <class name="edu.emory.library.tast.dm.FateSlaves" table="fates_slaves">
+		<!-- 
+		<cache usage="read-write" />
+		-->
+        <id name="id">
+        	<generator class="native"/>
+        </id>
+        <property name="name" column="name"/>
+    </class>
+    
+    <class name="edu.emory.library.tast.dm.FateVessel" table="fates_vessel">
+		<!-- 
+		<cache usage="read-write" />
+		-->
+        <id name="id">
+        	<generator class="native"/>
+        </id>
+        <property name="name" column="name"/>
+    </class>
+    
+    <class name="edu.emory.library.tast.dm.Resistance" table="resistance">
+		<!-- 
+		<cache usage="read-write" />
+		-->
+        <id name="id">
+        	<generator class="native"/>
+        </id>
+        <property name="name" column="name"/>
+    </class>
+
+    <class name="edu.emory.library.tast.dm.VesselRig" table="vessel_rigs">
+		<!-- 
+		<cache usage="read-write" />
+		-->
+        <id name="id">
+        	<generator class="native"/>
+        </id>
+        <property name="name" column="name"/>
+    </class>
+
+</hibernate-mapping>

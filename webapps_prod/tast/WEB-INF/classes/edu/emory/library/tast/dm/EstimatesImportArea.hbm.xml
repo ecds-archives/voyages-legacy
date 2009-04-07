@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="edu.emory.library.tast.dm.EstimatesImportArea" table="estimates_import_areas">
+
+		<!-- 
+		<cache usage="read-write" />
+		-->
+		
+		<id name="id" column="id">
+			<generator class="native"/>
+		</id>
+		
+		<property name="name" />
+		<property name="order" column="order_num" />
+		<property name="latitude" />
+		<property name="longitude" />
+		<property name="showAtZoom" column="show_at_zoom" />
+		<property name="showOnMap" column="show_on_map" />
+
+		<set name="regions" inverse="true" order-by="order_num asc">
+			<key column="area_id" />
+			<one-to-many class="edu.emory.library.tast.dm.EstimatesImportRegion" />
+		</set>
+
+	</class>
+</hibernate-mapping>
