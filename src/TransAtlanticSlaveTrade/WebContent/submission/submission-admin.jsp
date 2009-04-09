@@ -46,24 +46,24 @@
 			<table border="0" cellspacing="0" cellpadding="0">
 			<tr>
 				<td style="padding-right: 5px">From</td>
-				<td style="padding-right: 10px"></f:verbatim><h:selectOneMenu value="#{AdminVoyagesListBean.nationId}"><f:selectItems value="#{AdminVoyagesListBean.nations}"/></h:selectOneMenu><f:verbatim></td>
+				<td style="padding-right: 10px"><f:verbatim><h:selectOneMenu value="#{AdminVoyagesListBean.nationId}"><f:selectItems value="#{AdminVoyagesListBean.nations}"/></h:selectOneMenu></f:verbatim></td>
 				
 				<td style="padding-right: 5px">Yearam from</td>
-				<td style="padding-right: 10px"></f:verbatim><h:inputText value="#{AdminVoyagesListBean.yearFrom}" style="width: 40px;" /><f:verbatim></td>
+				<td style="padding-right: 10px"><f:verbatim><h:inputText value="#{AdminVoyagesListBean.yearFrom}" style="width: 40px;" /></f:verbatim></td>
 				<td style="padding-right: 5px">to</td>
-				<td style="padding-right: 10px"></f:verbatim><h:inputText value="#{AdminVoyagesListBean.yearTo}" style="width: 40px;" /><f:verbatim></td>
+				<td style="padding-right: 10px"><f:verbatim><h:inputText value="#{AdminVoyagesListBean.yearTo}" style="width: 40px;" /></f:verbatim></td>
 				
 				<td style="padding-right: 5px">Voyage ID from</td>
-				<td style="padding-right: 10px"></f:verbatim><h:inputText value="#{AdminVoyagesListBean.voyageIdFrom}" style="width: 40px;" /><f:verbatim></td>
+				<td style="padding-right: 10px"><f:verbatim><h:inputText value="#{AdminVoyagesListBean.voyageIdFrom}" style="width: 40px;" /></f:verbatim></td>
 				<td style="padding-right: 5px">to</td>
-				<td style="padding-right: 10px"></f:verbatim><h:inputText value="#{AdminVoyagesListBean.voyageIdTo}" style="width: 40px;" /><f:verbatim></td>
+				<td style="padding-right: 10px"><f:verbatim><h:inputText value="#{AdminVoyagesListBean.voyageIdTo}" style="width: 40px;" /></f:verbatim></td>
 				<td style="padding-right: 5px">Revision: </td>
-				<td style="padding-right: 10px"></f:verbatim><h:selectOneMenu value="#{AdminVoyagesListBean.revision}" style="width: 150px;"> 
-						<f:selectItems value="#{AdminVoyagesListBean.revisions}"/> </h:selectOneMenu><f:verbatim></td>
+				<td style="padding-right: 10px"><f:verbatim><h:selectOneMenu value="#{AdminVoyagesListBean.revision}" style="width: 150px;"> 
+						<f:selectItems value="#{AdminVoyagesListBean.revisions}"/> </h:selectOneMenu></f:verbatim></td>
 				
 				
 				<td style="padding-right: 5px"><h:commandButton value="Show" /></td>
-				<td></f:verbatim><h:commandButton value="Restore default" action="#{AdminVoyagesListBean.restoreDefaultOptions}" /><f:verbatim></td>
+				<td><f:verbatim><h:commandButton value="Restore default" action="#{AdminVoyagesListBean.restoreDefaultOptions}" /></f:verbatim></td>
 			</tr>
 			</table>
 		</div>
@@ -96,20 +96,20 @@
 			<tr>
 				<td style="padding-right: 5px">Type of request</td>
 				<td style="padding-right: 10px">
-					</f:verbatim>
+					<f:verbatim>
 					<h:selectOneMenu value="#{AdminSubmissionBean.requestType}"><f:selectItems value="#{AdminSubmissionBean.requestTypes}"/></h:selectOneMenu>
-					<f:verbatim></td>
+					</f:verbatim></td>
 				<td style="padding-right: 5px">
 				
 				<td style="padding-right: 5px">Status of request</td>
-				<td style="padding-right: 10px"></f:verbatim>
+				<td style="padding-right: 10px"><f:verbatim>
 						<h:selectOneMenu value="#{AdminSubmissionBean.requestStatus}">
 							<f:selectItem itemLabel="All requests" itemValue="1"/>
 							<f:selectItem itemLabel="Reviewed, not solved" itemValue="2"/>
 							<f:selectItem itemLabel="Not reviewed, not solved" itemValue="3"/>
 							<f:selectItem itemLabel="Solved" itemValue="4"/>
-						</h:selectOneMenu><f:verbatim></td>
-				<td style="padding-right: 5px"></f:verbatim><h:commandButton value="Show" /><f:verbatim></td>
+						</h:selectOneMenu></f:verbatim></td>
+				<td style="padding-right: 5px"><f:verbatim><h:commandButton value="Show" /></f:verbatim></td>
 				
 			</tr>
 			</table>
@@ -139,8 +139,8 @@
 			<table border="0" cellspacing="0" cellpadding="0">
 			<tr>
 				<td style="padding-right: 10px">Show: </td>
-				<td style="padding-right: 5px"></f:verbatim><h:selectOneMenu value="#{SubmissionUsersBean.accountType}"><f:selectItems value="#{SubmissionUsersBean.accountTypes}"/></h:selectOneMenu><f:verbatim></td>
-				<td></f:verbatim><h:commandButton value="Refresh" action="#{SubmissionUsersBean.refresh}" /><f:verbatim></td>
+				<td style="padding-right: 5px"><f:verbatim><h:selectOneMenu value="#{SubmissionUsersBean.accountType}"><f:selectItems value="#{SubmissionUsersBean.accountTypes}"/></h:selectOneMenu></f:verbatim></td>
+				<td><f:verbatim><h:commandButton value="Refresh" action="#{SubmissionUsersBean.refresh}" /></f:verbatim></td>
 			</tr>
 			</table>
 		</div>

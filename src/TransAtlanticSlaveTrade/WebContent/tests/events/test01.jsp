@@ -67,10 +67,10 @@ div.event-line-mark-pressed {
 			events="#{EventLineTestBean1.events}" />
 			
 		<div style="margin-left: 70px; margin-top: 10px">
-			<h:commandButton action="#{EventLineTestBean1.moveLeft}" value="<" />
+			<h:commandButton action="#{EventLineTestBean1.moveLeft}" value="&lt;" />
 			<h:commandButton action="#{EventLineTestBean1.zoomPlus}" value="+" />
 			<h:commandButton action="#{EventLineTestBean1.zoomMinus}" value="-" />
-			<h:commandButton action="#{EventLineTestBean1.moveRight}" value=">" />
+			<h:commandButton action="#{EventLineTestBean1.moveRight}" value="&gt;" />
 		</div>
 			
 		<div id="debug"></div>

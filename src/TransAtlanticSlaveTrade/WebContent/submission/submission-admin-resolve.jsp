@@ -87,11 +87,9 @@
 		<f:verbatim><h2>3. Request status</h2>
 		<table>
 			<tr>
-				<td></f:verbatim>
-					<h:selectBooleanCheckbox value="#{AdminSubmissionBean.finished}"/><f:verbatim>
+				<td><f:verbatim><h:selectBooleanCheckbox value="#{AdminSubmissionBean.finished}" /></f:verbatim>
 				</td>
-				<td></f:verbatim>
-					<h:outputText value="I am done with this submission and it does not require my further attention"/><f:verbatim>
+				<td><f:verbatim> <h:outputText value="I am done with this submission and it does not require my further attention"/></f:verbatim>
 				</td>
 			</tr>
 		</table></f:verbatim>
