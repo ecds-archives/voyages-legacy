@@ -308,7 +308,10 @@
 			<table border="0" cellspacing="0" cellpadding="0">
 			<tr>
 			<td style="padding-right:5px;">2008 &copy; Emory University</td>
-			<td> <img src="./images/ccl.png"/> </td>
+			<td> <a rel="license" href="http://creativecommons.org/licenses/by-nc/3.0/us/">
+			         <img src="./images/ccl.png" style="border-width:0px;"/>
+			     </a> 
+			 </td>
 			</tr> 
 			</table>
 			
