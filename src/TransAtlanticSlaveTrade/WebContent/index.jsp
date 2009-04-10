@@ -304,6 +304,13 @@
 				<td style="padding-right: 0px;"><a href="http://www.vuw.ac.nz" class="footer-link">Victoria University of<br>Wellington (New Zealand)</a></td>
 			</tr>
 			</table>
+			<br>
+			<table border="0" cellspacing="0" cellpadding="0">
+			<tr>
+			<td style="padding-right:5px;">2008 &copy; Emory University</td>
+			<td> <img src="./images/ccl.png"/> </td>
+			</tr> 
+			</table>
 			
 		</div>
 	
