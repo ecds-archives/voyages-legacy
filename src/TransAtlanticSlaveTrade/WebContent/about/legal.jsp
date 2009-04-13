@@ -71,7 +71,7 @@
 
 		<br>
 <a rel="license" href="http://creativecommons.org/licenses/by-nc/3.0/us/">
-    <img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc/3.0/us/80x15.png" />
+    <img alt="Creative Commons License" style="border-width:0" src="../images/ccl.png" />
 </a>
 <br />
 <span xmlns:dc="http://purl.org/dc/elements/1.1/" href="http://purl.org/dc/dcmitype/InteractiveResource" property="dc:title" rel="dc:type">Voyages: The Trans-Atlantic Slave Trade Database</span>
