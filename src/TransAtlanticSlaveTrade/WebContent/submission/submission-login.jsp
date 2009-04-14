@@ -83,9 +83,9 @@
 					<tr>
 						<td></td>
 						<td>
-						<!-- 	<h:commandButton value="Sign in" action="#{SubmissionUsersBean.auth}"/>&nbsp;&nbsp; 
-     							<h:outputText style="font-weight: bold;" value="#{SubmissionUsersBean.errorMessage}"/>-->
-							<h:commandButton value="Sign in" action="#"/>
+						 	<h:commandButton value="Sign in" action="#{SubmissionUsersBean.auth}"/>&nbsp;&nbsp; 
+     							<h:outputText style="font-weight: bold;" value="#{SubmissionUsersBean.errorMessage}"/>
+							<!-- <h:commandButton value="Sign in" action="#"/>-->
 
 						</td>
 					</tr>
