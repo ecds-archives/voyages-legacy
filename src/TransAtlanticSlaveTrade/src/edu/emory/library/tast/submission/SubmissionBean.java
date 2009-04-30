@@ -797,10 +797,11 @@ public class SubmissionBean
 				if (val.hasEditableNote()) {
 					notes.put(attrs[i].getName(), val.getNote().trim());
 				}
+				
 				Object[] vals = attrs[i].getValues(sess, val);
 				for (int j = 0; j < vals.length; j++) {
-					voyage.setAttrValue(attrs[i].getAttribute()[j].getName(), vals[j]);
-				}
+					voyage.setAttrValue(attrs[i].getAttribute()[j].getName(), vals[j]);			
+				}				
 			}
 			
 			for (int i = 0; i < SLAVE_CHAR_COLS.length; i++) {
@@ -825,6 +826,9 @@ public class SubmissionBean
 			if (!doErrorChecking()) {
 				return null;
 			}
+			
+			VoyagesCalculation voyagesCalc = new VoyagesCalculation(voyage, sess);
+			voyage = voyagesCalc.calculateImputedVariables();
 
 			sess.save(voyage);
 			if (submissionType == SUBMISSION_TYPE_NEW) {
@@ -1174,5 +1178,6 @@ public class SubmissionBean
 		this.verifyBean = verifyBean;
 		this.verifyBean.setSubmissionBean(this);
 	}
+		
 	
 }
