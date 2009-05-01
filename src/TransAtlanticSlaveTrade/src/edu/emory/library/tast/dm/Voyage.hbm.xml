@@ -64,6 +64,8 @@
 		<many-to-one name="plac2tra" column="plac2tra" class="edu.emory.library.tast.dm.Port" />
 		<many-to-one name="plac3tra" column="plac3tra" class="edu.emory.library.tast.dm.Port" />
 		<many-to-one name="mjbyptimp" column="mjbyptimp" class="edu.emory.library.tast.dm.Port" />
+		<many-to-one name="majbuypt" column="majbuypt" class="edu.emory.library.tast.dm.Port" />
+		<many-to-one name="majselpt" column="majselpt" class="edu.emory.library.tast.dm.Port" />
 		<many-to-one name="regem1" column="regem1" class="edu.emory.library.tast.dm.Region" />
 		<many-to-one name="regem2" column="regem2" class="edu.emory.library.tast.dm.Region" />
 		<many-to-one name="regem3" column="regem3" class="edu.emory.library.tast.dm.Region" />

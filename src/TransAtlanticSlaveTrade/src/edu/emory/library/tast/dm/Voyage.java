@@ -315,7 +315,7 @@ public class Voyage extends AbstractDescriptiveObject
 		attributes.add(new NumericAttribute("embport_area", "Voyage", NumericAttribute.TYPE_LONG, "embport_area"));
 		attributes.add(new NumericAttribute("arrport_area", "Voyage", NumericAttribute.TYPE_LONG, "arrport_area"));
 		attributes.add(new NumericAttribute("embport2_area", "Voyage", NumericAttribute.TYPE_LONG, "embport2_area"));
-		attributes.add(new NumericAttribute("arrport2_area", "Voyage", NumericAttribute.TYPE_LONG, "arrport2_area"));
+		attributes.add(new NumericAttribute("arrport2_area", "Voyage", NumericAttribute.TYPE_LONG, "arrport2_area"));	
 		
 		for (Iterator iterator = attributes.iterator(); iterator.hasNext();)
 		{
@@ -2125,5 +2125,22 @@ public class Voyage extends AbstractDescriptiveObject
 	public Integer getNdesert() {
 		return (Integer)this.values.get("ndesert");
 	}
-
+	
+	public void setMajbuypt(Port val) {
+		this.values.put("majbuypt", val);
+	}
+	
+	public Port getMajbuypt() {
+		return (Port)this.values.get("majbuypt");
+	}
+	
+	public void setMajselpt(Port val) {
+		this.values.put("majselpt", val);
+	}
+	
+	public Port getMajselpt() {
+		return (Port)this.values.get("majselpt");
+	}
+	
+	
 }
