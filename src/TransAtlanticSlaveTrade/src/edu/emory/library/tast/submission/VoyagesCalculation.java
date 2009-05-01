@@ -8,6 +8,7 @@ import edu.emory.library.tast.dm.Fate;
 import edu.emory.library.tast.dm.FateOwner;
 import edu.emory.library.tast.dm.FateSlaves;
 import edu.emory.library.tast.dm.FateVessel;
+import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.dm.Voyage;
 
 public class VoyagesCalculation {
@@ -24,6 +25,8 @@ public class VoyagesCalculation {
 		calculateImputedValueFate2();
 		calculateImputedValueFate3();
 		calculateImputedValueFate4();
+		calculateValueMajbuypt();
+		calculateValueMajselpt();
 		calculateImputedValueTonmod();
 		return this.voyage;
 	}
@@ -98,4 +101,262 @@ public class VoyagesCalculation {
 	    	voyage.setTonmod(tonmod);
 	    }
 	}	
+	
+	public void calculateValueMajbuypt() {
+		int plac1tra_int = 0;
+		int plac2tra_int = 0;
+		int plac3tra_int = 0;
+		Port majbuypt = null;
+		
+		Port plac1tra = voyage.getPlac1tra();
+		if (plac1tra != null){
+			plac1tra_int = plac1tra.getId().intValue();
+		}
+		
+		Port plac2tra = voyage.getPlac2tra();
+		if (plac2tra != null){
+			plac2tra_int = plac2tra.getId().intValue();
+		}
+		
+		Port plac3tra = voyage.getPlac3tra();
+		if (plac3tra != null){
+			plac3tra_int = plac3tra.getId().intValue();
+		}
+		
+		Integer ncar13 = voyage.getNcar13();
+		Integer ncar15 = voyage.getNcar15();
+		Integer ncar17 = voyage.getNcar17();
+		Integer tslavesd = voyage.getTslavesd();
+		Integer tslavesp = voyage.getTslavesp();
+				
+		Integer ncartot = defVal(ncar13, 0)+ defVal(ncar15, 0)+ defVal(ncar17, 0);
+		double rslt_d = ncartot.doubleValue()/tslavesd.doubleValue();
+		double rslt_p = ncartot.doubleValue()/tslavesp.doubleValue();
+		
+		if (plac1tra_int >= 1 && plac2tra==null && plac3tra==null) {
+			majbuypt = plac1tra;
+		} 
+		else if (plac2tra_int >= 1 && plac1tra==null && plac3tra==null) {
+	    	majbuypt = plac2tra;
+	    }
+		else if (plac3tra_int >= 1 && plac1tra==null && plac2tra==null) {
+	    	majbuypt = plac3tra;
+	    }
+		else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra==null && 
+		    		(rslt_d >= 0.5d) && (ncar13 >= ncar15)) {
+		    	majbuypt = plac1tra;
+		}
+		else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra==null && 
+				(rslt_d >= 0.5d) && (ncar15 >= ncar13)) {
+			majbuypt = plac2tra;
+		}
+		else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra==null && 
+				tslavesd==null && (rslt_p >= 0.5d) && (ncar13 >= ncar15)) {
+			majbuypt = plac1tra;
+		}
+		else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra==null && 
+				tslavesd==null && rslt_p >= 0.5d && ncar15 >= ncar13) {
+			majbuypt = plac2tra;
+		}
+		else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra==null && rslt_d < 0.5d && ncar13 < ncar15) {
+			majbuypt = plac1tra;
+		}
+		else if (plac1tra_int >= 1 && plac2tra_int >= 1 && plac3tra==null && tslavesd==null && tslavesp==null && ncar13 >= ncar15) {
+			majbuypt = plac1tra;
+		}
+		else if (plac1tra_int >= 1 && plac2tra_int >= 1 && plac3tra==null && tslavesd==null && tslavesp==null && ncar15 > ncar13) {
+			majbuypt = plac2tra;
+		}
+		else if (plac1tra_int >= 1 && plac2tra_int >= 1 && plac3tra==null && tslavesd==null && tslavesp==null && ncartot==null) {
+			majbuypt = plac2tra;
+		}
+		else  if (plac1tra_int >=1 && plac3tra_int >=1 && plac2tra==null) {
+			majbuypt = plac1tra;
+		}
+		else  if (plac2tra_int >=1 && plac3tra_int >=1 && plac1tra==null) {
+			majbuypt = plac2tra;
+		}
+		else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && rslt_d >= 0.5d && ncar13 >= ncar15 && ncar13 >= ncar17) {
+			majbuypt = plac1tra;
+		}
+		else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && tslavesd==null && rslt_p >= 0.5d && ncar13 >= ncar15 && ncar13 >= ncar17) {
+			majbuypt = plac1tra;
+		}
+		else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && rslt_d >= 0.5d && ncar15 >= ncar13 && ncar15 >= ncar17) {
+			majbuypt = plac2tra;
+		}
+		else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && tslavesd==null && rslt_p >= 0.5d && ncar15 >= ncar13 && ncar15 >= ncar17) {
+			majbuypt = plac2tra;
+		}
+	    if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && rslt_d >= 0.5d && ncar17 >= ncar13 && ncar17 >= ncar15) {
+	    	majbuypt = plac3tra;
+	    }
+	    else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && tslavesd==null && rslt_p >= 0.5d && ncar17 >= ncar13 && ncar17 >= ncar15) {
+	    	majbuypt = plac1tra;
+	    }
+	    else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && rslt_d < 0.5d && ncar13==0) {
+	    	majbuypt = plac1tra;
+	    }
+	    else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && rslt_d < 0.5d && ncar13>=1 && ncar15==0 && ncar17==0) {
+	    	majbuypt = plac3tra;
+	    }
+	    else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && rslt_d < 0.5d && ncar13>=1 && ncar15>=1 && ncar17==0) {
+	    	majbuypt = plac3tra;
+	    }
+	    else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && tslavesd==null && rslt_p < 0.5d && ncar13==0) {
+	    	majbuypt = plac1tra;
+	    }
+	    else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && tslavesd==null && rslt_p < 0.5d && ncar13>=1 && ncar15==0 && ncar17==0) {
+	    	majbuypt = plac3tra;
+	    }
+	    else if (tslavesd==null && tslavesp==null && ncartot.intValue() >=1 && plac1tra_int >= 1 && plac2tra_int >= 1 && plac3tra_int >= 1) {
+	    	majbuypt = plac3tra;
+	    }
+	    else if (ncartot==null && plac1tra_int >= 1 && plac2tra_int >= 1 && plac3tra_int >= 1) {
+	    	majbuypt = plac3tra;
+	    }
+        if (ncartot==null && tslavesd==null && tslavesp==null && plac1tra_int >= 1 && plac2tra_int >= 1 && plac3tra_int >= 1) {
+        	majbuypt = plac3tra;
+        }
+        //if Port is not null, then set the value in voyage 
+        if (majbuypt != null){
+			voyage.setMajbuypt(majbuypt);
+		}
+	    
+	}
+	
+	public void calculateValueMajselpt() {
+		 Double slastot=0d;
+		 
+	     int sla1port_int = 0;
+	     int adpsale1_int = 0;
+		 int adpsale2_int = 0;
+		 Port majselpt = null;
+		 
+		 Integer slas32 = voyage.getSlas32();
+		 	 
+		 Integer slas36 = voyage.getSlas36();
+		 Integer slas39 = voyage.getSlas39();
+	      
+		 slastot = new Double(defVal(slas32, 0)+defVal(slas36, 0)+defVal(slas39,0));
+		 
+		 Integer slaarriv = voyage.getSlaarriv();
+		 
+		 Port sla1port = voyage.getSla1port();
+		 Port adpsale1 = voyage.getAdpsale1();
+		 Port adpsale2 = voyage.getAdpsale2();
+		 
+		 sla1port_int = sla1port.getId().intValue();
+		 adpsale1_int = adpsale1.getId().intValue();
+		 adpsale2_int = adpsale2.getId().intValue();
+		 
+		 
+	     if (sla1port_int >= 1 && adpsale1_int==0 && adpsale2_int ==0) {
+	    	 majselpt = sla1port;
+	     }
+	     else if (adpsale1_int  >= 1 && sla1port==null && adpsale2==null) {
+	    	 majselpt = adpsale1;
+	     }
+	     else if (adpsale2_int >= 1 && sla1port==null && adpsale1 == null) {
+	    	 majselpt = adpsale2;
+	     }
+	     else if (sla1port_int  >=1 && adpsale1_int  >=1 && adpsale2==null && slastot.doubleValue()/slaarriv.doubleValue() >= 0.5d && slas32.intValue() >= slas36) {
+	    	 majselpt = sla1port;
+	     }
+	     else if (sla1port_int >=1 && adpsale1_int >=1 && adpsale2==null && slastot.doubleValue()/slaarriv.doubleValue() >= 0.5d && slas36.intValue() >= slas32) {
+	    	 majselpt = adpsale1;
+	     }
+	     else if (sla1port_int >=1 && adpsale1_int >=1 && adpsale2==null && slastot.doubleValue()/slaarriv.doubleValue() < 0.5d && slas32 < slas36) {
+	    	 majselpt = sla1port;
+	     }
+	     else if (sla1port_int >=1 && adpsale1_int >=1 && adpsale2==null && slastot.doubleValue()/slaarriv.doubleValue() < 0.5d && slas36 < slas32) {
+	    	 majselpt = adpsale1;
+	     }
+	     else if (slastot==null && sla1port_int >= 1 && adpsale1_int >= 1 && adpsale2==null) {
+	    	 majselpt = adpsale1;
+	     }
+	     else if (sla1port_int >= 1 && adpsale1_int >= 1 && adpsale2==null && slaarriv==null && slas32 >= slas36) {
+	    	 majselpt = sla1port;
+	     }
+	     else if (sla1port_int >= 1 && adpsale1_int >= 1 && adpsale2==null && slaarriv==null && slas36 > slas32) {
+	    	 majselpt = adpsale1;
+	     }
+	     else if (sla1port_int >= 1 && adpsale1_int >= 1 && adpsale2==null && slaarriv==null && getNcartot()==null) {
+	    	 majselpt = adpsale1;
+	     }	     
+	     else if (sla1port_int >=1 && adpsale2_int >=1 && adpsale1 == null) {
+	    	 majselpt = sla1port;
+	     }
+	     else if (sla1port_int >=1 && adpsale1_int >=1 && adpsale2_int >= 1 && slastot.doubleValue()/slaarriv.doubleValue() >= 0.5d && slas32 >= slas36 && slas32 >= slas39) {
+	    	 majselpt = sla1port;
+	     }
+	     else if (sla1port_int >=1 && adpsale1_int >=1 && adpsale2_int >= 1 && slastot.doubleValue()/slaarriv.doubleValue() >= 0.5d && slas36 >= slas32 && slas36 >= slas39) {
+	    	majselpt = adpsale1;
+	     }
+	     else if (sla1port_int >=1 && adpsale1_int >=1 && adpsale2_int >= 1 && slastot.doubleValue()/slaarriv.doubleValue() >= 0.5d && slas39 >= slas32 && slas39 >= slas36) {
+	    	 majselpt = adpsale2;
+	     }
+	     else if (sla1port_int >=1 && adpsale1_int >=1 && adpsale2_int >= 1 && slastot.doubleValue()/slaarriv.doubleValue() < 0.5d && slas32 == 0) {
+	    	 majselpt = sla1port;
+	     }
+	     else if (sla1port_int >=1 && adpsale1_int >=1 && adpsale2_int >= 1 && slastot.doubleValue()/slaarriv.doubleValue() < 0.5d && slas32 >=1 && slas36==0) {
+	    	 majselpt = adpsale1;
+	     }
+	     else if (sla1port_int >=1 && adpsale1_int >=1 && adpsale2_int >= 1 && slastot.doubleValue()/slaarriv.doubleValue() < 0.5d && slas32 >=1 && slas39==0) {
+	    	 majselpt = adpsale2;
+	     }
+	     else if (slaarriv==null && slastot.intValue() >=1 && sla1port_int >= 1 && adpsale1_int >= 1 && adpsale2_int >= 1 && slas32 >= slas36 && slas32 >= slas39) {
+	    	 majselpt = sla1port;
+	     }
+	     else if (slaarriv==null && slastot >=1 && sla1port_int >= 1 && adpsale1_int >= 1 && adpsale2_int >= 1 && slas36 >= slas32 && slas36 >= slas39) {
+	    	 majselpt = adpsale1;
+	     }
+	     else if (slaarriv==null && slastot >=1 && sla1port_int >= 1 && adpsale1_int >= 1 && adpsale2_int >= 1 && slas39 >= slas32 && slas39 >= slas36) {
+	    	 majselpt = adpsale2;
+	     }
+	     else if (slaarriv==null && slastot >=1 && sla1port_int >= 1 && adpsale1_int >= 1 && adpsale2==null) {
+	    	 majselpt = adpsale1;
+	     }
+	     else if (slastot==null && sla1port_int >= 1 && adpsale1_int >= 1 && adpsale2_int >= 1) {
+	    	 majselpt = adpsale2;
+	     }
+	     else if (slastot==null && slaarriv==null && sla1port_int >= 1 && adpsale1_int >= 1 && adpsale2_int >= 1) {
+	    	 majselpt = sla1port;
+	     }
+	     
+	     voyage.setMajselpt(majselpt);
+
+	}
+	
+	public Integer getNcartot(){
+		Integer ncar13 = voyage.getNcar13();
+		Integer ncar15 = voyage.getNcar15();
+		Integer ncar17 = voyage.getNcar17();		
+				
+		Integer ncartot = defVal(ncar13, 0)+ defVal(ncar15, 0)+ defVal(ncar17, 0);
+		return ncartot;
+	}
+	
+	//Returns def if input is null
+	public static Integer defVal(Integer orig, Integer def)
+	{
+	   if(orig==null)
+	   {
+	        return def;
+	   }
+	   else
+	       return orig;
+	}
+
+
+	//Returns def if input is null
+	public static Double defVal(Double orig, Double def)
+	{
+	   if(orig==null)
+	   {
+	        return def;
+	   }
+	   else
+	       return orig;
+	}
 }
