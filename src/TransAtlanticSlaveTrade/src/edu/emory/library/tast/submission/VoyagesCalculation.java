@@ -1,5 +1,7 @@
 package edu.emory.library.tast.submission;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -29,6 +31,7 @@ public class VoyagesCalculation {
 	public Voyage calculateImputedVariables() {
 		calculateValueNatinimp();
 		calculateValueYearN();
+		calculateValueVoy1impVoy2imp();
 		calculateImputedValueFate2();
 		calculateImputedValueFate3();
 		calculateImputedValueFate4();
@@ -485,6 +488,7 @@ public class VoyagesCalculation {
 		//Create variables for calculation
 		Integer national = voyage.getNational().getId().intValue();
 		HashMap natHash = VoyagesCalcConstants.getnatHash();
+		
 	    Integer natinimp= (Integer)natHash.get(national);
 	    
 	    //Store the value in a Nation object and update voyages object
@@ -492,7 +496,72 @@ public class VoyagesCalculation {
 	    	Nation nation= Nation.loadById(session, natinimp);
 			voyage.setNatinimp(nation);
 		}
-	}	
+	}
+	
+	/*
+	 * Calculates voy1imp and voy2imp values
+	 */
+	public void calculateValueVoy1impVoy2imp() {
+		//Create variables for calculation
+		Date dateland1=voyage.getDateland1();
+		Date datedep=voyage.getDatedep(); 
+		Date dateleftafr=voyage.getDateleftafr();
+		
+		//Calculate value
+		Integer voy1imp = dateDiff(dateland1, datedep);
+	    Integer voy2imp = dateDiff(dateland1, dateleftafr);
+	    
+	    //update voyages object
+	    if (voy1imp != null){
+	    	voyage.setVoy1imp(voy1imp);
+		}
+	    if (voy2imp != null){
+	    	voyage.setVoy2imp(voy2imp);
+		}
+	}
+	
+	/*
+	 * Calculates the number of days between two dates
+	 */
+	public static Integer dateDiff(Date start, Date end)
+	{
+	    if(start==null ||  end==null)  //If either are null return null
+	    {
+	        return null;
+	    }
+
+	    //convert dates to long, subtract, convert to days
+	    Long diff = (end.getTime() - start.getTime())/(1000 * 60 * 60 * 24);
+	    diff = round(diff);
+
+	    return diff.intValue();
+	}
+	
+	/*
+	 * Rounds a value to the closest double value
+	 */
+	public static Double round(Double d)
+	{
+	    Double ret=0d;
+	    int decimalPlace = 0;
+	    BigDecimal bd = new BigDecimal(d);
+	    bd = bd.setScale(decimalPlace,BigDecimal.ROUND_HALF_UP);
+	    ret = bd.doubleValue();
+	    return ret;
+	}
+
+	/*
+	 * Rounds a value to the closest long value
+	 */
+	public static Long round(Long l)
+	{
+	    Long ret=0l;
+	    int decimalPlace = 0;
+	    BigDecimal bd = new BigDecimal(l);
+	    bd = bd.setScale(decimalPlace,BigDecimal.ROUND_HALF_UP);
+	    ret = bd.longValue();
+	    return ret;
+	}
 	
 	
 }
