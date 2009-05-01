@@ -9,6 +9,7 @@ import edu.emory.library.tast.dm.Fate;
 import edu.emory.library.tast.dm.FateOwner;
 import edu.emory.library.tast.dm.FateSlaves;
 import edu.emory.library.tast.dm.FateVessel;
+import edu.emory.library.tast.dm.Nation;
 import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.dm.Voyage;
 
@@ -26,6 +27,7 @@ public class VoyagesCalculation {
 	 * Calls all the calculation functions in one shot
 	 */
 	public Voyage calculateImputedVariables() {
+		calculateValueNatinimp();
 		calculateValueYearN();
 		calculateImputedValueFate2();
 		calculateImputedValueFate3();
@@ -475,6 +477,22 @@ public class VoyagesCalculation {
 	  }
 	  return ret;
 	}
+	
+	/*
+	 * Calculates natinimp variable
+	 */
+	public void calculateValueNatinimp() {
+		//Create variables for calculation
+		Integer national = voyage.getNational().getId().intValue();
+		HashMap natHash = VoyagesCalcConstants.getnatHash();
+	    Integer natinimp= (Integer)natHash.get(national);
+	    
+	    //Store the value in a Nation object and update voyages object
+	    if (natinimp != null){
+	    	Nation nation= Nation.loadById(session, natinimp);
+			voyage.setNatinimp(nation);
+		}
+	}	
 	
 	
 }
