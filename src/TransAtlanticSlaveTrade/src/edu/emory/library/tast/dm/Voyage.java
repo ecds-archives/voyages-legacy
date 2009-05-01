@@ -762,6 +762,22 @@ public class Voyage extends AbstractDescriptiveObject
 	public void setYearam(Integer yearam) {
 		this.values.put("yearam", yearam);
 	}
+	
+	public void setYear5(Integer year5) {
+		this.values.put("year5", year5);
+	}
+	
+	public void setYear10(Integer year10) {
+		this.values.put("year10", year10);
+	}
+	
+	public void setYear25(Integer year25) {
+		this.values.put("year25", year25);
+	}
+	
+	public void setYear100(Integer year100) {
+		this.values.put("year100", year100);
+	}
 
 	public void setTonmod(Float tonmod) {
 		this.values.put("tonmod", tonmod);
@@ -1261,6 +1277,22 @@ public class Voyage extends AbstractDescriptiveObject
 
 	public Integer getYearam() {
 		return (Integer) this.values.get("yearam");
+	}
+	
+	public Integer getYear5() {
+		return (Integer) this.values.get("year5");
+	}
+	
+	public Integer getYear10() {
+		return (Integer) this.values.get("year10");
+	}
+	
+	public Integer getYear25() {
+		return (Integer) this.values.get("year25");
+	}
+	
+	public Integer getYear100() {
+		return (Integer) this.values.get("year100");
 	}
 
 	public Float getTonmod() {

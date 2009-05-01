@@ -1,5 +1,6 @@
 package edu.emory.library.tast.submission;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.hibernate.Session;
@@ -21,7 +22,11 @@ public class VoyagesCalculation {
 		this.session = session;
 	}
 	
-	public Voyage calculateImputedVariables() { 
+	/*
+	 * Calls all the calculation functions in one shot
+	 */
+	public Voyage calculateImputedVariables() {
+		calculateValueYearN();
 		calculateImputedValueFate2();
 		calculateImputedValueFate3();
 		calculateImputedValueFate4();
@@ -64,13 +69,18 @@ public class VoyagesCalculation {
 		}
 	}
 	
+    /*
+     * Calculates value of tonmod variable
+     */
 	public void calculateImputedValueTonmod() {
+		//Create the needed variables for calculations
 		Integer tontype=voyage.getTontype(); 
 		Integer tonnage=voyage.getTonnage(); 
 		Integer yearam=voyage.getYearam(); 
 		Integer natinimp=voyage.getNatinimp().getId().intValue();
 		Float tonmod=tonnage.floatValue();
 		
+		//calculate
 	    if (tontype == 13) {tonmod=tonnage.floatValue();}
 	    if ((tontype < 3 || tontype == 4 || tontype == 5) && yearam > 1773) {tonmod = tonnage.floatValue();}
 	    if ((tontype < 3 || tontype == 4 || tontype == 5) && yearam < 1774 && tonnage < 151) {tonmod=2.3f + (1.8f * tonnage);}
@@ -96,6 +106,7 @@ public class VoyagesCalculation {
 	    if (tontype == 15 || tontype == 14 || tontype == 17) {tonmod = 52.86f + (1.22f * tonnage);}
 	    if (tonmod==null) {tonmod=9999f;}
 	    
+        //Store the result in the object 
 	    if(tonmod!=null)
 	    {
 	    	voyage.setTonmod(tonmod);
@@ -337,7 +348,9 @@ public class VoyagesCalculation {
 		return ncartot;
 	}
 	
-	//Returns def if input is null
+	/*
+	 * Returns default value if Integer is null
+	 */
 	public static Integer defVal(Integer orig, Integer def)
 	{
 	   if(orig==null)
@@ -348,8 +361,9 @@ public class VoyagesCalculation {
 	       return orig;
 	}
 
-
-	//Returns def if input is null
+	/*
+	 * Returns default value if Double is null
+	 */
 	public static Double defVal(Double orig, Double def)
 	{
 	   if(orig==null)
@@ -359,4 +373,108 @@ public class VoyagesCalculation {
 	   else
 	       return orig;
 	}
+	
+	/*
+	 * Calculates year5, year10, year25 and year100
+	 */
+	public void calculateValueYearN() 
+	{
+		//Create variables for calculations
+		Integer yearam=voyage.getYearam();
+		Integer year100=-1; //dummy default value
+		
+		//Assign values and call function to calculate year5
+		ArrayList dateInputs=new ArrayList();
+	    dateInputs.add(yearam);
+	    ArrayList dateRanges=VoyagesCalcConstants.getdateRanges1();
+	    ArrayList impDate = recode(dateInputs, dateRanges, false);
+	    Integer year5=(Integer) impDate.get(0);
+ 
+	  //Assign values and call function to calculate year10
+        dateInputs=new ArrayList();
+	    dateInputs.add(yearam);
+	    dateRanges= VoyagesCalcConstants.getdateRanges2();
+	    impDate = recode(dateInputs, dateRanges, false);
+	    Integer year10=(Integer) impDate.get(0);
+
+	  //Assign values and call function to calculate year25
+	    dateInputs=new ArrayList();
+	    dateInputs.add(yearam);
+	    dateRanges=VoyagesCalcConstants.getdateRanges3();
+	    impDate = recode(dateInputs, dateRanges, false);
+	    Integer year25=(Integer) impDate.get(0);
+
+	    //ranges too few for year100 to create a HashMap
+	    if (yearam < 1601) {year100=1500;}
+	    else if (yearam > 1600 && yearam < 1701) {year100=1600;}
+	    else if (yearam > 1700 && yearam < 1801) {year100=1700;}
+	    else if (yearam > 1800) {year100=1800;}
+	    
+	    //Set values in object 
+	    //value of -1 means no match from function
+	    if(year5!=null && year5!=-1)
+	    {
+	    	voyage.setYear5(year5);
+	    }
+	    if(year10!=null && year10!=-1)
+	    {
+	    	voyage.setYear10(year10);
+	    }
+	    if(year25!=null && year25!=-1)
+	    {
+	    	voyage.setYear25(year5);
+	    }
+	    if(year100!=null && year100!=-1)
+	    {
+	    	voyage.setYear100(year100);
+	    }
+	}
+	
+	/*
+	 * Accepts array of inputs and an array of ranges
+	 * Returns the associated value for each input based on which range it is in
+	 * -1 is returned if the input does not fall into a range 
+	 */
+	public static ArrayList recode(ArrayList orig, ArrayList ranges, boolean torf)
+	{
+	  ArrayList ret=new ArrayList(); //Array of return values
+
+
+	  //Loop over each input vlaue
+	  for(int o=0; o < orig.size(); o++)
+	  {
+	     Integer curr=(Integer)orig.get(o);
+	     Integer foundvalue=-1; //value to be returned if no match is found
+
+	     //search each range until a match is found 
+	     for(int i=0; i < ranges.size(); i++)
+	     {
+	         foundvalue=-1;
+	         Integer[] range = (Integer[])ranges.get(i);
+	         Integer low=range[0];
+	         Integer high=range[1];
+	         
+	         if(torf) //Include low and high values in search
+	         {
+	             if(curr >=low && curr <= high)
+	             {
+	                 foundvalue=range[2];
+	                 break;
+	             }
+	         }
+	         else //do not include the low and high values in the search
+	         {
+	             if(curr > low && curr < high)
+	             {
+	                   foundvalue=range[2];
+	                 break;
+	             }
+	         }
+	      }
+	     ret.add(foundvalue); //Add the value to the return array
+	  }
+	  return ret;
+	}
+	
+	
 }
