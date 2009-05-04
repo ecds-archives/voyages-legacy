@@ -41,6 +41,9 @@ public class VoyagesCalculation {
 		return this.voyage;
 	}
 	
+	/*
+	 * fate2: Outcome of voyage for slaves
+	 */
 	public void calculateImputedValueFate2() {
 		Integer fate = null;		
 		HashMap fate2Hash = VoyagesCalcConstants.getfate2Hash();		
@@ -52,6 +55,9 @@ public class VoyagesCalculation {
 		}
 	}
 	
+	/*
+	 * fate3: Outcome of voyage If vessel captured
+	 */
 	public void calculateImputedValueFate3() {
 		Integer fate = null;		
 		HashMap fate3Hash = VoyagesCalcConstants.getfate3Hash();
@@ -63,6 +69,9 @@ public class VoyagesCalculation {
 		}
 	}
 	
+	/*
+	 * fate4: Outcome of voyage for owner
+	 */
 	public void calculateImputedValueFate4() {
 		Integer fate = null;
 		HashMap fate4Hash = VoyagesCalcConstants.getfate4Hash();
@@ -118,6 +127,9 @@ public class VoyagesCalculation {
 	    }
 	}	
 	
+	/*
+	 * majbuypt: Principal port of slave purchase
+	 */
 	public void calculateValueMajbuypt() {
 		int plac1tra_int = 0;
 		int plac2tra_int = 0;
@@ -251,6 +263,9 @@ public class VoyagesCalculation {
 	    
 	}
 	
+	/*
+	 * majselpt: Principal port of slave purchase
+	 */
 	public void calculateValueMajselpt() {
 		 Double slastot=0d;
 		 
@@ -618,11 +633,12 @@ public class VoyagesCalculation {
 	
 	/*
 	 * tslmtimp: Imputed total of slaves embarked for mortality calculation
+	 * vymrtrat: Slaves died on voyage/Slaves embarked
 	 */	
 	public void calculateTslmtimp() {
 		int tslavesd_int = 0;
 		int slaarriv_int = 0;
-		double vymrtrat = 0d;
+		float vymrtrat = 0f;
 		
 		Integer tslavesd = voyage.getTslavesd();
 		if (tslavesd != null) {
@@ -641,7 +657,9 @@ public class VoyagesCalculation {
 		if (vymrtimp >= 1) {
 			vymrtrat = vymrtimp / tslmtimp;
 		}
+		
 		voyage.setTslmtimp(tslmtimp);
+		voyage.setVymrtrat(vymrtrat);
 	}
 	
 
