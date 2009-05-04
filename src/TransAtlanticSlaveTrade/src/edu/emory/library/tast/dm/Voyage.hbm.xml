@@ -154,6 +154,7 @@
 
 		<property name="vymrtimp" column="vymrtimp" />
 		<property name="vymrtrat" column="vymrtrat" />
+		<property name="tslmtimp" column="tslmtimp" />
 		
 		<!--  the properties below don't seem to be used on the public website -->
 		
