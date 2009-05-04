@@ -2174,5 +2174,12 @@ public class Voyage extends AbstractDescriptiveObject
 		return (Port)this.values.get("majselpt");
 	}
 	
+	public void setTslmtimp(Integer tslmtimp) {
+		this.values.put("tslmtimp", tslmtimp);
+	}
+	
+	public Integer getTslmtimp() {
+		return (Integer) this.values.get("tslmtimp");
+	}	
 	
 }
