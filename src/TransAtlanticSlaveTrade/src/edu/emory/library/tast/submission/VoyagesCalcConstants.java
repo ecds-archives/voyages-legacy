@@ -662,7 +662,7 @@ public class VoyagesCalcConstants
              fate4Hash.put( new Integer("202"), new Integer("3"));
              return fate4Hash;
          }
-         public static ArrayList getRegonRanges1()
+         public static ArrayList getRegionRanges1()
          {
              ArrayList ranges1=new ArrayList();
              ranges1.add(new Integer[]{new Integer("10101"), new Integer("10199"), new Integer("10100")});

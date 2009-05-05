@@ -1006,6 +1006,26 @@ public class Voyage extends AbstractDescriptiveObject
 	public void setMajselrg(Region obj) {
 		this.values.put("majselrg", obj);
 	}
+	
+	public void setDeptreg1(Region obj) {
+		this.values.put("deptreg1", obj);
+	}
+	
+	public void setDeptregimp1(Region obj) {
+		this.values.put("deptregimp1", obj);
+	}
+	
+	public void setMajbyimp1(Region obj) {
+		this.values.put("majbyimp1", obj);
+	}
+	
+	public void setMjselimp1(Region obj) {
+		this.values.put("mjselimp1", obj);
+	}
+	
+	public void setRetrnreg1(Region obj) {
+		this.values.put("retrnreg1", obj);
+	}
 
 	public void setE_majbyimp(EstimatesExportRegion obj) {
 		this.values.put("e_majbyimp", obj);
@@ -1102,6 +1122,26 @@ public class Voyage extends AbstractDescriptiveObject
 	
 	public Region getMajselrg() {
 		return (Region) this.values.get("majselrg");
+	}
+	
+	public Region getDeptreg1() {
+		return (Region) this.values.get("deptreg1");
+	}
+	
+	public Region getDeptregimp1() {
+		return (Region) this.values.get("deptregimp1");
+	}
+	
+	public Region getMajbyimp1() {
+		return (Region) this.values.get("majbyimp1");
+	}
+	
+	public Region getMjselimp1() {
+		return (Region) this.values.get("mjselimp1");
+	}
+	
+	public Region getRetrnreg1() {
+		return (Region) this.values.get("retrnreg1");
 	}
 
 	public EstimatesExportRegion getE_majbyimp() {

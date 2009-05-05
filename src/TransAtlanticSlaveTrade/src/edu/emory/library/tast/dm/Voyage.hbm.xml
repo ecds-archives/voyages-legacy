@@ -79,6 +79,11 @@
 		<many-to-one name="regem2" column="regem2" class="edu.emory.library.tast.dm.Region" />
 		<many-to-one name="regem3" column="regem3" class="edu.emory.library.tast.dm.Region" />
 		<many-to-one name="majbyimp" column="majbyimp" class="edu.emory.library.tast.dm.Region" />
+		<many-to-one name="deptreg1" column="deptreg1" class="edu.emory.library.tast.dm.Region" />
+		<many-to-one name="deptregimp1" column="deptregimp1" class="edu.emory.library.tast.dm.Region" />
+		<many-to-one name="majbyimp1" column="majbyimp1" class="edu.emory.library.tast.dm.Region" />
+		<many-to-one name="mjselimp1" column="mjselimp1" class="edu.emory.library.tast.dm.Region" />
+		<many-to-one name="retrnreg1" column="retrnreg1" class="edu.emory.library.tast.dm.Region" />
 		<many-to-one name="npafttra" column="npafttra" class="edu.emory.library.tast.dm.Port" />
 		<many-to-one name="sla1port" column="sla1port" class="edu.emory.library.tast.dm.Port" />
 		<many-to-one name="adpsale1" column="adpsale1" class="edu.emory.library.tast.dm.Port" />
