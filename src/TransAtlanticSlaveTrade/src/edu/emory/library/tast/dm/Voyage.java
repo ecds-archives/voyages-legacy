@@ -970,6 +970,42 @@ public class Voyage extends AbstractDescriptiveObject
 	public void setDeptregimp(Region obj) {
 		this.values.put("deptregimp", obj);
 	}
+	
+	public void setConstreg(Region obj) {
+		this.values.put("constreg", obj);
+	}
+	
+	public void setRegisreg(Region obj) {
+		this.values.put("regisreg", obj);
+	}
+	
+	public void setDeptreg(Region obj) {
+		this.values.put("deptreg", obj);
+	}
+	
+	public void setEmbreg(Region obj) {
+		this.values.put("embreg", obj);
+	}
+	
+	public void setEmbreg2(Region obj) {
+		this.values.put("embreg2", obj);
+	}
+	
+	public void setMajbuyreg(Region obj) {
+		this.values.put("majbuyreg", obj);
+	}
+	
+	public void setRegarr(Region obj) {
+		this.values.put("regarr", obj);
+	}
+	
+	public void setRegarr2(Region obj) {
+		this.values.put("regarr2", obj);
+	}
+	
+	public void setMajselrg(Region obj) {
+		this.values.put("majselrg", obj);
+	}
 
 	public void setE_majbyimp(EstimatesExportRegion obj) {
 		this.values.put("e_majbyimp", obj);
@@ -1029,6 +1065,43 @@ public class Voyage extends AbstractDescriptiveObject
 
 	public Region getDeptregimp() {
 		return (Region) this.values.get("deptregimp");
+	}
+	
+	
+	public Region getConstreg () {
+		return (Region) this.values.get("constreg");
+	}
+	
+	public Region getRegisreg() {
+		return (Region) this.values.get("regisreg");
+	}
+	
+	public Region getDeptreg() {
+		return (Region) this.values.get("deptreg");
+	}
+	
+	public Region getEmbreg() {
+		return (Region) this.values.get("embreg");
+	}
+	
+	public Region getEmbreg2() {
+		return (Region) this.values.get("embreg2");
+	}
+	
+	public Region getMajbuyreg() {
+		return (Region) this.values.get("majbuyreg");
+	}
+	
+	public Region getRegarr() {
+		return (Region) this.values.get("regarr");
+	}
+	
+	public Region getRegarr2() {
+		return (Region) this.values.get("regarr2");
+	}
+	
+	public Region getMajselrg() {
+		return (Region) this.values.get("majselrg");
 	}
 
 	public EstimatesExportRegion getE_majbyimp() {

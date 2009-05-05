@@ -60,6 +60,15 @@
 		
 		<many-to-one name="ptdepimp" column="ptdepimp" class="edu.emory.library.tast.dm.Port" />
 		<many-to-one name="deptregimp" column="deptregimp" class="edu.emory.library.tast.dm.Region" />
+		<many-to-one name="constreg" column="constreg" class="edu.emory.library.tast.dm.Region" />
+		<many-to-one name="regisreg" column="regisreg" class="edu.emory.library.tast.dm.Region" />
+		<many-to-one name="deptreg" column="deptreg" class="edu.emory.library.tast.dm.Region" />
+		<many-to-one name="embreg" column="embreg" class="edu.emory.library.tast.dm.Region" />
+		<many-to-one name="embreg2" column="embreg2" class="edu.emory.library.tast.dm.Region" />
+		<many-to-one name="majbuyreg" column="majbuyreg" class="edu.emory.library.tast.dm.Region" />
+		<many-to-one name="regarr" column="regarr" class="edu.emory.library.tast.dm.Region" />
+		<many-to-one name="regarr2" column="regarr2" class="edu.emory.library.tast.dm.Region" />
+		<many-to-one name="majselrg" column="majselrg" class="edu.emory.library.tast.dm.Region" />
 		<many-to-one name="plac1tra" column="plac1tra" class="edu.emory.library.tast.dm.Port" />
 		<many-to-one name="plac2tra" column="plac2tra" class="edu.emory.library.tast.dm.Port" />
 		<many-to-one name="plac3tra" column="plac3tra" class="edu.emory.library.tast.dm.Port" />

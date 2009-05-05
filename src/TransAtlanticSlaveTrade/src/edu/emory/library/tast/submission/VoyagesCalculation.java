@@ -13,6 +13,7 @@ import edu.emory.library.tast.dm.FateSlaves;
 import edu.emory.library.tast.dm.FateVessel;
 import edu.emory.library.tast.dm.Nation;
 import edu.emory.library.tast.dm.Port;
+import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.dm.Voyage;
 
 public class VoyagesCalculation {
@@ -35,6 +36,7 @@ public class VoyagesCalculation {
 		calculateImputedValueFate2();
 		calculateImputedValueFate3();
 		calculateImputedValueFate4();
+		calculateValuesRegion1();
 		calculateValueMajbuypt();
 		calculateValueMajselpt();
 		calculateImputedValueTonmod();
@@ -662,5 +664,179 @@ public class VoyagesCalculation {
 		voyage.setVymrtrat(vymrtrat);
 	}
 	
+	/*
+	 * Calculates first set of region variables
+	 */
+	public void calculateValuesRegion1()
+	{
+		//Input variables for first region calculation
+		Integer placcons = voyage.getPlaccons().getId().intValue();
+		Integer placreg = voyage.getPlacreg().getId().intValue();
+		Integer portdep = voyage.getPortdep().getId().intValue(); 
+		Integer ptdepimp = voyage.getPtdepimp().getId().intValue(); 
+		Integer embport = voyage.getEmbport().getId().intValue(); 
+		Integer embport2 = voyage.getEmbport2().getId().intValue();
+		Integer plac1tra = voyage.getPlac1tra().getId().intValue(); 
+		Integer plac2tra = voyage.getPlac2tra().getId().intValue();
+		Integer plac3tra = voyage.getPlac3tra().getId().intValue();
+		Integer majbuypt = voyage.getMajbuypt().getId().intValue();
+		Integer mjbyptimp = voyage.getMjbyptimp().getId().intValue();
+		Integer arrport = voyage.getArrport().getId().intValue();
+		Integer arrport2 = voyage.getArrport2().getId().intValue();
+		Integer sla1port = voyage.getSla1port().getId().intValue();
+		Integer adpsale1 = voyage.getAdpsale1().getId().intValue();
+		Integer adpsale2 = voyage.getAdpsale2().getId().intValue();
+		Integer majselpt = voyage.getMajselpt().getId().intValue();
+		Integer mjslptimp = voyage.getMjslptimp().getId().intValue();
+		Integer portret = voyage.getPortret().getId().intValue();
+		
+		//Add to input array
+		ArrayList inputs=new ArrayList();
+	    inputs.add(placcons);
+	    inputs.add(placreg);
+	    inputs.add(portdep);
+	    inputs.add(ptdepimp);
+	    inputs.add(embport);
+	    inputs.add(embport2);
+	    inputs.add(plac1tra);
+	    inputs.add(plac2tra);
+	    inputs.add(plac3tra);
+	    inputs.add(majbuypt);
+	    inputs.add(mjbyptimp);
+	    inputs.add(arrport);
+	    inputs.add(arrport2);
+	    inputs.add(sla1port);
+	    inputs.add(adpsale1);
+	    inputs.add(adpsale2);
+	    inputs.add(majselpt);
+	    inputs.add(mjslptimp);
+	    inputs.add(portret);
+
+        //Get Ranges for first calculation
+	    ArrayList ranges= VoyagesCalcConstants.getRegonRanges1();
+
+        //Do the calculation
+	    ArrayList impVars = recode(inputs, ranges, true);
+	    
+	    //Get Return values
+	    Integer constreg= (Integer) impVars.get(0);
+	    Integer regisreg= (Integer) impVars.get(1);
+	    Integer deptreg = (Integer) impVars.get(2);
+	    Integer deptregimp = (Integer) impVars.get(3);
+	    Integer embreg= (Integer) impVars.get(4);
+	    Integer embreg2 = (Integer) impVars.get(5);
+	    Integer regem1 = (Integer) impVars.get(6);
+	    Integer regem2 = (Integer) impVars.get(7);
+	    Integer regem3 = (Integer) impVars.get(8);
+	    Integer majbuyreg = (Integer) impVars.get(9);
+	    Integer majbyimp = (Integer) impVars.get(10);
+	    Integer regarr = (Integer) impVars.get(11);
+	    Integer regarr2 = (Integer) impVars.get(12);
+	    Integer regdis1 = (Integer) impVars.get(13);
+	    Integer regdis2 = (Integer) impVars.get(14);
+	    Integer regdis3 = (Integer) impVars.get(15);
+	    Integer majselrg = (Integer) impVars.get(16);
+	    Integer mjselimp = (Integer) impVars.get(17);
+	    Integer retrnreg= (Integer) impVars.get(18);
+	    
+	    //Store the values back to the voyage object
+	    if(constreg!=null && constreg!=-1)
+	    {
+	    	Region region = Region.loadById(session, constreg);
+	    	voyage.setConstreg(region);	    
+	    }
+	    
+	    if(regisreg!=null && regisreg!=-1)
+	    {
+	    	Region region = Region.loadById(session, regisreg);
+	    	voyage.setRegisreg(region);	    
+	    }
+	    if(deptreg!=null && deptreg!=-1)
+	    {
+	    	Region region = Region.loadById(session, deptreg);
+	    	voyage.setDeptreg(region);	    
+	    }
+	    if(deptregimp!=null && deptregimp!=-1)
+	    {
+	    	Region region = Region.loadById(session, deptregimp);
+	    	voyage.setDeptregimp(region);	    
+	    }
+	    if(embreg!=null && embreg!=-1)
+	    {
+	    	Region region = Region.loadById(session, embreg);
+	    	voyage.setEmbreg(region);	    
+	    }
+	    if(embreg2!=null && embreg2!=-1)
+	    {
+	    	Region region = Region.loadById(session, embreg2);
+	    	voyage.setEmbreg2(region);	    
+	    }
+	    if(regem1!=null && regem1!=-1)
+	    {
+	    	Region region = Region.loadById(session, regem1);
+	    	voyage.setRegem1(region);	    
+	    }
+	    if(regem2!=null && regem2!=-1)
+	    {
+	    	Region region = Region.loadById(session, regem2);
+	    	voyage.setRegem2(region);	    
+	    }
+	    if(regem3!=null && regem3!=-1)
+	    {
+	    	Region region = Region.loadById(session, regem3);
+	    	voyage.setRegem3(region);	    
+	    }
+	    if(majbuyreg!=null && majbuyreg!=-1)
+	    {
+	    	Region region = Region.loadById(session, majbuyreg);
+	    	voyage.setMajbuyreg(region);	    
+	    }
+	    if(majbyimp!=null && majbyimp!=-1)
+	    {
+	    	Region region = Region.loadById(session, majbyimp);
+	    	voyage.setMajbyimp(region);	    
+	    }
+	    if(regarr!=null && regarr!=-1)
+	    {
+	    	Region region = Region.loadById(session, regarr);
+	    	voyage.setRegarr(region);	    
+	    }
+	    if(regarr2!=null && regarr2!=-1)
+	    {
+	    	Region region = Region.loadById(session, regarr2);
+	    	voyage.setRegarr2(region);	    
+	    }
+	    if(regdis1!=null && regdis1!=-1)
+	    {
+	    	Region region = Region.loadById(session, regdis1);
+	    	voyage.setRegdis1(region);	    
+	    }
+	    if(regdis2!=null && regdis2!=-1)
+	    {
+	    	Region region = Region.loadById(session, regdis2);
+	    	voyage.setRegdis2(region);	    
+	    }
+	    if(regdis3!=null && regdis3!=-1)
+	    {
+	    	Region region = Region.loadById(session, regdis3);
+	    	voyage.setRegdis3(region);	    
+	    }
+	    if(majselrg!=null && majselrg!=-1)
+	    {
+	    	Region region = Region.loadById(session, majselrg);
+	    	voyage.setMajselrg(region);	    
+	    }
+	    if(mjselimp!=null && mjselimp!=-1)
+	    {
+	    	Region region = Region.loadById(session, mjselimp);
+	    	voyage.setMjselimp(region);	    
+	    }
+	    if(retrnreg!=null && retrnreg!=-1)
+	    {
+	    	Region region = Region.loadById(session, retrnreg);
+	    	voyage.setRetrnreg(region);	    
+	    }
+	    	    
+	}
 
 }
