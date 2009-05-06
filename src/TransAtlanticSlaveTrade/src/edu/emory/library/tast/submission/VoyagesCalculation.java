@@ -651,27 +651,36 @@ public class VoyagesCalculation {
 	}
 	
 	/*
-	 * tslmtimp: Imputed total of slaves embarked for mortality calculation
-	 * vymrtrat: Slaves died on voyage/Slaves embarked
+	 * tslmtimp:  Imputed total of slaves embarked for mortality calculation
+	 * vymrtimp:  Imputed number of slaves died in  middle passage
+	 * vymrtrat:  Slaves died on voyage/Slaves embarked	 * 
 	 */	
 	public void calculateTslmtimp() {
-		int tslavesd_int = 0;
-		int slaarriv_int = 0;
 		float vymrtrat = 0f;
+		int tslavesd_int =  0;
+		int slaarriv_int = 0;
+		
+		Integer sladvoy = voyage.getSladvoy();
+		Integer vymrtimp = sladvoy;
 		
 		Integer tslavesd = voyage.getTslavesd();
 		if (tslavesd != null) {
 			tslavesd_int = tslavesd.intValue();
 		}
+		
 		Integer slaarriv = voyage.getSlaarriv();
 		if (slaarriv != null) {
-			 slaarriv_int = slaarriv.intValue();
+			 slaarriv_int =  slaarriv.intValue();
 		}
 		
 		Integer tslmtimp = tslavesd;
-		Integer vymrtimp = voyage.getVymrtimp();
-		if ((tslavesd == null) && slaarriv > 0) {
-			tslmtimp = slaarriv + vymrtimp;
+		
+		if (vymrtimp == null) {
+			vymrtimp = tslavesd_int - slaarriv_int;
+		}
+		
+		if ((tslavesd == null) && slaarriv_int > 0) {
+			tslmtimp = slaarriv_int + vymrtimp;
 		}
 		if (vymrtimp >= 1) {
 			vymrtrat = vymrtimp / tslmtimp;
