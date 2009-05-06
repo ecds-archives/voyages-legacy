@@ -283,7 +283,7 @@ public class VoyagesCalculation {
 		 Integer slas36 = voyage.getSlas36();
 		 Integer slas39 = voyage.getSlas39();
 	      
-		 slastot = new Double(defVal(slas32, 0)+defVal(slas36, 0)+defVal(slas39,0));
+		 slastot = getSlastot();
 		 
 		 Integer slaarriv = voyage.getSlaarriv();
 		 if (slaarriv != null) {
@@ -391,6 +391,21 @@ public class VoyagesCalculation {
 		Integer ncartot = defVal(ncar13, 0)+ defVal(ncar15, 0)+ defVal(ncar17, 0);
 		return ncartot;
 	}
+	
+	
+	/*
+	 * Calculates slastot
+	 * This is not written back to the database 
+	 */
+	public Double getSlastot(){
+		Integer slas32 = voyage.getSlas32();
+		 Integer slas36 = voyage.getSlas36();
+		 Integer slas39 = voyage.getSlas39();
+	      
+		 Double slastot = new Double(defVal(slas32, 0)+defVal(slas36, 0)+defVal(slas39,0));
+		return slastot;
+	}
+	
 	
 	/*
 	 * Returns default value if Integer is null
@@ -900,8 +915,7 @@ public class VoyagesCalculation {
 	    	Region region = Region.loadById(session, retrnreg1);
 	    	voyage.setRetrnreg1(region);	    
 	    }
-	    
-	    	    
+   	    
 	}
-
+	
 }
