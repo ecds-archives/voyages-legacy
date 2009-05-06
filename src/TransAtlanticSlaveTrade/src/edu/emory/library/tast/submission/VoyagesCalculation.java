@@ -31,8 +31,8 @@ public class VoyagesCalculation {
 	 */
 	public Voyage calculateImputedVariables() {
 		calculateValueNatinimp();
-		calculateValueYearN();
-		calculateValueVoy1impVoy2imp();
+		calculateValuesYear();
+		calculateValuesVoyLengths();
 		calculateImputedValueFate2();
 		calculateImputedValueFate3();
 		calculateImputedValueFate4();
@@ -94,7 +94,8 @@ public class VoyagesCalculation {
 		Integer tontype=voyage.getTontype(); 
 		Integer tonnage=voyage.getTonnage(); 
 		Integer yearam=voyage.getYearam(); 
-		Integer natinimp=voyage.getNatinimp().getId().intValue();
+		Integer natinimp=voyage.getNatinimp().getId().intValue();  //TODO imputed natinimp - should already have a function
+		
 		Float tonmod=tonnage.floatValue();
 		
 		//calculate
@@ -420,11 +421,11 @@ public class VoyagesCalculation {
 	/*
 	 * Calculates year5, year10, year25 and year100
 	 */
-	public void calculateValueYearN() 
+	public void calculateValuesYear() 
 	{
 		//Create variables for calculations
 		Integer yearam=voyage.getYearam();
-		Integer year100=-1; //dummy default value
+		Integer year100=-1; //dummy default value because no ranges array
 		
 		//Assign values and call function to calculate year5
 		ArrayList dateInputs=new ArrayList();
@@ -539,7 +540,7 @@ public class VoyagesCalculation {
 	/*
 	 * Calculates voy1imp and voy2imp values
 	 */
-	public void calculateValueVoy1impVoy2imp() {
+	public void calculateValuesVoyLengths() {
 		//Create variables for calculation
 		Date dateland1=voyage.getDateland1();
 		Date datedep=voyage.getDatedep(); 
@@ -674,21 +675,21 @@ public class VoyagesCalculation {
 		Integer placcons = voyage.getPlaccons().getId().intValue();
 		Integer placreg = voyage.getPlacreg().getId().intValue();
 		Integer portdep = voyage.getPortdep().getId().intValue(); 
-		Integer ptdepimp = voyage.getPtdepimp().getId().intValue(); 
+		Integer ptdepimp = voyage.getPtdepimp().getId().intValue();  //TODO imputed ptdepimp 
 		Integer embport = voyage.getEmbport().getId().intValue(); 
 		Integer embport2 = voyage.getEmbport2().getId().intValue();
 		Integer plac1tra = voyage.getPlac1tra().getId().intValue(); 
 		Integer plac2tra = voyage.getPlac2tra().getId().intValue();
 		Integer plac3tra = voyage.getPlac3tra().getId().intValue();
-		Integer majbuypt = voyage.getMajbuypt().getId().intValue();
-		Integer mjbyptimp = voyage.getMjbyptimp().getId().intValue();
+		Integer majbuypt = voyage.getMajbuypt().getId().intValue(); //TODO imputed  majbuypt
+		Integer mjbyptimp = voyage.getMjbyptimp().getId().intValue(); //TODO imputed mjbyptimp
 		Integer arrport = voyage.getArrport().getId().intValue();
 		Integer arrport2 = voyage.getArrport2().getId().intValue();
 		Integer sla1port = voyage.getSla1port().getId().intValue();
 		Integer adpsale1 = voyage.getAdpsale1().getId().intValue();
 		Integer adpsale2 = voyage.getAdpsale2().getId().intValue();
-		Integer majselpt = voyage.getMajselpt().getId().intValue();
-		Integer mjslptimp = voyage.getMjslptimp().getId().intValue();
+		Integer majselpt = voyage.getMajselpt().getId().intValue(); //TODO imputed majselpt
+		Integer mjslptimp = voyage.getMjslptimp().getId().intValue(); //TODO imputed mjslptimp
 		Integer portret = voyage.getPortret().getId().intValue();
 		
 		//Add to input array
@@ -847,9 +848,9 @@ public class VoyagesCalculation {
 	{
 		//Input variables for second region calculation
 		Integer portdep = voyage.getPortdep().getId().intValue();
-	    Integer ptdepimp = voyage.getPtdepimp().getId().intValue();
-	    Integer mjbyptimp = voyage.getMjbyptimp().getId().intValue();
-	    Integer mjslptimp = voyage.getMjslptimp().getId().intValue();
+	    Integer ptdepimp = voyage.getPtdepimp().getId().intValue(); //TODO imputed ptdepimp
+	    Integer mjbyptimp = voyage.getMjbyptimp().getId().intValue(); //TODO imputed mjbyptimp
+	    Integer mjslptimp = voyage.getMjslptimp().getId().intValue(); //TODO imputed mjslptimp
 	    Integer portret = voyage.getPortret().getId().intValue();
 				
 		//Add to input array
