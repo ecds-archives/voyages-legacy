@@ -33,8 +33,8 @@ public class VoyageCalcTest extends TestCase {
 
 	private void setValuesVoyage(Integer voyageId, String shipName) {
 		voyage = new Voyage();
-		voyage.setVoyageid(new Integer(99900));
-		voyage.setShipname("shipname1");
+		voyage.setVoyageid(voyageId);
+		voyage.setShipname(shipName);
 		int revision = 1;
 		voyage.setRevision(revision);		
 	}
@@ -77,8 +77,9 @@ public class VoyageCalcTest extends TestCase {
 		System.out.println("Running Specific Tests");
 		TestSuite suite = new TestSuite(this.getClass().getName());
 		//suite.addTest(new VoyageCalcTest("testCalculateImputedValueFate2"));
-		suite.addTest(new VoyageCalcTest("testCalculatePtDepImpByPortdep"));
+		//suite.addTest(new VoyageCalcTest("testCalculatePtDepImpByPortdep"));
 		//suite.addTest(new VoyageCalcTest("testCalculatePtDepImpByMajselpt"));
+		suite.addTest(new VoyageCalcTest("testCalculatePtDepImpByNullValues"));		
 		
 		return suite;
 	}
@@ -158,6 +159,24 @@ public class VoyageCalcTest extends TestCase {
 			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage, session);			
 			voyageCalc.calculateImputedValueFate2();
 			saveVoyage(voyage);
+			voyage = null;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testCalculateTslmtimp(){
+		try {	
+			deleteVoyage(99900);
+			setValuesVoyage(new Integer(99900), "shipName_99900");
+			long portId = 50105;//Rio Amazona
+			Port portdep = Port.loadById(session, portId);			
+			voyage.setPortdep(portdep);
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage, session);			
+			voyageCalc.calculatePtDepImp();
+			saveVoyage(voyage);
+			assertEquals(voyage.getPtdepimp().getId().longValue(), portId);
 			voyage = null;
 		} catch (Exception e) {
 			e.printStackTrace();
