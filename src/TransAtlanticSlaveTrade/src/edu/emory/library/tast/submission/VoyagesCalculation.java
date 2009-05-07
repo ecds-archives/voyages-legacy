@@ -42,6 +42,7 @@ public class VoyagesCalculation {
 		calculateValueMajselpt();
 		calculateImputedValueTonmod();
 		calculateSlavesEmbarkDisembark();
+		calculateValuesPeople();
 		return this.voyage;
 	}
 	
@@ -1584,5 +1585,360 @@ public class VoyagesCalculation {
 		//Store in voyages object
 		voyage.setSlaximp(slaximp.intValue());
 		voyage.setSlamimp(slamimp.intValue());
+	}
+	
+	/*
+	 * Calculates people variables
+	 */
+	public void calculateValuesPeople()
+	{
+		//Create input variables
+		  Integer men1=voyage.getMen1();
+		  Integer women1=voyage.getWomen1();
+		  Integer boy1=voyage.getBoy1();
+		  Integer girl1=voyage.getGirl1();
+		  Integer child1=voyage.getChild1();
+		  Integer infant1=voyage.getInfant1();
+		  Integer adult1=voyage.getAdult1();
+		  Integer men4=voyage.getMen4();
+		  Integer women4=voyage.getWomen4();
+		  Integer boy4=voyage.getBoy4();
+		  Integer girl4=voyage.getGirl4();
+		  Integer child4=voyage.getChild4();
+		  Integer infant4=voyage.getInfant4();
+		  Integer adult4=voyage.getAdult4();
+		  Integer  men5=voyage.getMen5();
+		  Integer women5=voyage.getWomen5();
+		  Integer boy5=voyage.getBoy5();
+		  Integer girl5=voyage.getGirl5();
+		  Integer child5=voyage.getChild5();
+		  Integer adult5 =voyage.getAdult5();
+		  Integer male1=voyage.getMale1();
+		  Integer female1=voyage.getFemale1();
+		  Integer male4=voyage.getMale4();
+		  Integer female4=voyage.getFemale4();
+		  Integer male5=voyage.getMale5();
+		  Integer female5=voyage.getFemale5();
+		  Integer tslavesd = voyage.getTslavesd();
+		  Integer tslavesp = voyage.getTslavesp();
+		  Integer men3=voyage.getMen3();
+		  Integer women3=voyage.getWomen3();
+		  Integer boy3=voyage.getBoy3();
+		  Integer girl3=voyage.getGirl3();
+		  Integer child3=voyage.getChild3();
+		  Integer infant3=voyage.getInfant3();
+		  Integer infantm3=voyage.getInfantm3();
+		  Integer infantf3=voyage.getInfantf3();
+		  Integer adult3=voyage.getAdult3();
+		  Integer men6=voyage.getMen6();
+		  Integer women6=voyage.getWomen6();
+		  Integer boy6=voyage.getBoy6();
+		  Integer girl6=voyage.getGirl6();
+		  Integer child6=voyage.getChild6();
+		  Integer adult6=voyage.getAdult6();
+		  Integer male3=voyage.getMale3();
+		  Integer female3=voyage.getFemale3();
+		  Integer male6=voyage.getMale6();
+		  Integer female6=voyage.getFemale6();
+		  Integer slaarriv = voyage.getSlaarriv();
+		  Integer men2 = voyage.getMen2();
+	      Integer women2=voyage.getWomen2();
+	      Integer boy2=voyage.getBoy2();
+	      Integer girl2=voyage.getGirl2();
+	      Integer child2 = voyage.getChild2();
+	      Integer adult2=voyage.getAdult2();
+		  Integer male2=voyage.getMale2();
+		  Integer female2=voyage.getFemale2();
+		  
+		  
+		  //Variables to be imputed
+		  Integer adlt1imp = 0;
+		  Integer chil1imp = 0;
+		  Integer male1imp = 0;
+		  Integer feml1imp =0;
+		  Integer adlt2imp = 0;
+		  Integer chil2imp = 0;
+		  Integer male2imp=0;
+		  Integer feml2imp=0;
+		  Integer slavema1 = 0;
+		  Integer slavemx1 = 0;
+		  Integer slavmax1 = 0;
+		  Double chilrat1=0d;
+		  Double malrat1=0d;
+		  Double menrat1=0d;
+		  Double womrat1=0d;
+		  Double boyrat1=0d;
+		  Double girlrat1=0d;
+		  Double adlt3imp = 0d;
+		  Double chil3imp = 0d;
+		  Double male3imp = 0d;
+		  Double feml3imp = 0d;
+		  Double slavema3=0d;
+		  Double slavemx3 = 0d;
+		  Double slavmax3=0d;
+		  Double chilrat3=0d;
+	      Double malrat3= 0d;
+	      Double menrat3=0d;
+	      Double womrat3=0d;
+	      Double boyrat3=0d;
+	      Double girlrat3=0d;
+	      Double slavema7=0d;
+	      Double slavemx7=0d;
+	      Double slavmax7=0d;
+	      Double men7=0d;
+	      Double women7=0d;
+          Double boy7=0d;
+	      Double girl7=0d;
+	      Double adult7=0d;
+	      Double child7=0d;
+	      Double male7=0d;
+	      Double female7=0d;
+	      Double menrat7=0d;
+	      Double womrat7=0d;
+	      Double boyrat7=0d;
+	      Double girlrat7=0d;
+	      Double malrat7=0d;
+	      Double chilrat7=0d;
+		  
+		  
+		  //set default values
+		  men1=defVal(men1, 0);
+		  women1=defVal(women1, 0);
+		  boy1=defVal(boy1, 0);
+		  girl1=defVal(girl1, 0);
+		  child1=defVal(child1, 0);
+		  infant1=defVal(infant1, 0);
+		  adult1=defVal(adult1, 0);
+		  men4=defVal(men4, 0);
+		  women4=defVal(women4, 0);
+		  boy4=defVal(boy4, 0);
+		  girl4=defVal(girl4, 0);
+		  child4=defVal(child4, 0);
+		  infant4=defVal(infant4, 0);
+		  adult4=defVal(adult4, 0);
+		  men5=defVal(men5, 0);
+		  women5=defVal(women5, 0);
+		  boy5=defVal(boy5, 0);
+		  girl5=defVal(girl5, 0);
+		  child5=defVal(child5, 0);
+		  adult5 = defVal(adult5, 0);
+		  male1=defVal(male1,0);
+		  female1=defVal(female1, 0);
+		  male4=defVal(male4, 0);
+		  female4=defVal(female4, 0);
+		  male5=defVal(male5, 0);
+		  female5=defVal(female5, 0);
+
+           
+		  //Do the calculations
+		 adlt1imp = men1+women1+adult1+men4+women4+adult4+men5+women5+adult5;
+		 chil1imp = boy1+girl1+child1+infant1+boy4+girl4+child4+infant4+boy5+girl5+child5;
+		 male1imp = male1+men1+boy1+male4+men4+boy4+male5+men5+boy5;
+		 feml1imp = female1+women1+girl1+female4+women4+girl4+female5+women5+girl5;
+
+
+		 if (tslavesd >=1 && adlt1imp==0) {adlt1imp = tslavesd - chil1imp;}
+		 if (tslavesd==null && tslavesp >=1 && adlt1imp==0) {adlt1imp = tslavesp - chil1imp;}
+		 if (tslavesd >=1 && chil1imp==0) {chil1imp = tslavesd - adlt1imp;}
+		 if (tslavesd==null && tslavesp >=1 && chil1imp==0) {chil1imp = tslavesp - adlt1imp;}
+
+		 slavema1 = adlt1imp+chil1imp;
+		 slavemx1 = male1imp+feml1imp;
+		 if (slavema1 >=1) {slavmax1=men1+women1+boy1+girl1+men4+women4+boy4+girl4+men5+women5+boy5+girl5;}
+
+
+		 if(slavema1 >=0 && slavema1 <= 19) {slavema1=null;}
+		 if(slavemx1 >=0 && slavemx1 <=19) {slavemx1=null;}
+		 if(slavmax1 >=0 && slavmax1 <=19) {slavmax1=null;}
+
+		 if (slavema1==null)
+		 {
+		     if(adlt1imp >=0) {adlt1imp=null;}
+		     if(chil1imp >=0)  {chil1imp=null;}
+		 }
+
+		 if(slavemx1==null)
+		 {
+		  if(feml1imp >=0) {feml1imp=null;}
+		  if(male1imp >=0) {male1imp=null;}
+		 }
+		 if(chil1imp!=null && slavema1!=null){chilrat1=chil1imp.doubleValue()/slavema1.doubleValue();} //Added If to check for null
+
+		 if(male1imp!=null && slavemx1!=null) {malrat1= male1imp.doubleValue()/slavemx1.doubleValue();} //Added If to check for null
+
+		 if (slavmax1!=null && slavmax1 >= 20) {menrat1=(men1.doubleValue()+men4.doubleValue()+men5.doubleValue())/slavmax1.doubleValue();} //Added null check
+		 if (slavmax1!=null && slavmax1 >= 20) {womrat1=(women1.doubleValue()+women4.doubleValue()+women5.doubleValue())/slavmax1.doubleValue();} //Added null check
+		 if (slavmax1!=null && slavmax1 >= 20) {boyrat1=(boy1.doubleValue()+boy4.doubleValue()+boy5.doubleValue())/slavmax1.doubleValue();} //Added null check
+		 if (slavmax1!=null && slavmax1 >= 20) {girlrat1= (girl1.doubleValue()+girl4.doubleValue()+girl5.doubleValue())/slavmax1.doubleValue();} //Added null check
+		
+		 //Set Defaults
+		 men3=defVal(men3, 0);
+		 women3=defVal(women3, 0);
+		 boy3=defVal(boy3, 0);
+		 girl3=defVal(girl3, 0);
+		 child3=defVal(child3, 0);
+		 infant3=defVal(infant3, 0);
+		 infantm3=defVal(infantm3, 0);
+		 infantf3=defVal(infantf3, 0);
+		 adult3=defVal(adult3, 0);
+		 men6=defVal(men6, 0);
+		 women6=defVal(women6, 0);
+		 boy6=defVal(boy6, 0);
+		 girl6=defVal(girl6, 0);
+		 child6=defVal(child6, 0);
+		 adult6=defVal(adult6, 0);
+		 male3=defVal(male3, 0);
+		 female3=defVal(female3, 0);
+		 men3=defVal(men3, 0);
+		 women3=defVal(women3, 0);
+		 boy3=defVal(boy3, 0);
+		 girl3=defVal(girl3, 0);
+		 infantm3=defVal(infantm3, 0);
+		 infantf3=defVal(infantf3, 0);
+		 male6=defVal(male6, 0);
+		 female6=defVal(female6, 0);
+		 men6=defVal(men6, 0);
+		 women6=defVal(women6, 0);
+		 boy6=defVal(boy6, 0);
+		 girl6=defVal(girl6, 0);
+
+
+		 adlt3imp = new Double(men3+women3+adult3+men6+women6+adult6);
+		 chil3imp = new Double( boy3+girl3+child3+infant3+boy6+girl6+child6);
+		 male3imp = new Double( male3+men3+boy3+infantm3+male6+men6+boy6+male5+men5+boy5);
+		 feml3imp = new Double( female3+women3+girl3+infantf3+female6+women6+girl6);
+
+		 if (slaarriv >=1 && adlt3imp==0) {adlt3imp = slaarriv - chil3imp;}
+		 if (slaarriv >=1 && chil3imp==0) {chil3imp = slaarriv - adlt3imp;}
+
+		 slavema3 = adlt3imp+chil3imp;
+		 slavemx3 = male3imp+feml3imp;
+		 if (slavema3 >=1) {slavmax3=new Double(men3+women3+boy3+girl3+men6+women6+boy6+girl6);}
+
+
+		 if(slavema3 >=0 && slavema3<=19) {slavema3=null;}
+		 if(slavemx3 >=0 && slavemx3<=19) {slavemx3=null;}
+		 if(slavmax3 >=0 && slavmax3<=19) {slavmax3=null;}
+
+
+		 if (slavema3==null)
+		 {
+		  if(adlt3imp >=0) {adlt3imp=null;}
+		  if(chil3imp >=0) {chil3imp=null;}
+		 }
+
+		 if(slavemx3==null)
+		 {
+		  if(feml3imp >=0) {feml3imp=null;}
+		  if(male3imp >=0) {male3imp=null;}
+		 }
+
+		 if(chil3imp!=null && slavema3!=null) {chilrat3=chil3imp/slavema3;} //Added If to check for null
+		 if(male3imp!=null && slavemx3!=null) {malrat3= male3imp/slavemx3;} //Added If to check for null
+		 if(slavmax3!=null && slavmax3 >= 20) {menrat3=(men3+men6)/slavmax3;}
+		 if(slavmax3!=null && slavmax3 >= 20) {womrat3=(women3+women6)/slavmax3;}
+		 if(slavmax3!=null && slavmax3 >= 20) {boyrat3=(boy3+boy6)/slavmax3;}
+		 if(slavmax3!=null && slavmax3 >= 20) {girlrat3= (girl3+girl6)/slavmax3;}
+
+
+		 if(slavema3!=null && slavema3 >= 20) {slavema7=slavema3;}
+		 if(slavemx3!=null && slavemx3 >= 20) {slavemx7=slavemx3;}
+		 if(slavmax3!=null && slavmax3 >= 20) {slavmax7=slavmax3;}
+		 if(slavmax7!=null && slavmax7 >= 20) {men7=new Double(men3+men6);}
+		 if(slavmax7!=null && slavmax7 >= 20) {women7=new Double(women3+women6);}
+		 if(slavmax7!=null && slavmax7 >= 20) {boy7=new Double(boy3+boy6);}
+		 if(slavmax7!=null && slavmax7 >= 20) {girl7=new Double(girl3+girl6);}
+		 if(slavema7!=null && slavema7 >= 20) {adult7=adlt3imp;}
+		 if(slavema7!=null && slavema7 >= 20) {child7=chil3imp;}
+		 if(slavemx7!=null && slavemx7 >=20) {male7=male3imp;}
+		 if(slavemx7!=null && slavemx7 >= 20) {female7=feml3imp;}
+		 if(menrat3!=null && menrat3 >= 0) {menrat7=menrat3;}
+		 if(womrat3!=null && womrat3 >= 0) {womrat7=womrat3;}
+		 if(boyrat3!=null && boyrat3 >= 0) {boyrat7=boyrat3;}
+		 if(girlrat3!=null && girlrat3 >= 0) {girlrat7=girlrat3;}
+		 if(malrat3!=null && malrat3 >= 0) {malrat7=malrat3;}
+		 if(chilrat3!=null && chilrat3 >= 0) {chilrat7=chilrat3;}
+
+		 if (slavema3==null && slavema1!=null && slavema1 >=20) {slavema7=slavema1.doubleValue();}
+		 if (slavemx3==null && slavemx1!=null && slavemx1 >=20) {slavemx7=slavemx1.doubleValue();}
+		 if (slavmax3==null && slavmax1!=null && slavmax1 >=20) {slavmax7=slavmax1.doubleValue();}
+		 if (slavmax3==null && slavmax1!=null && slavmax1 >= 20) {men7= new Double(men1+men4 +men5);}
+		 if (slavmax3==null && slavmax1!=null && slavmax1 >= 20) {women7= new Double(women1+women4+women5);}
+		 if (slavmax3==null && slavmax1!=null && slavmax1 >= 20) {boy7= new Double(boy1+boy4+boy5);}
+		 if (slavmax3==null && slavmax1!=null && slavmax1 >= 20) {girl7= new Double(girl1+girl4+girl5);}
+		 if (slavema3==null && slavema1!=null && slavema1 >= 20) {adult7=adlt1imp.doubleValue();}
+		 if (slavema3==null && slavema1!=null && slavema1 >= 20) {child7=chil1imp.doubleValue();}
+		 if (slavemx3==null && slavemx1!=null && slavemx1 >=20) {male7=male1imp.doubleValue();}
+		 if (slavemx3==null && slavemx1!=null && slavemx1 >= 20) {female7=feml1imp.doubleValue();}
+		 if (menrat3==null && menrat1!=null && menrat1 >= 0) {menrat7=menrat1;}
+		 if (womrat3==null && womrat1!=null && womrat1 >= 0) {womrat7=womrat1;}
+		 if (boyrat3==null && boyrat1!=null && boyrat1 >= 0) {boyrat7=boyrat1;}
+		 if (girlrat3==null && girlrat1!=null && girlrat1 >= 0) {girlrat7=girlrat1;}
+		 if (malrat3==null && malrat1!=null && malrat1 >= 0) {malrat7=malrat1;}
+		 if (chilrat3==null&& chilrat1!=null && chilrat1 >= 0) {chilrat7=chilrat1;}
+
+		 //more defaults
+		 men2=defVal(men2, 0);
+		 women2=defVal(women2, 0);
+		 boy2=defVal(boy2, 0);
+		 girl2=defVal(girl2, 0);
+		 child2=defVal(child2, 0);
+		 adult2=defVal(adult2, 0);
+		 male2=defVal(male2, 0);
+		 female2=defVal(female2, 0);
+		 
+		 adlt2imp = men2+women2;
+		 chil2imp = boy2+girl2+child2;
+		 male2imp=men2+boy2;
+		 feml2imp=women2+girl2;
+		 
+		 //Save back to voyage object
+		 voyage.setAdlt1imp(adlt1imp.doubleValue()); 
+		 voyage.setChil1imp(chil1imp.doubleValue());
+		 voyage.setMale1imp(male1imp.doubleValue());
+		 voyage.setFeml1imp(feml1imp.doubleValue());
+		 voyage.setAdlt2imp(adlt2imp.doubleValue());
+		 voyage.setChil2imp(chil2imp.doubleValue());
+		 voyage.setMale2imp(male2imp.doubleValue());
+		 voyage.setFeml2imp(feml2imp.doubleValue());
+		 voyage.setSlavema1(slavema1.doubleValue());
+		 voyage.setSlavemx1(slavemx1.doubleValue());
+		 voyage.setSlavmax1(slavmax1.doubleValue());
+		 voyage.setChilrat1(chilrat1);
+		 voyage.setMalrat1(malrat1);  
+		 voyage.setMenrat1(menrat1);
+		 voyage.setWomrat1(womrat1);
+		 voyage.setBoyrat1(boyrat1);
+		 voyage.setGirlrat1(girlrat1);
+		 voyage.setAdlt3imp(adlt3imp);
+		 voyage.setChil3imp(chil3imp);
+		 voyage.setMale3imp(male3imp);
+		 voyage.setFeml3imp(feml3imp);
+		 voyage.setSlavema3(slavema3);
+		 voyage.setSlavemx3(slavemx3);
+		 voyage.setSlavmax3(slavmax3);
+		 voyage.setChilrat3(chilrat3);
+	     voyage.setMalrat3(malrat3);
+	     voyage.setMenrat3(menrat3);
+	     voyage.setWomrat3(womrat3);
+	     voyage.setBoyrat3(boyrat3);
+	     voyage.setGirlrat3(girlrat3);
+	     voyage.setSlavema7(slavema7);
+	     voyage.setSlavemx7(slavemx7);
+	     voyage.setSlavmax7(slavmax7);
+	     voyage.setMen7(men7);
+	     voyage.setWomen7(women7);
+         voyage.setBoy7(boy7);
+	     voyage.setGirl7(girl7);
+	     voyage.setAdult7(adult7);
+	     voyage.setChild7(child7);
+	     voyage.setMale7(male7);
+	     voyage.setFemale7(female7);
+		 voyage.setMenrat7(menrat7.floatValue());
+	     voyage.setWomrat7(womrat7.floatValue());
+	     voyage.setBoyrat7(boyrat7.floatValue());
+	     voyage.setGirlrat7(girlrat7.floatValue());
+	     voyage.setMalrat7(malrat7.floatValue());
+	     voyage.setChilrat7(chilrat7.floatValue());
 	}
 }

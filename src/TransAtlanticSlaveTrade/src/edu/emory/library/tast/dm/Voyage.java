@@ -2295,4 +2295,333 @@ public class Voyage extends AbstractDescriptiveObject
 		return (Integer) this.values.get("tslmtimp");
 	}	
 	
+	//Some of the new getters and setters
+	public Double getAdlt1imp() {
+		return (Double) this.values.get("adlt1imp");
+	}
+	
+	public Double getChil1imp() {
+		return (Double) this.values.get("chil1imp");
+	}
+	
+	public Double getMale1imp() {
+		return (Double) this.values.get("male1imp");
+	}
+	
+	public Double getFeml1imp() {
+		return (Double) this.values.get("feml1imp");
+	}
+	
+	public Double getAdlt2imp() {
+		return (Double) this.values.get("adlt2imp");
+	}
+	
+	public Double getChil2imp() {
+		return (Double) this.values.get("chil2imp");
+	}
+	
+	public Double getMale2imp() {
+		return (Double) this.values.get("male2imp");
+	}
+	
+	public Double getFeml2imp() {
+		return (Double) this.values.get("feml2imp");
+	}
+	
+	public Double getSlavema1() {
+		return (Double) this.values.get("slavema1");
+	}
+	
+	public Double getSlavemx1() {
+		return (Double) this.values.get("slavemx1");
+	}
+	
+	public Double getSlavmax1() {
+		return (Double) this.values.get("slavmax1");
+	}
+	
+	public Double getChilrat1() {
+		return (Double) this.values.get("chilrat1");
+	}
+	
+	public Double getMalrat1() {
+		return (Double) this.values.get("malrat1");
+	}
+	
+	public Double getMenrat1() {
+		return (Double) this.values.get("menrat1");
+	}
+	
+	public Double getWomrat1() {
+		return (Double) this.values.get("womrat1");
+	}
+	
+	public Double getBoyrat1() {
+		return (Double) this.values.get("boyrat1");
+	}
+	
+	public Double getGirlrat1() {
+		return (Double) this.values.get("girlrat1");
+	}
+	
+	public Double getAdlt3imp() {
+		return (Double) this.values.get("adlt3imp");
+	}
+	
+	public Double getMale3imp() {
+		return (Double) this.values.get("male3imp");
+	}
+	
+	public Double getChil3imp() {
+		return (Double) this.values.get("chil3imp");
+	}
+	
+	public Double getFeml3imp() {
+		return (Double) this.values.get("feml3imp");
+	}
+	
+	public Double getSlavema3() {
+		return (Double) this.values.get("slavema3");
+	}
+	
+	public Double getSlavemx3() {
+		return (Double) this.values.get("slavemx3");
+	}
+	
+	public Double getSlavmax3() {
+		return (Double) this.values.get("slavmax3");
+	}
+	
+	public Double getChild7() {
+		return (Double) this.values.get("child7");
+	}
+	
+	public Double getAdult7() {
+		return (Double) this.values.get("adult7");
+	}
+	
+	public Double getGirl7() {
+		return (Double) this.values.get("girl7");
+	}
+	
+	public Double getChilrat3() {
+		return (Double) this.values.get("chilrat3");
+	}
+	
+	public Double getMalrat3() {
+		return (Double) this.values.get("malrat3");
+	}
+	
+	public Double getBoy7() {
+		return (Double) this.values.get("boy7");
+	}
+	
+	public Double getWomen7() {
+		return (Double) this.values.get("women7");
+	}
+	
+	public Double getMen7() {
+		return (Double) this.values.get("men7");
+	}
+	
+	public Double getSlavmax7() {
+		return (Double) this.values.get("slavmax7");
+	}
+	
+	public Double getMenrat3() {
+		return (Double) this.values.get("menrat3");
+	}
+	
+	public Double getWomrat3() {
+		return (Double) this.values.get("womrat3");
+	}
+	
+	public Double getBoyrat3() {
+		return (Double) this.values.get("boyrat3");
+	}
+	
+	public Double getGirlrat3() {
+		return (Double) this.values.get("girlrat3");
+	}
+	
+	public Double getSlavema7() {
+		return (Double) this.values.get("slavema7");
+	}
+	
+	public Double getSlavemx7() {
+		return (Double) this.values.get("slavemx7");
+	}
+	
+	public Double getMale7() {
+		return (Double) this.values.get("male7");
+	}
+	
+	public Double getFemale7() {
+		return (Double) this.values.get("female7");
+	}
+	
+	public void setAdlt1imp(Double obj){
+		this.values.put("adlt1imp", obj);
+	}
+	
+	public void setChil1imp(Double obj){
+		this.values.put("chil1imp", obj);
+	}
+	
+	public void setMale1imp(Double obj){
+		this.values.put("male1imp", obj);
+	}
+	
+	public void setFeml1imp(Double obj){
+		this.values.put("feml1imp", obj);
+	}
+	
+	public void setAdlt2imp(Double obj){
+		this.values.put("adlt2imp", obj);
+	}
+	
+	public void setChil2imp(Double obj){
+		this.values.put("chil2imp", obj);
+	}
+	
+	public void setMale2imp(Double obj){
+		this.values.put("male2imp", obj);
+	}
+	
+	public void setFeml2imp(Double obj){
+		this.values.put("feml2imp", obj);
+	}
+	
+	public void setSlavema1(Double obj){
+		this.values.put("slavema1", obj);
+	}
+	
+	public void setSlavemx1(Double obj){
+		this.values.put("slavemx1", obj);
+	}
+	
+	public void setSlavmax1(Double obj){
+		this.values.put("slavmax1", obj);
+	}
+	
+	public void setChilrat1(Double obj){
+		this.values.put("chilrat1", obj);
+	}
+	
+	public void setMalrat1(Double obj){
+		this.values.put("malrat1", obj);
+	}
+	
+	public void setMenrat1(Double obj){
+		this.values.put("menrat1", obj);
+	}
+	
+	public void setWomrat1(Double obj){
+		this.values.put("womrat1", obj);
+	}
+	
+	public void setBoyrat1(Double obj){
+		this.values.put("boyrat1", obj);
+	}
+	
+	public void setGirlrat1(Double obj){
+		this.values.put("girlrat1", obj);
+	}
+	
+	public void setAdlt3imp(Double obj){
+		this.values.put("adlt3imp", obj);
+	}
+	
+	public void setMale3imp(Double obj){
+		this.values.put("male3imp", obj);
+	}
+	
+	public void setChil3imp(Double obj){
+		this.values.put("chil3imp", obj);
+	}
+	
+	public void setFeml3imp(Double obj){
+		this.values.put("feml3imp", obj);
+	}
+	
+	public void setSlavema3(Double obj){
+		this.values.put("slavema3", obj);
+	}
+	
+	public void setSlavemx3(Double obj){
+		this.values.put("slavemx3", obj);
+	}
+	
+	public void setSlavmax3(Double obj){
+		this.values.put("slavmax3", obj);
+	}
+	
+	public void setChild7(Double obj){
+		this.values.put("child7", obj);
+	}
+	
+	public void setAdult7(Double obj){
+		this.values.put("adult7", obj);
+	}
+	
+	public void setGirl7(Double obj){
+		this.values.put("girl7", obj);
+	}
+	
+	public void setChilrat3(Double obj){
+		this.values.put("chilrat3", obj);
+	}
+	
+	public void setMalrat3(Double obj){
+		this.values.put("malrat3", obj);
+	}
+	
+	public void setBoy7(Double obj){
+		this.values.put("boy7", obj);
+	}
+	
+	public void setWomen7(Double obj){
+		this.values.put("women7", obj);
+	}
+	
+	public void setMen7(Double obj){
+		this.values.put("men7", obj);
+	}
+	
+	public void setSlavmax7(Double obj){
+		this.values.put("slavmax7", obj);
+	}
+	
+	public void setMenrat3(Double obj){
+		this.values.put("menrat3", obj);
+	}
+	
+	public void setWomrat3(Double obj){
+		this.values.put("womrat3", obj);
+	}
+	
+	public void setBoyrat3(Double obj){
+		this.values.put("boyrat3", obj);
+	}
+	
+	public void setGirlrat3(Double obj){
+		this.values.put("girlrat3", obj);
+	}
+	
+	public void setSlavema7(Double obj){
+		this.values.put("slavema7", obj);
+	}
+	
+	public void setSlavemx7(Double obj){
+		this.values.put("slavemx7", obj);
+	}
+	
+	public void setMale7(Double obj){
+		this.values.put("male7", obj);
+	}
+	
+	public void setFemale7(Double obj){
+		this.values.put("female7", obj);
+	}	
+	
 }

@@ -251,5 +251,47 @@
 		<property name="sladafri" column="sladafri" />
 		<property name="sladamer" column="sladamer" />
 		
+		<!--  Most of the new properties added here, others where added higher up the page -->
+        <property name="adlt1imp" column="adlt1imp" />
+        <property name="chil1imp" column="chil1imp" />
+        <property name="male1imp" column="male1imp" />
+        <property name="feml1imp" column="feml1imp" />
+        <property name="adlt2imp" column="adlt2imp" />
+        <property name="chil2imp" column="chil2imp" />
+        <property name="male2imp" column="male2imp" />
+        <property name="feml2imp" column="feml2imp" />
+        <property name="slavema1" column="slavema1" />
+        <property name="slavemx1" column="slavemx1" />
+        <property name="slavmax1" column="slavmax1" />
+        <property name="chilrat1" column="chilrat1" />
+        <property name="malrat1" column="malrat1" />
+        <property name="menrat1" column="menrat1" />
+        <property name="womrat1" column="womrat1" />
+        <property name="boyrat1" column="boyrat1" />
+        <property name="girlrat1" column="girlrat1" />
+        <property name="adlt3imp" column="adlt3imp" />
+        <property name="chil3imp" column="chil3imp" />
+        <property name="male3imp" column="male3imp" />
+        <property name="feml3imp" column="feml3imp" />
+        <property name="slavema3" column="slavema3" />
+        <property name="slavemx3" column="slavemx3" />
+        <property name="slavmax3" column="slavmax3" />
+        <property name="chilrat3" column="chilrat3" />
+        <property name="malrat3" column="malrat3" />
+        <property name="menrat3" column="menrat3" />
+        <property name="womrat3" column="womrat3" />
+        <property name="boyrat3" column="boyrat3" />
+        <property name="girlrat3" column="girlrat3" />
+        <property name="slavema7" column="slavema7" />
+        <property name="slavemx7" column="slavemx7" />
+        <property name="slavmax7" column="slavmax7" />
+        <property name="men7" column="men7" />
+        <property name="women7" column="women7" />
+        <property name="boy7" column="boy7" />
+        <property name="girl7" column="girl7" />
+        <property name="adult7" column="adult7" />
+        <property name="child7" column="child7" />
+        <property name="male7" column="male7" />
+        <property name="female7" column="female7" />		
 	</class>
 </hibernate-mapping>
