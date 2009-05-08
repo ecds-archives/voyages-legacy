@@ -169,9 +169,22 @@ public class VoyagesCalculation {
 			plac3tra_int = plac3tra.getId().intValue();
 		}
 		
+		int ncar13_int = 0;
+		int ncar15_int = 0;
+		int ncar17_int = 0;
 		Integer ncar13 = voyage.getNcar13();
 		Integer ncar15 = voyage.getNcar15();
 		Integer ncar17 = voyage.getNcar17();
+		if (ncar13 != null) {
+			ncar13_int = ncar13.intValue();
+		}
+		if (ncar15 != null) {
+			ncar15_int = ncar15.intValue();
+		}
+		if (ncar17 != null) {
+			ncar17_int = ncar17.intValue();
+		}
+		
 		Integer tslavesd = voyage.getTslavesd();
 		if (tslavesd != null) {
 			tslavesd_int = tslavesd.intValue();
@@ -182,8 +195,10 @@ public class VoyagesCalculation {
 		}
 				
 		Integer ncartot = defVal(ncar13, 0)+ defVal(ncar15, 0)+ defVal(ncar17, 0);
-		rslt_d = ncartot.doubleValue()/tslavesd_int;
-		rslt_p = ncartot.doubleValue()/tslavesp_int;
+		/*rslt_d = ncartot.doubleValue()/tslavesd_int;
+		rslt_p = ncartot.doubleValue()/tslavesp_int;*/		
+		rslt_d = tslavesd_int/ncartot.doubleValue();
+		rslt_p = tslavesp_int/ncartot.doubleValue();
 		
 		if (plac1tra_int >= 1 && plac2tra==null && plac3tra==null) {
 			majbuypt = plac1tra;
@@ -195,28 +210,28 @@ public class VoyagesCalculation {
 	    	majbuypt = plac3tra;
 	    }
 		else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra==null && 
-		    		(rslt_d >= 0.5d) && (ncar13 >= ncar15)) {
+		    		(rslt_d >= 0.5d) && (ncar13_int >= ncar15_int)) {
 		    	majbuypt = plac1tra;
 		}
 		else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra==null && 
-				(rslt_d >= 0.5d) && (ncar15 >= ncar13)) {
+				(rslt_d >= 0.5d) && (ncar15_int >= ncar13_int)) {
 			majbuypt = plac2tra;
 		}
 		else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra==null && 
-				tslavesd==null && (rslt_p >= 0.5d) && (ncar13 >= ncar15)) {
+				tslavesd==null && (rslt_p >= 0.5d) && (ncar13_int >= ncar15_int)) {
 			majbuypt = plac1tra;
 		}
 		else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra==null && 
-				tslavesd==null && rslt_p >= 0.5d && ncar15 >= ncar13) {
+				tslavesd==null && rslt_p >= 0.5d && ncar15_int >= ncar13_int) {
 			majbuypt = plac2tra;
 		}
-		else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra==null && rslt_d < 0.5d && ncar13 < ncar15) {
+		else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra==null && rslt_d < 0.5d && ncar13_int < ncar15_int) {
 			majbuypt = plac1tra;
 		}
-		else if (plac1tra_int >= 1 && plac2tra_int >= 1 && plac3tra==null && tslavesd==null && tslavesp==null && ncar13 >= ncar15) {
+		else if (plac1tra_int >= 1 && plac2tra_int >= 1 && plac3tra==null && tslavesd==null && tslavesp==null && ncar13_int >= ncar15_int) {
 			majbuypt = plac1tra;
 		}
-		else if (plac1tra_int >= 1 && plac2tra_int >= 1 && plac3tra==null && tslavesd==null && tslavesp==null && ncar15 > ncar13) {
+		else if (plac1tra_int >= 1 && plac2tra_int >= 1 && plac3tra==null && tslavesd==null && tslavesp==null && ncar15_int > ncar13_int) {
 			majbuypt = plac2tra;
 		}
 		else if (plac1tra_int >= 1 && plac2tra_int >= 1 && plac3tra==null && tslavesd==null && tslavesp==null && ncartot==null) {
@@ -228,37 +243,37 @@ public class VoyagesCalculation {
 		else  if (plac2tra_int >=1 && plac3tra_int >=1 && plac1tra==null) {
 			majbuypt = plac2tra;
 		}
-		else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && rslt_d >= 0.5d && ncar13 >= ncar15 && ncar13 >= ncar17) {
+		else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && rslt_d >= 0.5d && ncar13_int >= ncar15_int && ncar13_int >= ncar17_int) {
 			majbuypt = plac1tra;
 		}
-		else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && tslavesd==null && rslt_p >= 0.5d && ncar13 >= ncar15 && ncar13 >= ncar17) {
+		else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && tslavesd==null && rslt_p >= 0.5d && ncar13_int >= ncar15_int && ncar13_int >= ncar17_int) {
 			majbuypt = plac1tra;
 		}
-		else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && rslt_d >= 0.5d && ncar15 >= ncar13 && ncar15 >= ncar17) {
+		else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && rslt_d >= 0.5d && ncar15_int >= ncar13_int && ncar15_int >= ncar17_int) {
 			majbuypt = plac2tra;
 		}
-		else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && tslavesd==null && rslt_p >= 0.5d && ncar15 >= ncar13 && ncar15 >= ncar17) {
+		else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && tslavesd==null && rslt_p >= 0.5d && ncar15_int >= ncar13_int && ncar15_int >= ncar17_int) {
 			majbuypt = plac2tra;
 		}
-	    if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && rslt_d >= 0.5d && ncar17 >= ncar13 && ncar17 >= ncar15) {
+		else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && rslt_d >= 0.5d && ncar17_int >= ncar13_int && ncar17_int >= ncar15_int) {
 	    	majbuypt = plac3tra;
 	    }
-	    else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && tslavesd==null && rslt_p >= 0.5d && ncar17 >= ncar13 && ncar17 >= ncar15) {
+	    else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && tslavesd==null && rslt_p >= 0.5d && ncar17_int >= ncar13_int && ncar17_int >= ncar15_int) {
 	    	majbuypt = plac1tra;
 	    }
-	    else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && rslt_d < 0.5d && ncar13==0) {
+	    else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && rslt_d < 0.5d && ncar13_int==0) {
 	    	majbuypt = plac1tra;
 	    }
-	    else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && rslt_d < 0.5d && ncar13>=1 && ncar15==0 && ncar17==0) {
+	    else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && rslt_d < 0.5d && ncar13_int>=1 && ncar15_int==0 && ncar17_int==0) {
 	    	majbuypt = plac3tra;
 	    }
-	    else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && rslt_d < 0.5d && ncar13>=1 && ncar15>=1 && ncar17==0) {
+	    else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && rslt_d < 0.5d && ncar13_int>=1 && ncar15_int>=1 && ncar17_int==0) {
 	    	majbuypt = plac3tra;
 	    }
-	    else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && tslavesd==null && rslt_p < 0.5d && ncar13==0) {
+	    else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && tslavesd==null && rslt_p < 0.5d && ncar13_int==0) {
 	    	majbuypt = plac1tra;
 	    }
-	    else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && tslavesd==null && rslt_p < 0.5d && ncar13>=1 && ncar15==0 && ncar17==0) {
+	    else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && tslavesd==null && rslt_p < 0.5d && ncar13_int>=1 && ncar15_int==0 && ncar17_int==0) {
 	    	majbuypt = plac3tra;
 	    }
 	    else if (tslavesd==null && tslavesp==null && ncartot.intValue() >=1 && plac1tra_int >= 1 && plac2tra_int >= 1 && plac3tra_int >= 1) {
@@ -267,7 +282,7 @@ public class VoyagesCalculation {
 	    else if (ncartot==null && plac1tra_int >= 1 && plac2tra_int >= 1 && plac3tra_int >= 1) {
 	    	majbuypt = plac3tra;
 	    }
-        if (ncartot==null && tslavesd==null && tslavesp==null && plac1tra_int >= 1 && plac2tra_int >= 1 && plac3tra_int >= 1) {
+	    else if (ncartot==null && tslavesd==null && tslavesp==null && plac1tra_int >= 1 && plac2tra_int >= 1 && plac3tra_int >= 1) {
         	majbuypt = plac3tra;
         }
         //if Port is not null, then set the value in voyage 
@@ -670,67 +685,67 @@ public class VoyagesCalculation {
 			ptdepimp = portdep;
 		}
 		
-		int ptdepimp_int = 0;
-		int majselpt_int = 0;
-		
-		Port majselpt = voyage.getMajselpt();
-		if (majselpt != null) {
-			majselpt_int = majselpt.getId().intValue();
+		//TODO imputed var Majselpt
+		if (ptdepimp == null) {
+			int ptdepimp_int = 0;
+			int majselpt_int = 0;
+			Port majselpt = voyage.getMajselpt();
+			if (majselpt != null) {
+				majselpt_int = majselpt.getId().intValue();
+			}
+		    if (majselpt_int >= 50200 && majselpt_int < 50300 && portdep==null) {
+		    	ptdepimp_int = 50299;
+		    }
+		    else if (majselpt_int >= 50300 && majselpt_int < 50400 && portdep==null) {
+		    	ptdepimp_int = 50399;
+		    }
+		    else if (majselpt_int >= 50400 && majselpt_int < 50500 && portdep==null) {
+		    	ptdepimp_int = 50422;
+		    }
+		    
+		    if (ptdepimp_int != 0) {
+		    	ptdepimp = Port.loadById(session, ptdepimp_int);
+		    }	    
 		}
-	    if (majselpt_int >= 50200 && majselpt_int < 50300 && portdep==null) {
-	    	ptdepimp_int = 50299;
-	    }
-	    else if (majselpt_int >= 50300 && majselpt_int < 50400 && portdep==null) {
-	    	ptdepimp_int = 50399;
-	    }
-	    else if (majselpt_int >= 50400 && majselpt_int < 50500 && portdep==null) {
-	    	ptdepimp_int = 50422;
-	    }
 	    
-	    if (ptdepimp == null) {
-	    	ptdepimp = Port.loadById(session, ptdepimp_int);
-	    }	    
 	    voyage.setPtdepimp(ptdepimp);
 	}
 	
 	/*
 	 * tslmtimp:  Imputed total of slaves embarked for mortality calculation
 	 * vymrtimp:  Imputed number of slaves died in  middle passage
-	 * vymrtrat:  Slaves died on voyage/Slaves embarked	 * 
+	 * vymrtrat:  Slaves died on voyage/Slaves embarked	  
 	 */	
 	public void calculateTslmtimp() {
-		float vymrtrat = 0f;
-		int tslavesd_int =  0;
-		int slaarriv_int = 0;
-		
-		Integer sladvoy = voyage.getSladvoy();
-		Integer vymrtimp = sladvoy;
-		
-		Integer tslavesd = voyage.getTslavesd();
-		if (tslavesd != null) {
-			tslavesd_int = tslavesd.intValue();
+		try {
+			float vymrtrat = 0f;		
+			
+			Integer sladvoy = voyage.getSladvoy();
+			Integer vymrtimp = sladvoy;			
+			Integer tslavesd = voyage.getTslavesd();			
+			Integer slaarriv = voyage.getSlaarriv();
+			
+			if (vymrtimp == null && tslavesd!=null && slaarriv!=null) {				
+				vymrtimp = tslavesd - slaarriv;
+			}			
+			Integer tslmtimp = tslavesd;
+			
+			if ((tslavesd == null) && slaarriv!= null && slaarriv > 0) {
+				tslmtimp = slaarriv + vymrtimp;
+			}
+			if ( (vymrtimp!=null && vymrtimp >= 1) && (tslmtimp != null) ) {
+				vymrtrat = vymrtimp / tslmtimp;
+			}
+			
+			voyage.setTslmtimp(tslmtimp);
+			
+			if (vymrtrat != 0) {
+				voyage.setVymrtrat(vymrtrat);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
-		Integer slaarriv = voyage.getSlaarriv();
-		if (slaarriv != null) {
-			 slaarriv_int =  slaarriv.intValue();
-		}
-		
-		Integer tslmtimp = tslavesd;
-		
-		if (vymrtimp == null) {
-			vymrtimp = tslavesd_int - slaarriv_int;
-		}
-		
-		if ((tslavesd == null) && slaarriv_int > 0) {
-			tslmtimp = slaarriv_int + vymrtimp;
-		}
-		if (vymrtimp >= 1) {
-			vymrtrat = vymrtimp / tslmtimp;
-		}
-		
-		voyage.setTslmtimp(tslmtimp);
-		voyage.setVymrtrat(vymrtrat);
 	}
 	
 	/*
@@ -1030,7 +1045,7 @@ public class VoyagesCalculation {
 			if (ncartot >= 1 && tslavesd==null && tslavesp==null) {slaximp = ncartot.doubleValue();}
 			if (slaarriv >= 1) {slamimp = slaarriv.doubleValue();}
 			if (slastot >= 1 && slaarriv==null) {slamimp = slastot;}
-
+			//TODO xmimpflag imputed var
 			if (xmimpflag == 127 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.165107561642471);}
 			else if (xmimpflag == 127 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null){slaximp = slamimp / (1-0.165107561642471);}
 			else if (xmimpflag == 127 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp=163.181286549708;}
