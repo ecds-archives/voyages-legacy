@@ -2296,8 +2296,8 @@ public class Voyage extends AbstractDescriptiveObject
 	}	
 	
 	//Some of the new getters and setters
-	public Double getAdlt1imp() {
-		return (Double) this.values.get("adlt1imp");
+	public Integer getAdlt1imp() {
+		return (Integer) this.values.get("adlt1imp");
 	}
 	
 	public Double getChil1imp() {
@@ -2312,20 +2312,20 @@ public class Voyage extends AbstractDescriptiveObject
 		return (Double) this.values.get("feml1imp");
 	}
 	
-	public Double getAdlt2imp() {
-		return (Double) this.values.get("adlt2imp");
+	public Integer getAdlt2imp() {
+		return (Integer) this.values.get("adlt2imp");
 	}
 	
-	public Double getChil2imp() {
-		return (Double) this.values.get("chil2imp");
+	public Integer getChil2imp() {
+		return (Integer) this.values.get("chil2imp");
 	}
 	
-	public Double getMale2imp() {
-		return (Double) this.values.get("male2imp");
+	public Integer getMale2imp() {
+		return (Integer) this.values.get("male2imp");
 	}
 	
-	public Double getFeml2imp() {
-		return (Double) this.values.get("feml2imp");
+	public Integer getFeml2imp() {
+		return (Integer) this.values.get("feml2imp");
 	}
 	
 	public Double getSlavema1() {
@@ -2336,8 +2336,8 @@ public class Voyage extends AbstractDescriptiveObject
 		return (Double) this.values.get("slavemx1");
 	}
 	
-	public Double getSlavmax1() {
-		return (Double) this.values.get("slavmax1");
+	public Integer getSlavmax1() {
+		return (Integer) this.values.get("slavmax1");
 	}
 	
 	public Double getChilrat1() {
@@ -2388,8 +2388,8 @@ public class Voyage extends AbstractDescriptiveObject
 		return (Double) this.values.get("slavemx3");
 	}
 	
-	public Double getSlavmax3() {
-		return (Double) this.values.get("slavmax3");
+	public Integer getSlavmax3() {
+		return (Integer) this.values.get("slavmax3");
 	}
 	
 	public Double getChild7() {
@@ -2424,8 +2424,8 @@ public class Voyage extends AbstractDescriptiveObject
 		return (Double) this.values.get("men7");
 	}
 	
-	public Double getSlavmax7() {
-		return (Double) this.values.get("slavmax7");
+	public Integer getSlavmax7() {
+		return (Integer) this.values.get("slavmax7");
 	}
 	
 	public Double getMenrat3() {
@@ -2460,7 +2460,7 @@ public class Voyage extends AbstractDescriptiveObject
 		return (Double) this.values.get("female7");
 	}
 	
-	public void setAdlt1imp(Double obj){
+	public void setAdlt1imp(Integer obj){
 		this.values.put("adlt1imp", obj);
 	}
 	
@@ -2476,19 +2476,19 @@ public class Voyage extends AbstractDescriptiveObject
 		this.values.put("feml1imp", obj);
 	}
 	
-	public void setAdlt2imp(Double obj){
+	public void setAdlt2imp(Integer obj){
 		this.values.put("adlt2imp", obj);
 	}
 	
-	public void setChil2imp(Double obj){
+	public void setChil2imp(Integer obj){
 		this.values.put("chil2imp", obj);
 	}
 	
-	public void setMale2imp(Double obj){
+	public void setMale2imp(Integer obj){
 		this.values.put("male2imp", obj);
 	}
 	
-	public void setFeml2imp(Double obj){
+	public void setFeml2imp(Integer obj){
 		this.values.put("feml2imp", obj);
 	}
 	
@@ -2500,7 +2500,7 @@ public class Voyage extends AbstractDescriptiveObject
 		this.values.put("slavemx1", obj);
 	}
 	
-	public void setSlavmax1(Double obj){
+	public void setSlavmax1(Integer obj){
 		this.values.put("slavmax1", obj);
 	}
 	
@@ -2552,7 +2552,7 @@ public class Voyage extends AbstractDescriptiveObject
 		this.values.put("slavemx3", obj);
 	}
 	
-	public void setSlavmax3(Double obj){
+	public void setSlavmax3(Integer obj){
 		this.values.put("slavmax3", obj);
 	}
 	
@@ -2588,7 +2588,7 @@ public class Voyage extends AbstractDescriptiveObject
 		this.values.put("men7", obj);
 	}
 	
-	public void setSlavmax7(Double obj){
+	public void setSlavmax7(Integer obj){
 		this.values.put("slavmax7", obj);
 	}
 	

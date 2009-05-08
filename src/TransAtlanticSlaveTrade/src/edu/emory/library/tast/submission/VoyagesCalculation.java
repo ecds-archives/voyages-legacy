@@ -2190,17 +2190,17 @@ public class VoyagesCalculation {
 		 feml2imp=women2+girl2;
 		 
 		 //Save back to voyage object
-		 if(adlt1imp !=null) {voyage.setAdlt1imp(adlt1imp.doubleValue());} 
+		 voyage.setAdlt1imp(adlt1imp); 
 		 if(chil1imp !=null) {voyage.setChil1imp(chil1imp.doubleValue());}
 		 if(male1imp !=null) {voyage.setMale1imp(male1imp.doubleValue());}
 		 if(feml1imp !=null) {voyage.setFeml1imp(feml1imp.doubleValue());}
-		 if(adlt2imp !=null) {voyage.setAdlt2imp(adlt2imp.doubleValue());}
-		 if(chil2imp !=null) {voyage.setChil2imp(chil2imp.doubleValue());}
-		 if(male2imp !=null) {voyage.setMale2imp(male2imp.doubleValue());}
-		 if(feml2imp !=null) {voyage.setFeml2imp(feml2imp.doubleValue());}
+		 voyage.setAdlt2imp(adlt2imp);
+		 voyage.setChil2imp(chil2imp);
+		 voyage.setMale2imp(male2imp);
+		 voyage.setFeml2imp(feml2imp);
 		 if(slavema1!=null) {voyage.setSlavema1(slavema1.doubleValue());}
 		 if(slavemx1 !=null) {voyage.setSlavemx1(slavemx1.doubleValue());}
-		 if(slavmax1 !=null) {voyage.setSlavmax1(slavmax1.doubleValue());}
+		 voyage.setSlavmax1(slavmax1);
 		 voyage.setChilrat1(chilrat1);
 		 voyage.setMalrat1(malrat1);  
 		 voyage.setMenrat1(menrat1);
@@ -2213,7 +2213,7 @@ public class VoyagesCalculation {
 		 voyage.setFeml3imp(feml3imp);
 		 voyage.setSlavema3(slavema3);
 		 voyage.setSlavemx3(slavemx3);
-		 voyage.setSlavmax3(slavmax3);
+		 if(slavmax3 !=null) {voyage.setSlavmax3(slavmax3.intValue());}
 		 voyage.setChilrat3(chilrat3);
 	     voyage.setMalrat3(malrat3);
 	     voyage.setMenrat3(menrat3);
@@ -2222,7 +2222,7 @@ public class VoyagesCalculation {
 	     voyage.setGirlrat3(girlrat3);
 	     voyage.setSlavema7(slavema7);
 	     voyage.setSlavemx7(slavemx7);
-	     voyage.setSlavmax7(slavmax7);
+	     if(slavmax7 !=null) {voyage.setSlavmax7(slavmax7.intValue());}
 	     voyage.setMen7(men7);
 	     voyage.setWomen7(women7);
          voyage.setBoy7(boy7);
