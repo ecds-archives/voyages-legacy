@@ -79,8 +79,10 @@ public class VoyageCalcTest extends TestCase {
 		//suite.addTest(new VoyageCalcTest("testCalculateImputedValueFate2"));
 		//suite.addTest(new VoyageCalcTest("testCalculatePtDepImpByPortdep"));
 		//suite.addTest(new VoyageCalcTest("testCalculatePtDepImpByMajselpt"));
-		suite.addTest(new VoyageCalcTest("testCalculatePtDepImpByNullValues"));		
-		
+		//suite.addTest(new VoyageCalcTest("testCalculatePtDepImpByNullValues"));	
+		//suite.addTest(new VoyageCalcTest("testCalculateTslmtimp"));
+		suite.addTest(new VoyageCalcTest("testCalculateTslmtimpWithAllVars"));
+			
 		return suite;
 	}
 	
@@ -166,17 +168,43 @@ public class VoyageCalcTest extends TestCase {
 	}
 	
 	@Test
-	public void testCalculateTslmtimp(){
+	/*
+	 * tslmtimp:  Imputed total of slaves embarked for mortality calculation
+	 * vymrtimp:  Imputed number of slaves died in  middle passage
+	 * vymrtrat:  Slaves died on voyage/Slaves embarked	  
+	 */	
+	public void testCalculateTslmtimpWithSladvoy(){
 		try {	
 			deleteVoyage(99900);
 			setValuesVoyage(new Integer(99900), "shipName_99900");
-			long portId = 50105;//Rio Amazona
-			Port portdep = Port.loadById(session, portId);			
-			voyage.setPortdep(portdep);
+			voyage.setSladvoy(new Integer(75));
+			
+			/*Integer sladvoy = voyage.getSladvoy();
+			Integer tslavesd = voyage.getTslavesd();
+			Integer slaarriv = voyage.getSlaarriv();*/
+			
 			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage, session);			
-			voyageCalc.calculatePtDepImp();
+			voyageCalc.calculateTslmtimp();
 			saveVoyage(voyage);
-			assertEquals(voyage.getPtdepimp().getId().longValue(), portId);
+			//assertEquals(voyage.getPtdepimp().getId().longValue(), portId);
+			voyage = null;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void testCalculateTslmtimpWithAllVars(){
+		try {	
+			deleteVoyage(99900);
+			setValuesVoyage(new Integer(99900), "shipName_99900");
+			voyage.setTslavesd(new Integer(100));
+			voyage.setSladvoy(new Integer(200));
+			//voyage.setSlaarriv(new Integer(60));
+			
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage, session);			
+			voyageCalc.calculateTslmtimp();
+			saveVoyage(voyage);
+			//assertEquals(voyage.getPtdepimp().getId().longValue(), portId);
 			voyage = null;
 		} catch (Exception e) {
 			e.printStackTrace();
