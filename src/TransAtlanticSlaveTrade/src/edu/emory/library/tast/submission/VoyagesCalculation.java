@@ -96,35 +96,43 @@ public class VoyagesCalculation {
 		Integer tontype=voyage.getTontype(); 
 		Integer tonnage=voyage.getTonnage(); 
 		Integer yearam=voyage.getYearam(); 
-		Integer natinimp=voyage.getNatinimp().getId().intValue();  //TODO imputed natinimp - should already have a function
+		Integer natinimp=null;
+		if(voyage.getNatinimp().getId()!=null) {natinimp=voyage.getNatinimp().getId().intValue();}  //TODO imputed natinimp - should already have a function
 		
-		Float tonmod=tonnage.floatValue();
+		Float tonmod=null;
+		if(tonnage!=null) {tonmod=tonnage.floatValue();}
 		
 		//calculate
-	    if (tontype == 13) {tonmod=tonnage.floatValue();}
-	    if ((tontype < 3 || tontype == 4 || tontype == 5) && yearam > 1773) {tonmod = tonnage.floatValue();}
-	    if ((tontype < 3 || tontype == 4 || tontype == 5) && yearam < 1774 && tonnage < 151) {tonmod=2.3f + (1.8f * tonnage);}
-	    if ((tontype < 3 || tontype == 4 || tontype == 5) && yearam < 1774 && tonnage > 150 && tonnage < 251) {tonmod=65.3f + (1.2f * tonnage);}
-	    if ((tontype < 3 || tontype == 4 || tontype == 5) && yearam < 1774 && tonnage > 250) {tonmod=13.1f + (1.1f * tonnage);}
-	    if (tontype == 4 && yearam > 1783 && yearam < 1794) {tonmod=9999f;}
-	    if (tontype == 3 || tontype == 6 || tontype == 9 || tontype == 16){tonmod = 71 + (0.86f * tonnage);}
-	    if ((tontype == 3 || tontype == 6 || tontype == 9 || tontype == 16) && yearam < 1774 && tonmod < 151) {tonmod=2.3f + (1.8f * tonnage);}
-	    if ((tontype == 3 || tontype == 6 || tontype == 9 || tontype == 16) && yearam < 1774 && tonmod > 150 && tonmod < 251) {tonmod=65.3f + (1.2f * tonnage);}
-	    if ((tontype == 3 || tontype == 6 || tontype == 9 || tontype == 16) && yearam < 1774 && tonmod > 250) {tonmod=13.1f + (1.1f * tonnage);}
-	    if (tontype == 7) {tonmod=tonnage * 2f;}
-	    if (tontype == 7 && yearam > 1773 && tonmod < 151) {tonmod=2.3f + (1.8f * tonmod);}
-	    if (tontype == 7 && yearam > 1773 && tonmod > 150 && tonmod < 251) {tonmod=65.3f + (1.2f * tonmod);}
-	    if (tontype == 7 && yearam > 1773 && tonmod > 250) {tonmod=13.1f + (1.1f * tonmod);}
-	    if (tontype == 21) {tonmod= -6.093f + (0.76155f * tonnage);}
-	    if (tontype == 21 && yearam > 1773 && tonmod < 151) {tonmod=2.3f + (1.8f * tonmod);}
-	    if (tontype == 21 && yearam > 1773 && tonmod > 150 && tonmod < 251) {tonmod=65.3f + (1.2f * tonmod);}
-	    if (tontype == 21 && yearam > 1773 && tonmod > 250) {tonmod=13.1f + (1.1f * tonmod);}
-	    if ((tontype==null) && (yearam > 1714 && yearam < 1786) && tonnage > 0 && natinimp==7) {tontype=22;}
-	    if (tontype == 22 && tonnage < 151) {tonmod=2.3f + (1.8f * tonnage);}
-	    if (tontype == 22 && tonnage > 150 && tonnage < 251) {tonmod=65.3f + (1.2f * tonnage);}
-	    if (tontype == 22 && tonnage > 250) {tonmod=13.1f + (1.1f * tonnage);}
-	    if (tontype == 15 || tontype == 14 || tontype == 17) {tonmod = 52.86f + (1.22f * tonnage);}
-	    if (tonmod==null) {tonmod=9999f;}
+	    try {
+			if (tontype == 13) {tonmod=tonnage.floatValue();}
+			else if (tonnage!=null && (tontype < 3 || tontype == 4 || tontype == 5) && yearam > 1773) {tonmod = tonnage.floatValue();}
+			else if (tonnage!=null && (tontype < 3 || tontype == 4 || tontype == 5) && yearam < 1774 && tonnage < 151) {tonmod=2.3f + (1.8f * tonnage);}
+			else if (tonnage!=null && (tontype < 3 || tontype == 4 || tontype == 5) && yearam < 1774 && tonnage > 150 && tonnage < 251) {tonmod=65.3f + (1.2f * tonnage);}
+			else if (tonnage!=null && (tontype < 3 || tontype == 4 || tontype == 5) && yearam < 1774 && tonnage > 250) {tonmod=13.1f + (1.1f * tonnage);}
+			else if (tontype == 4 && yearam > 1783 && yearam < 1794) {tonmod=9999f;}
+			else if (tontype == 3 || tontype == 6 || tontype == 9 || tontype == 16){tonmod = 71 + (0.86f * tonnage);}
+			else if ((tontype == 3 || tontype == 6 || tontype == 9 || tontype == 16) && yearam < 1774 && tonmod < 151) {tonmod=2.3f + (1.8f * tonnage);}
+			else if ((tontype == 3 || tontype == 6 || tontype == 9 || tontype == 16) && yearam < 1774 && tonmod > 150 && tonmod < 251) {tonmod=65.3f + (1.2f * tonnage);}
+			else if ((tontype == 3 || tontype == 6 || tontype == 9 || tontype == 16) && yearam < 1774 && tonmod > 250) {tonmod=13.1f + (1.1f * tonnage);}
+			else if (tontype == 7) {tonmod=tonnage * 2f;}
+			else if (tontype == 7 && yearam > 1773 && tonmod < 151) {tonmod=2.3f + (1.8f * tonmod);}
+			else if (tontype == 7 && yearam > 1773 && tonmod > 150 && tonmod < 251) {tonmod=65.3f + (1.2f * tonmod);}
+			else if (tontype == 7 && yearam > 1773 && tonmod > 250) {tonmod=13.1f + (1.1f * tonmod);}
+			else if (tontype == 21) {tonmod= -6.093f + (0.76155f * tonnage);}
+			else if (tontype == 21 && yearam > 1773 && tonmod < 151) {tonmod=2.3f + (1.8f * tonmod);}
+			else if (tontype == 21 && yearam > 1773 && tonmod > 150 && tonmod < 251) {tonmod=65.3f + (1.2f * tonmod);}
+			else if (tontype == 21 && yearam > 1773 && tonmod > 250) {tonmod=13.1f + (1.1f * tonmod);}
+			
+			if ((tontype==null) && (yearam > 1714 && yearam < 1786) && tonnage > 0 && natinimp==7) {tontype=22;}
+			
+			if (tontype == 22 && tonnage < 151) {tonmod=2.3f + (1.8f * tonnage);}
+			else if (tontype == 22 && tonnage > 150 && tonnage < 251) {tonmod=65.3f + (1.2f * tonnage);}
+			else if (tontype == 22 && tonnage > 250) {tonmod=13.1f + (1.1f * tonnage);}
+			else if (tontype == 15 || tontype == 14 || tontype == 17) {tonmod = 52.86f + (1.22f * tonnage);}
+			else if (tonmod==null) {tonmod=9999f;}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	    
         //Store the result in the object 
 	    if(tonmod!=null)
@@ -445,25 +453,44 @@ public class VoyagesCalculation {
 		Integer year100=-1; //dummy default value because no ranges array
 		
 		//Assign values and call function to calculate year5
-		ArrayList dateInputs=new ArrayList();
-	    dateInputs.add(yearam);
-	    ArrayList dateRanges=VoyagesCalcConstants.getdateRanges1();
-	    ArrayList impDate = recode(dateInputs, dateRanges, false);
-	    Integer year5=(Integer) impDate.get(0);
+		ArrayList dateInputs;
+		ArrayList dateRanges;
+		ArrayList impDate;
+		
+		Integer year5=null;
+		try {
+			dateInputs = new ArrayList();
+			dateInputs.add(yearam);
+			dateRanges = VoyagesCalcConstants.getdateRanges1();
+			impDate = recode(dateInputs, dateRanges, false);
+			year5 = (Integer) impDate.get(0);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
  
-	  //Assign values and call function to calculate year10
-        dateInputs=new ArrayList();
-	    dateInputs.add(yearam);
-	    dateRanges= VoyagesCalcConstants.getdateRanges2();
-	    impDate = recode(dateInputs, dateRanges, false);
-	    Integer year10=(Integer) impDate.get(0);
+	  Integer year10=null;;
+	try {
+		//Assign values and call function to calculate year10
+		    dateInputs=new ArrayList();
+		    dateInputs.add(yearam);
+		    dateRanges= VoyagesCalcConstants.getdateRanges2();
+		    impDate = recode(dateInputs, dateRanges, false);
+		    year10 = (Integer) impDate.get(0);
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
 
-	  //Assign values and call function to calculate year25
-	    dateInputs=new ArrayList();
-	    dateInputs.add(yearam);
-	    dateRanges=VoyagesCalcConstants.getdateRanges3();
-	    impDate = recode(dateInputs, dateRanges, false);
-	    Integer year25=(Integer) impDate.get(0);
+	  Integer year25=null;;
+	try {
+		//Assign values and call function to calculate year25
+		    dateInputs=new ArrayList();
+		    dateInputs.add(yearam);
+		    dateRanges=VoyagesCalcConstants.getdateRanges3();
+		    impDate = recode(dateInputs, dateRanges, false);
+		    year25 = (Integer) impDate.get(0);
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
 
 	    //ranges too few for year100 to create a HashMap
 	    if (yearam < 1601) {year100=1500;}
@@ -541,11 +568,16 @@ public class VoyagesCalculation {
 	 * Calculates natinimp variable
 	 */
 	public void calculateValueNatinimp() {
-		//Create variables for calculation
-		Integer national = voyage.getNational().getId().intValue();
-		HashMap natHash = VoyagesCalcConstants.getnatHash();
-		
-	    Integer natinimp= (Integer)natHash.get(national);
+		Integer natinimp=null;
+		try {
+			//Create variables for calculation
+			Integer national = voyage.getNational().getId().intValue();
+			HashMap natHash = VoyagesCalcConstants.getnatHash();
+			
+			natinimp = (Integer)natHash.get(national);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	    
 	    //Store the value in a Nation object and update voyages object
 	    if (natinimp != null){
@@ -564,7 +596,7 @@ public class VoyagesCalculation {
 		Date dateleftafr=voyage.getDateleftafr();
 		
 		//Calculate value
-		Integer voy1imp = dateDiff(dateland1, datedep);
+		Integer voy1imp = dateDiff(datedep, dateland1);
 	    Integer voy2imp = dateDiff(dateland1, dateleftafr);
 	    
 	    //update voyages object
@@ -589,6 +621,9 @@ public class VoyagesCalculation {
 	    //convert dates to long, subtract, convert to days
 	    Long diff = (end.getTime() - start.getTime())/(1000 * 60 * 60 * 24);
 	    diff = round(diff);
+	    
+	    if(diff < 0)
+	    	diff=diff*-1;
 
 	    return diff.intValue();
 	}
@@ -703,75 +738,98 @@ public class VoyagesCalculation {
 	 */
 	public void calculateValuesRegion1()
 	{
-		//Input variables for first region calculation
-		Integer placcons = voyage.getPlaccons().getId().intValue();
-		Integer placreg = voyage.getPlacreg().getId().intValue();
-		Integer portdep = voyage.getPortdep().getId().intValue(); 
-		Integer ptdepimp = voyage.getPtdepimp().getId().intValue();  //TODO imputed ptdepimp 
-		Integer embport = voyage.getEmbport().getId().intValue(); 
-		Integer embport2 = voyage.getEmbport2().getId().intValue();
-		Integer plac1tra = voyage.getPlac1tra().getId().intValue(); 
-		Integer plac2tra = voyage.getPlac2tra().getId().intValue();
-		Integer plac3tra = voyage.getPlac3tra().getId().intValue();
-		Integer majbuypt = voyage.getMajbuypt().getId().intValue(); //TODO imputed  majbuypt
-		Integer mjbyptimp = voyage.getMjbyptimp().getId().intValue(); //TODO imputed mjbyptimp
-		Integer arrport = voyage.getArrport().getId().intValue();
-		Integer arrport2 = voyage.getArrport2().getId().intValue();
-		Integer sla1port = voyage.getSla1port().getId().intValue();
-		Integer adpsale1 = voyage.getAdpsale1().getId().intValue();
-		Integer adpsale2 = voyage.getAdpsale2().getId().intValue();
-		Integer majselpt = voyage.getMajselpt().getId().intValue(); //TODO imputed majselpt
-		Integer mjslptimp = voyage.getMjslptimp().getId().intValue(); //TODO imputed mjslptimp
-		Integer portret = voyage.getPortret().getId().intValue();
-		
-		//Add to input array
-		ArrayList inputs=new ArrayList();
-	    inputs.add(placcons);
-	    inputs.add(placreg);
-	    inputs.add(portdep);
-	    inputs.add(ptdepimp);
-	    inputs.add(embport);
-	    inputs.add(embport2);
-	    inputs.add(plac1tra);
-	    inputs.add(plac2tra);
-	    inputs.add(plac3tra);
-	    inputs.add(majbuypt);
-	    inputs.add(mjbyptimp);
-	    inputs.add(arrport);
-	    inputs.add(arrport2);
-	    inputs.add(sla1port);
-	    inputs.add(adpsale1);
-	    inputs.add(adpsale2);
-	    inputs.add(majselpt);
-	    inputs.add(mjslptimp);
-	    inputs.add(portret);
+		//Create Return values
+		Integer constreg=null;
+		Integer regisreg=null;;
+		Integer deptreg=null;;
+		Integer deptregimp=null;;
+		Integer embreg=null;;
+		Integer embreg2=null;;
+		Integer regem1=null;;
+		Integer regem2=null;;
+		Integer regem3=null;;
+		Integer majbuyreg=null;;
+		Integer majbyimp=null;;
+		Integer regarr=null;;
+		Integer regarr2=null;;
+		Integer regdis1=null;;
+		Integer regdis2=null;;
+		Integer regdis3=null;;
+		Integer majselrg=null;;
+		Integer mjselimp=null;;
+		Integer retrnreg=null;;
+		try {
+			//Input variables for first region calculation
+			Integer placcons = voyage.getPlaccons().getId().intValue();
+			Integer placreg = voyage.getPlacreg().getId().intValue();
+			Integer portdep = voyage.getPortdep().getId().intValue(); 
+			Integer ptdepimp = voyage.getPtdepimp().getId().intValue();  //TODO imputed ptdepimp 
+			Integer embport = voyage.getEmbport().getId().intValue(); 
+			Integer embport2 = voyage.getEmbport2().getId().intValue();
+			Integer plac1tra = voyage.getPlac1tra().getId().intValue(); 
+			Integer plac2tra = voyage.getPlac2tra().getId().intValue();
+			Integer plac3tra = voyage.getPlac3tra().getId().intValue();
+			Integer majbuypt = voyage.getMajbuypt().getId().intValue(); //TODO imputed  majbuypt
+			Integer mjbyptimp = voyage.getMjbyptimp().getId().intValue(); //TODO imputed mjbyptimp
+			Integer arrport = voyage.getArrport().getId().intValue();
+			Integer arrport2 = voyage.getArrport2().getId().intValue();
+			Integer sla1port = voyage.getSla1port().getId().intValue();
+			Integer adpsale1 = voyage.getAdpsale1().getId().intValue();
+			Integer adpsale2 = voyage.getAdpsale2().getId().intValue();
+			Integer majselpt = voyage.getMajselpt().getId().intValue(); //TODO imputed majselpt
+			Integer mjslptimp = voyage.getMjslptimp().getId().intValue(); //TODO imputed mjslptimp
+			Integer portret = voyage.getPortret().getId().intValue();
+			
+			//Add to input array
+			ArrayList inputs=new ArrayList();
+			inputs.add(placcons);
+			inputs.add(placreg);
+			inputs.add(portdep);
+			inputs.add(ptdepimp);
+			inputs.add(embport);
+			inputs.add(embport2);
+			inputs.add(plac1tra);
+			inputs.add(plac2tra);
+			inputs.add(plac3tra);
+			inputs.add(majbuypt);
+			inputs.add(mjbyptimp);
+			inputs.add(arrport);
+			inputs.add(arrport2);
+			inputs.add(sla1port);
+			inputs.add(adpsale1);
+			inputs.add(adpsale2);
+			inputs.add(majselpt);
+			inputs.add(mjslptimp);
+			inputs.add(portret);
 
-        //Get Ranges for first calculation
-	    ArrayList ranges= VoyagesCalcConstants.getRegionRanges1();
+			//Get Ranges for first calculation
+			ArrayList ranges= VoyagesCalcConstants.getRegionRanges1();
 
-        //Do the calculation
-	    ArrayList impVars = recode(inputs, ranges, true);
-	    
-	    //Get Return values
-	    Integer constreg= (Integer) impVars.get(0);
-	    Integer regisreg= (Integer) impVars.get(1);
-	    Integer deptreg = (Integer) impVars.get(2);
-	    Integer deptregimp = (Integer) impVars.get(3);
-	    Integer embreg= (Integer) impVars.get(4);
-	    Integer embreg2 = (Integer) impVars.get(5);
-	    Integer regem1 = (Integer) impVars.get(6);
-	    Integer regem2 = (Integer) impVars.get(7);
-	    Integer regem3 = (Integer) impVars.get(8);
-	    Integer majbuyreg = (Integer) impVars.get(9);
-	    Integer majbyimp = (Integer) impVars.get(10);
-	    Integer regarr = (Integer) impVars.get(11);
-	    Integer regarr2 = (Integer) impVars.get(12);
-	    Integer regdis1 = (Integer) impVars.get(13);
-	    Integer regdis2 = (Integer) impVars.get(14);
-	    Integer regdis3 = (Integer) impVars.get(15);
-	    Integer majselrg = (Integer) impVars.get(16);
-	    Integer mjselimp = (Integer) impVars.get(17);
-	    Integer retrnreg= (Integer) impVars.get(18);
+			//Do the calculation
+			ArrayList impVars = recode(inputs, ranges, true);
+			
+			constreg = (Integer) impVars.get(0);
+			regisreg = (Integer) impVars.get(1);
+			deptreg = (Integer) impVars.get(2);
+			deptregimp = (Integer) impVars.get(3);
+			embreg = (Integer) impVars.get(4);
+			embreg2 = (Integer) impVars.get(5);
+			regem1 = (Integer) impVars.get(6);
+			regem2 = (Integer) impVars.get(7);
+			regem3 = (Integer) impVars.get(8);
+			majbuyreg = (Integer) impVars.get(9);
+			majbyimp = (Integer) impVars.get(10);
+			regarr = (Integer) impVars.get(11);
+			regarr2 = (Integer) impVars.get(12);
+			regdis1 = (Integer) impVars.get(13);
+			regdis2 = (Integer) impVars.get(14);
+			regdis3 = (Integer) impVars.get(15);
+			majselrg = (Integer) impVars.get(16);
+			mjselimp = (Integer) impVars.get(17);
+			retrnreg = (Integer) impVars.get(18);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	    
 	    //Store the values back to the voyage object
 	    if(constreg!=null && constreg!=-1)
@@ -878,33 +936,42 @@ public class VoyagesCalculation {
 	 */
 	public void calculateValuesRegion2()
 	{
-		//Input variables for second region calculation
-		Integer portdep = voyage.getPortdep().getId().intValue();
-	    Integer ptdepimp = voyage.getPtdepimp().getId().intValue(); //TODO imputed ptdepimp
-	    Integer mjbyptimp = voyage.getMjbyptimp().getId().intValue(); //TODO imputed mjbyptimp
-	    Integer mjslptimp = voyage.getMjslptimp().getId().intValue(); //TODO imputed mjslptimp
-	    Integer portret = voyage.getPortret().getId().intValue();
-				
-		//Add to input array
-		ArrayList inputs=new ArrayList();
-		inputs.add(portdep);
-	    inputs.add(ptdepimp);
-	    inputs.add(mjbyptimp);
-	    inputs.add(mjslptimp);
-	    inputs.add(portret);
+		//Create Return values
+		Integer deptreg1=null;
+		Integer deptregimp1=null;
+		Integer majbyimp1=null;
+		Integer mjselimp1=null;
+		Integer retrnreg1=null;
+		try {
+			//Input variables for second region calculation
+			Integer portdep = voyage.getPortdep().getId().intValue();
+			Integer ptdepimp = voyage.getPtdepimp().getId().intValue(); //TODO imputed ptdepimp
+			Integer mjbyptimp = voyage.getMjbyptimp().getId().intValue(); //TODO imputed mjbyptimp
+			Integer mjslptimp = voyage.getMjslptimp().getId().intValue(); //TODO imputed mjslptimp
+			Integer portret = voyage.getPortret().getId().intValue();
+					
+			//Add to input array
+			ArrayList inputs=new ArrayList();
+			inputs.add(portdep);
+			inputs.add(ptdepimp);
+			inputs.add(mjbyptimp);
+			inputs.add(mjslptimp);
+			inputs.add(portret);
 
-        //Get Ranges for second calculation
-	    ArrayList ranges= VoyagesCalcConstants.getRegionRanges2();
+			//Get Ranges for second calculation
+			ArrayList ranges= VoyagesCalcConstants.getRegionRanges2();
 
-        //Do the calculation
-	    ArrayList impVars = recode(inputs, ranges, true);
-	    
-	    //Get Return values
-	    Integer deptreg1 = (Integer) impVars.get(0);
-	    Integer deptregimp1 = (Integer) impVars.get(1);
-	    Integer majbyimp1 = (Integer) impVars.get(2);
-	    Integer mjselimp1 = (Integer) impVars.get(3);
-	    Integer retrnreg1= (Integer) impVars.get(4);
+			//Do the calculation
+			ArrayList impVars = recode(inputs, ranges, true);
+			
+			deptreg1 = (Integer) impVars.get(0);
+			deptregimp1 = (Integer) impVars.get(1);
+			majbyimp1 = (Integer) impVars.get(2);
+			mjselimp1 = (Integer) impVars.get(3);
+			retrnreg1 = (Integer) impVars.get(4);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	    
 	    //Store the values back to the voyage object
 	    if(deptreg1!=null && deptreg1!=-1)
@@ -941,650 +1008,662 @@ public class VoyagesCalculation {
 	 */
 	public void calculateSlavesEmbarkDisembark()
 	{
-		//Get variables for calculation
-		Integer tslavesd = voyage.getTslavesd();
-		Integer xmimpflag =0; //TODO imputed  - get value from getter method once it is created
-		Integer tslavesp = voyage.getTslavesp();
-		Integer ncartot = getNcartot();
-		Double slastot = getSlastot();
-		Integer slaarriv = voyage.getSlaarriv();
-		Long fate2 = voyage.getFate2().getId();
-		
 		//Variables to calculate
-		 Double slaximp =0d;
-		Double slamimp=0d;
-		
-		//Do ALL of the calculations
-		if (tslavesd.doubleValue() >= 1d) {slaximp = tslavesd.doubleValue();}
-		if (tslavesd==null && tslavesp >=1) {slaximp = tslavesp.doubleValue();}
-		if (ncartot >= 1 && tslavesd==null && tslavesp==null) {slaximp = ncartot.doubleValue();}
-		if (slaarriv >= 1) {slamimp = slaarriv.doubleValue();}
-		if (slastot >= 1 && slaarriv==null) {slamimp = slastot;}
+		Double slaximp=null;
+		Double slamimp=null;
+		try {
+			//Get variables for calculation
+			Integer tslavesd = voyage.getTslavesd();
+			Integer xmimpflag =0; //TODO imputed  - get value from getter method once it is created
+			Integer tslavesp = voyage.getTslavesp();
+			Integer ncartot = getNcartot();
+			Double slastot = getSlastot();
+			Integer slaarriv = voyage.getSlaarriv();
+			Long fate2 = voyage.getFate2().getId();
+			
+			slaximp = 0d;
+			slamimp = 0d;
+			
+			//Do ALL of the calculations
+			if (tslavesd.doubleValue() >= 1d) {slaximp = tslavesd.doubleValue();}
+			if (tslavesd==null && tslavesp >=1) {slaximp = tslavesp.doubleValue();}
+			if (ncartot >= 1 && tslavesd==null && tslavesp==null) {slaximp = ncartot.doubleValue();}
+			if (slaarriv >= 1) {slamimp = slaarriv.doubleValue();}
+			if (slastot >= 1 && slaarriv==null) {slamimp = slastot;}
 
-		if (xmimpflag == 127 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.165107561642471);}
-		if (xmimpflag == 127 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null){slaximp = slamimp / (1-0.165107561642471);}
-		if (xmimpflag == 127 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp=163.181286549708;}
-		if (xmimpflag == 127 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null){slaximp =163.181286549708/ (1-0.165107561642471 );}
-		if (xmimpflag == 128 && slaximp >= 1 && slaarriv==null && slastot==null){slamimp = slaximp - (slaximp*0.230972326367458);}
-		if (xmimpflag == 128 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null){slaximp = slamimp / (1- 0.230972326367458);}
-		if (xmimpflag == 128 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null){slamimp =241.774647887324;}
-		if (xmimpflag == 128 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null){slaximp =241.774647887324/ (1-0.230972326367458 );}
-		if (xmimpflag == 129 && slaximp >= 1 && slaarriv==null && slastot==null){slamimp = slaximp - (slaximp*0.218216262481124);}
-		if (xmimpflag == 129 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null){slaximp = slamimp / (1- 0.218216262481124);}
-		if (xmimpflag == 129 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null){slamimp =249.141527001862;}
-		if (xmimpflag == 129 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null){slaximp =249.141527001862/ (1-0.218216262481124 );}
-		if (xmimpflag == 130 && slaximp >= 1 && slaarriv==null && slastot==null){slamimp = slaximp - (slaximp*0.164154067860228);}
-		if (xmimpflag == 130 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null){slaximp = slamimp / (1- 0.164154067860228);}
-		if (xmimpflag == 130 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null){slamimp =227.680034129693;}
-		if (xmimpflag == 130 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null){slaximp =227.680034129693/ (1-0.164154067860228 );}
-		if (xmimpflag == 131 && slaximp >= 1 && slaarriv==null && slastot==null){slamimp = slaximp - (slaximp*0.153670852602567);}
-		if (xmimpflag == 131 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null){slaximp = slamimp / (1- 0.153670852602567);}
-		if (xmimpflag == 131 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null){slamimp =272.60549132948;}
-		if (xmimpflag == 131 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null){slaximp =272.60549132948/ (1-0.153670852602567 );}
-		if (xmimpflag == 132 && slaximp >= 1 && slaarriv==null && slastot==null){slamimp = slaximp - (slaximp*0.120410468186061);}
-		if (xmimpflag == 132 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null){slaximp = slamimp / (1- 0.120410468186061);}
-		if (xmimpflag == 132 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null){slamimp =268.071314102564;}
-		if (xmimpflag == 132 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null){slaximp =268.071314102564/ (1-0.120410468186061 );}
-		if (xmimpflag == 133 && slaximp >= 1 && slaarriv==null && slastot==null){slamimp = slaximp - (slaximp*0.126821090786133);}
-		if (xmimpflag == 133 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null){slaximp = slamimp / (1- 0.126821090786133);}
-		if (xmimpflag == 133 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null){slamimp =290.826654240447;}
-		if (xmimpflag == 133 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null){slaximp =290.826654240447/ (1-0.126821090786133 );}
-		if (xmimpflag == 134 && slaximp >= 1 && slaarriv==null && slastot==null){slamimp = slaximp - (slaximp*0.105799354866935);}
-		if (xmimpflag == 134 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null){slaximp = slamimp / (1- 0.105799354866935);}
-		if (xmimpflag == 134 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null){slamimp =225.932515337423;}
-		if (xmimpflag == 134 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null){slaximp =225.932515337423/ (1-0.105799354866935 );}
-		if (xmimpflag == 135 && slaximp >= 1 && slaarriv==null && slastot==null){slamimp = slaximp - (slaximp*0.114160782328086);}
-		if (xmimpflag == 135 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null){slaximp = slamimp / (1- 0.114160782328086);}
-		if (xmimpflag == 135 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null){slamimp =391.452674897119;}
-		if (xmimpflag == 135 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null){slaximp =391.452674897119/ (1-0.114160782328086 );}
-		if (xmimpflag == 136 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.170755559662484);}
-		if (xmimpflag == 136 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.170755559662484);}
-		if (xmimpflag == 136 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =480.734042553191;}
-		if (xmimpflag == 136 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =480.734042553191/ (1-0.170755559662484 );}
-		if (xmimpflag == 101 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.142415261804064);}
-		if (xmimpflag == 101 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.142415261804064);}
-		if (xmimpflag == 101 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =163.80243902439;}
-		if (xmimpflag == 101 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =163.80243902439/ (1-0.142415261804064 );}
-		if (xmimpflag == 102 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.104951847967976);}
-		if (xmimpflag == 102 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.104951847967976);}
-		if (xmimpflag == 102 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =153.265497076023;}
-		if (xmimpflag == 102 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =153.265497076023/ (1-0.104951847967976 );}
-		if (xmimpflag == 103 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0794334443169517);}
-		if (xmimpflag == 103 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0794334443169517);}
-		if (xmimpflag == 103 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =138.094017094017;}
-		if (xmimpflag == 103 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =138.094017094017/ (1-0.0794334443169517 );}
-		if (xmimpflag == 104 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.125269157905197);}
-		if (xmimpflag == 104 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.125269157905197);}
-		if (xmimpflag == 104 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =107.64;}
-		if (xmimpflag == 104 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =107.64 - (107.64*0.125269157905197 );}
-		if (xmimpflag == 105 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0887057111704602);}
-		if (xmimpflag == 105 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0887057111704602);}
-		if (xmimpflag == 105 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =191.988789237668;}
-		if (xmimpflag == 105 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =191.988789237668/ (1-0.0887057111704602 );}
-		if (xmimpflag == 106 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0985396051230542);}
-		if (xmimpflag == 106 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0985396051230542);}
-		if (xmimpflag == 106 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =188.140969162996;}
-		if (xmimpflag == 106 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =188.140969162996/ (1-0.0985396051230542 );}
-		if (xmimpflag == 107 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.199714956235816);}
-		if (xmimpflag == 107 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.199714956235816);}
-		if (xmimpflag == 107 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =239.363636363636;}
-		if (xmimpflag == 107 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =239.363636363636/ (1-0.199714956235816 );}
-		if (xmimpflag == 108 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.116764553914052);}
-		if (xmimpflag == 108 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.116764553914052);}
-		if (xmimpflag == 108 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =241.066480055983;}
-		if (xmimpflag == 108 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =241.066480055983/ (1-0.116764553914052 );}
-		if (xmimpflag == 110 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.217817105373686);}
-		if (xmimpflag == 110 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.217817105373686);}
-		if (xmimpflag == 110 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =321.139784946236;}
-		if (xmimpflag == 110 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =321.139784946236/ (1-0.217817105373686 );}
-		if (xmimpflag == 111 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.134584278813695);}
-		if (xmimpflag == 111 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.134584278813695);}
-		if (xmimpflag == 111 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =320.396527777777;}
-		if (xmimpflag == 111 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =320.396527777777/ (1-0.134584278813695 );}
-		if (xmimpflag == 112 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0649564900465187);}
-		if (xmimpflag == 112 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0649564900465187);}
-		if (xmimpflag == 112 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =302.919243986254;}
-		if (xmimpflag == 112 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =302.919243986254/ (1-0.0649564900465187 );}
-		if (xmimpflag == 113 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.294943293777566);}
-		if (xmimpflag == 113 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.294943293777566);}
-		if (xmimpflag == 113 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =178.191780821918;}
-		if (xmimpflag == 113 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =178.191780821918/ (1-0.294943293777566 );}
-		if (xmimpflag == 114 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.190466263797331);}
-		if (xmimpflag == 114 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.190466263797331);}
-		if (xmimpflag == 114 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =268.709993468321;}
-		if (xmimpflag == 114 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =268.709993468321/ (1-0.190466263797331 );}
-		if (xmimpflag == 115 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.165262209695588);}
-		if (xmimpflag == 115 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.165262209695588);}
-		if (xmimpflag == 115 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =265.480215827338;}
-		if (xmimpflag == 115 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =265.480215827338/ (1-0.165262209695588 );}
-		if (xmimpflag == 116 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.250590294065011);}
-		if (xmimpflag == 116 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.250590294065011);}
-		if (xmimpflag == 116 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =216.026607538803;}
-		if (xmimpflag == 116 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =216.026607538803/ (1-0.250590294065011 );}
-		if (xmimpflag == 117 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0862116624182079);}
-		if (xmimpflag == 117 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0862116624182079);}
-		if (xmimpflag == 117 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =341.979498861048;}
-		if (xmimpflag == 117 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =341.979498861048/ (1-0.0862116624182079 );}
-		if (xmimpflag == 118 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0795782666543268);}
-		if (xmimpflag == 118 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0795782666543268);}
-		if (xmimpflag == 118 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =382.444580777097;}
-		if (xmimpflag == 118 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =382.444580777097/ (1-0.0795782666543268 );}
-		if (xmimpflag == 120 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.100542298212489);}
-		if (xmimpflag == 120 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.100542298212489);}
-		if (xmimpflag == 120 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =191.62583518931;}
-		if (xmimpflag == 120 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =191.62583518931/ (1-0.100542298212489 );}
-		if (xmimpflag == 121 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0690791392436498);}
-		if (xmimpflag == 121 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0690791392436498);}
-		if (xmimpflag == 121 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =162.041666666667;}
-		if (xmimpflag == 121 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =162.041666666667/ (1-0.0690791392436498 );}
-		if (xmimpflag == 122 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.274602006426542);}
-		if (xmimpflag == 122 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.274602006426542);}
-		if (xmimpflag == 122 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =173.454545454545;}
-		if (xmimpflag == 122 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =173.454545454545/ (1-0.274602006426542 );}
-		if (xmimpflag == 123 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.274602006426542);}
-		if (xmimpflag == 123 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.274602006426542);}
-		if (xmimpflag == 123 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =255.028571428571;}
-		if (xmimpflag == 123 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =255.028571428571/ (1-0.274602006426542 );}
-		if (xmimpflag == 124 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.181330570603409);}
-		if (xmimpflag == 124 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.181330570603409);}
-		if (xmimpflag == 124 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =447.532008830022;}
-		if (xmimpflag == 124 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =447.532008830022/ (1-0.181330570603409 );}
-		if (xmimpflag == 1 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.255634697158707);}
-		if (xmimpflag == 1 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.255634697158707);}
-		if (xmimpflag == 1 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =166.401374570447;}
-		if (xmimpflag == 1 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =166.401374570447/ (1-0.255634697158707 );}
-		if (xmimpflag == 2 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.173114449095158);}
-		if (xmimpflag == 2 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.173114449095158);}
-		if (xmimpflag == 2 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =152.863945578231;}
-		if (xmimpflag == 2 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =152.863945578231/ (1-0.173114449095158 );}
-		if (xmimpflag == 3 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.191426939591589);}
-		if (xmimpflag == 3 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.191426939591589);}
-		if (xmimpflag == 3 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =250.179245283019;}
-		if (xmimpflag == 3 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =250.179245283019/ (1-0.191426939591589 );}
-		if (xmimpflag == 4 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.143739162059858);}
-		if (xmimpflag == 4 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.143739162059858);}
-		if (xmimpflag == 4 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =273.896226415094;}
-		if (xmimpflag == 4 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =273.896226415094 - (273.896226415094*0.143739162059858 );}
-		if (xmimpflag == 5 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0703329947332674);}
-		if (xmimpflag == 5 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0703329947332674);}
-		if (xmimpflag == 5 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =380.04854368932;}
-		if (xmimpflag == 5 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =380.04854368932 - (380.04854368932*0.0703329947332674 );}
-		if (xmimpflag == 6 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.117444418143106);}
-		if (xmimpflag == 6 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.117444418143106);}
-		if (xmimpflag == 6 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =305.868020304568;}
-		if (xmimpflag == 6 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =305.868020304568/ (1-0.117444418143106 );}
-		if (xmimpflag == 7 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.126779394689057);}
-		if (xmimpflag == 7 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.126779394689057);}
-		if (xmimpflag == 7 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =265.88;}
-		if (xmimpflag == 7 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =265.88 - (265.88*0.126779394689057 );}
-		if (xmimpflag == 8 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.189011301766662);}
-		if (xmimpflag == 8 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.189011301766662);}
-		if (xmimpflag == 8 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =281.325;}
-		if (xmimpflag == 8 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =281.325/ (1-0.189011301766662 );}
-		if (xmimpflag == 9 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.140365224720275);}
-		if (xmimpflag == 9 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.140365224720275);}
-		if (xmimpflag == 9 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =402.502202643172;}
-		if (xmimpflag == 9 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =402.502202643172/ (1-0.140365224720275 );}
-		if (xmimpflag == 10 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.107188743129005);}
-		if (xmimpflag == 10 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.107188743129005);}
-		if (xmimpflag == 10 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =277.059842519684;}
-		if (xmimpflag == 10 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =277.059842519684/ (1-0.107188743129005 );}
-		if (xmimpflag == 11 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.126901348540731);}
-		if (xmimpflag == 11 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.126901348540731);}
-		if (xmimpflag == 11 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =355.810945273632;}
-		if (xmimpflag == 11 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =355.810945273632/ (1-0.126901348540731 );}
-		if (xmimpflag == 12 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0655772248600899);}
-		if (xmimpflag == 12 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0655772248600899);}
-		if (xmimpflag == 12 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =309.533898305085;}
-		if (xmimpflag == 12 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =309.533898305085/ (1-0.0655772248600899 );}
-		if (xmimpflag == 13 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0778021073375869);}
-		if (xmimpflag == 13 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0778021073375869);}
-		if (xmimpflag == 13 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =305.812154696132;}
-		if (xmimpflag == 13 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =305.812154696132/ (1-0.0778021073375869 );}
-		if (xmimpflag == 14 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0654921908875572);}
-		if (xmimpflag == 14 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0654921908875572);}
-		if (xmimpflag == 14 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =285.054112554113;}
-		if (xmimpflag == 14 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =285.054112554113/ (1-0.0654921908875572 );}
-		if (xmimpflag == 15 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0671696102131247);}
-		if (xmimpflag == 15 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0671696102131247);}
-		if (xmimpflag == 15 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =361.638059701493;}
-		if (xmimpflag == 15 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =361.638059701493/ (1-0.0671696102131247 );}
-		if (xmimpflag == 16 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.371414750110571);}
-		if (xmimpflag == 16 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.371414750110571);}
-		if (xmimpflag == 16 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =239.9;}
-		if (xmimpflag == 16 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =239.9/ (1-0.371414750110571 );}
-		if (xmimpflag == 157 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.230610260687796);}
-		if (xmimpflag == 157 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.230610260687796);}
-		if (xmimpflag == 157 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =139.029411764706;}
-		if (xmimpflag == 157 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =139.029411764706/ (1-0.230610260687796 );}
-		if (xmimpflag == 159 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.154487726688789);}
-		if (xmimpflag == 159 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.154487726688789);}
-		if (xmimpflag == 159 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =245.12676056338;}
-		if (xmimpflag == 159 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =245.12676056338/ (1-0.154487726688789 );}
-		if (xmimpflag == 99 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.166050441674744);}
-		if (xmimpflag == 99 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.166050441674744);}
-		if (xmimpflag == 99 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =125.619750283768;}
-		if (xmimpflag == 99 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =125.619750283768/ (1-0.166050441674744 );}
-		if (xmimpflag == 100 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.178717812379779);}
-		if (xmimpflag == 100 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.178717812379779);}
-		if (xmimpflag == 100 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =565.645161290322;}
-		if (xmimpflag == 100 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =565.645161290322/ (1-0.178717812379779 );}
-		if (xmimpflag == 17 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0557746478873239);}
-		if (xmimpflag == 17 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0557746478873239);}
-		if (xmimpflag == 17 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =148.882352941176;}
-		if (xmimpflag == 17 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =148.882352941176/ (1-0.0557746478873239 );}
-		if (xmimpflag == 98 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.126563817175912);}
-		if (xmimpflag == 98 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.126563817175912);}
-		if (xmimpflag == 98 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =132.596685082873;}
-		if (xmimpflag == 98 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =132.596685082873/ (1-0.126563817175912 );}
-		if (xmimpflag == 18 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.093544030879478);}
-		if (xmimpflag == 18 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.093544030879478);}
-		if (xmimpflag == 18 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =184.486013986014;}
-		if (xmimpflag == 18 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =184.486013986014/ (1-0.093544030879478 );}
-		if (xmimpflag == 19 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0985982521761244);}
-		if (xmimpflag == 19 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0985982521761244);}
-		if (xmimpflag == 19 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =230.298469387755;}
-		if (xmimpflag == 19 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =230.298469387755/ (1-0.0985982521761244 );}
-		if (xmimpflag == 20 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0944678720322908);}
-		if (xmimpflag == 20 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0944678720322908);}
-		if (xmimpflag == 20 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =444.290145985401;}
-		if (xmimpflag == 20 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =444.290145985401/ (1-0.0944678720322908 );}
-		if (xmimpflag == 21 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.167379623404603);}
-		if (xmimpflag == 21 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.167379623404603);}
-		if (xmimpflag == 21 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slamimp =492.946428571429;}
-		if (xmimpflag == 21 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slaximp =492.946428571429/ (1-0.167379623404603 );}
-		if (xmimpflag == 22 && slaximp >= 1 &&  slaarriv==null&& slastot==null) {slamimp = slaximp - (slaximp*0.183801786070534);}
-		if (xmimpflag == 22 && slamimp >= 1 &&  tslavesd==null&&  tslavesp==null&& ncartot==null) {slaximp = slamimp / (1- 0.183801786070534);}
-		if (xmimpflag == 22 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slamimp =91.9594594594595;}
-		if (xmimpflag == 22 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slaximp =91.9594594594595/ (1-0.183801786070534 );}
-		if (xmimpflag == 23 && slaximp >= 1 &&  slaarriv==null&& slastot==null) {slamimp = slaximp - (slaximp*0.102358180948044);}
-		if (xmimpflag == 23 && slamimp >= 1 &&  tslavesd==null&&  tslavesp==null&& ncartot==null) {slaximp = slamimp / (1- 0.102358180948044);}
-		if (xmimpflag == 23 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slamimp =95.972972972973;}
-		if (xmimpflag == 23 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slaximp =95.972972972973/ (1-0.102358180948044 );}
-		if (xmimpflag == 24 && slaximp >= 1 &&  slaarriv==null&& slastot==null) {slamimp = slaximp - (slaximp*0.122708750828674);}
-		if (xmimpflag == 24 && slamimp >= 1 &&  tslavesd==null&&  tslavesp==null&& ncartot==null) {slaximp = slamimp / (1- 0.122708750828674);}
-		if (xmimpflag == 24 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slamimp =146.31;}
-		if (xmimpflag == 24 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slaximp =146.31/ (1-0.122708750828674 );}
-		if (xmimpflag == 25 && slaximp >= 1 &&  slaarriv==null&& slastot==null) {slamimp = slaximp - (slaximp*0.101742168136026);}
-		if (xmimpflag == 25 && slamimp >= 1 &&  tslavesd==null&&  tslavesp==null&& ncartot==null) {slaximp = slamimp / (1- 0.101742168136026);}
-		if (xmimpflag == 25 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slamimp =279.357142857143;}
-		if (xmimpflag == 25 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slaximp =279.357142857143/ (1-0.101742168136026 );}
-		if (xmimpflag == 26 && slaximp >= 1 &&  slaarriv==null&& slastot==null) {slamimp = slaximp - (slaximp*0.0830808603000646);}
-		if (xmimpflag == 26 && slamimp >= 1 &&  tslavesd==null&&  tslavesp==null&& ncartot==null) {slaximp = slamimp / (1- 0.0830808603000646);}
-		if (xmimpflag == 26 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slamimp =341.5;}
-		if (xmimpflag == 26 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slaximp =341.5/ (1-0.0830808603000646 );}
-		if (xmimpflag == 27 && slaximp >= 1 &&  slaarriv==null&& slastot==null) {slamimp = slaximp - (slaximp*0.0951735364832193);}
-		if (xmimpflag == 27 && slamimp >= 1 &&  tslavesd==null&&  tslavesp==null&& ncartot==null) {slaximp = slamimp / (1- 0.0951735364832193);}
-		if (xmimpflag == 27 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slaximp =335.546666666667;}
-		if (xmimpflag == 27 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slamimp =335.546666666667 - (335.546666666667*0.0951735364832193 );}
-		if (xmimpflag == 28 && slaximp >= 1 &&  slaarriv==null&& slastot==null) {slamimp = slaximp - (slaximp*0.0599984615282753);}
-		if (xmimpflag == 28 && slamimp >= 1 &&  tslavesd==null&&  tslavesp==null&& ncartot==null) {slaximp = slamimp / (1- 0.0599984615282753);}
-		if (xmimpflag == 28 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slaximp =348.926267281106;}
-		if (xmimpflag == 28 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slamimp =348.926267281106 - (348.926267281106*0.0599984615282753 );}
-		if (xmimpflag == 29 && slaximp >= 1 &&  slaarriv==null&& slastot==null) {slamimp = slaximp - (slaximp*0.0849037398486349);}
-		if (xmimpflag == 29 && slamimp >= 1 &&  tslavesd==null&&  tslavesp==null&& ncartot==null) {slaximp = slamimp / (1- 0.0849037398486349);}
-		if (xmimpflag == 29 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slamimp =323.539358600583;}
-		if (xmimpflag == 29 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slaximp =323.539358600583/ (1-0.0849037398486349 );}
-		if (xmimpflag == 30 && slaximp >= 1 &&  slaarriv==null&& slastot==null) {slamimp = slaximp - (slaximp*0.0831292966753462);}
-		if (xmimpflag == 30 && slamimp >= 1 &&  tslavesd==null&&  tslavesp==null&& ncartot==null) {slaximp = slamimp / (1- 0.0831292966753462);}
-		if (xmimpflag == 30 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slamimp =435.738461538461;}
-		if (xmimpflag == 30 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slaximp =435.738461538461/ (1-0.0831292966753462 );}
-		if (xmimpflag == 31 && slaximp >= 1 &&  slaarriv==null&& slastot==null) {slamimp = slaximp - (slaximp*0.154603810637904);}
-		if (xmimpflag == 31 && slamimp >= 1 &&  tslavesd==null&&  tslavesp==null&& ncartot==null) {slaximp = slamimp / (1- 0.154603810637904);}
-		if (xmimpflag == 31 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slamimp =221.279220779221;}
-		if (xmimpflag == 31 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slaximp =221.279220779221/ (1-0.154603810637904 );}
-		if (xmimpflag == 32 && slaximp >= 1 &&  slaarriv==null&& slastot==null) {slamimp = slaximp - (slaximp*0.169381440464976);}
-		if (xmimpflag == 32 && slamimp >= 1 &&  tslavesd==null&&  tslavesp==null&& ncartot==null) {slaximp = slamimp / (1- 0.169381440464976);}
-		if (xmimpflag == 32 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slamimp =296.593103448276;}
-		if (xmimpflag == 32 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slaximp =296.593103448276/ (1-0.169381440464976 );}
-		if (xmimpflag == 33 && slaximp >= 1 &&  slaarriv==null&& slastot==null) {slamimp = slaximp - (slaximp*0.183684529291394);}
-		if (xmimpflag == 33 && slamimp >= 1 &&  tslavesd==null&&  tslavesp==null&& ncartot==null) {slaximp = slamimp / (1- 0.183684529291394);}
-		if (xmimpflag == 33 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slamimp =281.452966714906;}
-		if (xmimpflag == 33 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slaximp =281.452966714906/ (1-0.183684529291394 );}
-		if (xmimpflag == 34 && slaximp >= 1 &&  slaarriv==null&& slastot==null) {slamimp = slaximp - (slaximp*0.0864964921326426);}
-		if (xmimpflag == 34 && slamimp >= 1 &&  tslavesd==null&&  tslavesp==null&& ncartot==null) {slaximp = slamimp / (1- 0.0864964921326426);}
-		if (xmimpflag == 34 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slamimp =325.652360515021;}
-		if (xmimpflag == 34 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slaximp =325.652360515021/ (1-0.0864964921326426 );}
-		if (xmimpflag ==  35 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.176037224384829);}
-		if (xmimpflag == 35 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.176037224384829);}
-		if (xmimpflag ==  35 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =272.474358974359;}
-		if (xmimpflag ==  35 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =272.474358974359/ (1-0.176037224384829 );}
-		if (xmimpflag ==  36 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.116937605450612);}
-		if (xmimpflag ==  36 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.116937605450612);}
-		if (xmimpflag ==  36 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =556.677419354839;}
-		if (xmimpflag ==  36 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =556.677419354839/ (1-0.116937605450612 );}
-		if (xmimpflag ==  37 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.172812495199871);}
-		if (xmimpflag ==  37 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.172812495199871);}
-		if (xmimpflag ==  37 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =890.470588235294;}
-		if (xmimpflag ==  37 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =890.470588235294/ (1-0.172812495199871 );}
-		if (xmimpflag ==  38 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.105087524949968);}
-		if (xmimpflag ==  38 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.105087524949968);}
-		if (xmimpflag ==  38 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =335.813953488372;}
-		if (xmimpflag ==  38 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =335.813953488372/ (1-0.105087524949968 );}
-		if (xmimpflag ==  39 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0856667000685018);}
-		if (xmimpflag ==  39 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0856667000685018);}
-		if (xmimpflag ==  39 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =257.263157894737;}
-		if (xmimpflag ==  39 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =257.263157894737/ (1-0.0856667000685018 );}
-		if (xmimpflag ==  40 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0865650987499053);}
-		if (xmimpflag ==  40 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0865650987499053);}
-		if (xmimpflag ==  40 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =328.195266272189;}
-		if (xmimpflag ==  40 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =328.195266272189/ (1-0.0865650987499053 );}
-		if (xmimpflag ==  41 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.171814252005436);}
-		if (xmimpflag ==  41 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.171814252005436);}
-		if (xmimpflag ==  41 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =129.145454545455;}
-		if (xmimpflag ==  41 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =129.145454545455/ (1-0.171814252005436 );}
-		if (xmimpflag ==  42 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0610387045813586);}
-		if (xmimpflag ==  42 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0610387045813586);}
-		if (xmimpflag ==  42 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =158.1;}
-		if (xmimpflag ==  42 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =158.1/ (1-0.0610387045813586 );}
-		if (xmimpflag ==  43 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.159823459162871);}
-		if (xmimpflag ==  43 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.159823459162871);}
-		if (xmimpflag ==  43 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =247.759689922481;}
-		if (xmimpflag ==  43 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =247.759689922481/ (1-0.159823459162871 );}
-		if (xmimpflag ==  44 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0988853555387519);}
-		if (xmimpflag ==  44 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0988853555387519);}
-		if (xmimpflag ==  44 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =363d;}
-		if (xmimpflag ==  44 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =363/ (1-0.0988853555387519 );}
-		if (xmimpflag ==  45 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0904513085721602);}
-		if (xmimpflag ==  45 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0904513085721602);}
-		if (xmimpflag ==  45 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =466.25641025641;}
-		if (xmimpflag ==  45 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =466.25641025641/ (1-0.0904513085721602 );}
-		if (xmimpflag ==  46 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.082310278477633);}
-		if (xmimpflag ==  46 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.082310278477633);}
-		if (xmimpflag ==  46 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =159.810810810811;}
-		if (xmimpflag ==  46 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =159.810810810811/ (1-0.082310278477633 );}
-		if (xmimpflag ==  47 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.104714300552102);}
-		if (xmimpflag ==  47 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.104714300552102);}
-		if (xmimpflag ==  47 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =638.25;}
-		if (xmimpflag ==  47 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =638.25/ (1-0.104714300552102 );}
-		if (xmimpflag ==  48 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.193439630544956);}
-		if (xmimpflag ==  48 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.193439630544956);}
-		if (xmimpflag ==  48 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =608.392156862745;}
-		if (xmimpflag ==  48 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =608.392156862745/ (1-0.193439630544956 );}
-		if (xmimpflag ==  49 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.145583038352611);}
-		if (xmimpflag ==  49 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.145583038352611);}
-		if (xmimpflag ==  49 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =428.888888888889;}
-		if (xmimpflag ==  49 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =428.888888888889/ (1-0.145583038352611 );}
-		if (xmimpflag ==  50 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.233333333333333);}
-		if (xmimpflag ==  50 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.233333333333333);}
-		if (xmimpflag ==  50 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =270.846153846154;}
-		if (xmimpflag ==  50 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =270.846153846154/ (1-0.233333333333333 );}
-		if (xmimpflag ==  51 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.179223522528989);}
-		if (xmimpflag ==  51 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.179223522528989);}
-		if (xmimpflag ==  51 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =229.64;}
-		if (xmimpflag ==  51 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =229.64/ (1-0.179223522528989 );}
-		if (xmimpflag ==  52 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0819156347249732);}
-		if (xmimpflag ==  52 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0819156347249732);}
-		if (xmimpflag ==  52 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =290.164383561644;}
-		if (xmimpflag ==  52 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =290.164383561644 - (290.164383561644*0.0819156347249732 );}
-		if (xmimpflag ==  53 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0540922242825536);}
-		if (xmimpflag ==  53 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0540922242825536);}
-		if (xmimpflag ==  53 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =256.548387096774;}
-		if (xmimpflag ==  53 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =256.548387096774/ (1-0.0540922242825536 );}
-		if (xmimpflag ==  54 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0913651933726713);}
-		if (xmimpflag ==  54 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0913651933726713);}
-		if (xmimpflag ==  54 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =216.907894736842;}
-		if (xmimpflag ==  54 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =216.907894736842/ (1-0.0913651933726713 );}
-		if (xmimpflag ==  55 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0604022380426763);}
-		if (xmimpflag ==  55 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0604022380426763);}
-		if (xmimpflag ==  55 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =241.461538461538;}
-		if (xmimpflag ==  55 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =241.461538461538/ (1-0.0604022380426763 );}
-		if (xmimpflag ==  56 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0542026549646127);}
-		if (xmimpflag ==  56 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0542026549646127);}
-		if (xmimpflag ==  56 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =340.230769230769;}
-		if (xmimpflag ==  56 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =340.230769230769/ (1-0.0542026549646127 );}
-		if (xmimpflag ==  57 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0974564330758702);}
-		if (xmimpflag ==  57 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0974564330758702);}
-		if (xmimpflag ==  57 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =516.45;}
-		if (xmimpflag ==  57 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =516.45/ (1-0.0974564330758702 );}
-		if (xmimpflag ==  58 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.162886379968412);}
-		if (xmimpflag ==  58 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.162886379968412);}
-		if (xmimpflag ==  58 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =447.518072289157;}
-		if (xmimpflag ==  58 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =447.518072289157 - (447.518072289157*0.162886379968412 );}
-		if (xmimpflag ==  59 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0561646667118922);}
-		if (xmimpflag ==  59 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0561646667118922);}
-		if (xmimpflag ==  59 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =152.923076923077;}
-		if (xmimpflag ==  59 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =152.923076923077/ (1-0.0561646667118922 );}
-		if (xmimpflag ==  60 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.133468501803896);}
-		if (xmimpflag ==  60 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.133468501803896);}
-		if (xmimpflag ==  60 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =403.292993630573;}
-		if (xmimpflag ==  60 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =403.292993630573/ (1-0.133468501803896 );}
-		if (xmimpflag ==  61 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.106708705390018);}
-		if (xmimpflag ==  61 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.106708705390018);}
-		if (xmimpflag ==  61 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =285.644444444444;}
-		if (xmimpflag ==  61 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =285.644444444444/ (1-0.106708705390018 );}
-		if (xmimpflag ==  62 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0785278768682708);}
-		if (xmimpflag ==  62 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0785278768682708);}
-		if (xmimpflag ==  62 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =335.658227848101;}
-		if (xmimpflag ==  62 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =335.658227848101/ (1-0.0785278768682708 );}
-		if (xmimpflag ==  63 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.107782269167156);}
-		if (xmimpflag ==  63 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.107782269167156);}
-		if (xmimpflag ==  63 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =472.267857142857;}
-		if (xmimpflag ==  63 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =472.267857142857/ (1-0.107782269167156 );}
-		if (xmimpflag ==  160 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0779281672325541);}
-		if (xmimpflag ==  160 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0779281672325541);}
-		if (xmimpflag ==  160 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =536.842857142857;}
-		if (xmimpflag ==  160 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =536.842857142857/ (1-0.0779281672325541 );}
-		if (xmimpflag ==  65 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.115409873680179);}
-		if (xmimpflag ==  65 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.115409873680179);}
-		if (xmimpflag ==  65 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =103.376146788991;}
-		if (xmimpflag ==  65 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =103.376146788991/ (1-0.115409873680179 );}
-		if (xmimpflag ==  66 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.207088877726936);}
-		if (xmimpflag ==  66 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.207088877726936);}
-		if (xmimpflag ==  66 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =68.1506849315068;}
-		if (xmimpflag ==  66 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =68.1506849315068/ (1-0.207088877726936 );}
-		if (xmimpflag ==  67 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.110922605367631);}
-		if (xmimpflag ==  67 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.110922605367631);}
-		if (xmimpflag ==  67 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =80.0491803278688;}
-		if (xmimpflag ==  67 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =80.0491803278688/ (1-0.110922605367631 );}
-		if (xmimpflag ==  68 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.127935729778166);}
-		if (xmimpflag ==  68 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.127935729778166);}
-		if (xmimpflag ==  68 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =84d;}
-		if (xmimpflag ==  68 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =84 - (84*0.127935729778166 );}
-		if (xmimpflag ==  69 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.206358225584424);}
-		if (xmimpflag ==  69 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.206358225584424);}
-		if (xmimpflag == 69 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =1004.47058823529;}
-		if (xmimpflag == 69 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =1004.47058823529/ (1-0.206358225584424 );}
-		if (xmimpflag == 70 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.142775407154303);}
-		if (xmimpflag == 70 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.142775407154303);}
-		if (xmimpflag == 70 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =311.222222222222;}
-		if (xmimpflag == 70 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =311.222222222222/ (1-0.142775407154303 );}
-		if (xmimpflag == 71 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.106323148232566);}
-		if (xmimpflag == 71 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.106323148232566);}
-		if (xmimpflag == 71 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =310.39837398374;}
-		if (xmimpflag == 71 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =310.39837398374/ (1-0.106323148232566 );}
-		if (xmimpflag == 97 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.138965456634756);}
-		if (xmimpflag == 97 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.138965456634756);}
-		if (xmimpflag == 97 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =259.21875;}
-		if (xmimpflag == 97 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =259.21875/ (1-0.138965456634756 );}
-		if (xmimpflag == 72 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.169436742362705);}
-		if (xmimpflag == 72 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.169436742362705);}
-		if (xmimpflag == 72 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =265.325842696629;}
-		if (xmimpflag == 72 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =265.325842696629/ (1-0.169436742362705 );}
-		if (xmimpflag == 85 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.339905284604731);}
-		if (xmimpflag == 85 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.339905284604731);}
-		if (xmimpflag == 85 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =563.333333333333;}
-		if (xmimpflag == 85 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =563.333333333333/ (1-0.339905284604731 );}
-		if (xmimpflag == 73 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.129605450439467);}
-		if (xmimpflag == 73 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.129605450439467);}
-		if (xmimpflag == 73 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =407.289473684211;}
-		if (xmimpflag == 73 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =407.289473684211/ (1-0.129605450439467 );}
-		if (xmimpflag == 74 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.0794384325299229);}
-		if (xmimpflag == 74 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.0794384325299229);}
-		if (xmimpflag == 74 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =117.137931034483;}
-		if (xmimpflag == 74 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =117.137931034483/ (1-0.0794384325299229 );}
-		if (xmimpflag == 75 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.189369734252207);}
-		if (xmimpflag == 75 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.189369734252207);}
-		if (xmimpflag == 75 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =192.772020725389;}
-		if (xmimpflag == 75 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =192.772020725389/ (1-0.189369734252207 );}
-		if (xmimpflag == 76 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.131187789757565);}
-		if (xmimpflag == 76 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.131187789757565);}
-		if (xmimpflag == 76 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =199.041666666667;}
-		if (xmimpflag == 76 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =199.041666666667/ (1-0.131187789757565 );}
-		if (xmimpflag == 77 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.136342992788614);}
-		if (xmimpflag == 77 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.136342992788614);}
-		if (xmimpflag == 77 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =186.407894736842;}
-		if (xmimpflag == 77 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =186.407894736842/ (1-0.136342992788614 );}
-		if (xmimpflag == 78 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.103049659988616);}
-		if (xmimpflag == 78 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.103049659988616);}
-		if (xmimpflag == 78 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =155.470588235294;}
-		if (xmimpflag == 78 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =155.470588235294/ (1-0.103049659988616 );}
-		if (xmimpflag == 79 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.35);}
-		if (xmimpflag == 79 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.35);}
-		if (xmimpflag == 79 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =193.74358974359;}
-		if (xmimpflag == 79 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =193.74358974359/ (1-0.35 );}
-		if (xmimpflag == 80 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.0732085200996002);}
-		if (xmimpflag == 80 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.0732085200996002);}
-		if (xmimpflag == 80 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =249.692307692308;}
-		if (xmimpflag == 80 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =249.692307692308/ (1-0.0732085200996002 );}
-		if (xmimpflag == 81 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.0934359066589073);}
-		if (xmimpflag == 81 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.0934359066589073);}
-		if (xmimpflag == 81 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =352.952806122449;}
-		if (xmimpflag == 81 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =352.952806122449/ (1-0.0934359066589073 );}
-		if (xmimpflag == 82 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.07182740558555);}
-		if (xmimpflag == 82 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.07182740558555);}
-		if (xmimpflag == 82 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =419.619047619047;}
-		if (xmimpflag == 82 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =419.619047619047/ (1-0.07182740558555 );}
-		if (xmimpflag == 83 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.0956449943871365);}
-		if (xmimpflag == 83 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.0956449943871365);}
-		if (xmimpflag == 83 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =304.5625;}
-		if (xmimpflag == 83 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =304.5625 - (304.5625*0.0956449943871365 );}
-		if (xmimpflag == 84 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.163929225997462);}
-		if (xmimpflag == 84 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.163929225997462);}
-		if (xmimpflag == 84 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =319.285714285714;}
-		if (xmimpflag == 84 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =319.285714285714/ (1-0.163929225997462 );}
-		if (xmimpflag == 86 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.112733293827202);}
-		if (xmimpflag == 86 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.112733293827202);}
-		if (xmimpflag == 86 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =129.277777777778;}
-		if (xmimpflag == 86 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =129.277777777778/ (1-0.112733293827202 );}
-		if (xmimpflag == 87 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.0655504344628028);}
-		if (xmimpflag == 87 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.0655504344628028);}
-		if (xmimpflag == 87 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =211d;}
-		if (xmimpflag == 87 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =211/ (1-0.0655504344628028 );}
-		if (xmimpflag == 88 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.198929221794951);}
-		if (xmimpflag == 88 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.198929221794951);}
-		if (xmimpflag == 88 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =296.473684210526;}
-		if (xmimpflag == 88 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =296.473684210526 - (296.473684210526*0.198929221794951 );}
-		if (xmimpflag == 89 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.107517933823928);}
-		if (xmimpflag == 89 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.107517933823928);}
-		if (xmimpflag == 89 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =281.958333333333;}
-		if (xmimpflag == 89 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =281.958333333333/ (1-0.107517933823928 );}
-		if (xmimpflag == 90 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.028250184258012);}
-		if (xmimpflag == 90 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.028250184258012);}
-		if (xmimpflag == 90 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =208.341176470588;}
-		if (xmimpflag == 90 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =208.341176470588/ (1-0.028250184258012 );}
-		if (xmimpflag == 91 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.0487771272192143);}
-		if (xmimpflag == 91 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.0487771272192143);}
-		if (xmimpflag == 91 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =267.896551724138;}
-		if (xmimpflag == 91 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =267.896551724138/ (1-0.0487771272192143 );}
-		if (xmimpflag == 92 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.111975986975987);}
-		if (xmimpflag == 92 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.111975986975987);}
-		if (xmimpflag == 92 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =328.555555555556;}
-		if (xmimpflag == 92 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =328.555555555556/ (1-0.111975986975987 );}
-		if (xmimpflag == 93 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.0979648763988006);}
-		if (xmimpflag == 93 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.0979648763988006);}
-		if (xmimpflag == 93 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =101.111111111111;}
-		if (xmimpflag == 93 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =101.111111111111/ (1-0.0979648763988006 );}
-		if (xmimpflag == 94 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.297737659966491);}
-		if (xmimpflag == 94 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.297737659966491);}
-		if (xmimpflag == 94 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =319.733333333333;}
-		if (xmimpflag == 94 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =319.733333333333/ (1-0.297737659966491 );}
-		if (xmimpflag == 95 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.0220048899755501);}
-		if (xmimpflag == 95 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.0220048899755501);}
-		if (xmimpflag == 95 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =220.428571428571;}
-		if (xmimpflag == 95 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =220.428571428571/ (1-0.0220048899755501 );}
-		if (xmimpflag == 96 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0);}
-		if (xmimpflag == 96 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0);}
-		if (xmimpflag == 96 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =433d;}
-		if (xmimpflag == 96 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =433d/ (1-0 );}
-		if (xmimpflag == 137 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.12659407459354);}
-		if (xmimpflag == 137 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.12659407459354);}
-		if (xmimpflag == 137 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =104.986301369863;}
-		if (xmimpflag == 137 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =104.986301369863/ (1-0.12659407459354 );}
-		if (xmimpflag == 138 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.179201806454531);}
-		if (xmimpflag == 138 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.179201806454531);}
-		if (xmimpflag == 138 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =108.37037037037;}
-		if (xmimpflag == 138 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =108.37037037037 - (108.37037037037*0.179201806454531 );}
-		if (xmimpflag == 139 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.162003845923261);}
-		if (xmimpflag == 139 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.162003845923261);}
-		if (xmimpflag == 139 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =128.438775510204;}
-		if (xmimpflag == 139 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =128.438775510204/ (1-0.162003845923261 );}
-		if (xmimpflag == 140 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.171264386321147);}
-		if (xmimpflag == 140 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.171264386321147);}
-		if (xmimpflag == 140 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =557.6;}
-		if (xmimpflag == 140 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =557.6/ (1-0.171264386321147 );}
-		if (xmimpflag == 141 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.213152374545978);}
-		if (xmimpflag == 141 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.213152374545978);}
-		if (xmimpflag == 141 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =74d;}
-		if (xmimpflag == 141 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =74/ (1-0.213152374545978 );}
-		if (xmimpflag == 142 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.190548809128441);}
-		if (xmimpflag == 142 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.190548809128441);}
-		if (xmimpflag == 142 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =80.5625;}
-		if (xmimpflag == 142 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =80.5625 - (80.5625*0.190548809128441 );}
-		if (xmimpflag == 145 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.0577485174550083);}
-		if (xmimpflag == 145 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.0577485174550083);}
-		if (xmimpflag == 145 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =376.928571428571;}
-		if (xmimpflag == 145 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =376.928571428571/ (1-0.0577485174550083 );}
-		if (xmimpflag == 146 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.153749295952981);}
-		if (xmimpflag == 146 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.153749295952981);}
-		if (xmimpflag == 146 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =154.307692307692;}
-		if (xmimpflag == 146 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =154.307692307692/ (1-0.153749295952981 );}
-		if (xmimpflag == 147 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.143606923731731);}
-		if (xmimpflag == 147 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.143606923731731);}
-		if (xmimpflag == 147 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =165.903225806452;}
-		if (xmimpflag == 147 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =165.903225806452 - (165.903225806452*0.143606923731731 );}
-		if (xmimpflag == 148 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.254317624200109);}
-		if (xmimpflag == 148 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.254317624200109);}
-		if (xmimpflag == 148 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =199.730769230769;}
-		if (xmimpflag == 148 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =199.730769230769/ (1-0.254317624200109 );}
-		if (xmimpflag == 149 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.136559928551299);}
-		if (xmimpflag == 149 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.136559928551299);}
-		if (xmimpflag == 149 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =1003d;}
-		if (xmimpflag == 149 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =1003/ (1-0.136559928551299 );}
-		if (xmimpflag == 150 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.182187702624498);}
-		if (xmimpflag == 150 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.182187702624498);}
-		if (xmimpflag == 150 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =100.090909090909;}
-		if (xmimpflag == 150 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =100.090909090909/ (1-0.182187702624498 );}
-		if (xmimpflag == 151 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.00833333333333333);}
-		if (xmimpflag == 151 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.00833333333333333);}
-		if (xmimpflag == 151 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =127.103448275862;}
-		if (xmimpflag == 151 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =127.103448275862/ (1-0.00833333333333333 );}
-		if (xmimpflag == 152 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.100333848361108);}
-		if (xmimpflag == 152 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.100333848361108);}
-		if (xmimpflag == 152 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =436.5;}
-		if (xmimpflag == 152 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =436.5/ (1-0.100333848361108 );}
-		if (xmimpflag == 154 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.235321405225611);}
-		if (xmimpflag == 154 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.235321405225611);}
-		if (xmimpflag == 154 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =580.060606060606;}
-		if (xmimpflag == 154 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =580.060606060606/ (1-0.235321405225611 );}
-		if (xmimpflag == 155 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.157476046121814);}
-		if (xmimpflag == 155 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.157476046121814);}
-		if (xmimpflag == 155 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =70.0833333333334;}
-		if (xmimpflag == 155 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =70.0833333333334/ (1-0.157476046121814 );}
-		if (xmimpflag == 156 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.17641709128796);}
-		if (xmimpflag == 156 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.17641709128796);}
-		if (xmimpflag == 156 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =118.333333333333;}
-		if (xmimpflag == 156 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =118.333333333333/ (1-0.17641709128796 );}
+			if (xmimpflag == 127 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.165107561642471);}
+			if (xmimpflag == 127 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null){slaximp = slamimp / (1-0.165107561642471);}
+			if (xmimpflag == 127 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp=163.181286549708;}
+			if (xmimpflag == 127 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null){slaximp =163.181286549708/ (1-0.165107561642471 );}
+			if (xmimpflag == 128 && slaximp >= 1 && slaarriv==null && slastot==null){slamimp = slaximp - (slaximp*0.230972326367458);}
+			if (xmimpflag == 128 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null){slaximp = slamimp / (1- 0.230972326367458);}
+			if (xmimpflag == 128 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null){slamimp =241.774647887324;}
+			if (xmimpflag == 128 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null){slaximp =241.774647887324/ (1-0.230972326367458 );}
+			if (xmimpflag == 129 && slaximp >= 1 && slaarriv==null && slastot==null){slamimp = slaximp - (slaximp*0.218216262481124);}
+			if (xmimpflag == 129 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null){slaximp = slamimp / (1- 0.218216262481124);}
+			if (xmimpflag == 129 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null){slamimp =249.141527001862;}
+			if (xmimpflag == 129 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null){slaximp =249.141527001862/ (1-0.218216262481124 );}
+			if (xmimpflag == 130 && slaximp >= 1 && slaarriv==null && slastot==null){slamimp = slaximp - (slaximp*0.164154067860228);}
+			if (xmimpflag == 130 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null){slaximp = slamimp / (1- 0.164154067860228);}
+			if (xmimpflag == 130 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null){slamimp =227.680034129693;}
+			if (xmimpflag == 130 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null){slaximp =227.680034129693/ (1-0.164154067860228 );}
+			if (xmimpflag == 131 && slaximp >= 1 && slaarriv==null && slastot==null){slamimp = slaximp - (slaximp*0.153670852602567);}
+			if (xmimpflag == 131 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null){slaximp = slamimp / (1- 0.153670852602567);}
+			if (xmimpflag == 131 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null){slamimp =272.60549132948;}
+			if (xmimpflag == 131 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null){slaximp =272.60549132948/ (1-0.153670852602567 );}
+			if (xmimpflag == 132 && slaximp >= 1 && slaarriv==null && slastot==null){slamimp = slaximp - (slaximp*0.120410468186061);}
+			if (xmimpflag == 132 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null){slaximp = slamimp / (1- 0.120410468186061);}
+			if (xmimpflag == 132 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null){slamimp =268.071314102564;}
+			if (xmimpflag == 132 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null){slaximp =268.071314102564/ (1-0.120410468186061 );}
+			if (xmimpflag == 133 && slaximp >= 1 && slaarriv==null && slastot==null){slamimp = slaximp - (slaximp*0.126821090786133);}
+			if (xmimpflag == 133 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null){slaximp = slamimp / (1- 0.126821090786133);}
+			if (xmimpflag == 133 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null){slamimp =290.826654240447;}
+			if (xmimpflag == 133 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null){slaximp =290.826654240447/ (1-0.126821090786133 );}
+			if (xmimpflag == 134 && slaximp >= 1 && slaarriv==null && slastot==null){slamimp = slaximp - (slaximp*0.105799354866935);}
+			if (xmimpflag == 134 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null){slaximp = slamimp / (1- 0.105799354866935);}
+			if (xmimpflag == 134 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null){slamimp =225.932515337423;}
+			if (xmimpflag == 134 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null){slaximp =225.932515337423/ (1-0.105799354866935 );}
+			if (xmimpflag == 135 && slaximp >= 1 && slaarriv==null && slastot==null){slamimp = slaximp - (slaximp*0.114160782328086);}
+			if (xmimpflag == 135 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null){slaximp = slamimp / (1- 0.114160782328086);}
+			if (xmimpflag == 135 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null){slamimp =391.452674897119;}
+			if (xmimpflag == 135 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null){slaximp =391.452674897119/ (1-0.114160782328086 );}
+			if (xmimpflag == 136 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.170755559662484);}
+			if (xmimpflag == 136 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.170755559662484);}
+			if (xmimpflag == 136 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =480.734042553191;}
+			if (xmimpflag == 136 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =480.734042553191/ (1-0.170755559662484 );}
+			if (xmimpflag == 101 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.142415261804064);}
+			if (xmimpflag == 101 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.142415261804064);}
+			if (xmimpflag == 101 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =163.80243902439;}
+			if (xmimpflag == 101 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =163.80243902439/ (1-0.142415261804064 );}
+			if (xmimpflag == 102 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.104951847967976);}
+			if (xmimpflag == 102 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.104951847967976);}
+			if (xmimpflag == 102 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =153.265497076023;}
+			if (xmimpflag == 102 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =153.265497076023/ (1-0.104951847967976 );}
+			if (xmimpflag == 103 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0794334443169517);}
+			if (xmimpflag == 103 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0794334443169517);}
+			if (xmimpflag == 103 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =138.094017094017;}
+			if (xmimpflag == 103 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =138.094017094017/ (1-0.0794334443169517 );}
+			if (xmimpflag == 104 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.125269157905197);}
+			if (xmimpflag == 104 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.125269157905197);}
+			if (xmimpflag == 104 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =107.64;}
+			if (xmimpflag == 104 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =107.64 - (107.64*0.125269157905197 );}
+			if (xmimpflag == 105 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0887057111704602);}
+			if (xmimpflag == 105 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0887057111704602);}
+			if (xmimpflag == 105 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =191.988789237668;}
+			if (xmimpflag == 105 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =191.988789237668/ (1-0.0887057111704602 );}
+			if (xmimpflag == 106 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0985396051230542);}
+			if (xmimpflag == 106 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0985396051230542);}
+			if (xmimpflag == 106 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =188.140969162996;}
+			if (xmimpflag == 106 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =188.140969162996/ (1-0.0985396051230542 );}
+			if (xmimpflag == 107 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.199714956235816);}
+			if (xmimpflag == 107 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.199714956235816);}
+			if (xmimpflag == 107 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =239.363636363636;}
+			if (xmimpflag == 107 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =239.363636363636/ (1-0.199714956235816 );}
+			if (xmimpflag == 108 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.116764553914052);}
+			if (xmimpflag == 108 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.116764553914052);}
+			if (xmimpflag == 108 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =241.066480055983;}
+			if (xmimpflag == 108 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =241.066480055983/ (1-0.116764553914052 );}
+			if (xmimpflag == 110 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.217817105373686);}
+			if (xmimpflag == 110 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.217817105373686);}
+			if (xmimpflag == 110 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =321.139784946236;}
+			if (xmimpflag == 110 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =321.139784946236/ (1-0.217817105373686 );}
+			if (xmimpflag == 111 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.134584278813695);}
+			if (xmimpflag == 111 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.134584278813695);}
+			if (xmimpflag == 111 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =320.396527777777;}
+			if (xmimpflag == 111 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =320.396527777777/ (1-0.134584278813695 );}
+			if (xmimpflag == 112 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0649564900465187);}
+			if (xmimpflag == 112 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0649564900465187);}
+			if (xmimpflag == 112 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =302.919243986254;}
+			if (xmimpflag == 112 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =302.919243986254/ (1-0.0649564900465187 );}
+			if (xmimpflag == 113 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.294943293777566);}
+			if (xmimpflag == 113 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.294943293777566);}
+			if (xmimpflag == 113 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =178.191780821918;}
+			if (xmimpflag == 113 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =178.191780821918/ (1-0.294943293777566 );}
+			if (xmimpflag == 114 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.190466263797331);}
+			if (xmimpflag == 114 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.190466263797331);}
+			if (xmimpflag == 114 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =268.709993468321;}
+			if (xmimpflag == 114 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =268.709993468321/ (1-0.190466263797331 );}
+			if (xmimpflag == 115 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.165262209695588);}
+			if (xmimpflag == 115 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.165262209695588);}
+			if (xmimpflag == 115 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =265.480215827338;}
+			if (xmimpflag == 115 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =265.480215827338/ (1-0.165262209695588 );}
+			if (xmimpflag == 116 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.250590294065011);}
+			if (xmimpflag == 116 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.250590294065011);}
+			if (xmimpflag == 116 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =216.026607538803;}
+			if (xmimpflag == 116 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =216.026607538803/ (1-0.250590294065011 );}
+			if (xmimpflag == 117 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0862116624182079);}
+			if (xmimpflag == 117 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0862116624182079);}
+			if (xmimpflag == 117 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =341.979498861048;}
+			if (xmimpflag == 117 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =341.979498861048/ (1-0.0862116624182079 );}
+			if (xmimpflag == 118 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0795782666543268);}
+			if (xmimpflag == 118 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0795782666543268);}
+			if (xmimpflag == 118 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =382.444580777097;}
+			if (xmimpflag == 118 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =382.444580777097/ (1-0.0795782666543268 );}
+			if (xmimpflag == 120 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.100542298212489);}
+			if (xmimpflag == 120 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.100542298212489);}
+			if (xmimpflag == 120 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =191.62583518931;}
+			if (xmimpflag == 120 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =191.62583518931/ (1-0.100542298212489 );}
+			if (xmimpflag == 121 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0690791392436498);}
+			if (xmimpflag == 121 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0690791392436498);}
+			if (xmimpflag == 121 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =162.041666666667;}
+			if (xmimpflag == 121 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =162.041666666667/ (1-0.0690791392436498 );}
+			if (xmimpflag == 122 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.274602006426542);}
+			if (xmimpflag == 122 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.274602006426542);}
+			if (xmimpflag == 122 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =173.454545454545;}
+			if (xmimpflag == 122 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =173.454545454545/ (1-0.274602006426542 );}
+			if (xmimpflag == 123 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.274602006426542);}
+			if (xmimpflag == 123 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.274602006426542);}
+			if (xmimpflag == 123 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =255.028571428571;}
+			if (xmimpflag == 123 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =255.028571428571/ (1-0.274602006426542 );}
+			if (xmimpflag == 124 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.181330570603409);}
+			if (xmimpflag == 124 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.181330570603409);}
+			if (xmimpflag == 124 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =447.532008830022;}
+			if (xmimpflag == 124 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =447.532008830022/ (1-0.181330570603409 );}
+			if (xmimpflag == 1 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.255634697158707);}
+			if (xmimpflag == 1 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.255634697158707);}
+			if (xmimpflag == 1 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =166.401374570447;}
+			if (xmimpflag == 1 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =166.401374570447/ (1-0.255634697158707 );}
+			if (xmimpflag == 2 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.173114449095158);}
+			if (xmimpflag == 2 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.173114449095158);}
+			if (xmimpflag == 2 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =152.863945578231;}
+			if (xmimpflag == 2 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =152.863945578231/ (1-0.173114449095158 );}
+			if (xmimpflag == 3 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.191426939591589);}
+			if (xmimpflag == 3 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.191426939591589);}
+			if (xmimpflag == 3 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =250.179245283019;}
+			if (xmimpflag == 3 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =250.179245283019/ (1-0.191426939591589 );}
+			if (xmimpflag == 4 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.143739162059858);}
+			if (xmimpflag == 4 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.143739162059858);}
+			if (xmimpflag == 4 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =273.896226415094;}
+			if (xmimpflag == 4 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =273.896226415094 - (273.896226415094*0.143739162059858 );}
+			if (xmimpflag == 5 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0703329947332674);}
+			if (xmimpflag == 5 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0703329947332674);}
+			if (xmimpflag == 5 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =380.04854368932;}
+			if (xmimpflag == 5 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =380.04854368932 - (380.04854368932*0.0703329947332674 );}
+			if (xmimpflag == 6 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.117444418143106);}
+			if (xmimpflag == 6 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.117444418143106);}
+			if (xmimpflag == 6 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =305.868020304568;}
+			if (xmimpflag == 6 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =305.868020304568/ (1-0.117444418143106 );}
+			if (xmimpflag == 7 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.126779394689057);}
+			if (xmimpflag == 7 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.126779394689057);}
+			if (xmimpflag == 7 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =265.88;}
+			if (xmimpflag == 7 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =265.88 - (265.88*0.126779394689057 );}
+			if (xmimpflag == 8 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.189011301766662);}
+			if (xmimpflag == 8 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.189011301766662);}
+			if (xmimpflag == 8 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =281.325;}
+			if (xmimpflag == 8 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =281.325/ (1-0.189011301766662 );}
+			if (xmimpflag == 9 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.140365224720275);}
+			if (xmimpflag == 9 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.140365224720275);}
+			if (xmimpflag == 9 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =402.502202643172;}
+			if (xmimpflag == 9 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =402.502202643172/ (1-0.140365224720275 );}
+			if (xmimpflag == 10 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.107188743129005);}
+			if (xmimpflag == 10 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.107188743129005);}
+			if (xmimpflag == 10 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =277.059842519684;}
+			if (xmimpflag == 10 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =277.059842519684/ (1-0.107188743129005 );}
+			if (xmimpflag == 11 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.126901348540731);}
+			if (xmimpflag == 11 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.126901348540731);}
+			if (xmimpflag == 11 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =355.810945273632;}
+			if (xmimpflag == 11 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =355.810945273632/ (1-0.126901348540731 );}
+			if (xmimpflag == 12 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0655772248600899);}
+			if (xmimpflag == 12 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0655772248600899);}
+			if (xmimpflag == 12 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =309.533898305085;}
+			if (xmimpflag == 12 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =309.533898305085/ (1-0.0655772248600899 );}
+			if (xmimpflag == 13 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0778021073375869);}
+			if (xmimpflag == 13 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0778021073375869);}
+			if (xmimpflag == 13 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =305.812154696132;}
+			if (xmimpflag == 13 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =305.812154696132/ (1-0.0778021073375869 );}
+			if (xmimpflag == 14 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0654921908875572);}
+			if (xmimpflag == 14 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0654921908875572);}
+			if (xmimpflag == 14 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =285.054112554113;}
+			if (xmimpflag == 14 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =285.054112554113/ (1-0.0654921908875572 );}
+			if (xmimpflag == 15 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0671696102131247);}
+			if (xmimpflag == 15 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0671696102131247);}
+			if (xmimpflag == 15 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =361.638059701493;}
+			if (xmimpflag == 15 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =361.638059701493/ (1-0.0671696102131247 );}
+			if (xmimpflag == 16 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.371414750110571);}
+			if (xmimpflag == 16 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.371414750110571);}
+			if (xmimpflag == 16 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =239.9;}
+			if (xmimpflag == 16 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =239.9/ (1-0.371414750110571 );}
+			if (xmimpflag == 157 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.230610260687796);}
+			if (xmimpflag == 157 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.230610260687796);}
+			if (xmimpflag == 157 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =139.029411764706;}
+			if (xmimpflag == 157 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =139.029411764706/ (1-0.230610260687796 );}
+			if (xmimpflag == 159 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.154487726688789);}
+			if (xmimpflag == 159 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.154487726688789);}
+			if (xmimpflag == 159 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =245.12676056338;}
+			if (xmimpflag == 159 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =245.12676056338/ (1-0.154487726688789 );}
+			if (xmimpflag == 99 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.166050441674744);}
+			if (xmimpflag == 99 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.166050441674744);}
+			if (xmimpflag == 99 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =125.619750283768;}
+			if (xmimpflag == 99 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =125.619750283768/ (1-0.166050441674744 );}
+			if (xmimpflag == 100 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.178717812379779);}
+			if (xmimpflag == 100 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.178717812379779);}
+			if (xmimpflag == 100 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =565.645161290322;}
+			if (xmimpflag == 100 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =565.645161290322/ (1-0.178717812379779 );}
+			if (xmimpflag == 17 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0557746478873239);}
+			if (xmimpflag == 17 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0557746478873239);}
+			if (xmimpflag == 17 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =148.882352941176;}
+			if (xmimpflag == 17 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =148.882352941176/ (1-0.0557746478873239 );}
+			if (xmimpflag == 98 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.126563817175912);}
+			if (xmimpflag == 98 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.126563817175912);}
+			if (xmimpflag == 98 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =132.596685082873;}
+			if (xmimpflag == 98 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =132.596685082873/ (1-0.126563817175912 );}
+			if (xmimpflag == 18 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.093544030879478);}
+			if (xmimpflag == 18 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.093544030879478);}
+			if (xmimpflag == 18 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =184.486013986014;}
+			if (xmimpflag == 18 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =184.486013986014/ (1-0.093544030879478 );}
+			if (xmimpflag == 19 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0985982521761244);}
+			if (xmimpflag == 19 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0985982521761244);}
+			if (xmimpflag == 19 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =230.298469387755;}
+			if (xmimpflag == 19 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =230.298469387755/ (1-0.0985982521761244 );}
+			if (xmimpflag == 20 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0944678720322908);}
+			if (xmimpflag == 20 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0944678720322908);}
+			if (xmimpflag == 20 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =444.290145985401;}
+			if (xmimpflag == 20 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =444.290145985401/ (1-0.0944678720322908 );}
+			if (xmimpflag == 21 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.167379623404603);}
+			if (xmimpflag == 21 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.167379623404603);}
+			if (xmimpflag == 21 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slamimp =492.946428571429;}
+			if (xmimpflag == 21 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slaximp =492.946428571429/ (1-0.167379623404603 );}
+			if (xmimpflag == 22 && slaximp >= 1 &&  slaarriv==null&& slastot==null) {slamimp = slaximp - (slaximp*0.183801786070534);}
+			if (xmimpflag == 22 && slamimp >= 1 &&  tslavesd==null&&  tslavesp==null&& ncartot==null) {slaximp = slamimp / (1- 0.183801786070534);}
+			if (xmimpflag == 22 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slamimp =91.9594594594595;}
+			if (xmimpflag == 22 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slaximp =91.9594594594595/ (1-0.183801786070534 );}
+			if (xmimpflag == 23 && slaximp >= 1 &&  slaarriv==null&& slastot==null) {slamimp = slaximp - (slaximp*0.102358180948044);}
+			if (xmimpflag == 23 && slamimp >= 1 &&  tslavesd==null&&  tslavesp==null&& ncartot==null) {slaximp = slamimp / (1- 0.102358180948044);}
+			if (xmimpflag == 23 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slamimp =95.972972972973;}
+			if (xmimpflag == 23 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slaximp =95.972972972973/ (1-0.102358180948044 );}
+			if (xmimpflag == 24 && slaximp >= 1 &&  slaarriv==null&& slastot==null) {slamimp = slaximp - (slaximp*0.122708750828674);}
+			if (xmimpflag == 24 && slamimp >= 1 &&  tslavesd==null&&  tslavesp==null&& ncartot==null) {slaximp = slamimp / (1- 0.122708750828674);}
+			if (xmimpflag == 24 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slamimp =146.31;}
+			if (xmimpflag == 24 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slaximp =146.31/ (1-0.122708750828674 );}
+			if (xmimpflag == 25 && slaximp >= 1 &&  slaarriv==null&& slastot==null) {slamimp = slaximp - (slaximp*0.101742168136026);}
+			if (xmimpflag == 25 && slamimp >= 1 &&  tslavesd==null&&  tslavesp==null&& ncartot==null) {slaximp = slamimp / (1- 0.101742168136026);}
+			if (xmimpflag == 25 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slamimp =279.357142857143;}
+			if (xmimpflag == 25 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slaximp =279.357142857143/ (1-0.101742168136026 );}
+			if (xmimpflag == 26 && slaximp >= 1 &&  slaarriv==null&& slastot==null) {slamimp = slaximp - (slaximp*0.0830808603000646);}
+			if (xmimpflag == 26 && slamimp >= 1 &&  tslavesd==null&&  tslavesp==null&& ncartot==null) {slaximp = slamimp / (1- 0.0830808603000646);}
+			if (xmimpflag == 26 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slamimp =341.5;}
+			if (xmimpflag == 26 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slaximp =341.5/ (1-0.0830808603000646 );}
+			if (xmimpflag == 27 && slaximp >= 1 &&  slaarriv==null&& slastot==null) {slamimp = slaximp - (slaximp*0.0951735364832193);}
+			if (xmimpflag == 27 && slamimp >= 1 &&  tslavesd==null&&  tslavesp==null&& ncartot==null) {slaximp = slamimp / (1- 0.0951735364832193);}
+			if (xmimpflag == 27 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slaximp =335.546666666667;}
+			if (xmimpflag == 27 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slamimp =335.546666666667 - (335.546666666667*0.0951735364832193 );}
+			if (xmimpflag == 28 && slaximp >= 1 &&  slaarriv==null&& slastot==null) {slamimp = slaximp - (slaximp*0.0599984615282753);}
+			if (xmimpflag == 28 && slamimp >= 1 &&  tslavesd==null&&  tslavesp==null&& ncartot==null) {slaximp = slamimp / (1- 0.0599984615282753);}
+			if (xmimpflag == 28 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slaximp =348.926267281106;}
+			if (xmimpflag == 28 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slamimp =348.926267281106 - (348.926267281106*0.0599984615282753 );}
+			if (xmimpflag == 29 && slaximp >= 1 &&  slaarriv==null&& slastot==null) {slamimp = slaximp - (slaximp*0.0849037398486349);}
+			if (xmimpflag == 29 && slamimp >= 1 &&  tslavesd==null&&  tslavesp==null&& ncartot==null) {slaximp = slamimp / (1- 0.0849037398486349);}
+			if (xmimpflag == 29 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slamimp =323.539358600583;}
+			if (xmimpflag == 29 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slaximp =323.539358600583/ (1-0.0849037398486349 );}
+			if (xmimpflag == 30 && slaximp >= 1 &&  slaarriv==null&& slastot==null) {slamimp = slaximp - (slaximp*0.0831292966753462);}
+			if (xmimpflag == 30 && slamimp >= 1 &&  tslavesd==null&&  tslavesp==null&& ncartot==null) {slaximp = slamimp / (1- 0.0831292966753462);}
+			if (xmimpflag == 30 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slamimp =435.738461538461;}
+			if (xmimpflag == 30 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slaximp =435.738461538461/ (1-0.0831292966753462 );}
+			if (xmimpflag == 31 && slaximp >= 1 &&  slaarriv==null&& slastot==null) {slamimp = slaximp - (slaximp*0.154603810637904);}
+			if (xmimpflag == 31 && slamimp >= 1 &&  tslavesd==null&&  tslavesp==null&& ncartot==null) {slaximp = slamimp / (1- 0.154603810637904);}
+			if (xmimpflag == 31 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slamimp =221.279220779221;}
+			if (xmimpflag == 31 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slaximp =221.279220779221/ (1-0.154603810637904 );}
+			if (xmimpflag == 32 && slaximp >= 1 &&  slaarriv==null&& slastot==null) {slamimp = slaximp - (slaximp*0.169381440464976);}
+			if (xmimpflag == 32 && slamimp >= 1 &&  tslavesd==null&&  tslavesp==null&& ncartot==null) {slaximp = slamimp / (1- 0.169381440464976);}
+			if (xmimpflag == 32 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slamimp =296.593103448276;}
+			if (xmimpflag == 32 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slaximp =296.593103448276/ (1-0.169381440464976 );}
+			if (xmimpflag == 33 && slaximp >= 1 &&  slaarriv==null&& slastot==null) {slamimp = slaximp - (slaximp*0.183684529291394);}
+			if (xmimpflag == 33 && slamimp >= 1 &&  tslavesd==null&&  tslavesp==null&& ncartot==null) {slaximp = slamimp / (1- 0.183684529291394);}
+			if (xmimpflag == 33 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slamimp =281.452966714906;}
+			if (xmimpflag == 33 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slaximp =281.452966714906/ (1-0.183684529291394 );}
+			if (xmimpflag == 34 && slaximp >= 1 &&  slaarriv==null&& slastot==null) {slamimp = slaximp - (slaximp*0.0864964921326426);}
+			if (xmimpflag == 34 && slamimp >= 1 &&  tslavesd==null&&  tslavesp==null&& ncartot==null) {slaximp = slamimp / (1- 0.0864964921326426);}
+			if (xmimpflag == 34 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slamimp =325.652360515021;}
+			if (xmimpflag == 34 &&  tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slaximp =325.652360515021/ (1-0.0864964921326426 );}
+			if (xmimpflag ==  35 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.176037224384829);}
+			if (xmimpflag == 35 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.176037224384829);}
+			if (xmimpflag ==  35 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =272.474358974359;}
+			if (xmimpflag ==  35 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =272.474358974359/ (1-0.176037224384829 );}
+			if (xmimpflag ==  36 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.116937605450612);}
+			if (xmimpflag ==  36 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.116937605450612);}
+			if (xmimpflag ==  36 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =556.677419354839;}
+			if (xmimpflag ==  36 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =556.677419354839/ (1-0.116937605450612 );}
+			if (xmimpflag ==  37 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.172812495199871);}
+			if (xmimpflag ==  37 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.172812495199871);}
+			if (xmimpflag ==  37 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =890.470588235294;}
+			if (xmimpflag ==  37 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =890.470588235294/ (1-0.172812495199871 );}
+			if (xmimpflag ==  38 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.105087524949968);}
+			if (xmimpflag ==  38 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.105087524949968);}
+			if (xmimpflag ==  38 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =335.813953488372;}
+			if (xmimpflag ==  38 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =335.813953488372/ (1-0.105087524949968 );}
+			if (xmimpflag ==  39 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0856667000685018);}
+			if (xmimpflag ==  39 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0856667000685018);}
+			if (xmimpflag ==  39 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =257.263157894737;}
+			if (xmimpflag ==  39 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =257.263157894737/ (1-0.0856667000685018 );}
+			if (xmimpflag ==  40 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0865650987499053);}
+			if (xmimpflag ==  40 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0865650987499053);}
+			if (xmimpflag ==  40 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =328.195266272189;}
+			if (xmimpflag ==  40 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =328.195266272189/ (1-0.0865650987499053 );}
+			if (xmimpflag ==  41 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.171814252005436);}
+			if (xmimpflag ==  41 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.171814252005436);}
+			if (xmimpflag ==  41 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =129.145454545455;}
+			if (xmimpflag ==  41 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =129.145454545455/ (1-0.171814252005436 );}
+			if (xmimpflag ==  42 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0610387045813586);}
+			if (xmimpflag ==  42 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0610387045813586);}
+			if (xmimpflag ==  42 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =158.1;}
+			if (xmimpflag ==  42 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =158.1/ (1-0.0610387045813586 );}
+			if (xmimpflag ==  43 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.159823459162871);}
+			if (xmimpflag ==  43 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.159823459162871);}
+			if (xmimpflag ==  43 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =247.759689922481;}
+			if (xmimpflag ==  43 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =247.759689922481/ (1-0.159823459162871 );}
+			if (xmimpflag ==  44 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0988853555387519);}
+			if (xmimpflag ==  44 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0988853555387519);}
+			if (xmimpflag ==  44 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =363d;}
+			if (xmimpflag ==  44 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =363/ (1-0.0988853555387519 );}
+			if (xmimpflag ==  45 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0904513085721602);}
+			if (xmimpflag ==  45 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0904513085721602);}
+			if (xmimpflag ==  45 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =466.25641025641;}
+			if (xmimpflag ==  45 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =466.25641025641/ (1-0.0904513085721602 );}
+			if (xmimpflag ==  46 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.082310278477633);}
+			if (xmimpflag ==  46 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.082310278477633);}
+			if (xmimpflag ==  46 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =159.810810810811;}
+			if (xmimpflag ==  46 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =159.810810810811/ (1-0.082310278477633 );}
+			if (xmimpflag ==  47 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.104714300552102);}
+			if (xmimpflag ==  47 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.104714300552102);}
+			if (xmimpflag ==  47 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =638.25;}
+			if (xmimpflag ==  47 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =638.25/ (1-0.104714300552102 );}
+			if (xmimpflag ==  48 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.193439630544956);}
+			if (xmimpflag ==  48 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.193439630544956);}
+			if (xmimpflag ==  48 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =608.392156862745;}
+			if (xmimpflag ==  48 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =608.392156862745/ (1-0.193439630544956 );}
+			if (xmimpflag ==  49 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.145583038352611);}
+			if (xmimpflag ==  49 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.145583038352611);}
+			if (xmimpflag ==  49 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =428.888888888889;}
+			if (xmimpflag ==  49 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =428.888888888889/ (1-0.145583038352611 );}
+			if (xmimpflag ==  50 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.233333333333333);}
+			if (xmimpflag ==  50 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.233333333333333);}
+			if (xmimpflag ==  50 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =270.846153846154;}
+			if (xmimpflag ==  50 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =270.846153846154/ (1-0.233333333333333 );}
+			if (xmimpflag ==  51 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.179223522528989);}
+			if (xmimpflag ==  51 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.179223522528989);}
+			if (xmimpflag ==  51 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =229.64;}
+			if (xmimpflag ==  51 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =229.64/ (1-0.179223522528989 );}
+			if (xmimpflag ==  52 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0819156347249732);}
+			if (xmimpflag ==  52 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0819156347249732);}
+			if (xmimpflag ==  52 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =290.164383561644;}
+			if (xmimpflag ==  52 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =290.164383561644 - (290.164383561644*0.0819156347249732 );}
+			if (xmimpflag ==  53 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0540922242825536);}
+			if (xmimpflag ==  53 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0540922242825536);}
+			if (xmimpflag ==  53 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =256.548387096774;}
+			if (xmimpflag ==  53 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =256.548387096774/ (1-0.0540922242825536 );}
+			if (xmimpflag ==  54 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0913651933726713);}
+			if (xmimpflag ==  54 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0913651933726713);}
+			if (xmimpflag ==  54 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =216.907894736842;}
+			if (xmimpflag ==  54 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =216.907894736842/ (1-0.0913651933726713 );}
+			if (xmimpflag ==  55 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0604022380426763);}
+			if (xmimpflag ==  55 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0604022380426763);}
+			if (xmimpflag ==  55 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =241.461538461538;}
+			if (xmimpflag ==  55 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =241.461538461538/ (1-0.0604022380426763 );}
+			if (xmimpflag ==  56 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0542026549646127);}
+			if (xmimpflag ==  56 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0542026549646127);}
+			if (xmimpflag ==  56 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =340.230769230769;}
+			if (xmimpflag ==  56 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =340.230769230769/ (1-0.0542026549646127 );}
+			if (xmimpflag ==  57 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0974564330758702);}
+			if (xmimpflag ==  57 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0974564330758702);}
+			if (xmimpflag ==  57 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =516.45;}
+			if (xmimpflag ==  57 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =516.45/ (1-0.0974564330758702 );}
+			if (xmimpflag ==  58 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.162886379968412);}
+			if (xmimpflag ==  58 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.162886379968412);}
+			if (xmimpflag ==  58 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =447.518072289157;}
+			if (xmimpflag ==  58 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =447.518072289157 - (447.518072289157*0.162886379968412 );}
+			if (xmimpflag ==  59 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0561646667118922);}
+			if (xmimpflag ==  59 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0561646667118922);}
+			if (xmimpflag ==  59 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =152.923076923077;}
+			if (xmimpflag ==  59 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =152.923076923077/ (1-0.0561646667118922 );}
+			if (xmimpflag ==  60 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.133468501803896);}
+			if (xmimpflag ==  60 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.133468501803896);}
+			if (xmimpflag ==  60 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =403.292993630573;}
+			if (xmimpflag ==  60 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =403.292993630573/ (1-0.133468501803896 );}
+			if (xmimpflag ==  61 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.106708705390018);}
+			if (xmimpflag ==  61 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.106708705390018);}
+			if (xmimpflag ==  61 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =285.644444444444;}
+			if (xmimpflag ==  61 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =285.644444444444/ (1-0.106708705390018 );}
+			if (xmimpflag ==  62 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0785278768682708);}
+			if (xmimpflag ==  62 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0785278768682708);}
+			if (xmimpflag ==  62 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =335.658227848101;}
+			if (xmimpflag ==  62 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =335.658227848101/ (1-0.0785278768682708 );}
+			if (xmimpflag ==  63 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.107782269167156);}
+			if (xmimpflag ==  63 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.107782269167156);}
+			if (xmimpflag ==  63 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =472.267857142857;}
+			if (xmimpflag ==  63 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =472.267857142857/ (1-0.107782269167156 );}
+			if (xmimpflag ==  160 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.0779281672325541);}
+			if (xmimpflag ==  160 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.0779281672325541);}
+			if (xmimpflag ==  160 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =536.842857142857;}
+			if (xmimpflag ==  160 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =536.842857142857/ (1-0.0779281672325541 );}
+			if (xmimpflag ==  65 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.115409873680179);}
+			if (xmimpflag ==  65 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.115409873680179);}
+			if (xmimpflag ==  65 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =103.376146788991;}
+			if (xmimpflag ==  65 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =103.376146788991/ (1-0.115409873680179 );}
+			if (xmimpflag ==  66 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.207088877726936);}
+			if (xmimpflag ==  66 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.207088877726936);}
+			if (xmimpflag ==  66 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =68.1506849315068;}
+			if (xmimpflag ==  66 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =68.1506849315068/ (1-0.207088877726936 );}
+			if (xmimpflag ==  67 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.110922605367631);}
+			if (xmimpflag ==  67 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.110922605367631);}
+			if (xmimpflag ==  67 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =80.0491803278688;}
+			if (xmimpflag ==  67 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =80.0491803278688/ (1-0.110922605367631 );}
+			if (xmimpflag ==  68 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.127935729778166);}
+			if (xmimpflag ==  68 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.127935729778166);}
+			if (xmimpflag ==  68 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp =84d;}
+			if (xmimpflag ==  68 && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slamimp =84 - (84*0.127935729778166 );}
+			if (xmimpflag ==  69 && slaximp >= 1 && slaarriv==null && slastot==null) {slamimp = slaximp - (slaximp*0.206358225584424);}
+			if (xmimpflag ==  69 && slamimp >= 1 && tslavesd==null && tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.206358225584424);}
+			if (xmimpflag == 69 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =1004.47058823529;}
+			if (xmimpflag == 69 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =1004.47058823529/ (1-0.206358225584424 );}
+			if (xmimpflag == 70 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.142775407154303);}
+			if (xmimpflag == 70 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.142775407154303);}
+			if (xmimpflag == 70 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =311.222222222222;}
+			if (xmimpflag == 70 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =311.222222222222/ (1-0.142775407154303 );}
+			if (xmimpflag == 71 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.106323148232566);}
+			if (xmimpflag == 71 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.106323148232566);}
+			if (xmimpflag == 71 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =310.39837398374;}
+			if (xmimpflag == 71 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =310.39837398374/ (1-0.106323148232566 );}
+			if (xmimpflag == 97 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.138965456634756);}
+			if (xmimpflag == 97 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.138965456634756);}
+			if (xmimpflag == 97 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =259.21875;}
+			if (xmimpflag == 97 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =259.21875/ (1-0.138965456634756 );}
+			if (xmimpflag == 72 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.169436742362705);}
+			if (xmimpflag == 72 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.169436742362705);}
+			if (xmimpflag == 72 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =265.325842696629;}
+			if (xmimpflag == 72 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =265.325842696629/ (1-0.169436742362705 );}
+			if (xmimpflag == 85 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.339905284604731);}
+			if (xmimpflag == 85 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.339905284604731);}
+			if (xmimpflag == 85 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =563.333333333333;}
+			if (xmimpflag == 85 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =563.333333333333/ (1-0.339905284604731 );}
+			if (xmimpflag == 73 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.129605450439467);}
+			if (xmimpflag == 73 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.129605450439467);}
+			if (xmimpflag == 73 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =407.289473684211;}
+			if (xmimpflag == 73 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =407.289473684211/ (1-0.129605450439467 );}
+			if (xmimpflag == 74 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.0794384325299229);}
+			if (xmimpflag == 74 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.0794384325299229);}
+			if (xmimpflag == 74 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =117.137931034483;}
+			if (xmimpflag == 74 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =117.137931034483/ (1-0.0794384325299229 );}
+			if (xmimpflag == 75 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.189369734252207);}
+			if (xmimpflag == 75 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.189369734252207);}
+			if (xmimpflag == 75 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =192.772020725389;}
+			if (xmimpflag == 75 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =192.772020725389/ (1-0.189369734252207 );}
+			if (xmimpflag == 76 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.131187789757565);}
+			if (xmimpflag == 76 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.131187789757565);}
+			if (xmimpflag == 76 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =199.041666666667;}
+			if (xmimpflag == 76 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =199.041666666667/ (1-0.131187789757565 );}
+			if (xmimpflag == 77 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.136342992788614);}
+			if (xmimpflag == 77 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.136342992788614);}
+			if (xmimpflag == 77 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =186.407894736842;}
+			if (xmimpflag == 77 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =186.407894736842/ (1-0.136342992788614 );}
+			if (xmimpflag == 78 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.103049659988616);}
+			if (xmimpflag == 78 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.103049659988616);}
+			if (xmimpflag == 78 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =155.470588235294;}
+			if (xmimpflag == 78 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =155.470588235294/ (1-0.103049659988616 );}
+			if (xmimpflag == 79 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.35);}
+			if (xmimpflag == 79 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.35);}
+			if (xmimpflag == 79 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =193.74358974359;}
+			if (xmimpflag == 79 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =193.74358974359/ (1-0.35 );}
+			if (xmimpflag == 80 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.0732085200996002);}
+			if (xmimpflag == 80 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.0732085200996002);}
+			if (xmimpflag == 80 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =249.692307692308;}
+			if (xmimpflag == 80 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =249.692307692308/ (1-0.0732085200996002 );}
+			if (xmimpflag == 81 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.0934359066589073);}
+			if (xmimpflag == 81 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.0934359066589073);}
+			if (xmimpflag == 81 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =352.952806122449;}
+			if (xmimpflag == 81 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =352.952806122449/ (1-0.0934359066589073 );}
+			if (xmimpflag == 82 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.07182740558555);}
+			if (xmimpflag == 82 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.07182740558555);}
+			if (xmimpflag == 82 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =419.619047619047;}
+			if (xmimpflag == 82 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =419.619047619047/ (1-0.07182740558555 );}
+			if (xmimpflag == 83 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.0956449943871365);}
+			if (xmimpflag == 83 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.0956449943871365);}
+			if (xmimpflag == 83 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =304.5625;}
+			if (xmimpflag == 83 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =304.5625 - (304.5625*0.0956449943871365 );}
+			if (xmimpflag == 84 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.163929225997462);}
+			if (xmimpflag == 84 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.163929225997462);}
+			if (xmimpflag == 84 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =319.285714285714;}
+			if (xmimpflag == 84 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =319.285714285714/ (1-0.163929225997462 );}
+			if (xmimpflag == 86 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.112733293827202);}
+			if (xmimpflag == 86 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.112733293827202);}
+			if (xmimpflag == 86 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =129.277777777778;}
+			if (xmimpflag == 86 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =129.277777777778/ (1-0.112733293827202 );}
+			if (xmimpflag == 87 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.0655504344628028);}
+			if (xmimpflag == 87 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.0655504344628028);}
+			if (xmimpflag == 87 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =211d;}
+			if (xmimpflag == 87 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =211/ (1-0.0655504344628028 );}
+			if (xmimpflag == 88 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.198929221794951);}
+			if (xmimpflag == 88 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.198929221794951);}
+			if (xmimpflag == 88 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =296.473684210526;}
+			if (xmimpflag == 88 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =296.473684210526 - (296.473684210526*0.198929221794951 );}
+			if (xmimpflag == 89 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.107517933823928);}
+			if (xmimpflag == 89 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.107517933823928);}
+			if (xmimpflag == 89 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =281.958333333333;}
+			if (xmimpflag == 89 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =281.958333333333/ (1-0.107517933823928 );}
+			if (xmimpflag == 90 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.028250184258012);}
+			if (xmimpflag == 90 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.028250184258012);}
+			if (xmimpflag == 90 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =208.341176470588;}
+			if (xmimpflag == 90 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =208.341176470588/ (1-0.028250184258012 );}
+			if (xmimpflag == 91 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.0487771272192143);}
+			if (xmimpflag == 91 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.0487771272192143);}
+			if (xmimpflag == 91 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =267.896551724138;}
+			if (xmimpflag == 91 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =267.896551724138/ (1-0.0487771272192143 );}
+			if (xmimpflag == 92 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.111975986975987);}
+			if (xmimpflag == 92 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.111975986975987);}
+			if (xmimpflag == 92 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =328.555555555556;}
+			if (xmimpflag == 92 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =328.555555555556/ (1-0.111975986975987 );}
+			if (xmimpflag == 93 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.0979648763988006);}
+			if (xmimpflag == 93 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.0979648763988006);}
+			if (xmimpflag == 93 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =101.111111111111;}
+			if (xmimpflag == 93 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =101.111111111111/ (1-0.0979648763988006 );}
+			if (xmimpflag == 94 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.297737659966491);}
+			if (xmimpflag == 94 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.297737659966491);}
+			if (xmimpflag == 94 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =319.733333333333;}
+			if (xmimpflag == 94 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =319.733333333333/ (1-0.297737659966491 );}
+			if (xmimpflag == 95 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.0220048899755501);}
+			if (xmimpflag == 95 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.0220048899755501);}
+			if (xmimpflag == 95 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =220.428571428571;}
+			if (xmimpflag == 95 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =220.428571428571/ (1-0.0220048899755501 );}
+			if (xmimpflag == 96 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0);}
+			if (xmimpflag == 96 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0);}
+			if (xmimpflag == 96 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =433d;}
+			if (xmimpflag == 96 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =433d/ (1-0 );}
+			if (xmimpflag == 137 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.12659407459354);}
+			if (xmimpflag == 137 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.12659407459354);}
+			if (xmimpflag == 137 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =104.986301369863;}
+			if (xmimpflag == 137 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =104.986301369863/ (1-0.12659407459354 );}
+			if (xmimpflag == 138 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.179201806454531);}
+			if (xmimpflag == 138 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.179201806454531);}
+			if (xmimpflag == 138 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =108.37037037037;}
+			if (xmimpflag == 138 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =108.37037037037 - (108.37037037037*0.179201806454531 );}
+			if (xmimpflag == 139 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.162003845923261);}
+			if (xmimpflag == 139 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.162003845923261);}
+			if (xmimpflag == 139 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =128.438775510204;}
+			if (xmimpflag == 139 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =128.438775510204/ (1-0.162003845923261 );}
+			if (xmimpflag == 140 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.171264386321147);}
+			if (xmimpflag == 140 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.171264386321147);}
+			if (xmimpflag == 140 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =557.6;}
+			if (xmimpflag == 140 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =557.6/ (1-0.171264386321147 );}
+			if (xmimpflag == 141 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.213152374545978);}
+			if (xmimpflag == 141 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.213152374545978);}
+			if (xmimpflag == 141 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =74d;}
+			if (xmimpflag == 141 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =74/ (1-0.213152374545978 );}
+			if (xmimpflag == 142 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.190548809128441);}
+			if (xmimpflag == 142 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.190548809128441);}
+			if (xmimpflag == 142 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =80.5625;}
+			if (xmimpflag == 142 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =80.5625 - (80.5625*0.190548809128441 );}
+			if (xmimpflag == 145 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.0577485174550083);}
+			if (xmimpflag == 145 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.0577485174550083);}
+			if (xmimpflag == 145 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =376.928571428571;}
+			if (xmimpflag == 145 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =376.928571428571/ (1-0.0577485174550083 );}
+			if (xmimpflag == 146 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.153749295952981);}
+			if (xmimpflag == 146 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.153749295952981);}
+			if (xmimpflag == 146 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =154.307692307692;}
+			if (xmimpflag == 146 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =154.307692307692/ (1-0.153749295952981 );}
+			if (xmimpflag == 147 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.143606923731731);}
+			if (xmimpflag == 147 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.143606923731731);}
+			if (xmimpflag == 147 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =165.903225806452;}
+			if (xmimpflag == 147 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =165.903225806452 - (165.903225806452*0.143606923731731 );}
+			if (xmimpflag == 148 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.254317624200109);}
+			if (xmimpflag == 148 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.254317624200109);}
+			if (xmimpflag == 148 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =199.730769230769;}
+			if (xmimpflag == 148 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =199.730769230769/ (1-0.254317624200109 );}
+			if (xmimpflag == 149 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.136559928551299);}
+			if (xmimpflag == 149 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.136559928551299);}
+			if (xmimpflag == 149 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =1003d;}
+			if (xmimpflag == 149 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =1003/ (1-0.136559928551299 );}
+			if (xmimpflag == 150 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.182187702624498);}
+			if (xmimpflag == 150 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.182187702624498);}
+			if (xmimpflag == 150 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =100.090909090909;}
+			if (xmimpflag == 150 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =100.090909090909/ (1-0.182187702624498 );}
+			if (xmimpflag == 151 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.00833333333333333);}
+			if (xmimpflag == 151 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.00833333333333333);}
+			if (xmimpflag == 151 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =127.103448275862;}
+			if (xmimpflag == 151 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =127.103448275862/ (1-0.00833333333333333 );}
+			if (xmimpflag == 152 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.100333848361108);}
+			if (xmimpflag == 152 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.100333848361108);}
+			if (xmimpflag == 152 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =436.5;}
+			if (xmimpflag == 152 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =436.5/ (1-0.100333848361108 );}
+			if (xmimpflag == 154 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.235321405225611);}
+			if (xmimpflag == 154 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.235321405225611);}
+			if (xmimpflag == 154 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =580.060606060606;}
+			if (xmimpflag == 154 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =580.060606060606/ (1-0.235321405225611 );}
+			if (xmimpflag == 155 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.157476046121814);}
+			if (xmimpflag == 155 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.157476046121814);}
+			if (xmimpflag == 155 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =70.0833333333334;}
+			if (xmimpflag == 155 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =70.0833333333334/ (1-0.157476046121814 );}
+			if (xmimpflag == 156 && slaximp >= 1 &&  slaarriv==null &&  slastot==null) {slamimp = slaximp - (slaximp*0.17641709128796);}
+			if (xmimpflag == 156 && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null) {slaximp = slamimp / (1- 0.17641709128796);}
+			if (xmimpflag == 156 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slamimp =118.333333333333;}
+			if (xmimpflag == 156 &&  tslavesd==null &&  tslavesp==null &&  ncartot==null &&  slaarriv==null &&  slastot==null) {slaximp =118.333333333333/ (1-0.17641709128796 );}
 
 
-		if (fate2== 2)
-		{
-		    if(slaximp >= 0) {slamimp=null;}
-		    if(slaximp >= 0) {slamimp=null;}
+			if (fate2== 2)
+			{
+			    if(slaximp >= 0) {slamimp=null;}
+			    if(slaximp >= 0) {slamimp=null;}
+			}
+			if (fate2== 4 && slamimp >=0) {slamimp=0d;}
+
+			if (fate2 == 7 && slamimp >= 0)
+			{
+			   slamimp=null;
+			}
+
+			slaximp = round(slaximp);
+			slamimp = round(slamimp);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		if (fate2== 4 && slamimp >=0) {slamimp=0d;}
-
-		if (fate2 == 7 && slamimp >= 0)
-		{
-		   slamimp=null;
-		}
-
-		slaximp = round(slaximp);
-		slamimp = round(slamimp);
 		
 		//Store in voyages object
-		voyage.setSlaximp(slaximp.intValue());
-		voyage.setSlamimp(slamimp.intValue());
+		if(slaximp!=null){voyage.setSlaximp(slaximp.intValue());}
+		else {voyage.setSlaximp(null);}
+		
+		if(slamimp!=null)
+		{voyage.setSlamimp(slamimp.intValue());}
+		else 
+		{voyage.setSlamimp(null);}
 	}
 	
 	/*
@@ -1593,62 +1672,122 @@ public class VoyagesCalculation {
 	public void calculateValuesPeople()
 	{
 		//Create input variables
-		  Integer men1=voyage.getMen1();
-		  Integer women1=voyage.getWomen1();
-		  Integer boy1=voyage.getBoy1();
-		  Integer girl1=voyage.getGirl1();
-		  Integer child1=voyage.getChild1();
-		  Integer infant1=voyage.getInfant1();
-		  Integer adult1=voyage.getAdult1();
-		  Integer men4=voyage.getMen4();
-		  Integer women4=voyage.getWomen4();
-		  Integer boy4=voyage.getBoy4();
-		  Integer girl4=voyage.getGirl4();
-		  Integer child4=voyage.getChild4();
-		  Integer infant4=voyage.getInfant4();
-		  Integer adult4=voyage.getAdult4();
-		  Integer  men5=voyage.getMen5();
-		  Integer women5=voyage.getWomen5();
-		  Integer boy5=voyage.getBoy5();
-		  Integer girl5=voyage.getGirl5();
-		  Integer child5=voyage.getChild5();
-		  Integer adult5 =voyage.getAdult5();
-		  Integer male1=voyage.getMale1();
-		  Integer female1=voyage.getFemale1();
-		  Integer male4=voyage.getMale4();
-		  Integer female4=voyage.getFemale4();
-		  Integer male5=voyage.getMale5();
-		  Integer female5=voyage.getFemale5();
-		  Integer tslavesd = voyage.getTslavesd();
-		  Integer tslavesp = voyage.getTslavesp();
-		  Integer men3=voyage.getMen3();
-		  Integer women3=voyage.getWomen3();
-		  Integer boy3=voyage.getBoy3();
-		  Integer girl3=voyage.getGirl3();
-		  Integer child3=voyage.getChild3();
-		  Integer infant3=voyage.getInfant3();
-		  Integer infantm3=voyage.getInfantm3();
-		  Integer infantf3=voyage.getInfantf3();
-		  Integer adult3=voyage.getAdult3();
-		  Integer men6=voyage.getMen6();
-		  Integer women6=voyage.getWomen6();
-		  Integer boy6=voyage.getBoy6();
-		  Integer girl6=voyage.getGirl6();
-		  Integer child6=voyage.getChild6();
-		  Integer adult6=voyage.getAdult6();
-		  Integer male3=voyage.getMale3();
-		  Integer female3=voyage.getFemale3();
-		  Integer male6=voyage.getMale6();
-		  Integer female6=voyage.getFemale6();
-		  Integer slaarriv = voyage.getSlaarriv();
-		  Integer men2 = voyage.getMen2();
-	      Integer women2=voyage.getWomen2();
-	      Integer boy2=voyage.getBoy2();
-	      Integer girl2=voyage.getGirl2();
-	      Integer child2 = voyage.getChild2();
-	      Integer adult2=voyage.getAdult2();
-		  Integer male2=voyage.getMale2();
-		  Integer female2=voyage.getFemale2();
+		Integer men1=null;
+		Integer women1=null;
+		Integer boy1=null;
+		Integer girl1=null;
+		Integer child1=null;
+		Integer infant1=null;
+		Integer adult1=null;
+		Integer men4=null;
+		Integer women4=null;
+		Integer boy4=null;
+		Integer girl4=null;
+		Integer child4=null;
+		Integer infant4=null;
+		Integer adult4=null;
+		Integer men5=null;
+		Integer women5=null;
+		Integer boy5=null;
+		Integer girl5=null;
+		Integer child5=null;
+		Integer adult5=null;
+		Integer male1=null;
+		Integer female1=null;
+		Integer male4=null;
+		Integer female4=null;
+		Integer male5=null;
+		Integer female5=null;
+		Integer tslavesd=null;
+		Integer tslavesp=null;
+		Integer men3=null;
+		Integer women3=null;
+		Integer boy3=null;
+		Integer girl3=null;
+		Integer child3=null;
+		Integer infant3=null;
+		Integer infantm3=null;
+		Integer infantf3=null;
+		Integer adult3=null;
+		Integer men6=null;
+		Integer women6=null;
+		Integer boy6=null;
+		Integer girl6=null;
+		Integer child6=null;
+		Integer adult6=null;
+		Integer male3=null;
+		Integer female3=null;
+		Integer male6=null;
+		Integer female6=null;
+		Integer slaarriv=null;
+		Integer men2=null;
+		Integer women2=null;
+		Integer boy2=null;
+		Integer girl2=null;
+		Integer child2=null;
+		Integer adult2=null;
+		Integer male2=null;
+		Integer female2=null;
+		try {
+			men1 = voyage.getMen1();
+			  women1 = voyage.getWomen1();
+			  boy1 = voyage.getBoy1();
+			  girl1 = voyage.getGirl1();
+			  child1 = voyage.getChild1();
+			  infant1 = voyage.getInfant1();
+			  adult1 = voyage.getAdult1();
+			  men4 = voyage.getMen4();
+			  women4 = voyage.getWomen4();
+			  boy4 = voyage.getBoy4();
+			  girl4 = voyage.getGirl4();
+			  child4 = voyage.getChild4();
+			  infant4 = voyage.getInfant4();
+			  adult4 = voyage.getAdult4();
+			  men5 = voyage.getMen5();
+			  women5 = voyage.getWomen5();
+			  boy5 = voyage.getBoy5();
+			  girl5 = voyage.getGirl5();
+			  child5 = voyage.getChild5();
+			  adult5 = voyage.getAdult5();
+			  male1 = voyage.getMale1();
+			  female1 = voyage.getFemale1();
+			  male4 = voyage.getMale4();
+			  female4 = voyage.getFemale4();
+			  male5 = voyage.getMale5();
+			  female5 = voyage.getFemale5();
+			  tslavesd = voyage.getTslavesd();
+			  tslavesp = voyage.getTslavesp();
+			  men3 = voyage.getMen3();
+			  women3 = voyage.getWomen3();
+			  boy3 = voyage.getBoy3();
+			  girl3 = voyage.getGirl3();
+			  child3 = voyage.getChild3();
+			  infant3 = voyage.getInfant3();
+			  infantm3 = voyage.getInfantm3();
+			  infantf3 = voyage.getInfantf3();
+			  adult3 = voyage.getAdult3();
+			  men6 = voyage.getMen6();
+			  women6 = voyage.getWomen6();
+			  boy6 = voyage.getBoy6();
+			  girl6 = voyage.getGirl6();
+			  child6 = voyage.getChild6();
+			  adult6 = voyage.getAdult6();
+			  male3 = voyage.getMale3();
+			  female3 = voyage.getFemale3();
+			  male6 = voyage.getMale6();
+			  female6 = voyage.getFemale6();
+			  slaarriv = voyage.getSlaarriv();
+			  men2 = voyage.getMen2();
+			  women2 = voyage.getWomen2();
+			  boy2 = voyage.getBoy2();
+			  girl2 = voyage.getGirl2();
+			  child2 = voyage.getChild2();
+			  adult2 = voyage.getAdult2();
+			  male2 = voyage.getMale2();
+			  female2 = voyage.getFemale2();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		  
 		  
 		  //Variables to be imputed
@@ -1730,46 +1869,50 @@ public class VoyagesCalculation {
 		  female5=defVal(female5, 0);
 
            
-		  //Do the calculations
-		 adlt1imp = men1+women1+adult1+men4+women4+adult4+men5+women5+adult5;
-		 chil1imp = boy1+girl1+child1+infant1+boy4+girl4+child4+infant4+boy5+girl5+child5;
-		 male1imp = male1+men1+boy1+male4+men4+boy4+male5+men5+boy5;
-		 feml1imp = female1+women1+girl1+female4+women4+girl4+female5+women5+girl5;
+		  try {
+			//Do the calculations
+			 adlt1imp = men1+women1+adult1+men4+women4+adult4+men5+women5+adult5;
+			 chil1imp = boy1+girl1+child1+infant1+boy4+girl4+child4+infant4+boy5+girl5+child5;
+			 male1imp = male1+men1+boy1+male4+men4+boy4+male5+men5+boy5;
+			 feml1imp = female1+women1+girl1+female4+women4+girl4+female5+women5+girl5;
 
 
-		 if (tslavesd >=1 && adlt1imp==0) {adlt1imp = tslavesd - chil1imp;}
-		 if (tslavesd==null && tslavesp >=1 && adlt1imp==0) {adlt1imp = tslavesp - chil1imp;}
-		 if (tslavesd >=1 && chil1imp==0) {chil1imp = tslavesd - adlt1imp;}
-		 if (tslavesd==null && tslavesp >=1 && chil1imp==0) {chil1imp = tslavesp - adlt1imp;}
+			 if (tslavesd >=1 && adlt1imp==0) {adlt1imp = tslavesd - chil1imp;}
+			 if (tslavesd==null && tslavesp >=1 && adlt1imp==0) {adlt1imp = tslavesp - chil1imp;}
+			 if (tslavesd >=1 && chil1imp==0) {chil1imp = tslavesd - adlt1imp;}
+			 if (tslavesd==null && tslavesp >=1 && chil1imp==0) {chil1imp = tslavesp - adlt1imp;}
 
-		 slavema1 = adlt1imp+chil1imp;
-		 slavemx1 = male1imp+feml1imp;
-		 if (slavema1 >=1) {slavmax1=men1+women1+boy1+girl1+men4+women4+boy4+girl4+men5+women5+boy5+girl5;}
+			 slavema1 = adlt1imp+chil1imp;
+			 slavemx1 = male1imp+feml1imp;
+			 if (slavema1 >=1) {slavmax1=men1+women1+boy1+girl1+men4+women4+boy4+girl4+men5+women5+boy5+girl5;}
 
 
-		 if(slavema1 >=0 && slavema1 <= 19) {slavema1=null;}
-		 if(slavemx1 >=0 && slavemx1 <=19) {slavemx1=null;}
-		 if(slavmax1 >=0 && slavmax1 <=19) {slavmax1=null;}
+			 if(slavema1 >=0 && slavema1 <= 19) {slavema1=null;}
+			 if(slavemx1 >=0 && slavemx1 <=19) {slavemx1=null;}
+			 if(slavmax1 >=0 && slavmax1 <=19) {slavmax1=null;}
 
-		 if (slavema1==null)
-		 {
-		     if(adlt1imp >=0) {adlt1imp=null;}
-		     if(chil1imp >=0)  {chil1imp=null;}
-		 }
+			 if (slavema1==null)
+			 {
+			     if(adlt1imp >=0) {adlt1imp=null;}
+			     if(chil1imp >=0)  {chil1imp=null;}
+			 }
 
-		 if(slavemx1==null)
-		 {
-		  if(feml1imp >=0) {feml1imp=null;}
-		  if(male1imp >=0) {male1imp=null;}
-		 }
-		 if(chil1imp!=null && slavema1!=null){chilrat1=chil1imp.doubleValue()/slavema1.doubleValue();} //Added If to check for null
+			 if(slavemx1==null)
+			 {
+			  if(feml1imp >=0) {feml1imp=null;}
+			  if(male1imp >=0) {male1imp=null;}
+			 }
+			 if(chil1imp!=null && slavema1!=null){chilrat1=chil1imp.doubleValue()/slavema1.doubleValue();} //Added If to check for null
 
-		 if(male1imp!=null && slavemx1!=null) {malrat1= male1imp.doubleValue()/slavemx1.doubleValue();} //Added If to check for null
+			 if(male1imp!=null && slavemx1!=null) {malrat1= male1imp.doubleValue()/slavemx1.doubleValue();} //Added If to check for null
 
-		 if (slavmax1!=null && slavmax1 >= 20) {menrat1=(men1.doubleValue()+men4.doubleValue()+men5.doubleValue())/slavmax1.doubleValue();} //Added null check
-		 if (slavmax1!=null && slavmax1 >= 20) {womrat1=(women1.doubleValue()+women4.doubleValue()+women5.doubleValue())/slavmax1.doubleValue();} //Added null check
-		 if (slavmax1!=null && slavmax1 >= 20) {boyrat1=(boy1.doubleValue()+boy4.doubleValue()+boy5.doubleValue())/slavmax1.doubleValue();} //Added null check
-		 if (slavmax1!=null && slavmax1 >= 20) {girlrat1= (girl1.doubleValue()+girl4.doubleValue()+girl5.doubleValue())/slavmax1.doubleValue();} //Added null check
+			 if (slavmax1!=null && slavmax1 >= 20) {menrat1=(men1.doubleValue()+men4.doubleValue()+men5.doubleValue())/slavmax1.doubleValue();} //Added null check
+			 if (slavmax1!=null && slavmax1 >= 20) {womrat1=(women1.doubleValue()+women4.doubleValue()+women5.doubleValue())/slavmax1.doubleValue();} //Added null check
+			 if (slavmax1!=null && slavmax1 >= 20) {boyrat1=(boy1.doubleValue()+boy4.doubleValue()+boy5.doubleValue())/slavmax1.doubleValue();} //Added null check
+			 if (slavmax1!=null && slavmax1 >= 20) {girlrat1= (girl1.doubleValue()+girl4.doubleValue()+girl5.doubleValue())/slavmax1.doubleValue();} //Added null check
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		 //Set Defaults
 		 men3=defVal(men3, 0);
@@ -1803,79 +1946,83 @@ public class VoyagesCalculation {
 		 girl6=defVal(girl6, 0);
 
 
-		 adlt3imp = new Double(men3+women3+adult3+men6+women6+adult6);
-		 chil3imp = new Double( boy3+girl3+child3+infant3+boy6+girl6+child6);
-		 male3imp = new Double( male3+men3+boy3+infantm3+male6+men6+boy6+male5+men5+boy5);
-		 feml3imp = new Double( female3+women3+girl3+infantf3+female6+women6+girl6);
+		 try {
+			adlt3imp = new Double(men3+women3+adult3+men6+women6+adult6);
+			 chil3imp = new Double( boy3+girl3+child3+infant3+boy6+girl6+child6);
+			 male3imp = new Double( male3+men3+boy3+infantm3+male6+men6+boy6+male5+men5+boy5);
+			 feml3imp = new Double( female3+women3+girl3+infantf3+female6+women6+girl6);
 
-		 if (slaarriv >=1 && adlt3imp==0) {adlt3imp = slaarriv - chil3imp;}
-		 if (slaarriv >=1 && chil3imp==0) {chil3imp = slaarriv - adlt3imp;}
+			 if (slaarriv >=1 && adlt3imp==0) {adlt3imp = slaarriv - chil3imp;}
+			 if (slaarriv >=1 && chil3imp==0) {chil3imp = slaarriv - adlt3imp;}
 
-		 slavema3 = adlt3imp+chil3imp;
-		 slavemx3 = male3imp+feml3imp;
-		 if (slavema3 >=1) {slavmax3=new Double(men3+women3+boy3+girl3+men6+women6+boy6+girl6);}
-
-
-		 if(slavema3 >=0 && slavema3<=19) {slavema3=null;}
-		 if(slavemx3 >=0 && slavemx3<=19) {slavemx3=null;}
-		 if(slavmax3 >=0 && slavmax3<=19) {slavmax3=null;}
+			 slavema3 = adlt3imp+chil3imp;
+			 slavemx3 = male3imp+feml3imp;
+			 if (slavema3 >=1) {slavmax3=new Double(men3+women3+boy3+girl3+men6+women6+boy6+girl6);}
 
 
-		 if (slavema3==null)
-		 {
-		  if(adlt3imp >=0) {adlt3imp=null;}
-		  if(chil3imp >=0) {chil3imp=null;}
-		 }
-
-		 if(slavemx3==null)
-		 {
-		  if(feml3imp >=0) {feml3imp=null;}
-		  if(male3imp >=0) {male3imp=null;}
-		 }
-
-		 if(chil3imp!=null && slavema3!=null) {chilrat3=chil3imp/slavema3;} //Added If to check for null
-		 if(male3imp!=null && slavemx3!=null) {malrat3= male3imp/slavemx3;} //Added If to check for null
-		 if(slavmax3!=null && slavmax3 >= 20) {menrat3=(men3+men6)/slavmax3;}
-		 if(slavmax3!=null && slavmax3 >= 20) {womrat3=(women3+women6)/slavmax3;}
-		 if(slavmax3!=null && slavmax3 >= 20) {boyrat3=(boy3+boy6)/slavmax3;}
-		 if(slavmax3!=null && slavmax3 >= 20) {girlrat3= (girl3+girl6)/slavmax3;}
+			 if(slavema3 >=0 && slavema3<=19) {slavema3=null;}
+			 if(slavemx3 >=0 && slavemx3<=19) {slavemx3=null;}
+			 if(slavmax3 >=0 && slavmax3<=19) {slavmax3=null;}
 
 
-		 if(slavema3!=null && slavema3 >= 20) {slavema7=slavema3;}
-		 if(slavemx3!=null && slavemx3 >= 20) {slavemx7=slavemx3;}
-		 if(slavmax3!=null && slavmax3 >= 20) {slavmax7=slavmax3;}
-		 if(slavmax7!=null && slavmax7 >= 20) {men7=new Double(men3+men6);}
-		 if(slavmax7!=null && slavmax7 >= 20) {women7=new Double(women3+women6);}
-		 if(slavmax7!=null && slavmax7 >= 20) {boy7=new Double(boy3+boy6);}
-		 if(slavmax7!=null && slavmax7 >= 20) {girl7=new Double(girl3+girl6);}
-		 if(slavema7!=null && slavema7 >= 20) {adult7=adlt3imp;}
-		 if(slavema7!=null && slavema7 >= 20) {child7=chil3imp;}
-		 if(slavemx7!=null && slavemx7 >=20) {male7=male3imp;}
-		 if(slavemx7!=null && slavemx7 >= 20) {female7=feml3imp;}
-		 if(menrat3!=null && menrat3 >= 0) {menrat7=menrat3;}
-		 if(womrat3!=null && womrat3 >= 0) {womrat7=womrat3;}
-		 if(boyrat3!=null && boyrat3 >= 0) {boyrat7=boyrat3;}
-		 if(girlrat3!=null && girlrat3 >= 0) {girlrat7=girlrat3;}
-		 if(malrat3!=null && malrat3 >= 0) {malrat7=malrat3;}
-		 if(chilrat3!=null && chilrat3 >= 0) {chilrat7=chilrat3;}
+			 if (slavema3==null)
+			 {
+			  if(adlt3imp >=0) {adlt3imp=null;}
+			  if(chil3imp >=0) {chil3imp=null;}
+			 }
 
-		 if (slavema3==null && slavema1!=null && slavema1 >=20) {slavema7=slavema1.doubleValue();}
-		 if (slavemx3==null && slavemx1!=null && slavemx1 >=20) {slavemx7=slavemx1.doubleValue();}
-		 if (slavmax3==null && slavmax1!=null && slavmax1 >=20) {slavmax7=slavmax1.doubleValue();}
-		 if (slavmax3==null && slavmax1!=null && slavmax1 >= 20) {men7= new Double(men1+men4 +men5);}
-		 if (slavmax3==null && slavmax1!=null && slavmax1 >= 20) {women7= new Double(women1+women4+women5);}
-		 if (slavmax3==null && slavmax1!=null && slavmax1 >= 20) {boy7= new Double(boy1+boy4+boy5);}
-		 if (slavmax3==null && slavmax1!=null && slavmax1 >= 20) {girl7= new Double(girl1+girl4+girl5);}
-		 if (slavema3==null && slavema1!=null && slavema1 >= 20) {adult7=adlt1imp.doubleValue();}
-		 if (slavema3==null && slavema1!=null && slavema1 >= 20) {child7=chil1imp.doubleValue();}
-		 if (slavemx3==null && slavemx1!=null && slavemx1 >=20) {male7=male1imp.doubleValue();}
-		 if (slavemx3==null && slavemx1!=null && slavemx1 >= 20) {female7=feml1imp.doubleValue();}
-		 if (menrat3==null && menrat1!=null && menrat1 >= 0) {menrat7=menrat1;}
-		 if (womrat3==null && womrat1!=null && womrat1 >= 0) {womrat7=womrat1;}
-		 if (boyrat3==null && boyrat1!=null && boyrat1 >= 0) {boyrat7=boyrat1;}
-		 if (girlrat3==null && girlrat1!=null && girlrat1 >= 0) {girlrat7=girlrat1;}
-		 if (malrat3==null && malrat1!=null && malrat1 >= 0) {malrat7=malrat1;}
-		 if (chilrat3==null&& chilrat1!=null && chilrat1 >= 0) {chilrat7=chilrat1;}
+			 if(slavemx3==null)
+			 {
+			  if(feml3imp >=0) {feml3imp=null;}
+			  if(male3imp >=0) {male3imp=null;}
+			 }
+
+			 if(chil3imp!=null && slavema3!=null) {chilrat3=chil3imp/slavema3;} //Added If to check for null
+			 if(male3imp!=null && slavemx3!=null) {malrat3= male3imp/slavemx3;} //Added If to check for null
+			 if(slavmax3!=null && slavmax3 >= 20) {menrat3=(men3+men6)/slavmax3;}
+			 if(slavmax3!=null && slavmax3 >= 20) {womrat3=(women3+women6)/slavmax3;}
+			 if(slavmax3!=null && slavmax3 >= 20) {boyrat3=(boy3+boy6)/slavmax3;}
+			 if(slavmax3!=null && slavmax3 >= 20) {girlrat3= (girl3+girl6)/slavmax3;}
+
+
+			 if(slavema3!=null && slavema3 >= 20) {slavema7=slavema3;}
+			 if(slavemx3!=null && slavemx3 >= 20) {slavemx7=slavemx3;}
+			 if(slavmax3!=null && slavmax3 >= 20) {slavmax7=slavmax3;}
+			 if(slavmax7!=null && slavmax7 >= 20) {men7=new Double(men3+men6);}
+			 if(slavmax7!=null && slavmax7 >= 20) {women7=new Double(women3+women6);}
+			 if(slavmax7!=null && slavmax7 >= 20) {boy7=new Double(boy3+boy6);}
+			 if(slavmax7!=null && slavmax7 >= 20) {girl7=new Double(girl3+girl6);}
+			 if(slavema7!=null && slavema7 >= 20) {adult7=adlt3imp;}
+			 if(slavema7!=null && slavema7 >= 20) {child7=chil3imp;}
+			 if(slavemx7!=null && slavemx7 >=20) {male7=male3imp;}
+			 if(slavemx7!=null && slavemx7 >= 20) {female7=feml3imp;}
+			 if(menrat3!=null && menrat3 >= 0) {menrat7=menrat3;}
+			 if(womrat3!=null && womrat3 >= 0) {womrat7=womrat3;}
+			 if(boyrat3!=null && boyrat3 >= 0) {boyrat7=boyrat3;}
+			 if(girlrat3!=null && girlrat3 >= 0) {girlrat7=girlrat3;}
+			 if(malrat3!=null && malrat3 >= 0) {malrat7=malrat3;}
+			 if(chilrat3!=null && chilrat3 >= 0) {chilrat7=chilrat3;}
+
+			 if (slavema3==null && slavema1!=null && slavema1 >=20) {slavema7=slavema1.doubleValue();}
+			 if (slavemx3==null && slavemx1!=null && slavemx1 >=20) {slavemx7=slavemx1.doubleValue();}
+			 if (slavmax3==null && slavmax1!=null && slavmax1 >=20) {slavmax7=slavmax1.doubleValue();}
+			 if (slavmax3==null && slavmax1!=null && slavmax1 >= 20) {men7= new Double(men1+men4 +men5);}
+			 if (slavmax3==null && slavmax1!=null && slavmax1 >= 20) {women7= new Double(women1+women4+women5);}
+			 if (slavmax3==null && slavmax1!=null && slavmax1 >= 20) {boy7= new Double(boy1+boy4+boy5);}
+			 if (slavmax3==null && slavmax1!=null && slavmax1 >= 20) {girl7= new Double(girl1+girl4+girl5);}
+			 if (slavema3==null && slavema1!=null && slavema1 >= 20) {adult7=adlt1imp.doubleValue();}
+			 if (slavema3==null && slavema1!=null && slavema1 >= 20) {child7=chil1imp.doubleValue();}
+			 if (slavemx3==null && slavemx1!=null && slavemx1 >=20) {male7=male1imp.doubleValue();}
+			 if (slavemx3==null && slavemx1!=null && slavemx1 >= 20) {female7=feml1imp.doubleValue();}
+			 if (menrat3==null && menrat1!=null && menrat1 >= 0) {menrat7=menrat1;}
+			 if (womrat3==null && womrat1!=null && womrat1 >= 0) {womrat7=womrat1;}
+			 if (boyrat3==null && boyrat1!=null && boyrat1 >= 0) {boyrat7=boyrat1;}
+			 if (girlrat3==null && girlrat1!=null && girlrat1 >= 0) {girlrat7=girlrat1;}
+			 if (malrat3==null && malrat1!=null && malrat1 >= 0) {malrat7=malrat1;}
+			 if (chilrat3==null&& chilrat1!=null && chilrat1 >= 0) {chilrat7=chilrat1;}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		 //more defaults
 		 men2=defVal(men2, 0);
@@ -1893,17 +2040,17 @@ public class VoyagesCalculation {
 		 feml2imp=women2+girl2;
 		 
 		 //Save back to voyage object
-		 voyage.setAdlt1imp(adlt1imp.doubleValue()); 
-		 voyage.setChil1imp(chil1imp.doubleValue());
-		 voyage.setMale1imp(male1imp.doubleValue());
-		 voyage.setFeml1imp(feml1imp.doubleValue());
-		 voyage.setAdlt2imp(adlt2imp.doubleValue());
-		 voyage.setChil2imp(chil2imp.doubleValue());
-		 voyage.setMale2imp(male2imp.doubleValue());
-		 voyage.setFeml2imp(feml2imp.doubleValue());
-		 voyage.setSlavema1(slavema1.doubleValue());
-		 voyage.setSlavemx1(slavemx1.doubleValue());
-		 voyage.setSlavmax1(slavmax1.doubleValue());
+		 if(adlt1imp !=null) {voyage.setAdlt1imp(adlt1imp.doubleValue());} 
+		 if(chil1imp !=null) {voyage.setChil1imp(chil1imp.doubleValue());}
+		 if(male1imp !=null) {voyage.setMale1imp(male1imp.doubleValue());}
+		 if(feml1imp !=null) {voyage.setFeml1imp(feml1imp.doubleValue());}
+		 if(adlt2imp !=null) {voyage.setAdlt2imp(adlt2imp.doubleValue());}
+		 if(chil2imp !=null) {voyage.setChil2imp(chil2imp.doubleValue());}
+		 if(male2imp !=null) {voyage.setMale2imp(male2imp.doubleValue());}
+		 if(feml2imp !=null) {voyage.setFeml2imp(feml2imp.doubleValue());}
+		 if(slavema1!=null) {voyage.setSlavema1(slavema1.doubleValue());}
+		 if(slavemx1 !=null) {voyage.setSlavemx1(slavemx1.doubleValue());}
+		 if(slavmax1 !=null) {voyage.setSlavmax1(slavmax1.doubleValue());}
 		 voyage.setChilrat1(chilrat1);
 		 voyage.setMalrat1(malrat1);  
 		 voyage.setMenrat1(menrat1);
@@ -1934,11 +2081,11 @@ public class VoyagesCalculation {
 	     voyage.setChild7(child7);
 	     voyage.setMale7(male7);
 	     voyage.setFemale7(female7);
-		 voyage.setMenrat7(menrat7.floatValue());
-	     voyage.setWomrat7(womrat7.floatValue());
-	     voyage.setBoyrat7(boyrat7.floatValue());
-	     voyage.setGirlrat7(girlrat7.floatValue());
-	     voyage.setMalrat7(malrat7.floatValue());
-	     voyage.setChilrat7(chilrat7.floatValue());
+		 if(menrat7 !=null) {voyage.setMenrat7(menrat7.floatValue());}
+		 if(womrat7 !=null) {voyage.setWomrat7(womrat7.floatValue());}
+		 if(boyrat7 !=null) {voyage.setBoyrat7(boyrat7.floatValue());}
+		 if(girlrat7 !=null) {voyage.setGirlrat7(girlrat7.floatValue());}
+		 if(malrat7 !=null) {voyage.setMalrat7(malrat7.floatValue());}
+		 if(chilrat7 !=null) {voyage.setChilrat7(chilrat7.floatValue());}
 	}
 }
