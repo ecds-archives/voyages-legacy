@@ -293,5 +293,6 @@
         <property name="child7" column="child7" />
         <property name="male7" column="male7" />
         <property name="female7" column="female7" />		
+        <property name="xmimpflag" column="xmimpflag" />
 	</class>
 </hibernate-mapping>
