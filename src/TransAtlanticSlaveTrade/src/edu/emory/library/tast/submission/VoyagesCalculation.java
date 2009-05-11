@@ -1,8 +1,10 @@
 package edu.emory.library.tast.submission;
 
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 
 import org.hibernate.Session;
@@ -458,6 +460,18 @@ public class VoyagesCalculation {
 	   else
 	       return orig;
 	}
+	/*
+	 * Returns default value if Long is null
+	 */
+	public static Long defVal(Long orig, Long def)
+	{
+	   if(orig==null)
+	   {
+	        return def;
+	   }
+	   else
+	       return orig;
+	}
 	
 	/*
 	 * Calculates year5, year10, year25 and year100
@@ -544,7 +558,7 @@ public class VoyagesCalculation {
 	  ArrayList ret=new ArrayList(); //Array of return values
 
 
-	  //Loop over each input vlaue
+	  //Loop over each input value
 	  for(int o=0; o < orig.size(); o++)
 	  {
 	     Integer curr=(Integer)orig.get(o);
@@ -584,10 +598,12 @@ public class VoyagesCalculation {
 	 * Calculates natinimp variable
 	 */
 	public void calculateValueNatinimp() {
+		Integer national=-1;
+		
 		Integer natinimp=null;
 		try {
 			//Create variables for calculation
-			Integer national = voyage.getNational().getId().intValue();
+			if(voyage.getNational()!=null) {national = voyage.getNational().getId().intValue();}
 			HashMap natHash = VoyagesCalcConstants.getnatHash();
 			
 			natinimp = (Integer)natHash.get(national);
@@ -634,6 +650,23 @@ public class VoyagesCalculation {
 	        return null;
 	    }
 
+	    //move the time back to the beginning of the days
+	    GregorianCalendar greg = new GregorianCalendar();
+	    greg.setTime(start);
+	    greg.set(Calendar.HOUR_OF_DAY, 0);
+	    greg.set(Calendar.MINUTE, 0);
+	    greg.set(Calendar.SECOND, 0);
+	    greg.set(Calendar.MILLISECOND, 0);
+	    start=greg.getTime();
+	    
+	    greg.setTime(end);
+	    greg.set(Calendar.HOUR_OF_DAY, 0);
+	    greg.set(Calendar.MINUTE, 0);
+	    greg.set(Calendar.SECOND, 0);
+	    greg.set(Calendar.MILLISECOND, 0);
+	    end=greg.getTime();
+	    
+	    
 	    //convert dates to long, subtract, convert to days
 	    Long diff = (end.getTime() - start.getTime())/(1000 * 60 * 60 * 24);
 	    diff = round(diff);
@@ -756,45 +789,69 @@ public class VoyagesCalculation {
 	{
 		//Create Return values
 		Integer constreg=null;
-		Integer regisreg=null;;
-		Integer deptreg=null;;
-		Integer deptregimp=null;;
-		Integer embreg=null;;
-		Integer embreg2=null;;
-		Integer regem1=null;;
-		Integer regem2=null;;
-		Integer regem3=null;;
-		Integer majbuyreg=null;;
-		Integer majbyimp=null;;
-		Integer regarr=null;;
-		Integer regarr2=null;;
-		Integer regdis1=null;;
-		Integer regdis2=null;;
-		Integer regdis3=null;;
-		Integer majselrg=null;;
-		Integer mjselimp=null;;
-		Integer retrnreg=null;;
+		Integer regisreg=null;
+		Integer deptreg=null;
+		Integer deptregimp=null;
+		Integer embreg=null;
+		Integer embreg2=null;
+		Integer regem1=null;
+		Integer regem2=null;
+		Integer regem3=null;
+		Integer majbuyreg=null;
+		Integer majbyimp=null;
+		Integer regarr=null;
+		Integer regarr2=null;
+		Integer regdis1=null;
+		Integer regdis2=null;
+		Integer regdis3=null;
+		Integer majselrg=null;
+		Integer mjselimp=null;
+		Integer retrnreg=null;
+		
+		//Input variables
+		Integer placcons = -1;
+		Integer placreg = -1;
+		Integer portdep = -1; 
+		Integer ptdepimp = -1;  //TODO imputed ptdepimp 
+		Integer embport = -1; 
+		Integer embport2 = -1;
+		Integer plac1tra = -1; 
+		Integer plac2tra = -1;
+		Integer plac3tra = -1;
+		Integer majbuypt = -1; //TODO imputed  majbuypt
+		Integer mjbyptimp = -1; //TODO imputed mjbyptimp
+		Integer arrport = -1;
+		Integer arrport2 = -1;
+		Integer sla1port = -1;
+		Integer adpsale1 = -1;
+		Integer adpsale2 = -1;
+		Integer majselpt = -1; //TODO imputed majselpt
+		Integer mjslptimp = -1; //TODO imputed mjslptimp
+		Integer portret = -1;
+		
+		
+		
 		try {
-			//Input variables for first region calculation
-			Integer placcons = voyage.getPlaccons().getId().intValue();
-			Integer placreg = voyage.getPlacreg().getId().intValue();
-			Integer portdep = voyage.getPortdep().getId().intValue(); 
-			Integer ptdepimp = voyage.getPtdepimp().getId().intValue();  //TODO imputed ptdepimp 
-			Integer embport = voyage.getEmbport().getId().intValue(); 
-			Integer embport2 = voyage.getEmbport2().getId().intValue();
-			Integer plac1tra = voyage.getPlac1tra().getId().intValue(); 
-			Integer plac2tra = voyage.getPlac2tra().getId().intValue();
-			Integer plac3tra = voyage.getPlac3tra().getId().intValue();
-			Integer majbuypt = voyage.getMajbuypt().getId().intValue(); //TODO imputed  majbuypt
-			Integer mjbyptimp = voyage.getMjbyptimp().getId().intValue(); //TODO imputed mjbyptimp
-			Integer arrport = voyage.getArrport().getId().intValue();
-			Integer arrport2 = voyage.getArrport2().getId().intValue();
-			Integer sla1port = voyage.getSla1port().getId().intValue();
-			Integer adpsale1 = voyage.getAdpsale1().getId().intValue();
-			Integer adpsale2 = voyage.getAdpsale2().getId().intValue();
-			Integer majselpt = voyage.getMajselpt().getId().intValue(); //TODO imputed majselpt
-			Integer mjslptimp = voyage.getMjslptimp().getId().intValue(); //TODO imputed mjslptimp
-			Integer portret = voyage.getPortret().getId().intValue();
+			//Get Values for first region calculation
+			if(voyage.getPlaccons()!=null) {placcons = voyage.getPlaccons().getId().intValue();}
+			if(voyage.getPlacreg()!=null) {placreg = voyage.getPlacreg().getId().intValue();}
+			if(voyage.getPortdep()!=null) {portdep = voyage.getPortdep().getId().intValue();} 
+			if(voyage.getPtdepimp()!=null) {ptdepimp = voyage.getPtdepimp().getId().intValue();}  
+			if(voyage.getEmbport()!=null) {embport = voyage.getEmbport().getId().intValue();} 
+			if(voyage.getEmbport2()!=null) {embport2 = voyage.getEmbport2().getId().intValue();}
+			if(voyage.getPlac1tra()!=null) {plac1tra = voyage.getPlac1tra().getId().intValue();} 
+			if(voyage.getPlac2tra()!=null) {plac2tra = voyage.getPlac2tra().getId().intValue();}
+			if(voyage.getPlac3tra()!=null) {plac3tra = voyage.getPlac3tra().getId().intValue();}
+			if(voyage.getMajbuypt()!=null) {majbuypt = voyage.getMajbuypt().getId().intValue();} 
+			if(voyage.getMjbyptimp()!=null) {mjbyptimp = voyage.getMjbyptimp().getId().intValue();} 
+			if(voyage.getArrport()!=null) {arrport = voyage.getArrport().getId().intValue();}
+			if(voyage.getArrport2()!=null) {arrport2 = voyage.getArrport2().getId().intValue();}
+			if(voyage.getSla1port()!=null) {sla1port = voyage.getSla1port().getId().intValue();}
+			if(voyage.getAdpsale1()!=null) {adpsale1 = voyage.getAdpsale1().getId().intValue();}
+			if(voyage.getAdpsale2()!=null) {adpsale2 = voyage.getAdpsale2().getId().intValue();}
+			if(voyage.getMajselpt()!=null) {majselpt = voyage.getMajselpt().getId().intValue();} 
+			if(voyage.getMjslptimp()!=null) {mjslptimp = voyage.getMjslptimp().getId().intValue();}
+			if(voyage.getPortret()!=null) {portret = voyage.getPortret().getId().intValue();}
 			
 			//Add to input array
 			ArrayList inputs=new ArrayList();
@@ -958,13 +1015,21 @@ public class VoyagesCalculation {
 		Integer majbyimp1=null;
 		Integer mjselimp1=null;
 		Integer retrnreg1=null;
+		
+		//Input variables for second region calculation
+		Integer portdep = -1;
+		Integer ptdepimp = -1; //TODO imputed ptdepimp
+		Integer mjbyptimp = -1; //TODO imputed mjbyptimp
+		Integer mjslptimp = -1; //TODO imputed mjslptimp
+		Integer portret = -1;
+		
 		try {
 			//Input variables for second region calculation
-			Integer portdep = voyage.getPortdep().getId().intValue();
-			Integer ptdepimp = voyage.getPtdepimp().getId().intValue(); //TODO imputed ptdepimp
-			Integer mjbyptimp = voyage.getMjbyptimp().getId().intValue(); //TODO imputed mjbyptimp
-			Integer mjslptimp = voyage.getMjslptimp().getId().intValue(); //TODO imputed mjslptimp
-			Integer portret = voyage.getPortret().getId().intValue();
+			 if(voyage.getPortdep()!=null) {portdep = voyage.getPortdep().getId().intValue();}
+			 if(voyage.getPtdepimp()!=null) {ptdepimp = voyage.getPtdepimp().getId().intValue();} //TODO imputed ptdepimp
+			 if(voyage.getMjbyptimp()!=null) {mjbyptimp = voyage.getMjbyptimp().getId().intValue();} //TODO imputed mjbyptimp
+			 if(voyage.getMjslptimp()!=null) {mjslptimp = voyage.getMjslptimp().getId().intValue();} //TODO imputed mjslptimp
+			 if(voyage.getPortret()!=null) {portret = voyage.getPortret().getId().intValue();}
 					
 			//Add to input array
 			ArrayList inputs=new ArrayList();

@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.dm.Fate;
+import edu.emory.library.tast.dm.Nation;
 import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.submission.VoyagesCalculation;
@@ -19,6 +20,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.sql.Timestamp;
 public class VoyageCalcTest2 extends TestCase {
 	
 	//boolean RUN_ALL_MODE = false; 
@@ -247,7 +249,189 @@ public class VoyageCalcTest2 extends TestCase {
 		assertEquals((Integer)results.get(1), new Integer("200"));
 		assertEquals((Integer)results.get(2), new Integer("300"));
 		assertEquals((Integer)results.get(3), new Integer("-1"));
-		
 	}
 	
+	public void testNatinImpRet(){
+		try {	
+			deleteVoyage(99900);
+			
+			//add test specific variables in voyage object
+			setValuesVoyage(new Integer(99900), "shipName_99900");
+			long nat = 1;
+			Nation nation = Nation.loadById(session, nat);
+			voyage.setNational(nation);
+			
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage, session);			
+			
+			voyageCalc.calculateValueNatinimp();
+			
+			saveVoyage(voyage);
+			assertEquals(voyage.getNatinimp().getId(), new Long("3"));
+			
+			
+			voyage = null;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+
+	public void testNatinImpNoRet(){
+		try {	
+			deleteVoyage(99901);
+			
+			//add test specific variables in voyage object
+			setValuesVoyage(new Integer(99901), "shipName_99901");
+			long nat = 0;
+			Nation nation = Nation.loadById(session, nat);
+			voyage.setNational(nation);
+			
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage, session);			
+			
+			voyageCalc.calculateValueNatinimp();
+			
+			saveVoyage(voyage);
+			assertNull(voyage.getNatinimp());
+			
+			
+			voyage = null;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void testVoyageLens(){
+		try {	
+			deleteVoyage(99900);
+			
+			//add test specific variables in voyage object
+			setValuesVoyage(new Integer(99900), "shipName_99900");
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+			Date datedep=sdf.parse("2009-05-11 00:00");
+			Date dateland1=sdf.parse("2009-05-17 23:59");
+			Date dateleftafr=sdf.parse("2009-05-27 00:00");
+			
+			voyage.setDatedep(datedep);
+			voyage.setDateland1(dateland1);
+			voyage.setDateleftafr(dateleftafr);
+			
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage, session);			
+			
+			voyageCalc.calculateValuesVoyLengths();
+			
+			saveVoyage(voyage);
+			assertEquals(voyage.getVoy1imp(), new Integer("6"));
+		    assertEquals(voyage.getVoy2imp(), new Integer("10"));
+			
+			
+			voyage = null;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void testVoyageLensWithNull(){
+		try {	
+			deleteVoyage(99901);
+			
+			//add test specific variables in voyage object
+			setValuesVoyage(new Integer(99901), "shipName_99901");
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+			Date datedep=null;
+			Date dateland1=sdf.parse("2009-05-17 23:59");
+			Date dateleftafr=sdf.parse("2009-05-27 00:00");
+			
+			voyage.setDatedep(datedep);
+			voyage.setDateland1(dateland1);
+			voyage.setDateleftafr(dateleftafr);
+			
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage, session);			
+			
+			voyageCalc.calculateValuesVoyLengths();
+			
+			saveVoyage(voyage);
+			assertNull(voyage.getVoy1imp());
+		    assertEquals(voyage.getVoy2imp(), new Integer("10"));
+			
+			
+			voyage = null;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void testRegions1(){
+		try {	
+			deleteVoyage(99900);
+			
+			//add test specific variables in voyage object
+			setValuesVoyage(new Integer(99900), "shipName_99900");
+			//Input variables
+			
+			voyage.setPlaccons(Port.loadById(session, 10201));  //not in db
+			voyage.setPlacreg(Port.loadById(session, 10299)); // in db
+			voyage.setPortdep(null); 
+			voyage.setPtdepimp(null);   
+			voyage.setEmbport(null); 
+			voyage.setEmbport2(null);
+			voyage.setPlac1tra(null); 
+			voyage.setPlac2tra(null);
+			voyage.setPlac3tra(null);
+			voyage.setMajbuypt(null);
+			voyage.setMjbyptimp(null);
+			voyage.setArrport(null);
+			voyage.setArrport2(null);
+			voyage.setSla1port(null);
+			voyage.setAdpsale1(null);
+			voyage.setAdpsale2(null);
+			voyage.setMajselpt(null);
+			voyage.setMjslptimp(null);
+			voyage.setPortret(null);
+			
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage, session);			
+			
+			voyageCalc.calculateValuesRegion1();
+			
+			saveVoyage(voyage);
+			assertNull(voyage.getConstreg());
+			assertEquals(voyage.getRegisreg().getId(), new Long("10200"));
+			
+			
+			voyage = null;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void testRegions2(){
+		try {	
+			deleteVoyage(99900);
+			
+			//add test specific variables in voyage object
+			setValuesVoyage(new Integer(99900), "shipName_99900");
+			
+			//Input variables for second region calculation
+			voyage.setPortdep(Port.loadById(session, 10101));  
+			voyage.setPtdepimp(Port.loadById(session, 41202)); //look-up not in DB 
+			voyage.setMjbyptimp(null); 
+			voyage.setMjslptimp(null);  
+			voyage.setPortret(null);
+			
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage, session);			
+			
+			voyageCalc.calculateValuesRegion2();
+			
+			saveVoyage(voyage);
+			assertNull(voyage.getDeptreg1()); //look-up not in DB
+			assertNull(voyage.getDeptregimp1()); //look-up not in DB
+			
+			
+			voyage = null;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 }
