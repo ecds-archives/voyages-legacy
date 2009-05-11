@@ -2624,11 +2624,11 @@ public class Voyage extends AbstractDescriptiveObject
 		this.values.put("female7", obj);
 	}	
 	
-	public void setXmimpFlag(Double xmimpFlag) {
-		this.values.put("xmimpflag", xmimpFlag);
+	public void setXmimpflag(Double xmimpflag) {
+		this.values.put("xmimpflag", xmimpflag);
 	}
 	
-	public Double getXmimpFlag() {
+	public Double getXmimpflag() {
 		return (Double) this.values.get("xmimpflag");
 	}
 		

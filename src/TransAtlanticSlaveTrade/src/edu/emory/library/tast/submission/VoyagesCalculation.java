@@ -2457,7 +2457,7 @@ public class VoyagesCalculation {
 		else if (rig_int == 35 && natinimp_int == 9) {xmimpflag = 156d;}
 		
 		if (xmimpflag != 0){
-			voyage.setXmimpFlag(xmimpflag);
+			voyage.setXmimpflag(xmimpflag);
 		}
 	}
 }
