@@ -100,7 +100,7 @@ public class VoyagesCalculation {
 		Integer tonnage=voyage.getTonnage(); 
 		Integer yearam=voyage.getYearam(); 
 		Integer natinimp=null;
-		if(voyage.getNatinimp().getId()!=null) {natinimp=voyage.getNatinimp().getId().intValue();}  //TODO imputed natinimp - should already have a function
+		if(voyage.getNatinimp()!=null) {natinimp=voyage.getNatinimp().getId().intValue();}  //TODO imputed natinimp - should already have a function
 		
 		Float tonmod=null;
 		if(tonnage!=null) {tonmod=tonnage.floatValue();}
