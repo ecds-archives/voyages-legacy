@@ -112,13 +112,16 @@ public class VoyagesCalculation {
 			else if (tonnage!=null && (tontype < 3 || tontype == 4 || tontype == 5) && yearam < 1774 && tonnage < 151) {tonmod=2.3f + (1.8f * tonnage);}
 			else if (tonnage!=null && (tontype < 3 || tontype == 4 || tontype == 5) && yearam < 1774 && tonnage > 150 && tonnage < 251) {tonmod=65.3f + (1.2f * tonnage);}
 			else if (tonnage!=null && (tontype < 3 || tontype == 4 || tontype == 5) && yearam < 1774 && tonnage > 250) {tonmod=13.1f + (1.1f * tonnage);}
-			else if (tontype == 4 && yearam > 1783 && yearam < 1794) {tonmod=9999f;}
+			
+			if (tontype == 4 && yearam > 1783 && yearam < 1794) {tonmod=9999f;}
 			else if (tontype == 3 || tontype == 6 || tontype == 9 || tontype == 16){tonmod = 71 + (0.86f * tonnage);}
 			else if ((tontype == 3 || tontype == 6 || tontype == 9 || tontype == 16) && yearam < 1774 && tonmod < 151) {tonmod=2.3f + (1.8f * tonnage);}
 			else if ((tontype == 3 || tontype == 6 || tontype == 9 || tontype == 16) && yearam < 1774 && tonmod > 150 && tonmod < 251) {tonmod=65.3f + (1.2f * tonnage);}
 			else if ((tontype == 3 || tontype == 6 || tontype == 9 || tontype == 16) && yearam < 1774 && tonmod > 250) {tonmod=13.1f + (1.1f * tonnage);}
-			else if (tontype == 7) {tonmod=tonnage * 2f;}
-			else if (tontype == 7 && yearam > 1773 && tonmod < 151) {tonmod=2.3f + (1.8f * tonmod);}
+			
+			if (tontype == 7) {tonmod=tonnage * 2f;}
+			
+			if (tontype == 7 && yearam > 1773 && tonmod < 151) {tonmod=2.3f + (1.8f * tonmod);}
 			else if (tontype == 7 && yearam > 1773 && tonmod > 150 && tonmod < 251) {tonmod=65.3f + (1.2f * tonmod);}
 			else if (tontype == 7 && yearam > 1773 && tonmod > 250) {tonmod=13.1f + (1.1f * tonmod);}
 			else if (tontype == 21) {tonmod= -6.093f + (0.76155f * tonnage);}
@@ -131,8 +134,10 @@ public class VoyagesCalculation {
 			if (tontype == 22 && tonnage < 151) {tonmod=2.3f + (1.8f * tonnage);}
 			else if (tontype == 22 && tonnage > 150 && tonnage < 251) {tonmod=65.3f + (1.2f * tonnage);}
 			else if (tontype == 22 && tonnage > 250) {tonmod=13.1f + (1.1f * tonnage);}
-			else if (tontype == 15 || tontype == 14 || tontype == 17) {tonmod = 52.86f + (1.22f * tonnage);}
-			else if (tonmod==null) {tonmod=9999f;}
+			
+			if (tontype == 15 || tontype == 14 || tontype == 17) {tonmod = 52.86f + (1.22f * tonnage);}
+			
+			if (tonmod==null) {tonmod=9999f;}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
