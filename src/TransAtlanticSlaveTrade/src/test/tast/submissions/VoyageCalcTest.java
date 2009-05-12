@@ -23,15 +23,19 @@ public class VoyageCalcTest extends TestCase {
 	Voyage voyage = null;
 	Transaction tran = null;
 
-	@Before
 	public void setUp() throws Exception {	
-		if (session == null) {
+		/*if (session == null) {
 			session = HibernateConn.getSession();
 			tran = session.beginTransaction();
-		}			
+		}	*/		
+	}
+	
+	public void setUpSession() throws Exception {
+			session = HibernateConn.getSession();
+			tran = session.beginTransaction();
 	}
 
-	private void setValuesVoyage(Integer voyageId, String shipName) {
+	private void setValuesVoyage(Integer voyageId, String shipName) {	
 		voyage = new Voyage();
 		voyage.setVoyageid(voyageId);
 		voyage.setShipname(shipName);
@@ -76,13 +80,15 @@ public class VoyageCalcTest extends TestCase {
 		//overrides so that test can be executed for localized change
 		System.out.println("Running Specific Tests");
 		TestSuite suite = new TestSuite(this.getClass().getName());
-		//suite.addTest(new VoyageCalcTest("testCalculateImputedValueFate2"));
+		suite.addTest(new VoyageCalcTest("testCalculateImputedValueFate2"));
 		//suite.addTest(new VoyageCalcTest("testCalculatePtDepImpByPortdep"));
 		//suite.addTest(new VoyageCalcTest("testCalculatePtDepImpByMajselpt"));
 		//suite.addTest(new VoyageCalcTest("testCalculatePtDepImpByNullValues"));	
 		//suite.addTest(new VoyageCalcTest("testCalculateTslmtimp"));
-		suite.addTest(new VoyageCalcTest("testCalculateTslmtimpWithAllVars"));
-			
+		//suite.addTest(new VoyageCalcTest("testCalculateTslmtimpWithAllVars"));
+		suite.addTest(new VoyageCalcTest("testCalculateImputedValueFate3"));
+		suite.addTest(new VoyageCalcTest("testCalculateImputedValueFate4"));
+					
 		return suite;
 	}
 	
@@ -101,7 +107,8 @@ public class VoyageCalcTest extends TestCase {
 	
 	@Test
 	public void testCalculatePtDepImpByPortdep(){
-		try {	
+		try {
+			setUpSession();
 			deleteVoyage(99900);
 			setValuesVoyage(new Integer(99900), "shipName_99900");
 			long portId = 50105;//Rio Amazona
@@ -120,6 +127,7 @@ public class VoyageCalcTest extends TestCase {
 	@Test
 	public void testCalculatePtDepImpByMajselpt(){
 		try {	
+			setUpSession();
 			deleteVoyage(99901);
 			setValuesVoyage(new Integer(99901), "shipName_99901");
 			long portId = 50420;//Parati
@@ -138,6 +146,7 @@ public class VoyageCalcTest extends TestCase {
 	@Test
 	public void testCalculatePtDepImpByNullValues(){
 		try {	
+			setUpSession();
 			deleteVoyage(99902);
 			setValuesVoyage(new Integer(99902), "shipName_99902");
 			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage, session);			
@@ -152,6 +161,7 @@ public class VoyageCalcTest extends TestCase {
 	@Test
 	public void testCalculateImputedValueFate2(){
 		try {	
+			setUpSession();
 			deleteVoyage(99903);
 			setValuesVoyage(new Integer(99903), "shipName_99903");
 			//add test specific variables in voyage object
@@ -161,6 +171,47 @@ public class VoyageCalcTest extends TestCase {
 			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage, session);			
 			voyageCalc.calculateImputedValueFate2();
 			saveVoyage(voyage);
+			assertEquals(voyage.getFate2().getId().longValue(), 1);
+			voyage = null;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testCalculateImputedValueFate3(){
+		try {	
+			setUpSession();
+			deleteVoyage(99904);
+			setValuesVoyage(new Integer(99904), "shipName_99904");
+			//add test specific variables in voyage object
+			long rigId = 15;
+			Fate fate = Fate.loadById(session, rigId);
+			voyage.setFate(fate);
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage, session);			
+			voyageCalc.calculateImputedValueFate3();
+			saveVoyage(voyage);
+			assertEquals(voyage.getFate3().getId().longValue(), 4);
+			voyage = null;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testCalculateImputedValueFate4(){
+		try {	
+			setUpSession();
+			deleteVoyage(99905);
+			setValuesVoyage(new Integer(99905), "shipName_99905");
+			//add test specific variables in voyage object
+			long rigId = 15;
+			Fate fate = Fate.loadById(session, rigId);
+			voyage.setFate(fate);
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage, session);			
+			voyageCalc.calculateImputedValueFate4();
+			saveVoyage(voyage);
+			assertEquals(voyage.getFate4().getId().longValue(), 3);
 			voyage = null;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -175,6 +226,7 @@ public class VoyageCalcTest extends TestCase {
 	 */	
 	public void testCalculateTslmtimpWithSladvoy(){
 		try {	
+			setUpSession();
 			deleteVoyage(99900);
 			setValuesVoyage(new Integer(99900), "shipName_99900");
 			voyage.setSladvoy(new Integer(75));
@@ -193,8 +245,10 @@ public class VoyageCalcTest extends TestCase {
 		}
 	}
 	
+	@Test
 	public void testCalculateTslmtimpWithAllVars(){
-		try {	
+		try {
+			setUpSession();
 			deleteVoyage(99900);
 			setValuesVoyage(new Integer(99900), "shipName_99900");
 			voyage.setTslavesd(new Integer(100));
