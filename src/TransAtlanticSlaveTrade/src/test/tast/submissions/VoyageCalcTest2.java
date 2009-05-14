@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.dm.Fate;
+import edu.emory.library.tast.dm.FateSlaves;
 import edu.emory.library.tast.dm.Nation;
 import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.dm.Voyage;
@@ -433,5 +434,331 @@ public class VoyageCalcTest2 extends TestCase {
 			e.printStackTrace();
 		}
 	}
+	
+	
 
+	public void testTonmod(){
+		try {	
+			deleteVoyage(99900);
+			
+			//add test specific variables in voyage object
+			setValuesVoyage(new Integer(99900), "shipName_99900");
+			
+			//Input variables for second region calculation
+			voyage.setTontype(4); 
+			voyage.setTonnage(300); 
+			voyage.setYearam(1770); 
+			voyage.setNatinimp(null);
+			
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage, session);			
+			
+			voyageCalc.calculateImputedValueTonmod();
+			
+			saveVoyage(voyage);
+			assertEquals(voyage.getTonmod(), 343.1f);
+			
+			
+			voyage = null;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void testTonmodTest2(){
+		try {	
+			deleteVoyage(99901);
+			
+			//add test specific variables in voyage object
+			setValuesVoyage(new Integer(99901), "shipName_99901");
+			
+			//Input variables for second region calculation
+			voyage.setTontype(4); 
+			voyage.setTonnage(null); 
+			voyage.setYearam(1770); 
+			voyage.setNatinimp(null);
+			
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage, session);			
+			
+			voyageCalc.calculateImputedValueTonmod();
+			
+			saveVoyage(voyage);
+			assertEquals(voyage.getTonmod(), 9999f);
+			
+			
+			voyage = null;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public void testYear(){
+		try {	
+			deleteVoyage(99900);
+			
+			//add test specific variables in voyage object
+			setValuesVoyage(new Integer(99900), "shipName_99900");
+			
+			//Input variables for second region calculation
+			voyage.setYearam(1770); 
+;
+			
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage, session);			
+			
+			voyageCalc.calculateValuesYear();
+			
+			saveVoyage(voyage);
+			assertEquals(voyage.getYear5(), new Integer("49"));
+			assertEquals(voyage.getYear10(), new Integer("27"));
+			assertEquals(voyage.getYear25(), new Integer("11"));
+			assertEquals(voyage.getYear100(), new Integer("1700"));
+			
+			
+			voyage = null;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+ 	
+	public void testSlavesEmbarkDisembark(){
+		try {	
+			deleteVoyage(99900);
+			
+			//add test specific variables in voyage object
+			setValuesVoyage(new Integer(99900), "shipName_99900");
+			
+			//Input variables for second region calculation
+			voyage.setNcar13(10);
+			voyage.setNcar13(20);
+			voyage.setNcar13(30);
+			
+			voyage.setSlas32(10);
+			voyage.setSlas36(20);
+			voyage.setSlas39(30);
+			
+			voyage.setXmimpflag(127d);
+			voyage.setTslavesp(100);
+			voyage.setSlaarriv(75);
+			voyage.setTslavesd(100);
+			voyage.setFate2(FateSlaves.loadById(session, 5)); 
+;
+			
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage, session);			
+			
+			voyageCalc.calculateSlavesEmbarkDisembark();
+			
+			saveVoyage(voyage);
+			assertEquals(voyage.getSlaximp(), new Integer("100"));
+			assertEquals(voyage.getSlamimp(), new Integer("75"));
+						
+			
+			voyage = null;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void testSlavesEmbarkDisembarkTest2(){
+		try {	
+			deleteVoyage(99901);
+			
+			//add test specific variables in voyage object
+			setValuesVoyage(new Integer(99901), "shipName_99901");
+			
+			//Input variables for second region calculation
+			voyage.setNcar13(10);
+			voyage.setNcar13(20);
+			voyage.setNcar13(30);
+			
+			voyage.setSlas32(10);
+			voyage.setSlas36(20);
+			voyage.setSlas39(30);
+			
+			voyage.setXmimpflag(127d);
+			voyage.setTslavesp(100);
+			voyage.setSlaarriv(75);
+			voyage.setTslavesd(100);
+			voyage.setFate2(FateSlaves.loadById(session, 2)); 
+;
+			
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage, session);			
+			
+			voyageCalc.calculateSlavesEmbarkDisembark();
+			
+			saveVoyage(voyage);
+			assertNull(voyage.getSlaximp());
+			assertNull(voyage.getSlamimp());
+						
+			
+			voyage = null;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void testPeople(){
+		try {	
+			deleteVoyage(99900);
+			
+			//add test specific variables in voyage object
+			setValuesVoyage(new Integer(99900), "shipName_99900");
+			
+			//Input variables for second region calculation
+			voyage.setMen1(100);
+			voyage.setWomen1(100);
+			voyage.setBoy1(100);
+			voyage.setGirl1(100);
+			voyage.setChild1(100);
+			voyage.setInfant1(100);
+			voyage.setAdult1(100);
+			voyage.setMen4(400);
+			voyage.setWomen4(400);
+			voyage.setBoy4(400);
+			voyage.setGirl4(400);
+			voyage.setChild4(400);
+			voyage.setInfant4(400);
+			voyage.setAdult4(400);
+			voyage.setMen5(500);
+			voyage.setWomen5(500);
+			voyage.setBoy5(500);
+			voyage.setGirl5(500);
+			voyage.setChild5(500);
+			voyage.setAdult5(500);
+			voyage.setMale1(100);
+			voyage.setFemale1(100);
+			voyage.setMale4(400);
+			voyage.setFemale4(400);
+			voyage.setMale5(500);
+			voyage.setFemale5(500);
+			voyage.setTslavesd(500);
+			voyage.setTslavesp(10);
+			voyage.setMen3(300);
+			voyage.setWomen3(300);
+			voyage.setBoy3(300);
+			voyage.setGirl3(300);
+			voyage.setChild3(300);
+			voyage.setInfant3(300);
+			voyage.setinfantm3(300);
+			voyage.setInfantf3(300);
+			voyage.setAdult3(300);
+			voyage.setMen6(600);
+			voyage.setWomen6(600);
+			voyage.setBoy6(600);
+			voyage.setGirl6(600);
+			voyage.setChild6(600);
+			voyage.setAdult6(600);
+			voyage.setMale3(300);
+			voyage.setFemale3(300);
+			voyage.setMale6(300);
+			voyage.setFemale6(600);
+			voyage.setSlaarriv(10);
+			voyage.setMen2(200);
+			voyage.setWomen2(200);
+			voyage.setBoy2(200);
+			voyage.setGirl2(200);
+			voyage.setChild2(200);
+			voyage.setAdult2(200);
+			voyage.setMale2(200);
+			voyage.setFemale2(200);
+			 
+;
+			
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage, session);			
+			
+			voyageCalc.calculateValuesPeople();
+			
+			saveVoyage(voyage);
+			assertEquals(voyage.getAdlt1imp(), new Integer("3000"));
+			assertEquals(voyage.getBoyrat1(), new Double("0.25"));
+			//assertNull(voyage.getSlamimp());
+						
+			
+			voyage = null;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void testPeopleTest2(){
+		try {	
+			deleteVoyage(99901);
+			
+			//add test specific variables in voyage object
+			setValuesVoyage(new Integer(99901), "shipName_99901");
+			
+			//Input variables for second region calculation
+			//voyage.setMen1(100);
+			//voyage.setWomen1(100);
+			voyage.setBoy1(100);
+			voyage.setGirl1(100);
+			voyage.setChild1(100);
+			voyage.setInfant1(100);
+			//voyage.setAdult1(100);
+			//voyage.setMen4(400);
+			//voyage.setWomen4(400);
+			voyage.setBoy4(400);
+			voyage.setGirl4(400);
+			voyage.setChild4(400);
+			voyage.setInfant4(400);
+			//voyage.setAdult4(400);
+			//voyage.setMen5(500);
+			//voyage.setWomen5(500);
+			voyage.setBoy5(500);
+			voyage.setGirl5(500);
+			voyage.setChild5(500);
+			//voyage.setAdult5(500);
+			voyage.setMale1(100);
+			voyage.setFemale1(100);
+			voyage.setMale4(400);
+			voyage.setFemale4(400);
+			voyage.setMale5(500);
+			voyage.setFemale5(500);
+			voyage.setTslavesd(5000);
+			voyage.setTslavesp(10);
+			voyage.setMen3(300);
+			voyage.setWomen3(300);
+			voyage.setBoy3(300);
+			voyage.setGirl3(300);
+			voyage.setChild3(300);
+			voyage.setInfant3(300);
+			voyage.setinfantm3(300);
+			voyage.setInfantf3(300);
+			voyage.setAdult3(300);
+			voyage.setMen6(600);
+			voyage.setWomen6(600);
+			voyage.setBoy6(600);
+			voyage.setGirl6(600);
+			voyage.setChild6(600);
+			voyage.setAdult6(600);
+			voyage.setMale3(300);
+			voyage.setFemale3(300);
+			voyage.setMale6(300);
+			voyage.setFemale6(600);
+			voyage.setSlaarriv(2000);
+			voyage.setMen2(200);
+			voyage.setWomen2(200);
+			voyage.setBoy2(200);
+			voyage.setGirl2(200);
+			voyage.setChild2(200);
+			voyage.setAdult2(200);
+			voyage.setMale2(200);
+			voyage.setFemale2(200);
+			 
+;
+			
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage, session);			
+			
+			voyageCalc.calculateValuesPeople();
+			
+			saveVoyage(voyage);
+			assertEquals(voyage.getAdlt1imp(), new Integer("1500"));
+			
+			voyage = null;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
 }
