@@ -91,7 +91,8 @@ public class VoyageCalcTest extends TestCase {
 		//suite.addTest(new VoyageCalcTest("testCalculateValueMajbuypt"));
 		//suite.addTest(new VoyageCalcTest("testCalculateValueMajbuyptNullValues"));
 		//suite.addTest(new VoyageCalcTest("testCalculateValueMajbuyptVariableValues"));
-		suite.addTest(new VoyageCalcTest("testCalculateValueMajbuyptVariableValues1"));
+		//suite.addTest(new VoyageCalcTest("testCalculateValueMajbuyptVariableValues1"));
+		suite.addTest(new VoyageCalcTest("testCalculateValueMajselptVariableValues"));
 									
 		return suite;
 	}
@@ -421,6 +422,48 @@ public class VoyageCalcTest extends TestCase {
 				
 				VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage, session);			
 				voyageCalc.calculateValueMajbuypt();
+				saveVoyage(voyage);				
+				voyage = null;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testCalculateValueMajselptVariableValues(){
+		try {			
+			//double rslt_sla = slastot.doubleValue()/slaarriv_doub;			 
+			long[] sla1portArray = {10112, 0, 10112, 10480, 0, 10112};
+			long[] adpsale1Array = {10106, 37010, 0, 80199, 0, 0};
+			long[] adpsale2Array = {35113, 32140, 32120, 0, 35113, 0};
+			Integer[] shipName = {99900, 99901, 99902, 99903, 99904, 99005};
+			Integer[] slas32Array = {20, null, 30, 40, null, 50};
+			Integer[] slas36Array = {10, 20, null, 30, null, null};
+			Integer[] slas39Array = {5, 10, 20, null, 30, null};
+			
+			Integer[] slaarrivArray = {null, 1000, 2000, null, 3000, 500};
+						
+			for (int i=0; i < sla1portArray.length; i++){
+				setUpSession();
+				deleteVoyage((Integer)shipName[i]);
+				setValuesVoyage((Integer)shipName[i], "shipName_"+ shipName[i]);
+				Port sla1port = Port.loadById(session, (long)sla1portArray[i]);
+				Port adpsale1 = Port.loadById(session, (long)adpsale1Array[i]);
+				Port adpsale2 = Port.loadById(session, (long)adpsale2Array[i]);
+				voyage.setSla1port(sla1port);
+				voyage.setAdpsale1(adpsale1);
+				voyage.setAdpsale2(adpsale2);
+				
+				voyage.setSlas32(slas32Array[i]);
+				voyage.setSlas36(slas36Array[i]);
+				voyage.setSlas39(slas39Array[i]);
+			
+				voyage.setSlaarriv(slaarrivArray[i]);
+				
+				VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage, session);			
+				voyageCalc.calculateValueMajselpt();
 				saveVoyage(voyage);				
 				voyage = null;
 			}
