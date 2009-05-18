@@ -91,8 +91,8 @@ public class VoyageCalcTest extends TestCase {
 		//suite.addTest(new VoyageCalcTest("testCalculateValueMajbuypt"));
 		//suite.addTest(new VoyageCalcTest("testCalculateValueMajbuyptNullValues"));
 		//suite.addTest(new VoyageCalcTest("testCalculateValueMajbuyptVariableValues"));
-		//suite.addTest(new VoyageCalcTest("testCalculateValueMajbuyptVariableValues1"));
-		suite.addTest(new VoyageCalcTest("testCalculateValueMajselptVariableValues"));
+		suite.addTest(new VoyageCalcTest("testCalculateValueMajbuyptVariableValues1"));
+		//suite.addTest(new VoyageCalcTest("testCalculateValueMajselptVariableValues"));
 									
 		return suite;
 	}
@@ -391,13 +391,13 @@ public class VoyageCalcTest extends TestCase {
 			long[] port1Array = {10112, 10112, 10480, 42001, 0, 10112};
 			long[] port2Array = {10106, 0, 37010, 80199, 0, 37010};
 			long[] port3Array = {35113, 32140, 0, 32120, 0, 35113};
-			Integer[] shipName = {99900, 99901, 99902, 99903, 99904, 99005};
+			Integer[] shipName = {99900, 99901, 99902, 99903, 99904, 99905};
 			Integer[] ncar13Array = {0, 20, 30, 40, 0, 10};
 			Integer[] ncar15Array = {50, 0, 70, 80, 0, 10};
 			Integer[] ncar17Array = {100, 200, 0, 400, 0, 10};
 			Integer[] tslavesdArray = {null, 10, 10, null, null, null};
 			Integer[] tslavespArray = {null, 20, 20, 20, null, null};
-			
+			Integer[] rsltArray = {35113, 10112, 37010, 42001, null, 35113};
 			for (int i=0; i < port1Array.length; i++){
 				setUpSession();
 				deleteVoyage((Integer)shipName[i]);
@@ -422,7 +422,10 @@ public class VoyageCalcTest extends TestCase {
 				
 				VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage, session);			
 				voyageCalc.calculateValueMajbuypt();
-				saveVoyage(voyage);				
+				saveVoyage(voyage);		
+				if (voyage.getMajbuypt() != null) {
+					assertEquals(voyage.getMajbuypt().getId().longValue(), (long)rsltArray[i]);
+				}
 				voyage = null;
 			}
 			
@@ -438,12 +441,12 @@ public class VoyageCalcTest extends TestCase {
 			long[] sla1portArray = {10112, 0, 10112, 10480, 0, 10112};
 			long[] adpsale1Array = {10106, 37010, 0, 80199, 0, 0};
 			long[] adpsale2Array = {35113, 32140, 32120, 0, 35113, 0};
-			Integer[] shipName = {99900, 99901, 99902, 99903, 99904, 99005};
+			Integer[] shipName = {99900, 99901, 99902, 99903, 99904, 99905};
 			Integer[] slas32Array = {20, null, 30, 40, null, 50};
 			Integer[] slas36Array = {10, 20, null, 30, null, null};
-			Integer[] slas39Array = {5, 10, 20, null, 30, null};
-			
+			Integer[] slas39Array = {5, 10, 20, null, 30, null};					
 			Integer[] slaarrivArray = {null, 1000, 2000, null, 3000, 500};
+			Integer[] rsltArray = {10112, null, 10112, 10480, 35113, 10112};
 						
 			for (int i=0; i < sla1portArray.length; i++){
 				setUpSession();
@@ -464,7 +467,10 @@ public class VoyageCalcTest extends TestCase {
 				
 				VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage, session);			
 				voyageCalc.calculateValueMajselpt();
-				saveVoyage(voyage);				
+				saveVoyage(voyage);			
+				if (voyage.getMajselpt() != null) {
+					assertEquals(voyage.getMajselpt().getId().longValue(), (long)rsltArray[i]);
+				}
 				voyage = null;
 			}
 			
