@@ -429,13 +429,13 @@ public class VoyageCalcTest extends TestCase {
 			Integer[] shipName = {99900, 99901, 99902, 99903, 99904, 99905};
 			long[] rigArray = {29, 0, 90, 10, 25, 0};
 			//int[] rigArray = {29, 42, 43, 54, 59, 61, 65, 80, 86};
-			long[] yearamArray = {1500, 1720, 1500, 1710, 1800, 0};
+			Integer[] yearamArray = {1500, 1720, 1500, 1710, 1800, null};
 			long[] majbyimpArray = {20, 0, 60100, 60600, 0, 0};
 			long[] mjselimpArray = {80400, 0, 36200, 0, 50200, 0};
 			long[] mjselimp1Array = {80400, 0, 36200, 0, 50200, 0};
 			long[] natinimpArray = {20, 0, 30, 15, 20, 9};
 
-			Integer[] rsltArray = {10112, null, 10112, 10480, 35113, 10112};
+			double[] rsltArray = {1, 130, 101, 114, 13, 0};
 						
 			for (int i=0; i < rigArray.length; i++){
 				setUpSession();
@@ -451,13 +451,14 @@ public class VoyageCalcTest extends TestCase {
 				voyage.setMjselimp1(mjselimp1);
 				Nation natinimp = Nation.loadById(session, (long)natinimpArray[i]);
 				voyage.setNatinimp(natinimp);				
+				voyage.setYearam((Integer)yearamArray[i]);
 								
 				VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage, session);			
 				voyageCalc.calculateXmImpflag();
 				saveVoyage(voyage);			
-				/*if (voyage.getMajselpt() != null) {
-					assertEquals(voyage.getMajselpt().getId().longValue(), (long)rsltArray[i]);
-				}*/
+				if (voyage.getXmimpflag() != null) {
+					assertEquals(voyage.getXmimpflag().doubleValue(), (double)rsltArray[i]);
+				}
 				voyage = null;
 			}
 			
