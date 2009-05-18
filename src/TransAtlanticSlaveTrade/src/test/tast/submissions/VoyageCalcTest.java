@@ -1,5 +1,7 @@
 package test.tast.submissions;
 
+import java.util.Arrays;
+
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
@@ -11,7 +13,10 @@ import org.junit.Test;
 
 import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.dm.Fate;
+import edu.emory.library.tast.dm.Nation;
 import edu.emory.library.tast.dm.Port;
+import edu.emory.library.tast.dm.Region;
+import edu.emory.library.tast.dm.VesselRig;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.submission.VoyagesCalculation;
 
@@ -88,11 +93,12 @@ public class VoyageCalcTest extends TestCase {
 		//suite.addTest(new VoyageCalcTest("testCalculatePtDepImpByNullValues"));	
 		//suite.addTest(new VoyageCalcTest("testCalculateTslmtimp"));
 		//suite.addTest(new VoyageCalcTest("testCalculateTslmtimpWithAllVars"));
-		//suite.addTest(new VoyageCalcTest("testCalculateValueMajbuypt"));
-		//suite.addTest(new VoyageCalcTest("testCalculateValueMajbuyptNullValues"));
 		//suite.addTest(new VoyageCalcTest("testCalculateValueMajbuyptVariableValues"));
-		suite.addTest(new VoyageCalcTest("testCalculateValueMajbuyptVariableValues1"));
+		//suite.addTest(new VoyageCalcTest("testCalculateValueMajbuyptVariableValues1"));
 		//suite.addTest(new VoyageCalcTest("testCalculateValueMajselptVariableValues"));
+		suite.addTest(new VoyageCalcTest("testCalculateXmImpflag"));
+		//suite.addTest(new VoyageCalcTest("testBinarySearch"));
+		
 									
 		return suite;
 	}
@@ -265,69 +271,7 @@ public class VoyageCalcTest extends TestCase {
 			e.printStackTrace();
 		}
 	}
-	
-	@Test
-	public void testCalculateValueMajbuypt(){
-		try {
-			setUpSession();
-			deleteVoyage(99900);
-			setValuesVoyage(new Integer(99900), "shipName_99900");
-			//setup data
-			long portId = 50105;//Rio Amazona
-			Port plac1tra = Port.loadById(session, portId);
-			voyage.setPlac1tra(plac1tra);
-			//plac2tra
-			//plac3tra
-			
-			voyage.setNcar13(new Integer(20));
-			voyage.setNcar15(new Integer(40));
-			voyage.setNcar17(new Integer(60));
-			
-			voyage.setTslavesd(new Integer(10));
-			voyage.setTslavesp(new Integer(20));
-			
-			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage, session);			
-			voyageCalc.calculateValueMajbuypt();
-			saveVoyage(voyage);
-			assertEquals(voyage.getMajbuypt().getId().longValue(), 50105);
-			voyage = null;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	@Test
-	public void testCalculateValueMajbuyptNullValues(){
-		try {
-			setUpSession();
-			deleteVoyage(99900);
-			Integer[] portArray = {10112, 10480, 35112, 42001, 50303};
-			setValuesVoyage(new Integer(99900), "shipName_99900");
-			//setup data
-			long portId = 50105;//Rio Amazona
-			Port plac1tra = Port.loadById(session, portId);
-			voyage.setPlac1tra(plac1tra);
-			//plac2tra
-			//plac3tra
-			
-			voyage.setNcar13(new Integer(20));
-			voyage.setNcar15(new Integer(40));
-			voyage.setNcar17(new Integer(60));
-			
-			//rslt_d = ncartot.doubleValue()/tslavesd_int;
-			voyage.setTslavesd(new Integer(10));
-			//voyage.setTslavesp(new Integer(20));
-			
-			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage, session);			
-			voyageCalc.calculateValueMajbuypt();
-			saveVoyage(voyage);
-			assertEquals(voyage.getMajbuypt().getId().longValue(), 50105);
-			voyage = null;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
+		
 	@Test
 	public void testCalculateValueMajbuyptVariableValues(){
 		try {
@@ -477,6 +421,63 @@ public class VoyageCalcTest extends TestCase {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@Test
+	public void testCalculateXmImpflag(){
+		try {			
+			Integer[] shipName = {99900, 99901, 99902, 99903, 99904, 99905};
+			long[] rigArray = {29, 0, 90, 10, 25, 0};
+			//int[] rigArray = {29, 42, 43, 54, 59, 61, 65, 80, 86};
+			long[] yearamArray = {1500, 1720, 1500, 1710, 1800, 0};
+			long[] majbyimpArray = {20, 0, 60100, 60600, 0, 0};
+			long[] mjselimpArray = {80400, 0, 36200, 0, 50200, 0};
+			long[] mjselimp1Array = {80400, 0, 36200, 0, 50200, 0};
+			long[] natinimpArray = {20, 0, 30, 15, 20, 9};
+
+			Integer[] rsltArray = {10112, null, 10112, 10480, 35113, 10112};
+						
+			for (int i=0; i < rigArray.length; i++){
+				setUpSession();
+				deleteVoyage((Integer)shipName[i]);
+				setValuesVoyage((Integer)shipName[i], "shipName_"+ shipName[i]);
+				VesselRig rig = VesselRig.loadById(session, (long)rigArray[i]);
+				voyage.setRig(rig);
+				Region majbyimp = Region.loadById(session, (long)majbyimpArray[i]);
+				voyage.setMajbyimp(majbyimp);
+				Region mjselimp = Region.loadById(session, (long)mjselimpArray[i]);
+				voyage.setMjselimp(mjselimp);
+				Region mjselimp1 = Region.loadById(session, (long)mjselimp1Array[i]);
+				voyage.setMjselimp1(mjselimp1);
+				Nation natinimp = Nation.loadById(session, (long)natinimpArray[i]);
+				voyage.setNatinimp(natinimp);				
+								
+				VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage, session);			
+				voyageCalc.calculateXmImpflag();
+				saveVoyage(voyage);			
+				/*if (voyage.getMajselpt() != null) {
+					assertEquals(voyage.getMajselpt().getId().longValue(), (long)rsltArray[i]);
+				}*/
+				voyage = null;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testBinarySearch(){
+		int[] rigArray = {29, 42, 43, 54, 59, 61, 65, 80, 86};
+		int rig = 29;
+		int rig1 = 30;
+		   
+		int a = Arrays.binarySearch(rigArray, rig);
+		int b = Arrays.binarySearch(rigArray, rig1);
+		
+		System.out.println("a:" + a);
+		System.out.println("b:" + b);
+		
 	}
 
 }
