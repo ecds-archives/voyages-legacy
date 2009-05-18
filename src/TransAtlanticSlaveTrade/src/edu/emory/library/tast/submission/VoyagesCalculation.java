@@ -2,6 +2,7 @@ package edu.emory.library.tast.submission;
 
 import java.math.BigDecimal;
 import java.util.Calendar;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -200,8 +201,21 @@ public class VoyagesCalculation {
 		Integer ncartot = defVal(ncar13, 0)+ defVal(ncar15, 0)+ defVal(ncar17, 0);
 		/*rslt_d = ncartot.doubleValue()/tslavesd_int;
 		rslt_p = ncartot.doubleValue()/tslavesp_int;*/		
-		rslt_d = tslavesd_int/ncartot.doubleValue();
-		rslt_p = tslavesp_int/ncartot.doubleValue();
+		rslt_d = ncartot.doubleValue()/tslavesd_int;
+		rslt_p = ncartot.doubleValue()/tslavesp_int;
+		
+		System.out.println("plac1tra_int:" + plac1tra_int);
+		System.out.println("plac2tra_int:" + plac2tra_int);
+		System.out.println("plac3tra_int:" + plac3tra_int);
+		System.out.println("ncar13:" + ncar13);
+		System.out.println("ncar15:" + ncar15);
+		System.out.println("ncar17:" + ncar17);
+		
+		System.out.println("ncartort:" + ncartot);
+		System.out.println("tslavesd:" + tslavesd);
+		System.out.println("tslavesp:" + tslavesp);
+		System.out.println("rslt_d:" + rslt_d);
+		System.out.println("rslt_p:" + rslt_p);
 		
 		if (plac1tra_int >= 1 && plac2tra==null && plac3tra==null) {
 			majbuypt = plac1tra;
@@ -213,22 +227,22 @@ public class VoyagesCalculation {
 	    	majbuypt = plac3tra;
 	    }
 		else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra==null && 
-		    		(rslt_d >= 0.5d) && (ncar13_int >= ncar15_int)) {
+		    		(tslavesd != null && rslt_d >= 0.5d) && (ncar13_int >= ncar15_int)) {
 		    	majbuypt = plac1tra;
 		}
 		else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra==null && 
-				(rslt_d >= 0.5d) && (ncar15_int >= ncar13_int)) {
+				(tslavesd != null && rslt_d >= 0.5d) && (ncar15_int >= ncar13_int)) {
 			majbuypt = plac2tra;
 		}
 		else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra==null && 
-				tslavesd==null && (rslt_p >= 0.5d) && (ncar13_int >= ncar15_int)) {
+				tslavesd==null && (tslavesp != null && rslt_p >= 0.5d) && (ncar13_int >= ncar15_int)) {
 			majbuypt = plac1tra;
 		}
 		else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra==null && 
-				tslavesd==null && rslt_p >= 0.5d && ncar15_int >= ncar13_int) {
+				tslavesd==null && tslavesp != null && rslt_p >= 0.5d && ncar15_int >= ncar13_int) {
 			majbuypt = plac2tra;
 		}
-		else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra==null && rslt_d < 0.5d && ncar13_int < ncar15_int) {
+		else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra==null && tslavesd != null && rslt_d < 0.5d && ncar13_int < ncar15_int) {
 			majbuypt = plac1tra;
 		}
 		else if (plac1tra_int >= 1 && plac2tra_int >= 1 && plac3tra==null && tslavesd==null && tslavesp==null && ncar13_int >= ncar15_int) {
@@ -246,40 +260,40 @@ public class VoyagesCalculation {
 		else  if (plac2tra_int >=1 && plac3tra_int >=1 && plac1tra==null) {
 			majbuypt = plac2tra;
 		}
-		else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && rslt_d >= 0.5d && ncar13_int >= ncar15_int && ncar13_int >= ncar17_int) {
+		else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && tslavesd != null && rslt_d >= 0.5d && ncar13_int >= ncar15_int && ncar13_int >= ncar17_int) {
 			majbuypt = plac1tra;
 		}
-		else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && tslavesd==null && rslt_p >= 0.5d && ncar13_int >= ncar15_int && ncar13_int >= ncar17_int) {
+		else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && tslavesd==null && tslavesp != null && rslt_p >= 0.5d && ncar13_int >= ncar15_int && ncar13_int >= ncar17_int) {
 			majbuypt = plac1tra;
 		}
-		else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && rslt_d >= 0.5d && ncar15_int >= ncar13_int && ncar15_int >= ncar17_int) {
+		else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && tslavesd != null && rslt_d >= 0.5d && ncar15_int >= ncar13_int && ncar15_int >= ncar17_int) {
 			majbuypt = plac2tra;
 		}
-		else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && tslavesd==null && rslt_p >= 0.5d && ncar15_int >= ncar13_int && ncar15_int >= ncar17_int) {
+		else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && tslavesd==null && tslavesp != null && rslt_p >= 0.5d && ncar15_int >= ncar13_int && ncar15_int >= ncar17_int) {
 			majbuypt = plac2tra;
 		}
-		else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && rslt_d >= 0.5d && ncar17_int >= ncar13_int && ncar17_int >= ncar15_int) {
+		else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && tslavesd != null && rslt_d >= 0.5d && ncar17_int >= ncar13_int && ncar17_int >= ncar15_int) {
 	    	majbuypt = plac3tra;
 	    }
-	    else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && tslavesd==null && rslt_p >= 0.5d && ncar17_int >= ncar13_int && ncar17_int >= ncar15_int) {
+	    else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && tslavesd==null && tslavesp != null && rslt_p >= 0.5d && ncar17_int >= ncar13_int && ncar17_int >= ncar15_int) {
 	    	majbuypt = plac1tra;
 	    }
-	    else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && rslt_d < 0.5d && ncar13_int==0) {
+	    else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && tslavesd != null && rslt_d < 0.5d && ncar13_int==0) {
 	    	majbuypt = plac1tra;
 	    }
-	    else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && rslt_d < 0.5d && ncar13_int>=1 && ncar15_int==0 && ncar17_int==0) {
+	    else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && tslavesd != null && rslt_d < 0.5d && ncar13_int>=1 && ncar15_int==0 && ncar17_int==0) {
 	    	majbuypt = plac3tra;
 	    }
-	    else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && rslt_d < 0.5d && ncar13_int>=1 && ncar15_int>=1 && ncar17_int==0) {
+	    else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && tslavesd != null && rslt_d < 0.5d && ncar13_int>=1 && ncar15_int>=1 && ncar17_int==0) {
 	    	majbuypt = plac3tra;
 	    }
-	    else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && tslavesd==null && rslt_p < 0.5d && ncar13_int==0) {
+	    else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && tslavesd==null && tslavesp != null && rslt_p < 0.5d && ncar13_int==0) {
 	    	majbuypt = plac1tra;
 	    }
-	    else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && tslavesd==null && rslt_p < 0.5d && ncar13_int>=1 && ncar15_int==0 && ncar17_int==0) {
+	    else if (plac1tra_int >=1 && plac2tra_int >=1 && plac3tra_int >= 1 && tslavesd==null && tslavesp != null && rslt_p < 0.5d && ncar13_int>=1 && ncar15_int==0 && ncar17_int==0) {
 	    	majbuypt = plac3tra;
 	    }
-	    else if (tslavesd==null && tslavesp==null && ncartot.intValue() >=1 && plac1tra_int >= 1 && plac2tra_int >= 1 && plac3tra_int >= 1) {
+	    else if (tslavesd==null && tslavesp==null && ncartot >=1 && plac1tra_int >= 1 && plac2tra_int >= 1 && plac3tra_int >= 1) {
 	    	majbuypt = plac3tra;
 	    }
 	    else if (ncartot==null && plac1tra_int >= 1 && plac2tra_int >= 1 && plac3tra_int >= 1) {
@@ -291,8 +305,9 @@ public class VoyagesCalculation {
         //if Port is not null, then set the value in voyage 
         if (majbuypt != null){
 			voyage.setMajbuypt(majbuypt);
+			System.out.println("majbuypt:" + majbuypt.getId() + ":" + majbuypt);
 		}
-	    
+        
 	}
 	
 	/*
@@ -307,6 +322,12 @@ public class VoyagesCalculation {
 		 double slaarriv_doub = 0d;
 		 Port majselpt = null;
 		 
+		 /*
+		  * slas32 - Slaves disembarked at first port(numbers)
+		  * slas36 - Slaves disembarked at second port
+		  * slas39 - Slaves disembarked at third port
+		  * slaarriv - Total slaves arrived at first port of disembarkation
+		  */
 		 Integer slas32 = voyage.getSlas32();
 		 Integer slas36 = voyage.getSlas36();
 		 Integer slas39 = voyage.getSlas39();
@@ -319,11 +340,25 @@ public class VoyagesCalculation {
 		 }
 		 
 		 double rslt_sla = slastot.doubleValue()/slaarriv_doub;
-		 
+		 /*
+		  * sla1port - First place of landing
+		  * adpsale1 - Second place of landing
+		  * adpsale2 - Third place of landing
+		  */
 		 Port sla1port = voyage.getSla1port();
 		 Port adpsale1 = voyage.getAdpsale1();
 		 Port adpsale2 = voyage.getAdpsale2();
 		 
+		 System.out.println("sla1port:" + sla1port);
+		 System.out.println("adpsale1:" + adpsale1);
+		 System.out.println("adpsale2:" + adpsale2);
+		 System.out.println("slaarriv:" + slaarriv);
+		 System.out.println("slas32:" + slas32);
+		 System.out.println("slas36:" + slas36);
+		 System.out.println("slas39:" + slas39);
+		 System.out.println("slastot:" + slastot);
+		 System.out.println("rslt_sla:" + rslt_sla);
+		 		 
 		 if (sla1port != null) {
 			 sla1port_int = sla1port.getId().intValue();
 		 }
@@ -334,25 +369,25 @@ public class VoyagesCalculation {
 		  adpsale2_int = adpsale2.getId().intValue();
 		 }		 
 		 
-	     if (sla1port_int >= 1 && adpsale1_int==0 && adpsale2_int ==0) {
+	     if (sla1port_int >= 1 && adpsale1==null && adpsale2==null) {
 	    	 majselpt = sla1port;
 	     }
-	     else if (adpsale1_int  >= 1 && sla1port==null && adpsale2==null) {
+	     else if (sla1port==null && adpsale1_int  >= 1 && adpsale2==null) {
 	    	 majselpt = adpsale1;
 	     }
-	     else if (adpsale2_int >= 1 && sla1port==null && adpsale1 == null) {
+	     else if (sla1port==null && adpsale1 == null && adpsale2_int >= 1) {
 	    	 majselpt = adpsale2;
 	     }
-	     else if (sla1port_int  >=1 && adpsale1_int  >=1 && adpsale2==null && rslt_sla >= 0.5d && slas32 >= slas36) {
+	     else if (sla1port_int  >=1 && adpsale1_int  >=1 && adpsale2==null && slaarriv != null && rslt_sla >= 0.5d && slas32 >= slas36) {
 	    	 majselpt = sla1port;
 	     }
-	     else if (sla1port_int >=1 && adpsale1_int >=1 && adpsale2==null && rslt_sla >= 0.5d && slas36 >= slas32) {
+	     else if (sla1port_int >=1 && adpsale1_int >=1 && adpsale2==null && slaarriv != null && rslt_sla >= 0.5d && slas36 >= slas32) {
 	    	 majselpt = adpsale1;
 	     }
-	     else if (sla1port_int >=1 && adpsale1_int >=1 && adpsale2==null && rslt_sla < 0.5d && slas32 < slas36) {
+	     else if (sla1port_int >=1 && adpsale1_int >=1 && adpsale2==null && slaarriv != null && rslt_sla < 0.5d && slas32 < slas36) {
 	    	 majselpt = sla1port;
 	     }
-	     else if (sla1port_int >=1 && adpsale1_int >=1 && adpsale2==null && rslt_sla < 0.5d && slas36 < slas32) {
+	     else if (sla1port_int >=1 && adpsale1_int >=1 && adpsale2==null && slaarriv != null && rslt_sla < 0.5d && slas36 < slas32) {
 	    	 majselpt = adpsale1;
 	     }
 	     else if (slastot==null && sla1port_int >= 1 && adpsale1_int >= 1 && adpsale2==null) {
@@ -370,25 +405,25 @@ public class VoyagesCalculation {
 	     else if (sla1port_int >=1 && adpsale2_int >=1 && adpsale1 == null) {
 	    	 majselpt = sla1port;
 	     }
-	     else if (sla1port_int >=1 && adpsale1_int >=1 && adpsale2_int >= 1 && rslt_sla >= 0.5d && slas32 >= slas36 && slas32 >= slas39) {
+	     else if (slaarriv != null && sla1port_int >=1 && adpsale1_int >=1 && adpsale2_int >= 1 && rslt_sla >= 0.5d && slas32 >= slas36 && slas32 >= slas39) {
 	    	 majselpt = sla1port;
 	     }
-	     else if (sla1port_int >=1 && adpsale1_int >=1 && adpsale2_int >= 1 && rslt_sla >= 0.5d && slas36 >= slas32 && slas36 >= slas39) {
+	     else if (slaarriv != null && sla1port_int >=1 && adpsale1_int >=1 && adpsale2_int >= 1 && rslt_sla >= 0.5d && slas36 >= slas32 && slas36 >= slas39) {
 	    	majselpt = adpsale1;
 	     }
-	     else if (sla1port_int >=1 && adpsale1_int >=1 && adpsale2_int >= 1 && rslt_sla >= 0.5d && slas39 >= slas32 && slas39 >= slas36) {
+	     else if (slaarriv != null && sla1port_int >=1 && adpsale1_int >=1 && adpsale2_int >= 1 && rslt_sla >= 0.5d && slas39 >= slas32 && slas39 >= slas36) {
 	    	 majselpt = adpsale2;
 	     }
-	     else if (sla1port_int >=1 && adpsale1_int >=1 && adpsale2_int >= 1 && rslt_sla < 0.5d && slas32 == 0) {
+	     else if (slaarriv != null && sla1port_int >=1 && adpsale1_int >=1 && adpsale2_int >= 1 && rslt_sla < 0.5d && slas32 == 0) {
 	    	 majselpt = sla1port;
 	     }
-	     else if (sla1port_int >=1 && adpsale1_int >=1 && adpsale2_int >= 1 && rslt_sla < 0.5d && slas32 >=1 && slas36==0) {
+	     else if (slaarriv != null && sla1port_int >=1 && adpsale1_int >=1 && adpsale2_int >= 1 && rslt_sla < 0.5d && slas32 >=1 && slas36==0) {
 	    	 majselpt = adpsale1;
 	     }
-	     else if (sla1port_int >=1 && adpsale1_int >=1 && adpsale2_int >= 1 && rslt_sla < 0.5d && slas32 >=1 && slas39==0) {
+	     else if (slaarriv != null && sla1port_int >=1 && adpsale1_int >=1 && adpsale2_int >= 1 && rslt_sla < 0.5d && slas32 >=1 && slas39==0) {
 	    	 majselpt = adpsale2;
 	     }
-	     else if (slaarriv==null && slastot.intValue() >=1 && sla1port_int >= 1 && adpsale1_int >= 1 && adpsale2_int >= 1 && slas32 >= slas36 && slas32 >= slas39) {
+	     else if (slaarriv==null && slastot >=1 && sla1port_int >= 1 && adpsale1_int >= 1 && adpsale2_int >= 1 && slas32 >= slas36 && slas32 >= slas39) {
 	    	 majselpt = sla1port;
 	     }
 	     else if (slaarriv==null && slastot >=1 && sla1port_int >= 1 && adpsale1_int >= 1 && adpsale2_int >= 1 && slas36 >= slas32 && slas36 >= slas39) {
@@ -407,7 +442,10 @@ public class VoyagesCalculation {
 	    	 majselpt = sla1port;
 	     }
 	     
-	     voyage.setMajselpt(majselpt);
+	     if (majselpt != null) {
+		     voyage.setMajselpt(majselpt);
+		     System.out.println("majselpt:" + majselpt.getId() + ":" + majselpt);
+	     }
 
 	}
 	
@@ -2503,34 +2541,26 @@ public class VoyagesCalculation {
 			mjselimp1_int = mjselimp1.getId().intValue();
 		}
 				
+	    int[] rigArray = {29, 42, 43, 54, 59, 61, 65, 80, 86};
+	    Arrays.sort(rigArray);
 	    
-		if  ((rig_int==26 || rig_int==29 || rig_int==42 || rig_int==43 || rig_int==54 || rig_int==59 || rig_int==61 || rig_int==65 || rig_int== 80 || rig_int==86 || rig==null)
-		    && yearam >= 1626 && yearam < 1651) {xmimpflag = 127d ;}
-		else if  ((rig_int==26 || rig_int==29 || rig_int==42 || rig_int==43 || rig_int==54 || rig_int==59 || rig_int==61 || rig_int==65 || rig_int==80 || rig_int==86 || rig==null)
-		    && yearam >= 1651 && yearam < 1676) {xmimpflag = 128d ;}
-		else if   ((rig_int==26 || rig_int==29 || rig_int==42 || rig_int==43 || rig_int==54 || rig_int==59 || rig_int==61 || rig_int==65 || rig_int== 80 || rig_int==86 || rig==null)
-		    && yearam >= 1676 && yearam < 1701) {xmimpflag = 129d ;}
-		else if   ((rig_int==26 || rig_int==29 || rig_int==42 || rig_int==43 || rig_int==54 || rig_int==59 || rig_int==61 || rig_int==65 || rig_int==80 || rig_int==86 || rig==null)
-		    && yearam >= 1701 && yearam < 1726) {xmimpflag = 130d;}
-		else if   ((rig_int==26 || rig_int==29 || rig_int==42 || rig_int==43 || rig_int==54 || rig_int==59 || rig_int==61 || rig_int==65 || rig_int==80 || rig_int==86 || rig==null)
-		    && yearam >= 1726 && yearam < 1751) {xmimpflag = 131d;}
-		else if   ((rig_int==26 || rig_int==29 || rig_int==42 || rig_int==43 || rig_int==54 || rig_int==59 || rig_int==61 || rig_int==65 || rig_int==80 || rig_int==86 || rig==null)
-		   && yearam >= 1751 && yearam < 1776) {xmimpflag = 132d;}
-		else if   ((rig_int==26 || rig_int==29 || rig_int==42 || rig_int==43 || rig_int==54 || rig_int==59 || rig_int==61 || rig_int==65 || rig_int==80 || rig_int==86 || rig==null)
-		   && yearam >= 1776 && yearam < 1801) {xmimpflag = 133d;}
-		else if   ((rig_int==26 || rig_int==29 || rig_int==42 || rig_int==43 || rig_int==54 || rig_int==59 || rig_int==61 || rig_int==65 || rig_int==80 || rig_int==86 || rig==null)
-		   && yearam >= 1801 && yearam < 1826) {xmimpflag = 134d;}
-		else if   ((rig_int==26 || rig_int==29 || rig_int==42 || rig_int==43 || rig_int==54 || rig_int==59 || rig_int==61 || rig_int==65 || rig_int==80 || rig_int==86 || rig==null)
-		   && yearam >= 1826 && yearam < 1851) {xmimpflag = 135d;}
-		else if   ((rig_int==26 || rig_int==29 || rig_int==42 || rig_int==43 || rig_int==54 || rig_int==59 || rig_int==61 || rig_int==65 || rig_int==80 || rig_int==86 || rig==null)
-		   && yearam >= 1851 && yearam < 1876) {xmimpflag = 136d;}
-	
-		else if   (yearam < 1700 && majbyimp_int == 60100) {xmimpflag = 101d;}
-		else if   (yearam >= 1700 && yearam < 1801 && majbyimp_int == 60100) {xmimpflag = 102d;}
-		else if   (yearam >=1800 && majbyimp_int == 60100) {xmimpflag = 103d;}
-		else if   (yearam < 1700 && majbyimp_int == 60200) {xmimpflag = 104d;}
-		else if   (yearam >= 1700 && yearam < 1801 && majbyimp_int == 60200) {xmimpflag = 105d;}
-		else if   (yearam >=1800 && majbyimp_int == 60200) {xmimpflag = 106d;}
+		if  (rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0 && (yearam >= 1626 && yearam < 1651)) {xmimpflag = 127d ;}			
+		else if  (rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0 && (yearam >= 1626 && yearam < 1651)) {xmimpflag = 127d ;}
+		else if  (rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0 && (yearam >= 1651 && yearam < 1676)) {xmimpflag = 128d ;}
+		else if  (rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0 && (yearam >= 1676 && yearam < 1701)) {xmimpflag = 129d ;}
+		else if  (rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0 && (yearam >= 1701 && yearam < 1726)) {xmimpflag = 130d;}
+		else if  (rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0 && (yearam >= 1726 && yearam < 1751)) {xmimpflag = 131d;}
+		else if  (rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0 && (yearam >= 1751 && yearam < 1776)) {xmimpflag = 132d;}
+		else if  (rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0 && (yearam >= 1776 && yearam < 1801)) {xmimpflag = 133d;}
+		else if  (rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0 && (yearam >= 1801 && yearam < 1826)) {xmimpflag = 134d;}
+		else if  (rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0 && (yearam >= 1826 && yearam < 1851)) {xmimpflag = 135d;}
+		else if  (rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0 && (yearam >= 1851 && yearam < 1876)) {xmimpflag = 136d;}
+		else if  (yearam < 1700 && majbyimp_int == 60100) {xmimpflag = 101d;}
+		else if  (yearam >= 1700 && yearam < 1801 && majbyimp_int == 60100) {xmimpflag = 102d;}
+		else if  (yearam >=1800 && majbyimp_int == 60100) {xmimpflag = 103d;}
+		else if  (yearam < 1700 && majbyimp_int == 60200) {xmimpflag = 104d;}
+		else if  (yearam >= 1700 && yearam < 1801 && majbyimp_int == 60200) {xmimpflag = 105d;}
+		else if  (yearam >=1800 && majbyimp_int == 60200) {xmimpflag = 106d;}
 		else if  (yearam < 1700 && majbyimp_int == 60400) {xmimpflag = 107d;}
 		else if  (yearam >= 1700 && yearam < 1801 && majbyimp_int == 60400){xmimpflag = 108d ;}
 		else if  (yearam < 1700 && majbyimp_int == 60500) {xmimpflag = 110d;}
@@ -2547,21 +2577,21 @@ public class VoyagesCalculation {
 		else if  (yearam < 1700 && majbyimp_int == 60800) {xmimpflag = 122d;}
 		else if  (yearam >= 1700 && yearam < 1801 && majbyimp_int == 60800) {xmimpflag = 123d;}
 		else if  (yearam >=1800 && majbyimp_int == 60800) {xmimpflag = 124d;}
-		else if  (yearam < 1627) {xmimpflag = 1d;}
+		else if  (yearam < 1627) {xmimpflag = 1d;}		
 		else if  ((yearam >= 1626 && yearam < 1642) && ((mjselimp_int >= 31100 && mjselimp_int < 32000) ||  mjselimp1_int == 40000 || mjselimp_int == 80400))   {xmimpflag = 2d;}
 		else if  (yearam < 1716 && mjselimp_int >= 36100 && mjselimp_int < 37000) {xmimpflag = 3d;}
 		else if  (yearam < 1701 && mjselimp_int == 50300)  {xmimpflag = 4d;}
 		else if  (yearam >= 1700 && yearam < 1800 && mjselimp_int == 50300)  {xmimpflag = 5d;}
-		else if  (yearam > 1799 && mjselimp_int == 50300)  {xmimpflag = 6d;}
-		else if  (yearam < 1650 && natinimp_int == 8 )  {xmimpflag = 7d;}
-		else if  (yearam >= 1650 && yearam < 1674 && natinimp_int == 8)  {xmimpflag = 8d;}
-		else if  (yearam >= 1674 && yearam < 1731 && natinimp_int == 8)  {xmimpflag = 9d;}
-		else if  (yearam > 1730 && natinimp_int == 8 )  {xmimpflag = 10d;}
+		else if  (yearam > 1799 && mjselimp_int == 50300)  {xmimpflag = 6d;}		
 		else if  (yearam < 1751 && mjselimp_int == 50200)  {xmimpflag = 11d;}
 		else if  (yearam >= 1751 && yearam < 1776 && mjselimp_int == 50200)  {xmimpflag = 12d;}
 		else if  (yearam >= 1776 && yearam < 1801 && mjselimp_int == 50200)  {xmimpflag = 13d;}
 		else if  (yearam >= 1801 && yearam < 1826 && mjselimp_int == 50200)  {xmimpflag = 14d;}
 		else if  (yearam > 1825 && mjselimp_int == 50200)  {xmimpflag = 15d;}
+		else if  (yearam < 1650 && natinimp_int == 8 )  {xmimpflag = 7d;}
+		else if  (yearam >= 1650 && yearam < 1674 && natinimp_int == 8)  {xmimpflag = 8d;}
+		else if  (yearam >= 1674 && yearam < 1731 && natinimp_int == 8)  {xmimpflag = 9d;}
+		else if  (yearam > 1730 && natinimp_int == 8 )  {xmimpflag = 10d;}
 		else if  (yearam >= 1642 && yearam < 1663 && ((mjselimp_int >= 31100 && mjselimp_int < 32000) ||
 		    mjselimp1_int == 40000 || mjselimp_int == 80400))  {xmimpflag = 16d;}
 		else if  (yearam >= 1794 && yearam < 1807 && natinimp_int == 15)  {xmimpflag = 157d;}
