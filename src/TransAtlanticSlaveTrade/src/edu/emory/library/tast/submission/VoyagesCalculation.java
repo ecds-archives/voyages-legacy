@@ -2514,194 +2514,203 @@ public class VoyagesCalculation {
 		int mjselimp_int = 0;
 		int mjselimp1_int = 0;
 		Double xmimpflag=0d;
-		//find vesselRig attribute
+		//Rig of ship
 		VesselRig rig = voyage.getRig();
 		if (rig != null){
 			rig_int = rig.getId().intValue();
 		}
-		
+		//Principal place of slave purchase
 		Region majbyimp = voyage.getMajbyimp();
 		if (majbyimp != null){
 			majbyimp_int = majbyimp.getId().intValue();
 		}
-		
+		//Nationality 
 		Nation natinimp = voyage.getNatinimp();
 		if (natinimp != null){
 			natinimp_int = natinimp.getId().intValue();
 		}
-		
+		//Year arrived with slaves
 		Integer yearam = voyage.getYearam();
 		Region mjselimp = voyage.getMjselimp();
 		if (mjselimp != null){
 			mjselimp_int = mjselimp.getId().intValue();
 		}
-		
+		//Principal place of slave landing
 		Region mjselimp1 = voyage.getMjselimp();
 		if (mjselimp1 != null){
 			mjselimp1_int = mjselimp1.getId().intValue();
 		}
 				
 	    int[] rigArray = {29, 42, 43, 54, 59, 61, 65, 80, 86};
-	    Arrays.sort(rigArray);
+	    //Arrays.sort(rigArray);
 	    
-		if  (rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0 && (yearam >= 1626 && yearam < 1651)) {xmimpflag = 127d ;}			
-		else if  (rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0 && (yearam >= 1626 && yearam < 1651)) {xmimpflag = 127d ;}
-		else if  (rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0 && (yearam >= 1651 && yearam < 1676)) {xmimpflag = 128d ;}
-		else if  (rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0 && (yearam >= 1676 && yearam < 1701)) {xmimpflag = 129d ;}
-		else if  (rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0 && (yearam >= 1701 && yearam < 1726)) {xmimpflag = 130d;}
-		else if  (rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0 && (yearam >= 1726 && yearam < 1751)) {xmimpflag = 131d;}
-		else if  (rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0 && (yearam >= 1751 && yearam < 1776)) {xmimpflag = 132d;}
-		else if  (rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0 && (yearam >= 1776 && yearam < 1801)) {xmimpflag = 133d;}
-		else if  (rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0 && (yearam >= 1801 && yearam < 1826)) {xmimpflag = 134d;}
-		else if  (rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0 && (yearam >= 1826 && yearam < 1851)) {xmimpflag = 135d;}
-		else if  (rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0 && (yearam >= 1851 && yearam < 1876)) {xmimpflag = 136d;}
-		else if  (yearam < 1700 && majbyimp_int == 60100) {xmimpflag = 101d;}
-		else if  (yearam >= 1700 && yearam < 1801 && majbyimp_int == 60100) {xmimpflag = 102d;}
-		else if  (yearam >=1800 && majbyimp_int == 60100) {xmimpflag = 103d;}
-		else if  (yearam < 1700 && majbyimp_int == 60200) {xmimpflag = 104d;}
-		else if  (yearam >= 1700 && yearam < 1801 && majbyimp_int == 60200) {xmimpflag = 105d;}
-		else if  (yearam >=1800 && majbyimp_int == 60200) {xmimpflag = 106d;}
-		else if  (yearam < 1700 && majbyimp_int == 60400) {xmimpflag = 107d;}
-		else if  (yearam >= 1700 && yearam < 1801 && majbyimp_int == 60400){xmimpflag = 108d ;}
-		else if  (yearam < 1700 && majbyimp_int == 60500) {xmimpflag = 110d;}
-		else if  (yearam >= 1700 && yearam < 1801 && majbyimp_int == 60500) {xmimpflag = 111d;}
-		else if  (yearam >=1800 && majbyimp_int == 60500) {xmimpflag = 112d;}
-		else if  (yearam < 1700 && majbyimp_int == 60600) {xmimpflag = 113d;}
-		else if  (yearam >= 1700 && yearam < 1801 && majbyimp_int == 60600) {xmimpflag = 114d;}
-		else if  (yearam >=1800 && majbyimp_int == 60600) {xmimpflag = 115d;}
-		else if  (yearam < 1700 && majbyimp_int == 60700) {xmimpflag = 116d;}
-		else if  (yearam >= 1700 && yearam < 1801 && majbyimp_int == 60700) {xmimpflag = 117d;}
-		else if  (yearam >=1800 && majbyimp_int == 60700) {xmimpflag = 118d;}
-		else if  (yearam >= 1700 && yearam < 1801 && majbyimp_int == 60300) {xmimpflag = 120d;}
-		else if  (yearam >=1800 && majbyimp_int == 60300) {xmimpflag = 121d;}
-		else if  (yearam < 1700 && majbyimp_int == 60800) {xmimpflag = 122d;}
-		else if  (yearam >= 1700 && yearam < 1801 && majbyimp_int == 60800) {xmimpflag = 123d;}
-		else if  (yearam >=1800 && majbyimp_int == 60800) {xmimpflag = 124d;}
-		else if  (yearam < 1627) {xmimpflag = 1d;}		
-		else if  ((yearam >= 1626 && yearam < 1642) && ((mjselimp_int >= 31100 && mjselimp_int < 32000) ||  mjselimp1_int == 40000 || mjselimp_int == 80400))   {xmimpflag = 2d;}
-		else if  (yearam < 1716 && mjselimp_int >= 36100 && mjselimp_int < 37000) {xmimpflag = 3d;}
-		else if  (yearam < 1701 && mjselimp_int == 50300)  {xmimpflag = 4d;}
-		else if  (yearam >= 1700 && yearam < 1800 && mjselimp_int == 50300)  {xmimpflag = 5d;}
-		else if  (yearam > 1799 && mjselimp_int == 50300)  {xmimpflag = 6d;}		
-		else if  (yearam < 1751 && mjselimp_int == 50200)  {xmimpflag = 11d;}
-		else if  (yearam >= 1751 && yearam < 1776 && mjselimp_int == 50200)  {xmimpflag = 12d;}
-		else if  (yearam >= 1776 && yearam < 1801 && mjselimp_int == 50200)  {xmimpflag = 13d;}
-		else if  (yearam >= 1801 && yearam < 1826 && mjselimp_int == 50200)  {xmimpflag = 14d;}
-		else if  (yearam > 1825 && mjselimp_int == 50200)  {xmimpflag = 15d;}
-		else if  (yearam < 1650 && natinimp_int == 8 )  {xmimpflag = 7d;}
-		else if  (yearam >= 1650 && yearam < 1674 && natinimp_int == 8)  {xmimpflag = 8d;}
-		else if  (yearam >= 1674 && yearam < 1731 && natinimp_int == 8)  {xmimpflag = 9d;}
-		else if  (yearam > 1730 && natinimp_int == 8 )  {xmimpflag = 10d;}
-		else if  (yearam >= 1642 && yearam < 1663 && ((mjselimp_int >= 31100 && mjselimp_int < 32000) ||
+	    System.out.println("rig:" + rig);
+	    System.out.println("majbyimp:" + majbyimp + ":" + majbyimp_int);
+	    System.out.println("mjselimp:" + mjselimp + ":" + mjselimp_int);
+	    System.out.println("mjselimp1:" + mjselimp1 + ":" + mjselimp1_int);
+	    System.out.println("natinimp:" + natinimp + ":" + natinimp_int);
+	    System.out.println("yearam:" + yearam);
+	    
+	    
+		if  (rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0 && (yearam!= null && yearam >= 1626 && yearam < 1651)) {xmimpflag = 127d ;}			
+		else if  (rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0 && (yearam!= null && yearam >= 1626 && yearam < 1651)) {xmimpflag = 127d ;}
+		else if  (rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0 && (yearam!= null && yearam >= 1651 && yearam < 1676)) {xmimpflag = 128d ;}
+		else if  (rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0 && (yearam!= null && yearam >= 1676 && yearam < 1701)) {xmimpflag = 129d ;}
+		else if  (rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0 && (yearam!= null && yearam >= 1701 && yearam < 1726)) {xmimpflag = 130d;}
+		else if  (rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0 && (yearam!= null && yearam >= 1726 && yearam < 1751)) {xmimpflag = 131d;}
+		else if  (rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0 && (yearam!= null && yearam >= 1751 && yearam < 1776)) {xmimpflag = 132d;}
+		else if  (rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0 && (yearam!= null && yearam >= 1776 && yearam < 1801)) {xmimpflag = 133d;}
+		else if  (rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0 && (yearam!= null && yearam >= 1801 && yearam < 1826)) {xmimpflag = 134d;}
+		else if  (rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0 && (yearam!= null && yearam >= 1826 && yearam < 1851)) {xmimpflag = 135d;}
+		else if  (rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0 && (yearam!= null && yearam >= 1851 && yearam < 1876)) {xmimpflag = 136d;}
+		else if  (yearam!= null && yearam < 1700 && majbyimp_int == 60100) {xmimpflag = 101d;}
+		else if  (yearam!= null && yearam >= 1700 && yearam < 1801 && majbyimp_int == 60100) {xmimpflag = 102d;}
+		else if  (yearam!= null && yearam >=1800 && majbyimp_int == 60100) {xmimpflag = 103d;}
+		else if  (yearam!= null && yearam < 1700 && majbyimp_int == 60200) {xmimpflag = 104d;}
+		else if  (yearam!= null && yearam >= 1700 && yearam < 1801 && majbyimp_int == 60200) {xmimpflag = 105d;}
+		else if  (yearam!= null && yearam >=1800 && majbyimp_int == 60200) {xmimpflag = 106d;}
+		else if  (yearam!= null && yearam < 1700 && majbyimp_int == 60400) {xmimpflag = 107d;}
+		else if  (yearam!= null && yearam >= 1700 && yearam < 1801 && majbyimp_int == 60400){xmimpflag = 108d ;}
+		else if  (yearam!= null && yearam < 1700 && majbyimp_int == 60500) {xmimpflag = 110d;}
+		else if  (yearam!= null && yearam >= 1700 && yearam < 1801 && majbyimp_int == 60500) {xmimpflag = 111d;}
+		else if  (yearam!= null && yearam >=1800 && majbyimp_int == 60500) {xmimpflag = 112d;}
+		else if  (yearam!= null && yearam < 1700 && majbyimp_int == 60600) {xmimpflag = 113d;}
+		else if  (yearam!= null && yearam >= 1700 && yearam < 1801 && majbyimp_int == 60600) {xmimpflag = 114d;}
+		else if  (yearam!= null && yearam >=1800 && majbyimp_int == 60600) {xmimpflag = 115d;}
+		else if  (yearam!= null && yearam < 1700 && majbyimp_int == 60700) {xmimpflag = 116d;}
+		else if  (yearam!= null && yearam >= 1700 && yearam < 1801 && majbyimp_int == 60700) {xmimpflag = 117d;}
+		else if  (yearam!= null && yearam >=1800 && majbyimp_int == 60700) {xmimpflag = 118d;}
+		else if  (yearam!= null && yearam >= 1700 && yearam < 1801 && majbyimp_int == 60300) {xmimpflag = 120d;}
+		else if  (yearam!= null && yearam >=1800 && majbyimp_int == 60300) {xmimpflag = 121d;}
+		else if  (yearam!= null && yearam < 1700 && majbyimp_int == 60800) {xmimpflag = 122d;}
+		else if  (yearam!= null && yearam >= 1700 && yearam < 1801 && majbyimp_int == 60800) {xmimpflag = 123d;}
+		else if  (yearam!= null && yearam >=1800 && majbyimp_int == 60800) {xmimpflag = 124d;}
+		else if  (yearam!= null && yearam < 1627) {xmimpflag = 1d;}		
+		else if  (yearam!= null && (yearam >= 1626 && yearam < 1642) && ((mjselimp_int >= 31100 && mjselimp_int < 32000) ||  mjselimp1_int == 40000 || mjselimp_int == 80400))   {xmimpflag = 2d;}
+		else if  (yearam!= null && yearam < 1716 && mjselimp_int >= 36100 && mjselimp_int < 37000) {xmimpflag = 3d;}
+		else if  (yearam!= null && yearam < 1701 && mjselimp_int == 50300)  {xmimpflag = 4d;}
+		else if  (yearam!= null && yearam >= 1700 && yearam < 1800 && mjselimp_int == 50300)  {xmimpflag = 5d;}
+		else if  (yearam!= null && yearam > 1799 && mjselimp_int == 50300)  {xmimpflag = 6d;}		
+		else if  (yearam!= null && yearam < 1751 && mjselimp_int == 50200)  {xmimpflag = 11d;}
+		else if  (yearam!= null && yearam >= 1751 && yearam < 1776 && mjselimp_int == 50200)  {xmimpflag = 12d;}
+		else if  (yearam!= null && yearam >= 1776 && yearam < 1801 && mjselimp_int == 50200)  {xmimpflag = 13d;}
+		else if  (yearam!= null && yearam >= 1801 && yearam < 1826 && mjselimp_int == 50200)  {xmimpflag = 14d;}
+		else if  (yearam!= null && yearam > 1825 && mjselimp_int == 50200)  {xmimpflag = 15d;}
+		else if  (yearam!= null && yearam < 1650 && natinimp_int == 8 )  {xmimpflag = 7d;}
+		else if  (yearam!= null && yearam >= 1650 && yearam < 1674 && natinimp_int == 8)  {xmimpflag = 8d;}
+		else if  (yearam!= null && yearam >= 1674 && yearam < 1731 && natinimp_int == 8)  {xmimpflag = 9d;}
+		else if  (yearam!= null && yearam > 1730 && natinimp_int == 8 )  {xmimpflag = 10d;}
+		else if  (yearam!= null && yearam >= 1642 && yearam < 1663 && ((mjselimp_int >= 31100 && mjselimp_int < 32000) ||
 		    mjselimp1_int == 40000 || mjselimp_int == 80400))  {xmimpflag = 16d;}
-		else if  (yearam >= 1794 && yearam < 1807 && natinimp_int == 15)  {xmimpflag = 157d;}
-		else if  (yearam < 1794 && natinimp_int == 15) {xmimpflag = 159d;}
-		else if  (yearam < 1851 && natinimp_int == 9 )  {xmimpflag = 99d;}
-		else if  (yearam >= 1851 && yearam < 1876 && natinimp_int ==9)  {xmimpflag = 100d;}
-		else if  (yearam < 1751 && rig_int == 1) {xmimpflag = 17d;}
-		else if  (yearam >= 1751 && yearam < 1776 && rig_int == 1)  {xmimpflag = 98d;}
-		else if  (yearam >= 1776 && yearam < 1801 && rig_int == 1)  {xmimpflag = 18d;}
-		else if  (yearam >= 1801 && yearam < 1826 && rig_int == 1)  {xmimpflag = 19d;}
-		else if  (yearam >= 1826 && yearam < 1851 && rig_int == 1)  {xmimpflag = 20d;}
-		else if  (yearam >= 1851 && yearam < 1876 && rig_int == 1)  {xmimpflag = 21d;}
-		else if  (yearam < 1776 && rig_int == 2) {xmimpflag = 22d;}
-		else if  (yearam >= 1776 && yearam < 1801 && rig_int == 2)  {xmimpflag = 23d;}
-		else if  (yearam >= 1801 && yearam < 1826 && rig_int == 2)  {xmimpflag = 24d;}
-		else if  (yearam >= 1826 && yearam < 1851 && rig_int == 2)  {xmimpflag = 25d;}
-		else if  (yearam >= 1851 && yearam < 1876 && rig_int == 2)  {xmimpflag = 26d;}
-		else if  (yearam < 1751 && rig_int == 3) {xmimpflag = 27d;}
-		else if  (yearam >= 1751 && yearam < 1776 && rig_int == 3)  {xmimpflag = 28d;}
-		else if  (yearam >= 1776 && yearam < 1801 && rig_int == 3)  {xmimpflag = 29d;}
-		else if  (yearam >= 1801 && yearam < 1876 && rig_int == 3)  {xmimpflag = 30d;}
-		else if  (yearam < 1726 && rig_int == 4) {xmimpflag = 31d;}
-		else if  (yearam >= 1726 && yearam < 1751 && rig_int == 4)  {xmimpflag = 32d;}
-		else if  (yearam >= 1751 && yearam < 1776 && rig_int == 4)  {xmimpflag = 33d;}
-		else if  (yearam >= 1776 && yearam < 1801 && rig_int == 4)  {xmimpflag = 34d;}
-		else if  (yearam >= 1801 && yearam < 1826 && rig_int == 4)  {xmimpflag = 35d;}
-		else if  (yearam >= 1826 && yearam < 1851 && rig_int == 4)  {xmimpflag = 36d;}
-		else if  (yearam >= 1851 && yearam < 1876 && rig_int == 4)  {xmimpflag = 37d;}
+		else if  (yearam!= null && yearam >= 1794 && yearam < 1807 && natinimp_int == 15)  {xmimpflag = 157d;}
+		else if  (yearam!= null && yearam < 1794 && natinimp_int == 15) {xmimpflag = 159d;}
+		else if  (yearam!= null && yearam < 1851 && natinimp_int == 9 )  {xmimpflag = 99d;}
+		else if  (yearam!= null && yearam >= 1851 && yearam < 1876 && natinimp_int ==9)  {xmimpflag = 100d;}
+		else if  (yearam!= null && yearam < 1751 && rig_int == 1) {xmimpflag = 17d;}
+		else if  (yearam!= null && yearam >= 1751 && yearam < 1776 && rig_int == 1)  {xmimpflag = 98d;}
+		else if  (yearam!= null && yearam >= 1776 && yearam < 1801 && rig_int == 1)  {xmimpflag = 18d;}
+		else if  (yearam!= null && yearam >= 1801 && yearam < 1826 && rig_int == 1)  {xmimpflag = 19d;}
+		else if  (yearam!= null && yearam >= 1826 && yearam < 1851 && rig_int == 1)  {xmimpflag = 20d;}
+		else if  (yearam!= null && yearam >= 1851 && yearam < 1876 && rig_int == 1)  {xmimpflag = 21d;}
+		else if  (yearam!= null && yearam < 1776 && rig_int == 2) {xmimpflag = 22d;}
+		else if  (yearam!= null && yearam >= 1776 && yearam < 1801 && rig_int == 2)  {xmimpflag = 23d;}
+		else if  (yearam!= null && yearam >= 1801 && yearam < 1826 && rig_int == 2)  {xmimpflag = 24d;}
+		else if  (yearam!= null && yearam >= 1826 && yearam < 1851 && rig_int == 2)  {xmimpflag = 25d;}
+		else if  (yearam!= null && yearam >= 1851 && yearam < 1876 && rig_int == 2)  {xmimpflag = 26d;}
+		else if  (yearam!= null && yearam < 1751 && rig_int == 3) {xmimpflag = 27d;}
+		else if  (yearam!= null && yearam >= 1751 && yearam < 1776 && rig_int == 3)  {xmimpflag = 28d;}
+		else if  (yearam!= null && yearam >= 1776 && yearam < 1801 && rig_int == 3)  {xmimpflag = 29d;}
+		else if  (yearam!= null && yearam >= 1801 && yearam < 1876 && rig_int == 3)  {xmimpflag = 30d;}
+		else if  (yearam!= null && yearam < 1726 && rig_int == 4) {xmimpflag = 31d;}
+		else if  (yearam!= null && yearam >= 1726 && yearam < 1751 && rig_int == 4)  {xmimpflag = 32d;}
+		else if  (yearam!= null && yearam >= 1751 && yearam < 1776 && rig_int == 4)  {xmimpflag = 33d;}
+		else if  (yearam!= null && yearam >= 1776 && yearam < 1801 && rig_int == 4)  {xmimpflag = 34d;}
+		else if  (yearam!= null && yearam >= 1801 && yearam < 1826 && rig_int == 4)  {xmimpflag = 35d;}
+		else if  (yearam!= null && yearam >= 1826 && yearam < 1851 && rig_int == 4)  {xmimpflag = 36d;}
+		else if  (yearam!= null && yearam >= 1851 && yearam < 1876 && rig_int == 4)  {xmimpflag = 37d;}
 		else if  (rig_int==5) {xmimpflag = 38d;}
 		else if  (rig_int==6) {xmimpflag = 39d;}
 		else if  (rig_int==7) {xmimpflag = 40d;}
-		else if  (yearam < 1776 && rig_int == 8) {xmimpflag = 41d;}
-		else if  (yearam >= 1776 && yearam < 1801 && rig_int == 8)  {xmimpflag = 42d;}
-		else if  (yearam >= 1801 && yearam < 1826 && rig_int == 8)  {xmimpflag = 43d;}
-		else if  (yearam >= 1826 && yearam < 1851 && rig_int == 8)  {xmimpflag = 44d;}
-		else if  (yearam >= 1851 && yearam < 1876 && rig_int == 8)  {xmimpflag = 45d;}
-		else if  (yearam < 1826 && (rig_int == 9 || rig_int == 31)) {xmimpflag = 46d;}
-		else if  (yearam >= 1826 && yearam < 1851 && (rig_int == 9 || rig_int == 31))  {xmimpflag = 47d;}
-		else if  (yearam >= 1851 && yearam < 1876 && (rig_int == 9 || rig_int == 31))  {xmimpflag = 48d;}
+		else if  (yearam!= null && yearam < 1776 && rig_int == 8) {xmimpflag = 41d;}
+		else if  (yearam!= null && yearam >= 1776 && yearam < 1801 && rig_int == 8)  {xmimpflag = 42d;}
+		else if  (yearam!= null && yearam >= 1801 && yearam < 1826 && rig_int == 8)  {xmimpflag = 43d;}
+		else if  (yearam!= null && yearam >= 1826 && yearam < 1851 && rig_int == 8)  {xmimpflag = 44d;}
+		else if  (yearam!= null && yearam >= 1851 && yearam < 1876 && rig_int == 8)  {xmimpflag = 45d;}
+		else if  (yearam!= null && yearam < 1826 && (rig_int == 9 || rig_int == 31)) {xmimpflag = 46d;}
+		else if  (yearam!= null && yearam >= 1826 && yearam < 1851 && (rig_int == 9 || rig_int == 31))  {xmimpflag = 47d;}
+		else if  (yearam!= null && yearam >= 1851 && yearam < 1876 && (rig_int == 9 || rig_int == 31))  {xmimpflag = 48d;}
 		else if  (rig_int==10||rig_int==24) {xmimpflag = 49d;}
 		else if  (rig_int==11 || rig_int==12) {xmimpflag = 50d;}
-		else if  (yearam < 1751 && rig_int == 13) {xmimpflag = 51d;}
-		else if  (yearam >= 1751 && yearam < 1776 && rig_int == 13)  {xmimpflag = 52d;}
-		else if  (yearam >= 1776 && yearam < 1801 && rig_int == 13)  {xmimpflag = 53d;}
-		else if  (yearam >= 1801 && yearam < 1826 && rig_int == 13)  {xmimpflag = 54d;}
-		else if  (yearam >= 1826 && yearam < 1877 && rig_int == 13)  {xmimpflag = 55d;}
+		else if  (yearam!= null && yearam < 1751 && rig_int == 13) {xmimpflag = 51d;}
+		else if  (yearam!= null && yearam >= 1751 && yearam < 1776 && rig_int == 13)  {xmimpflag = 52d;}
+		else if  (yearam!= null && yearam >= 1776 && yearam < 1801 && rig_int == 13)  {xmimpflag = 53d;}
+		else if  (yearam!= null && yearam >= 1801 && yearam < 1826 && rig_int == 13)  {xmimpflag = 54d;}
+		else if  (yearam!= null && yearam >= 1826 && yearam < 1877 && rig_int == 13)  {xmimpflag = 55d;}
 		else if  (rig_int==15) {xmimpflag = 56d;}
 		else if  (rig_int==20) {xmimpflag = 57d;}
 		else if  (rig_int==21) {xmimpflag = 58d;}
 		else if  (rig_int==23) {xmimpflag = 59d;}
-		else if  (yearam < 1751 && rig_int == 25) {xmimpflag = 60d;}
-		else if  (yearam >= 1751 && yearam < 1776 && rig_int == 25)  {xmimpflag = 61d;}
-		else if  (yearam >= 1776 && yearam < 1801 && rig_int == 25)  {xmimpflag = 62d;}
-		else if  (yearam >= 1801 && yearam < 1826 && rig_int == 25)  {xmimpflag = 63d;}
-		else if  (yearam >= 1826 && yearam < 1851 && rig_int == 25)  {xmimpflag = 160d;}
-		else if  (yearam >= 1851 && yearam < 1877 && rig_int == 25)  {xmimpflag = 64d;}
-		else if  (yearam < 1751 && rig_int == 27) {xmimpflag = 65d;}
-		else if  (yearam >= 1751 && yearam < 1776 && rig_int == 27)  {xmimpflag = 66d;}
-		else if  (yearam >= 1776 && yearam < 1801 && rig_int == 27)  {xmimpflag = 67d;}
-		else if  (yearam >= 1801 && yearam < 1877 && rig_int == 27)  {xmimpflag = 68d;}
+		else if  (yearam!= null && yearam < 1751 && rig_int == 25) {xmimpflag = 60d;}
+		else if  (yearam!= null && yearam >= 1751 && yearam < 1776 && rig_int == 25)  {xmimpflag = 61d;}
+		else if  (yearam!= null && yearam >= 1776 && yearam < 1801 && rig_int == 25)  {xmimpflag = 62d;}
+		else if  (yearam!= null && yearam >= 1801 && yearam < 1826 && rig_int == 25)  {xmimpflag = 63d;}
+		else if  (yearam!= null && yearam >= 1826 && yearam < 1851 && rig_int == 25)  {xmimpflag = 160d;}
+		else if  (yearam!= null && yearam >= 1851 && yearam < 1877 && rig_int == 25)  {xmimpflag = 64d;}
+		else if  (yearam!= null && yearam < 1751 && rig_int == 27) {xmimpflag = 65d;}
+		else if  (yearam!= null && yearam >= 1751 && yearam < 1776 && rig_int == 27)  {xmimpflag = 66d;}
+		else if  (yearam!= null && yearam >= 1776 && yearam < 1801 && rig_int == 27)  {xmimpflag = 67d;}
+		else if  (yearam!= null && yearam >= 1801 && yearam < 1877 && rig_int == 27)  {xmimpflag = 68d;}
 		else if  (rig_int==28) {xmimpflag = 69d;}
-		else if  (yearam < 1726 && (rig_int == 30 || rig_int == 45 || rig_int==63)) {xmimpflag = 70d;}
-		else if  (yearam >= 1726 && yearam < 1776 && (rig_int == 30 || rig_int == 45 || rig_int==63))  {xmimpflag = 71d;}
-		else if  (yearam >= 1776 && yearam < 1801 && (rig_int==30 || rig_int==45 || rig_int==63)) {xmimpflag = 97d;}
-		else if  (yearam >= 1801 && yearam < 1826 && (rig_int == 30 || rig_int == 45 || rig_int==63))  {xmimpflag = 72d;}
-		else if  (yearam >= 1826 && yearam < 1876 && (rig_int==30 || rig_int==45 || rig_int==63)) {xmimpflag = 85d;}
+		else if  (yearam!= null && yearam < 1726 && (rig_int == 30 || rig_int == 45 || rig_int==63)) {xmimpflag = 70d;}
+		else if  (yearam!= null && yearam >= 1726 && yearam < 1776 && (rig_int == 30 || rig_int == 45 || rig_int==63))  {xmimpflag = 71d;}
+		else if  (yearam!= null && yearam >= 1776 && yearam < 1801 && (rig_int==30 || rig_int==45 || rig_int==63)) {xmimpflag = 97d;}
+		else if  (yearam!= null && yearam >= 1801 && yearam < 1826 && (rig_int == 30 || rig_int == 45 || rig_int==63))  {xmimpflag = 72d;}
+		else if  (yearam!= null && yearam >= 1826 && yearam < 1876 && (rig_int==30 || rig_int==45 || rig_int==63)) {xmimpflag = 85d;}
 		else if  (rig_int==32 || rig_int==39) {xmimpflag = 73d;}
-		else if  (yearam < 1726 && rig_int == 35) {xmimpflag = 74d;}
-		else if  (yearam >= 1726 && yearam < 1751 && rig_int == 35)  {xmimpflag = 75d;}
-		else if  (yearam >= 1751 && yearam < 1776 && rig_int == 35)  {xmimpflag = 76d;}
-		else if  (yearam >= 1776 && yearam < 1801 && rig_int == 35)  {xmimpflag = 77d;}
-		else if  (yearam >= 1801 && yearam < 1877 && rig_int == 35)  {xmimpflag = 78d;}
-		else if  (yearam < 1776 && rig_int == 40) {xmimpflag = 79d;}
-		else if  (yearam >= 1776 && yearam < 1801 && rig_int == 40)  {xmimpflag = 80d;}
-		else if  (yearam >= 1801 && yearam < 1826 && rig_int == 40)  {xmimpflag = 81d;}
-		else if  (yearam >= 1826 && yearam < 1876 && rig_int == 40)  {xmimpflag = 82d;}
+		else if  (yearam!= null && yearam < 1726 && rig_int == 35) {xmimpflag = 74d;}
+		else if  (yearam!= null && yearam >= 1726 && yearam < 1751 && rig_int == 35)  {xmimpflag = 75d;}
+		else if  (yearam!= null && yearam >= 1751 && yearam < 1776 && rig_int == 35)  {xmimpflag = 76d;}
+		else if  (yearam!= null && yearam >= 1776 && yearam < 1801 && rig_int == 35)  {xmimpflag = 77d;}
+		else if  (yearam!= null && yearam >= 1801 && yearam < 1877 && rig_int == 35)  {xmimpflag = 78d;}
+		else if  (yearam!= null && yearam < 1776 && rig_int == 40) {xmimpflag = 79d;}
+		else if  (yearam!= null && yearam >= 1776 && yearam < 1801 && rig_int == 40)  {xmimpflag = 80d;}
+		else if  (yearam!= null && yearam >= 1801 && yearam < 1826 && rig_int == 40)  {xmimpflag = 81d;}
+		else if  (yearam!= null && yearam >= 1826 && yearam < 1876 && rig_int == 40)  {xmimpflag = 82d;}
 		else if  (rig_int==41 || rig_int==57) {xmimpflag = 83d;}
 		else if  (rig_int==44) {xmimpflag = 84d;}
 		else if  (rig_int==47) {xmimpflag = 86d;}
 		else if  (rig_int==48) {xmimpflag = 87d;}
-		else if  (yearam < 1826 && (rig_int==14 || rig_int == 36 || rig_int==49)) {xmimpflag = 88d;}
-		else if  (yearam >= 1826 && yearam < 1876 && ( rig_int == 14 || rig_int==36 || rig_int == 49))  {xmimpflag = 89d;}
-		else if  (yearam < 1826 && (rig_int==16 || rig_int == 51)) {xmimpflag = 90d;}
-		else if  (yearam >= 1826 && yearam < 1851 && (rig_int==16 || rig_int == 51))  {xmimpflag = 91d;}
-		else if  (yearam >= 1851 && yearam < 1876 && (rig_int==16 || rig_int == 51))  {xmimpflag = 92d;}
+		else if  (yearam!= null && yearam < 1826 && (rig_int==14 || rig_int == 36 || rig_int==49)) {xmimpflag = 88d;}
+		else if  (yearam!= null && yearam >= 1826 && yearam < 1876 && ( rig_int == 14 || rig_int==36 || rig_int == 49))  {xmimpflag = 89d;}
+		else if  (yearam!= null && yearam < 1826 && (rig_int==16 || rig_int == 51)) {xmimpflag = 90d;}
+		else if  (yearam!= null && yearam >= 1826 && yearam < 1851 && (rig_int==16 || rig_int == 51))  {xmimpflag = 91d;}
+		else if  (yearam!= null && yearam >= 1851 && yearam < 1876 && (rig_int==16 || rig_int == 51))  {xmimpflag = 92d;}
 		else if  (rig_int==17||rig_int==19||rig_int==52||rig_int==53) {xmimpflag = 93d;}
-		else if  (yearam < 1726 && rig_int == 60) {xmimpflag = 94d;}
-		else if  (yearam >= 1726 && yearam < 1826 && rig_int == 60)  {xmimpflag = 95d;}
-		else if  (yearam >= 1826 && yearam < 1876 && rig_int == 60)  {xmimpflag = 96d;}
-		else if  (yearam < 1776 && rig_int == 1 && natinimp_int == 9) {xmimpflag = 137d;}
-		else if  (yearam >= 1776 && yearam < 1801 && rig_int == 1 && natinimp_int == 9)  {xmimpflag = 138d;}
-		else if  (yearam >= 1801 && yearam < 1826 && rig_int == 1 && natinimp_int == 9)  {xmimpflag = 139d;}
-		else if  (yearam > 1825 && rig_int == 1 && natinimp_int ==9)  {xmimpflag = 140d;}
-		else if  (yearam < 1776 && (rig_int==2 || rig_int == 5) && natinimp_int == 9) {xmimpflag = 141d;}
-		else if  (yearam >= 1776 && yearam < 1801 && (rig_int==2 || rig_int == 5) && natinimp_int == 9)  {xmimpflag = 142d;}
-		else if  (yearam >= 1801 && yearam < 1826 && rig_int == 5 && natinimp_int == 9)  {xmimpflag = 143d;}
-		else if  (yearam > 1825 && (rig_int==2 || rig_int == 5) && natinimp_int ==9)  {xmimpflag = 145d;}
-		else if  (yearam < 1776 && rig_int ==4 && natinimp_int == 9) {xmimpflag = 146d;}
-		else if  (yearam >= 1776 && yearam < 1801 && rig_int ==4 && natinimp_int == 9)  {xmimpflag = 147d;}
-		else if  (yearam >= 1801 && yearam < 1826 && rig_int ==4 && natinimp_int == 9)  {xmimpflag = 148d;}
-		else if  (yearam > 1825 && rig_int ==4 && natinimp_int ==9)  {xmimpflag = 149d;}
-		else if  (yearam < 1776 && rig_int ==8 && natinimp_int == 9) {xmimpflag = 150d;}
-		else if  (yearam >= 1776 && yearam < 1826 && rig_int ==8 && natinimp_int == 9)  {xmimpflag = 151d;}
-		else if  (yearam > 1825 && rig_int ==8 && natinimp_int ==9)  {xmimpflag = 152d;}
-		else if  (yearam >= 1826 && yearam < 1876 && rig_int == 9 && natinimp_int == 9) {xmimpflag = 154d;}
+		else if  (yearam!= null && yearam < 1726 && rig_int == 60) {xmimpflag = 94d;}
+		else if  (yearam!= null && yearam >= 1726 && yearam < 1826 && rig_int == 60)  {xmimpflag = 95d;}
+		else if  (yearam!= null && yearam >= 1826 && yearam < 1876 && rig_int == 60)  {xmimpflag = 96d;}
+		else if  (yearam!= null && yearam < 1776 && rig_int == 1 && natinimp_int == 9) {xmimpflag = 137d;}
+		else if  (yearam!= null && yearam >= 1776 && yearam < 1801 && rig_int == 1 && natinimp_int == 9)  {xmimpflag = 138d;}
+		else if  (yearam!= null && yearam >= 1801 && yearam < 1826 && rig_int == 1 && natinimp_int == 9)  {xmimpflag = 139d;}
+		else if  (yearam!= null && yearam > 1825 && rig_int == 1 && natinimp_int ==9)  {xmimpflag = 140d;}
+		else if  (yearam!= null && yearam < 1776 && (rig_int==2 || rig_int == 5) && natinimp_int == 9) {xmimpflag = 141d;}
+		else if  (yearam!= null && yearam >= 1776 && yearam < 1801 && (rig_int==2 || rig_int == 5) && natinimp_int == 9)  {xmimpflag = 142d;}
+		else if  (yearam!= null && yearam >= 1801 && yearam < 1826 && rig_int == 5 && natinimp_int == 9)  {xmimpflag = 143d;}
+		else if  (yearam!= null && yearam > 1825 && (rig_int==2 || rig_int == 5) && natinimp_int ==9)  {xmimpflag = 145d;}
+		else if  (yearam!= null && yearam < 1776 && rig_int ==4 && natinimp_int == 9) {xmimpflag = 146d;}
+		else if  (yearam!= null && yearam >= 1776 && yearam < 1801 && rig_int ==4 && natinimp_int == 9)  {xmimpflag = 147d;}
+		else if  (yearam!= null && yearam >= 1801 && yearam < 1826 && rig_int ==4 && natinimp_int == 9)  {xmimpflag = 148d;}
+		else if  (yearam!= null && yearam > 1825 && rig_int ==4 && natinimp_int ==9)  {xmimpflag = 149d;}
+		else if  (yearam!= null && yearam < 1776 && rig_int ==8 && natinimp_int == 9) {xmimpflag = 150d;}
+		else if  (yearam!= null && yearam >= 1776 && yearam < 1826 && rig_int ==8 && natinimp_int == 9)  {xmimpflag = 151d;}
+		else if  (yearam!= null && yearam > 1825 && rig_int ==8 && natinimp_int ==9)  {xmimpflag = 152d;}
+		else if  (yearam!= null && yearam >= 1826 && yearam < 1876 && rig_int == 9 && natinimp_int == 9) {xmimpflag = 154d;}
 		else if  (rig_int == 27 && natinimp_int == 9) {xmimpflag = 155d;}
 		else if (rig_int == 35 && natinimp_int == 9) {xmimpflag = 156d;}
 		
 		if (xmimpflag != 0){
 			voyage.setXmimpflag(xmimpflag);
+			System.out.println("xmimpflag:" + xmimpflag);
 		}
 	}
 }
