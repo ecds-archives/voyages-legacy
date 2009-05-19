@@ -43,13 +43,17 @@ public class VoyagesCalculation {
 		calculateVoyLengths();
 		calculateMajbuypt();
 		calculateMajselpt();
+		calculateMjbyptimp();
+		calculateMjslptimp();
 		calculateTonmod();
-		calculateXmImpflag();
-		calculateSlavesEmbarkDisembark();
+		//calculateXmImpflag();
+		//calculateSlavesEmbarkDisembark();
 		calculateValuesPeople();
 		calculatePtDepImp();
 		calculateValuesRegion1();
 		calculateValuesRegion2();
+		calculateXmImpflag();
+		calculateSlavesEmbarkDisembark();
 		return this.voyage;
 	}
 	
@@ -57,13 +61,14 @@ public class VoyagesCalculation {
 	 * fate2: Outcome of voyage for slaves
 	 */
 	public void calculateFate2() {
-		Integer fate = null;		
 		HashMap fate2Hash = VoyagesCalcConstants.getfate2Hash();		
 		Fate fateObj = voyage.getFate();
-		fate = (Integer)fate2Hash.get(fateObj.getId().intValue());
-		if (fate != null){
-			FateSlaves fateSlave = FateSlaves.loadById(session, fate);
-			voyage.setFate2(fateSlave);
+		if (fateObj != null) {
+			Integer fate = (Integer)fate2Hash.get(fateObj.getId().intValue());
+			if (fate != null){
+				FateSlaves fateSlave = FateSlaves.loadById(session, fate);
+				voyage.setFate2(fateSlave);
+			}
 		}
 	}
 	
@@ -71,13 +76,14 @@ public class VoyagesCalculation {
 	 * fate3: Outcome of voyage If vessel captured
 	 */
 	public void calculateFate3() {
-		Integer fate = null;		
 		HashMap fate3Hash = VoyagesCalcConstants.getfate3Hash();
 		Fate fateObj = voyage.getFate();
-		fate = (Integer)fate3Hash.get(fateObj.getId().intValue());
-		if (fate != null){
-			FateVessel fateVessel = FateVessel.loadById(session, fate);
-			voyage.setFate3(fateVessel);		 
+		if (fateObj != null) {
+			Integer fate = (Integer)fate3Hash.get(fateObj.getId().intValue());
+			if (fate != null){
+				FateVessel fateVessel = FateVessel.loadById(session, fate);
+				voyage.setFate3(fateVessel);		 
+			}
 		}
 	}
 	
@@ -85,19 +91,20 @@ public class VoyagesCalculation {
 	 * fate4: Outcome of voyage for owner
 	 */
 	public void calculateFate4() {
-		Integer fate = null;
 		HashMap fate4Hash = VoyagesCalcConstants.getfate4Hash();
 		Fate fateObj = voyage.getFate();
-		fate = (Integer)fate4Hash.get(fateObj.getId().intValue());
-		if (fate != null){
-			FateOwner fateOwner = FateOwner.loadById(session, fate);
-			voyage.setFate4(fateOwner);
+		if (fateObj != null) {
+			Integer fate = (Integer)fate4Hash.get(fateObj.getId().intValue());
+			if (fate != null){
+				FateOwner fateOwner = FateOwner.loadById(session, fate);
+				voyage.setFate4(fateOwner);
+			}
 		}
 	}
 	
     /*
-     * Calculates value of tonmod variable
-     */
+     * Calculates Standardized tonnage of ship
+    */
 	public void calculateTonmod() {
 		//Create the needed variables for calculations
 		Integer tontype=voyage.getTontype(); 
@@ -812,7 +819,9 @@ public class VoyagesCalculation {
 				vymrtrat = vymrtimp / tslmtimp;
 			}
 			
-			voyage.setTslmtimp(tslmtimp);
+			if (tslmtimp != 0) {
+				voyage.setTslmtimp(tslmtimp);
+			}
 			
 			if (vymrtrat != 0) {
 				voyage.setVymrtrat(vymrtrat);
@@ -2716,4 +2725,51 @@ public class VoyagesCalculation {
 			System.out.println("xmimpflag:" + xmimpflag);
 		}
 	}
+	
+	/*
+	 * Calculate mjbyptimp - Imputed principal place of slave purchase
+	*/
+	public void calculateMjbyptimp() {
+		Port mjbyptimp = null;
+				
+		FateSlaves fate2 = voyage.getFate2();
+		
+		Port majbuypt = voyage.getMajbuypt();
+		if (majbuypt != null) {
+			mjbyptimp = majbuypt;
+		}
+
+	    if ((majbuypt == null) && fate2 != null && fate2.getId().intValue() != 2) {
+	    	Port embport = voyage.getEmbport();
+	    	if (embport != null) {
+	    		mjbyptimp = embport;
+	    	}
+	    }
+	    if (mjbyptimp != null){
+	    	voyage.setMjbyptimp(mjbyptimp);
+	    }
+	}
+	
+	/*
+	 * Calculate mjslptimp - Imputed principal place of landing
+	*/
+	public void calculateMjslptimp() {
+		Port mjslptimp = null;
+		
+		Port majselpt = voyage.getMajselpt();
+	    if (majselpt == null) {
+	    	Port arrport = voyage.getArrport();
+	    	if (arrport != null) {
+	    		mjslptimp = arrport;
+	    	}
+	    }
+	    else {
+	    	mjslptimp = majselpt;
+		}
+
+	    if (mjslptimp != null){
+	    	voyage.setMjslptimp(mjslptimp);
+	    }
+	}
+	
 }
