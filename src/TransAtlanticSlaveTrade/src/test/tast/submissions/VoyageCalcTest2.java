@@ -452,7 +452,7 @@ public class VoyageCalcTest2 extends TestCase {
 			
 			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage, session);			
 			
-			voyageCalc.calculateImputedValueTonmod();
+			voyageCalc.calculateTonmod();
 			
 			saveVoyage(voyage);
 			assertEquals(voyage.getTonmod(), 343.1f);
@@ -479,7 +479,7 @@ public class VoyageCalcTest2 extends TestCase {
 			
 			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage, session);			
 			
-			voyageCalc.calculateImputedValueTonmod();
+			voyageCalc.calculateTonmod();
 			
 			saveVoyage(voyage);
 			assertEquals(voyage.getTonmod(), 9999f);
