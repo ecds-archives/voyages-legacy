@@ -470,5 +470,17 @@ public class VoyageCalcTest extends TestCase {
 		System.out.println("b:" + b);
 		
 	}
+	
+	@Test
+	public void testCalculateImputedVariables(){
+		try{
+			setUpSession();
+			deleteVoyage(99910);
+			setValuesVoyage(new Integer(99910), "shipName_99910");
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+	}
 
 }

@@ -494,19 +494,13 @@ public class VoyageCalcTest2 extends TestCase {
 	
 	public void testYear(){
 		try {	
-			deleteVoyage(99900);
-			
+			deleteVoyage(99900);			
 			//add test specific variables in voyage object
-			setValuesVoyage(new Integer(99900), "shipName_99900");
-			
+			setValuesVoyage(new Integer(99900), "shipName_99900");			
 			//Input variables for second region calculation
 			voyage.setYearam(1770); 
-;
-			
-			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage, session);			
-			
-			voyageCalc.calculateValuesYear();
-			
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage, session);		
+			voyageCalc.calculateValuesYear();			
 			saveVoyage(voyage);
 			assertEquals(voyage.getYear5(), new Integer("49"));
 			assertEquals(voyage.getYear10(), new Integer("27"));
