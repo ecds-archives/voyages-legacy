@@ -2323,14 +2323,14 @@ public class VoyagesCalculation {
 			  if(feml1imp!=null && feml1imp >=0) {feml1imp=null;}
 			  if(male1imp!=null && male1imp >=0) {male1imp=null;}
 			 }
-			 if(chil1imp!=null && slavema1!=null){chilrat1=chil1imp.doubleValue()/slavema1.doubleValue();} //Added If to check for null
+			 if(chil1imp!=null && slavema1!=null && slavema1!=0){chilrat1=chil1imp.doubleValue()/slavema1.doubleValue();} //Added If to check for null
 
-			 if(male1imp!=null && slavemx1!=null) {malrat1= male1imp.doubleValue()/slavemx1.doubleValue();} //Added If to check for null
+			 if(male1imp!=null && slavemx1!=null && slavemx1!=0) {malrat1= male1imp.doubleValue()/slavemx1.doubleValue();} //Added If to check for null
 
-			 if (slavmax1!=null && slavmax1 >= 20) {menrat1=(men1.doubleValue()+men4.doubleValue()+men5.doubleValue())/slavmax1.doubleValue();} //Added null check
-			 if (slavmax1!=null && slavmax1 >= 20) {womrat1=(women1.doubleValue()+women4.doubleValue()+women5.doubleValue())/slavmax1.doubleValue();} //Added null check
-			 if (slavmax1!=null && slavmax1 >= 20) {boyrat1=(boy1.doubleValue()+boy4.doubleValue()+boy5.doubleValue())/slavmax1.doubleValue();} //Added null check
-			 if (slavmax1!=null && slavmax1 >= 20) {girlrat1= (girl1.doubleValue()+girl4.doubleValue()+girl5.doubleValue())/slavmax1.doubleValue();} //Added null check
+			 if (slavmax1!=null && slavmax1 >= 20 && slavmax1!=0) {menrat1=(men1.doubleValue()+men4.doubleValue()+men5.doubleValue())/slavmax1.doubleValue();} //Added null check
+			 if (slavmax1!=null && slavmax1 >= 20 && slavmax1 !=0) {womrat1=(women1.doubleValue()+women4.doubleValue()+women5.doubleValue())/slavmax1.doubleValue();} //Added null check
+			 if (slavmax1!=null && slavmax1 >= 20 && slavmax1!=0) {boyrat1=(boy1.doubleValue()+boy4.doubleValue()+boy5.doubleValue())/slavmax1.doubleValue();} //Added null check
+			 if (slavmax1!=null && slavmax1 >= 20 && slavmax1!=0) {girlrat1= (girl1.doubleValue()+girl4.doubleValue()+girl5.doubleValue())/slavmax1.doubleValue();} //Added null check
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -2398,12 +2398,12 @@ public class VoyagesCalculation {
 			  if(male3imp!=null && male3imp >=0) {male3imp=null;}
 			 }
 
-			 if(chil3imp!=null && slavema3!=null) {chilrat3=chil3imp/slavema3;} //Added If to check for null
-			 if(male3imp!=null && slavemx3!=null) {malrat3= male3imp/slavemx3;} //Added If to check for null
-			 if(slavmax3!=null && slavmax3 >= 20) {menrat3=(men3+men6)/slavmax3;}
-			 if(slavmax3!=null && slavmax3 >= 20) {womrat3=(women3+women6)/slavmax3;}
-			 if(slavmax3!=null && slavmax3 >= 20) {boyrat3=(boy3+boy6)/slavmax3;}
-			 if(slavmax3!=null && slavmax3 >= 20) {girlrat3= (girl3+girl6)/slavmax3;}
+			 if(chil3imp!=null && slavema3!=null && slavema3!=0) {chilrat3=chil3imp/slavema3;} //Added If to check for null
+			 if(male3imp!=null && slavemx3!=null && slavemx3!=0) {malrat3= male3imp/slavemx3;} //Added If to check for null
+			 if(slavmax3!=null && slavmax3 >= 20 && slavmax3!=0) {menrat3=(men3+men6)/slavmax3;}
+			 if(slavmax3!=null && slavmax3 >= 20 && slavmax3!=0) {womrat3=(women3+women6)/slavmax3;}
+			 if(slavmax3!=null && slavmax3 >= 20 && slavmax3!=0) {boyrat3=(boy3+boy6)/slavmax3;}
+			 if(slavmax3!=null && slavmax3 >= 20 && slavmax3!=0) {girlrat3= (girl3+girl6)/slavmax3;}
 
 
 			 if(slavema3!=null && slavema3 >= 20) {slavema7=slavema3;}
