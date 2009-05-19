@@ -34,26 +34,29 @@ public class VoyagesCalculation {
 	 * Calls all the calculation functions in one shot
 	 */
 	public Voyage calculateImputedVariables() {
-		calculateValueNatinimp();
+		calculateFate2();
+		calculateFate3();
+		calculateFate4();
+		calculateTslmtimp();
+		calculateNatinimp();
 		calculateValuesYear();
-		calculateValuesVoyLengths();
-		calculateImputedValueFate2();
-		calculateImputedValueFate3();
-		calculateImputedValueFate4();
-		calculateValuesRegion1();
-		calculateValuesRegion2();
-		calculateValueMajbuypt();
-		calculateValueMajselpt();
-		calculateImputedValueTonmod();
+		calculateVoyLengths();
+		calculateMajbuypt();
+		calculateMajselpt();
+		calculateTonmod();
+		calculateXmImpflag();
 		calculateSlavesEmbarkDisembark();
 		calculateValuesPeople();
+		calculatePtDepImp();
+		calculateValuesRegion1();
+		calculateValuesRegion2();
 		return this.voyage;
 	}
 	
 	/*
 	 * fate2: Outcome of voyage for slaves
 	 */
-	public void calculateImputedValueFate2() {
+	public void calculateFate2() {
 		Integer fate = null;		
 		HashMap fate2Hash = VoyagesCalcConstants.getfate2Hash();		
 		Fate fateObj = voyage.getFate();
@@ -67,7 +70,7 @@ public class VoyagesCalculation {
 	/*
 	 * fate3: Outcome of voyage If vessel captured
 	 */
-	public void calculateImputedValueFate3() {
+	public void calculateFate3() {
 		Integer fate = null;		
 		HashMap fate3Hash = VoyagesCalcConstants.getfate3Hash();
 		Fate fateObj = voyage.getFate();
@@ -81,7 +84,7 @@ public class VoyagesCalculation {
 	/*
 	 * fate4: Outcome of voyage for owner
 	 */
-	public void calculateImputedValueFate4() {
+	public void calculateFate4() {
 		Integer fate = null;
 		HashMap fate4Hash = VoyagesCalcConstants.getfate4Hash();
 		Fate fateObj = voyage.getFate();
@@ -95,7 +98,7 @@ public class VoyagesCalculation {
     /*
      * Calculates value of tonmod variable
      */
-	public void calculateImputedValueTonmod() {
+	public void calculateTonmod() {
 		//Create the needed variables for calculations
 		Integer tontype=voyage.getTontype(); 
 		Integer tonnage=voyage.getTonnage(); 
@@ -148,7 +151,7 @@ public class VoyagesCalculation {
 	/*
 	 * majbuypt: Principal port of slave purchase
 	 */
-	public void calculateValueMajbuypt() {
+	public void calculateMajbuypt() {
 		int plac1tra_int = 0;
 		int plac2tra_int = 0;
 		int plac3tra_int = 0;
@@ -313,7 +316,7 @@ public class VoyagesCalculation {
 	/*
 	 * majselpt: Principal port of slave purchase
 	 */
-	public void calculateValueMajselpt() {
+	public void calculateMajselpt() {
 		 Double slastot=0d;
 		 
 	     int sla1port_int = 0;
@@ -635,7 +638,7 @@ public class VoyagesCalculation {
 	/*
 	 * Calculates natinimp variable
 	 */
-	public void calculateValueNatinimp() {
+	public void calculateNatinimp() {
 		Integer national=-1;
 		
 		Integer natinimp=null;
@@ -659,7 +662,7 @@ public class VoyagesCalculation {
 	/*
 	 * Calculates voy1imp and voy2imp values
 	 */
-	public void calculateValuesVoyLengths() {
+	public void calculateVoyLengths() {
 		//Create variables for calculation
 		Date dateland1=voyage.getDateland1();
 		Date datedep=voyage.getDatedep(); 
@@ -2544,7 +2547,7 @@ public class VoyagesCalculation {
 	    int[] rigArray = {29, 42, 43, 54, 59, 61, 65, 80, 86};
 	    //Arrays.sort(rigArray);
 	    
-	    System.out.println("rig:" + rig);
+	    System.out.println("rig:" + rig_int);
 	    System.out.println("majbyimp:" + majbyimp + ":" + majbyimp_int);
 	    System.out.println("mjselimp:" + mjselimp + ":" + mjselimp_int);
 	    System.out.println("mjselimp1:" + mjselimp1 + ":" + mjselimp1_int);
@@ -2552,17 +2555,17 @@ public class VoyagesCalculation {
 	    System.out.println("yearam:" + yearam);
 	    
 	    
-		if  (rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0 && (yearam!= null && yearam >= 1626 && yearam < 1651)) {xmimpflag = 127d ;}			
-		else if  (rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0 && (yearam!= null && yearam >= 1626 && yearam < 1651)) {xmimpflag = 127d ;}
-		else if  (rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0 && (yearam!= null && yearam >= 1651 && yearam < 1676)) {xmimpflag = 128d ;}
-		else if  (rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0 && (yearam!= null && yearam >= 1676 && yearam < 1701)) {xmimpflag = 129d ;}
-		else if  (rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0 && (yearam!= null && yearam >= 1701 && yearam < 1726)) {xmimpflag = 130d;}
-		else if  (rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0 && (yearam!= null && yearam >= 1726 && yearam < 1751)) {xmimpflag = 131d;}
-		else if  (rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0 && (yearam!= null && yearam >= 1751 && yearam < 1776)) {xmimpflag = 132d;}
-		else if  (rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0 && (yearam!= null && yearam >= 1776 && yearam < 1801)) {xmimpflag = 133d;}
-		else if  (rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0 && (yearam!= null && yearam >= 1801 && yearam < 1826)) {xmimpflag = 134d;}
-		else if  (rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0 && (yearam!= null && yearam >= 1826 && yearam < 1851)) {xmimpflag = 135d;}
-		else if  (rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0 && (yearam!= null && yearam >= 1851 && yearam < 1876)) {xmimpflag = 136d;}
+		if  ((rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0) && (yearam!= null && yearam >= 1626 && yearam < 1651)) {xmimpflag = 127d ;}			
+		else if  ((rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0) && (yearam!= null && yearam >= 1626 && yearam < 1651)) {xmimpflag = 127d ;}
+		else if  ((rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0) && (yearam!= null && yearam >= 1651 && yearam < 1676)) {xmimpflag = 128d ;}
+		else if  ((rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0) && (yearam!= null && yearam >= 1676 && yearam < 1701)) {xmimpflag = 129d ;}
+		else if  ((rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0) && (yearam!= null && yearam >= 1701 && yearam < 1726)) {xmimpflag = 130d;}
+		else if  ((rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0) && (yearam!= null && yearam >= 1726 && yearam < 1751)) {xmimpflag = 131d;}
+		else if  ((rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0) && (yearam!= null && yearam >= 1751 && yearam < 1776)) {xmimpflag = 132d;}
+		else if  ((rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0) && (yearam!= null && yearam >= 1776 && yearam < 1801)) {xmimpflag = 133d;}
+		else if  ((rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0) && (yearam!= null && yearam >= 1801 && yearam < 1826)) {xmimpflag = 134d;}
+		else if  ((rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0) && (yearam!= null && yearam >= 1826 && yearam < 1851)) {xmimpflag = 135d;}
+		else if  ((rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0) && (yearam!= null && yearam >= 1851 && yearam < 1876)) {xmimpflag = 136d;}
 		else if  (yearam!= null && yearam < 1700 && majbyimp_int == 60100) {xmimpflag = 101d;}
 		else if  (yearam!= null && yearam >= 1700 && yearam < 1801 && majbyimp_int == 60100) {xmimpflag = 102d;}
 		else if  (yearam!= null && yearam >=1800 && majbyimp_int == 60100) {xmimpflag = 103d;}

@@ -28,13 +28,6 @@ public class VoyageCalcTest extends TestCase {
 	Voyage voyage = null;
 	Transaction tran = null;
 
-	public void setUp() throws Exception {	
-		/*if (session == null) {
-			session = HibernateConn.getSession();
-			tran = session.beginTransaction();
-		}	*/		
-	}
-	
 	public void setUpSession() throws Exception {
 			session = HibernateConn.getSession();
 			tran = session.beginTransaction();
@@ -97,8 +90,6 @@ public class VoyageCalcTest extends TestCase {
 		//suite.addTest(new VoyageCalcTest("testCalculateValueMajbuyptVariableValues1"));
 		//suite.addTest(new VoyageCalcTest("testCalculateValueMajselptVariableValues"));
 		suite.addTest(new VoyageCalcTest("testCalculateXmImpflag"));
-		//suite.addTest(new VoyageCalcTest("testBinarySearch"));
-		
 									
 		return suite;
 	}
@@ -180,7 +171,7 @@ public class VoyageCalcTest extends TestCase {
 			Fate fate = Fate.loadById(session, rigId);
 			voyage.setFate(fate);
 			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage, session);			
-			voyageCalc.calculateImputedValueFate2();
+			voyageCalc.calculateFate2();
 			saveVoyage(voyage);
 			assertEquals(voyage.getFate2().getId().longValue(), 1);
 			voyage = null;
@@ -200,7 +191,7 @@ public class VoyageCalcTest extends TestCase {
 			Fate fate = Fate.loadById(session, rigId);
 			voyage.setFate(fate);
 			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage, session);			
-			voyageCalc.calculateImputedValueFate3();
+			voyageCalc.calculateFate3();
 			saveVoyage(voyage);
 			assertEquals(voyage.getFate3().getId().longValue(), 4);
 			voyage = null;
@@ -220,7 +211,7 @@ public class VoyageCalcTest extends TestCase {
 			Fate fate = Fate.loadById(session, rigId);
 			voyage.setFate(fate);
 			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage, session);			
-			voyageCalc.calculateImputedValueFate4();
+			voyageCalc.calculateFate4();
 			saveVoyage(voyage);
 			assertEquals(voyage.getFate4().getId().longValue(), 3);
 			voyage = null;
@@ -311,7 +302,7 @@ public class VoyageCalcTest extends TestCase {
 				voyage.setTslavesp(tslavespArray[i]);
 				
 				VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage, session);			
-				voyageCalc.calculateValueMajbuypt();
+				voyageCalc.calculateMajbuypt();
 				saveVoyage(voyage);
 				assertEquals(voyage.getMajbuypt().getId().longValue(), (long)rsltArray[i]);				
 				//Ist result majbuypt = plac3tra=35113, Spanish Town 
@@ -365,7 +356,7 @@ public class VoyageCalcTest extends TestCase {
 				voyage.setTslavesp(tslavespArray[i]);
 				
 				VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage, session);			
-				voyageCalc.calculateValueMajbuypt();
+				voyageCalc.calculateMajbuypt();
 				saveVoyage(voyage);		
 				if (voyage.getMajbuypt() != null) {
 					assertEquals(voyage.getMajbuypt().getId().longValue(), (long)rsltArray[i]);
@@ -410,7 +401,7 @@ public class VoyageCalcTest extends TestCase {
 				voyage.setSlaarriv(slaarrivArray[i]);
 				
 				VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage, session);			
-				voyageCalc.calculateValueMajselpt();
+				voyageCalc.calculateMajselpt();
 				saveVoyage(voyage);			
 				if (voyage.getMajselpt() != null) {
 					assertEquals(voyage.getMajselpt().getId().longValue(), (long)rsltArray[i]);
@@ -427,8 +418,7 @@ public class VoyageCalcTest extends TestCase {
 	public void testCalculateXmImpflag(){
 		try {			
 			Integer[] shipName = {99900, 99901, 99902, 99903, 99904, 99905};
-			long[] rigArray = {29, 0, 90, 10, 25, 0};
-			//int[] rigArray = {29, 42, 43, 54, 59, 61, 65, 80, 86};
+			long[] rigArray = {29, 0, 90, 10, 25, 0};	
 			Integer[] yearamArray = {1500, 1720, 1500, 1710, 1800, null};
 			long[] majbyimpArray = {20, 0, 60100, 60600, 0, 0};
 			long[] mjselimpArray = {80400, 0, 36200, 0, 50200, 0};

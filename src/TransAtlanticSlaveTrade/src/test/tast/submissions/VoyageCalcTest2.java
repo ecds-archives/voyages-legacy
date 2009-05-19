@@ -264,7 +264,7 @@ public class VoyageCalcTest2 extends TestCase {
 			
 			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage, session);			
 			
-			voyageCalc.calculateValueNatinimp();
+			voyageCalc.calculateNatinimp();
 			
 			saveVoyage(voyage);
 			assertEquals(voyage.getNatinimp().getId(), new Long("3"));
@@ -289,7 +289,7 @@ public class VoyageCalcTest2 extends TestCase {
 			
 			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage, session);			
 			
-			voyageCalc.calculateValueNatinimp();
+			voyageCalc.calculateNatinimp();
 			
 			saveVoyage(voyage);
 			assertNull(voyage.getNatinimp());
@@ -319,7 +319,7 @@ public class VoyageCalcTest2 extends TestCase {
 			
 			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage, session);			
 			
-			voyageCalc.calculateValuesVoyLengths();
+			voyageCalc.calculateVoyLengths();
 			
 			saveVoyage(voyage);
 			assertEquals(voyage.getVoy1imp(), new Integer("6"));
@@ -350,7 +350,7 @@ public class VoyageCalcTest2 extends TestCase {
 			
 			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage, session);			
 			
-			voyageCalc.calculateValuesVoyLengths();
+			voyageCalc.calculateVoyLengths();
 			
 			saveVoyage(voyage);
 			assertNull(voyage.getVoy1imp());
