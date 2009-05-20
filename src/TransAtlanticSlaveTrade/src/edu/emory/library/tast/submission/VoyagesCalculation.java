@@ -46,8 +46,6 @@ public class VoyagesCalculation {
 		calculateMjbyptimp();
 		calculateMjslptimp();
 		calculateTonmod();
-		//calculateXmImpflag();
-		//calculateSlavesEmbarkDisembark();
 		calculateValuesPeople();
 		calculatePtDepImp();
 		calculateValuesRegion1();
@@ -209,23 +207,8 @@ public class VoyagesCalculation {
 		}
 				
 		Integer ncartot = defVal(ncar13, 0)+ defVal(ncar15, 0)+ defVal(ncar17, 0);
-		/*rslt_d = ncartot.doubleValue()/tslavesd_int;
-		rslt_p = ncartot.doubleValue()/tslavesp_int;*/		
 		rslt_d = ncartot.doubleValue()/tslavesd_int;
 		rslt_p = ncartot.doubleValue()/tslavesp_int;
-		
-		System.out.println("plac1tra_int:" + plac1tra_int);
-		System.out.println("plac2tra_int:" + plac2tra_int);
-		System.out.println("plac3tra_int:" + plac3tra_int);
-		System.out.println("ncar13:" + ncar13);
-		System.out.println("ncar15:" + ncar15);
-		System.out.println("ncar17:" + ncar17);
-		
-		System.out.println("ncartort:" + ncartot);
-		System.out.println("tslavesd:" + tslavesd);
-		System.out.println("tslavesp:" + tslavesp);
-		System.out.println("rslt_d:" + rslt_d);
-		System.out.println("rslt_p:" + rslt_p);
 		
 		if (plac1tra_int >= 1 && plac2tra==null && plac3tra==null) {
 			majbuypt = plac1tra;
@@ -314,8 +297,7 @@ public class VoyagesCalculation {
         }
         //if Port is not null, then set the value in voyage 
         if (majbuypt != null){
-			voyage.setMajbuypt(majbuypt);
-			System.out.println("majbuypt:" + majbuypt.getId() + ":" + majbuypt);
+			voyage.setMajbuypt(majbuypt);			
 		}
         
 	}
@@ -359,16 +341,6 @@ public class VoyagesCalculation {
 		 Port adpsale1 = voyage.getAdpsale1();
 		 Port adpsale2 = voyage.getAdpsale2();
 		 
-		 System.out.println("sla1port:" + sla1port);
-		 System.out.println("adpsale1:" + adpsale1);
-		 System.out.println("adpsale2:" + adpsale2);
-		 System.out.println("slaarriv:" + slaarriv);
-		 System.out.println("slas32:" + slas32);
-		 System.out.println("slas36:" + slas36);
-		 System.out.println("slas39:" + slas39);
-		 System.out.println("slastot:" + slastot);
-		 System.out.println("rslt_sla:" + rslt_sla);
-		 		 
 		 if (sla1port != null) {
 			 sla1port_int = sla1port.getId().intValue();
 		 }
@@ -454,7 +426,7 @@ public class VoyagesCalculation {
 	     
 	     if (majselpt != null) {
 		     voyage.setMajselpt(majselpt);
-		     System.out.println("majselpt:" + majselpt.getId() + ":" + majselpt);
+		    // System.out.println("majselpt:" + majselpt.getId() + ":" + majselpt);
 	     }
 
 	}
@@ -643,18 +615,19 @@ public class VoyagesCalculation {
 	}
 	
 	/*
-	 * Calculates natinimp variable
+	 * Calculates natinimp : Imputed country in which ship registered (flag*)
 	 */
 	public void calculateNatinimp() {
-		Integer national=-1;
-		
+		Integer national=-1;		
 		Integer natinimp=null;
+		
 		try {
 			//Create variables for calculation
-			if(voyage.getNational()!=null) {national = voyage.getNational().getId().intValue();}
-			HashMap natHash = VoyagesCalcConstants.getnatHash();
-			
-			natinimp = (Integer)natHash.get(national);
+			if(voyage.getNational()!= null) {
+				national = voyage.getNational().getId().intValue();
+				HashMap natHash = VoyagesCalcConstants.getnatHash();				
+				natinimp = (Integer)natHash.get(national);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -662,7 +635,9 @@ public class VoyagesCalculation {
 	    //Store the value in a Nation object and update voyages object
 	    if (natinimp != null){
 	    	Nation nation= Nation.loadById(session, natinimp);
-			voyage.setNatinimp(nation);
+	    	if(nation != null) {
+	    		voyage.setNatinimp(nation);
+	    	}
 		}
 	}
 	
@@ -827,7 +802,6 @@ public class VoyagesCalculation {
 				voyage.setVymrtrat(vymrtrat);
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -2544,25 +2518,17 @@ public class VoyagesCalculation {
 		//Year arrived with slaves
 		Integer yearam = voyage.getYearam();
 		Region mjselimp = voyage.getMjselimp();
+		
 		if (mjselimp != null){
 			mjselimp_int = mjselimp.getId().intValue();
 		}
 		//Principal place of slave landing
-		Region mjselimp1 = voyage.getMjselimp();
+		Region mjselimp1 = voyage.getMjselimp1();
 		if (mjselimp1 != null){
 			mjselimp1_int = mjselimp1.getId().intValue();
 		}
 				
 	    int[] rigArray = {29, 42, 43, 54, 59, 61, 65, 80, 86};
-	    //Arrays.sort(rigArray);
-	    
-	    System.out.println("rig:" + rig_int);
-	    System.out.println("majbyimp:" + majbyimp + ":" + majbyimp_int);
-	    System.out.println("mjselimp:" + mjselimp + ":" + mjselimp_int);
-	    System.out.println("mjselimp1:" + mjselimp1 + ":" + mjselimp1_int);
-	    System.out.println("natinimp:" + natinimp + ":" + natinimp_int);
-	    System.out.println("yearam:" + yearam);
-	    
 	    
 		if  ((rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0) && (yearam!= null && yearam >= 1626 && yearam < 1651)) {xmimpflag = 127d ;}			
 		else if  ((rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0) && (yearam!= null && yearam >= 1626 && yearam < 1651)) {xmimpflag = 127d ;}
@@ -2722,7 +2688,7 @@ public class VoyagesCalculation {
 		
 		if (xmimpflag != 0){
 			voyage.setXmimpflag(xmimpflag);
-			System.out.println("xmimpflag:" + xmimpflag);
+			//System.out.println("xmimpflag:" + xmimpflag);
 		}
 	}
 	
