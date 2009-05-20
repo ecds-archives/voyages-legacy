@@ -39,6 +39,7 @@ public class VoyagesCalculation {
 		calculateFate4();
 		calculateTslmtimp();
 		calculateNatinimp();
+		calculateYearam();
 		calculateValuesYear();
 		calculateVoyLengths();
 		calculateMajbuypt();
@@ -2737,5 +2738,34 @@ public class VoyagesCalculation {
 	    	voyage.setMjslptimp(mjslptimp);
 	    }
 	}
+	
+	/*
+	 * Calculates yearam variable
+	 */
+	public void calculateYearam() {
+		//Get Inputs
+		Integer datedepc=voyage.getDatedepc();
+		Integer d1slatrc=voyage.getD1slatrc();
+		Integer dlslatrc=voyage.getDlslatrc();
+		Integer datarr34=voyage.getDatarr34();
+		Integer ddepamc=voyage.getDdepamc(); 
+		Integer datarr45=voyage.getDatarr45();
+
+		
+		//Variables to impute
+		Integer yearam=null;
+		
+		//Calculate
+		yearam=datarr34; 
+		if (yearam==null){yearam=dlslatrc;}
+		if (yearam==null){yearam=d1slatrc;} 
+		if (yearam==null){yearam=datedepc;}
+		if (yearam==null){yearam=ddepamc;} 
+		if (yearam==null){yearam=datarr45;}
+		
+		//Store in voyage object
+		voyage.setYearam(yearam);
+	}
+	
 	
 }

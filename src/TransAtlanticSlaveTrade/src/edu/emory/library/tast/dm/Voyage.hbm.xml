@@ -294,5 +294,11 @@
         <property name="male7" column="male7" />
         <property name="female7" column="female7" />		
         <property name="xmimpflag" column="xmimpflag" />
+        <property name="datedepc" column="datedepc" />
+		<property name="d1slatrc" column="d1slatrc" />
+		<property name="dlslatrc" column="dlslatrc" />
+		<property name="datarr34" column="datarr34" />
+		<property name="ddepamc" column="ddepamc" />
+		<property name="datarr45" column="datarr45" />
 	</class>
 </hibernate-mapping>

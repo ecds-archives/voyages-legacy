@@ -2631,5 +2631,64 @@ public class Voyage extends AbstractDescriptiveObject
 	public Double getXmimpflag() {
 		return (Double) this.values.get("xmimpflag");
 	}
-		
+	
+	
+	public void setDatedepc(Integer obj) {
+		this.values.put("datedepc", obj);
+	}
+	
+	public Integer getDatedepc() {
+		return (Integer) this.values.get("datedepc");
+	}
+	
+	
+	
+	public void setD1slatrc(Integer obj) {
+		this.values.put("d1slatrc", obj);
+	}
+	
+	public Integer getD1slatrc() {
+		return (Integer) this.values.get("d1slatrc");
+	}
+	
+	
+	
+	public void setDlslatrc(Integer obj) {
+		this.values.put("dlslatrc", obj);
+	}
+	
+	public Integer getDlslatrc() {
+		return (Integer) this.values.get("dlslatrc");
+	}
+	
+	
+	
+	public void setDatarr34(Integer obj) {
+		this.values.put("datarr34", obj);
+	}
+	
+	public Integer getDatarr34() {
+		return (Integer) this.values.get("datarr34");
+	}
+	
+	
+	
+	public void setDdepamc(Integer obj) {
+		this.values.put("ddepamc", obj);
+	}
+	
+	public Integer getDdepamc() {
+		return (Integer) this.values.get("ddepamc");
+	}
+	
+	
+	
+	public void setDatarr45(Integer obj) {
+		this.values.put("datarr45", obj);
+	}
+	
+	public Integer getDatarr45() {
+		return (Integer) this.values.get("datarr45");
+	}
+	
 }
