@@ -400,7 +400,12 @@
 		<attributes>
 			<attribute name="tslavesp"/>
 		</attributes>
-	</submission-attributes>	
+	</submission-attributes>
+	<submission-attributes name="tslavesd" group="Slaves (numbers)" editable="Y" type="integer" userLabel="Total slaves on board at departure from last slaving port">
+			<attributes>
+				<attribute name="tslavesd"/>
+			</attributes>
+	</submission-attributes>
 		<submission-attributes name="sladafri" group="Slaves (numbers)" editable="Y" type="integer" userLabel="Shipboard slave deaths in Africa">
 		<attributes>
 			<attribute name="sladafri"/>
