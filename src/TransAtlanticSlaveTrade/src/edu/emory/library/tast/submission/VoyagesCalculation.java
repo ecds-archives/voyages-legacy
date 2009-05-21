@@ -540,10 +540,10 @@ public class VoyagesCalculation {
 	}
 
 	    //ranges too few for year100 to create a HashMap
-	    if (yearam < 1601) {year100=1500;}
-	    else if (yearam > 1600 && yearam < 1701) {year100=1600;}
-	    else if (yearam > 1700 && yearam < 1801) {year100=1700;}
-	    else if (yearam > 1800) {year100=1800;}
+	    if (yearam !=null && yearam < 1601) {year100=1500;}
+	    else if (yearam !=null && yearam > 1600 && yearam < 1701) {year100=1600;}
+	    else if (yearam !=null && yearam > 1700 && yearam < 1801) {year100=1700;}
+	    else if (yearam !=null && yearam > 1800) {year100=1800;}
 	    
 	    //Set values in object 
 	    //value of -1 means no match from function
@@ -573,12 +573,13 @@ public class VoyagesCalculation {
 	public static ArrayList recode(ArrayList orig, ArrayList ranges, boolean torf)
 	{
 	  ArrayList ret=new ArrayList(); //Array of return values
+	  Integer curr=null;
 
 
 	  //Loop over each input value
 	  for(int o=0; o < orig.size(); o++)
 	  {
-	     Integer curr=(Integer)orig.get(o);
+	     if(orig.get(o)!=null) {curr=(Integer)orig.get(o);}
 	     Integer foundvalue=-1; //value to be returned if no match is found
 
 	     //search each range until a match is found 
@@ -591,7 +592,7 @@ public class VoyagesCalculation {
 	         
 	         if(torf) //Include low and high values in search
 	         {
-	             if(curr >=low && curr <= high)
+	             if(curr!=null && curr >=low && curr <= high)
 	             {
 	                 foundvalue=range[2];
 	                 break;
@@ -599,7 +600,7 @@ public class VoyagesCalculation {
 	         }
 	         else //do not include the low and high values in the search
 	         {
-	             if(curr > low && curr < high)
+	             if(curr!=null && curr > low && curr < high)
 	             {
 	                   foundvalue=range[2];
 	                 break;
@@ -791,7 +792,7 @@ public class VoyagesCalculation {
 				vymrtrat = vymrtimp / tslmtimp;
 			}
 			
-			if (tslmtimp != 0) {
+			if (tslmtimp != null && tslmtimp != 0) {
 				voyage.setTslmtimp(tslmtimp);
 			}
 			
