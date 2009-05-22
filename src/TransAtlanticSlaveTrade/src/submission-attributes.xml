@@ -6,7 +6,7 @@
 			<attribute name="voyageid"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="evgreen" group="Ship, nation, owners" editable="Y" type="string" userLabel="Voyage in 1999 CD-ROM">
+	<submission-attributes name="evgreen" group="Ship, nation, owners" editable="Y" type="boolean" userLabel="Voyage in 1999 CD-ROM">
 		<attributes>
 			<attribute name="evgreen"/>
 		</attributes>
