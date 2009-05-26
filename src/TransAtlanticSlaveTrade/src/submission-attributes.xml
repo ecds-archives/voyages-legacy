@@ -121,7 +121,7 @@
 			<attribute name="fate4"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="resistance" group="Voyage outcome" editable="Y" type="integer" userLabel="African resistance">
+	<submission-attributes name="resistance" group="Voyage outcome" editable="Y" type="resistance" userLabel="African resistance">
 		<attributes>
 			<attribute name="resistance"/>
 		</attributes>
