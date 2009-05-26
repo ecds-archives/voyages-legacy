@@ -31,6 +31,7 @@ import edu.emory.library.tast.dm.FateVessel;
 import edu.emory.library.tast.dm.Nation;
 import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.dm.Region;
+import edu.emory.library.tast.dm.Resistance;
 import edu.emory.library.tast.dm.Source;
 import edu.emory.library.tast.dm.VesselRig;
 import edu.emory.library.tast.dm.Voyage;
@@ -168,7 +169,8 @@ public class SubmissionAttribute {
 			if (toBeFormatted[0] == null) {
 				return new ListValue();
 			}
-			return new ListValue(new String[] {((Integer)toBeFormatted[0]).intValue() == 1 ? "true" : "false"});
+			//return new ListValue(new String[] {((Integer)toBeFormatted[0]).intValue() == 1 ? "true" : "false"});			
+			return new ListValue(new String[] {((Boolean)toBeFormatted[0]) == Boolean.TRUE ? "true" : "false"});
 		} else {
 			if (toBeFormatted[0] == null) {
 				return new ListValue();
@@ -289,12 +291,20 @@ public class SubmissionAttribute {
 				return new Object[] {null};
 			}
 			return new Object[] {Dictionary.loadById(FateOwner.class, sess, id)};
-		} else if (type.equals(SubmissionDictionaries.BOOLEAN)) {
+		}else if (type.equals(SubmissionDictionaries.RESISTANCE)) {
 			String id = ((ListValue)object).getValues()[0];
 			if (id.equals("-1")) {
 				return new Object[] {null};
 			}
-			return new Object[] {"true".equals(id) ? new Integer(1) : new Integer(0)};
+			return new Object[] {Dictionary.loadById(Resistance.class, sess, id)};
+		}  
+		else if (type.equals(SubmissionDictionaries.BOOLEAN)) {
+			String id = ((ListValue)object).getValues()[0];
+			if (id.equals("-1")) {
+				return new Object[] {null};
+			}
+			//return new Object[] {"true".equals(id) ? new Integer(1) : new Integer(0)};
+			return new Object[] {"true".equals(id) ? new Boolean(true) : new Boolean(false)};
 		} else {
 			throw new RuntimeException("Attribute type " + type + " not defined in Submission attribute");
 		}

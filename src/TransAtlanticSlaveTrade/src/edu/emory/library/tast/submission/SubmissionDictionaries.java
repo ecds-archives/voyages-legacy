@@ -34,6 +34,7 @@ import edu.emory.library.tast.dm.Nation;
 import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.dm.VesselRig;
+import edu.emory.library.tast.dm.Resistance;
 
 public class SubmissionDictionaries {
 
@@ -43,10 +44,11 @@ public class SubmissionDictionaries {
 	public static final String FATES = "fates";
 	public static final String TONTYPES = "tontypes";
 	public static final String NATIONALS = "nationals";
+	public static final String RESISTANCE = "resistance";
 	
 	public static final String FATE2 = "fate2";
 	public static final String FATE3 = "fate3";
-	public static final String FATE4 = "fate4";
+	public static final String FATE4 = "fate4";	
 	public static final String BOOLEAN = "boolean";
 	
 	public static Map fieldTypes = new HashMap();
@@ -62,6 +64,7 @@ public class SubmissionDictionaries {
 	public static ListItem[] fate3;
 	public static ListItem[] fate4;
 	public static ListItem[] boolItems;
+	public static ListItem[] resistance;
 	
 	static {
 		Session session = HibernateConn.getSession();
@@ -132,6 +135,9 @@ public class SubmissionDictionaries {
 		boolItems[2] = new ListItem("false", "No");
 		fieldTypes.put(BOOLEAN, new ListFieldType(BOOLEAN, boolItems));
 		
+		resistance = fillIn(session, Resistance.class);
+		fieldTypes.put(RESISTANCE, new ListFieldType(RESISTANCE, resistance));
+				
 		t.commit();
 		session.close();
 		
