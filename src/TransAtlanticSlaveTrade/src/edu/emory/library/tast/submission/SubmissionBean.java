@@ -495,13 +495,12 @@ public class SubmissionBean
 	
 	public String submit()
 	{
-		
 		this.sourcesBean.submit();
 		
 		lookupPerformed = false;
 		lookedUpVoyage = null;
 		selectedVoyagesForMerge.clear();
-
+		
 		return "done";
 
 	}
@@ -827,9 +826,8 @@ public class SubmissionBean
 				return null;
 			}
 			
-			VoyagesCalculation voyagesCalc = new VoyagesCalculation(voyage, sess);
-			voyage = voyagesCalc.calculateImputedVariables();
-
+			imputeVariables(voyage);
+			
 			sess.save(voyage);
 			if (submissionType == SUBMISSION_TYPE_NEW) {
 
@@ -1036,6 +1034,8 @@ public class SubmissionBean
 				return false;
 			}
 			
+			imputeVariables(voyage);
+			
 			submission.setSavedState(phase);
 			storedEditedVoyage.setAttributeNotes(notes);
 			sess.update(voyage);
@@ -1048,7 +1048,12 @@ public class SubmissionBean
 		}
 		return true;
 	}
-
+	 
+	private void imputeVariables(Voyage voyage) {
+		VoyagesCalculation voyagesCalc = new VoyagesCalculation(voyage);
+		voyage = voyagesCalc.calculateImputedVariables();
+	}
+	
 	public void setSubmission(Submission submission) {
 		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
