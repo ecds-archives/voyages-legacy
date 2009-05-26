@@ -761,7 +761,7 @@ public class VoyageCalcTest2 extends TestCase {
 			setValuesVoyage(new Integer(99900), "shipName_99900");
 
 			
-			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage, session);			
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage);			
 			
 			voyageCalc.calculateYearam();
 			
@@ -788,7 +788,7 @@ public class VoyageCalcTest2 extends TestCase {
 			voyage.setDdepamc(5); 
 			voyage.setDatarr45(6);
 			
-			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage, session);			
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage);			
 			
 			voyageCalc.calculateYearam();
 			
