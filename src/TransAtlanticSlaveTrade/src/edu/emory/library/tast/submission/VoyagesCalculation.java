@@ -59,7 +59,7 @@ public class VoyagesCalculation {
 		calculateSlavesEmbarkDisembark();
 		trans.commit();
 		session.close();
-		return this.voyage;
+		return voyage;
 	}
 	
 	/*
