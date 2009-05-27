@@ -1126,13 +1126,17 @@ public class VoyagesApplier
 				SubmissionEdit edit = (SubmissionEdit) toUpdate[i];
 				edit.setSolved(true);
 				edit.setAccepted(true);
+				vNew.setSuggestion(false);
 				session.update(edit);
+				session.update(vNew);
 			}
 		} else
 		{
 			lSubmission.setSolved(true);
 			lSubmission.setAccepted(true);
+			vNew.setSuggestion(false);
 			session.update(lSubmission);
+			session.update(vNew);
 		}
 		this.vals = null;
 
