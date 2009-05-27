@@ -32,14 +32,8 @@ BEGIN
 	INSERT INTO revisions (id, name) values (revID, revisionName);
 	RAISE NOTICE 'Created New Revision Record: %', revID;
 
-	--Copy all records except for revised voyages to next version
-        FOR voyRec IN SELECT * FROM voyages WHERE revison > 0 AND suggestion='f' 
-        LOOP
-             voyRec.revision:=revID;
-             voyRec.iid:=nextval('voyages_iid_seq');
-             
-             insert into voyages values(voyRec.*);
-        END LOOP;
+	--Update revision to next number
+        UPDATE voyages SET revision=revID WHERE revison > 0 AND suggestion='f'; 
 	
         --Update and delete records for new revision
         FOR voyRec IN SELECT voyageid FROM voyages v WHERE  revision=-1 AND suggestion='f' 
