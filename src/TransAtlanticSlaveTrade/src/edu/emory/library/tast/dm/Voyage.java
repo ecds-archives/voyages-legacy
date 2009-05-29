@@ -1,6 +1,7 @@
 package edu.emory.library.tast.dm;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -112,6 +113,8 @@ public class Voyage extends AbstractDescriptiveObject
 		attributes.add(new PortAttribute("portret", "Voyage", "portret"));
 		attributes.add(new RegionAttribute("retrnreg", "Voyage", "retrnreg"));
 		attributes.add(new NumericAttribute("yearam", "Voyage", NumericAttribute.TYPE_INTEGER, "yearam"));
+		attributes.add(new NumericAttribute("yearaf", "Voyage", NumericAttribute.TYPE_INTEGER, "yearaf"));
+		attributes.add(new NumericAttribute("yeardep", "Voyage", NumericAttribute.TYPE_INTEGER, "yeardep"));
 		attributes.add(new DateAttribute("datedep", "Voyage", "date_dep"));
 		attributes.add(new DateAttribute("datebuy", "Voyage", "date_buy"));
 		attributes.add(new DateAttribute("dateleftafr", "Voyage", "date_leftafr"));
@@ -328,6 +331,7 @@ public class Voyage extends AbstractDescriptiveObject
 	private int revision;
 	private boolean suggestion;
 	private boolean approved;
+	private Calendar cal = Calendar.getInstance();
 	
 	/**
 	 * Gets all attributes of voyage.
@@ -761,6 +765,14 @@ public class Voyage extends AbstractDescriptiveObject
 
 	public void setYearam(Integer yearam) {
 		this.values.put("yearam", yearam);
+	}
+	
+	public void setYearaf(Integer yearaf) {
+		this.values.put("yearaf", yearaf);
+	}
+	
+	public void setYeardep(Integer yeardep) {
+		this.values.put("yeardep", yeardep);
 	}
 	
 	public void setYear5(Integer year5) {
@@ -1390,6 +1402,14 @@ public class Voyage extends AbstractDescriptiveObject
 
 	public Integer getYearam() {
 		return (Integer) this.values.get("yearam");
+	}
+	
+	public Integer getYearaf() {
+		return (Integer) this.values.get("yearaf");
+	}
+	
+	public Integer getYeardep() {
+		return (Integer) this.values.get("yeardep");
 	}
 	
 	public Integer getYear5() {
@@ -2632,39 +2652,64 @@ public class Voyage extends AbstractDescriptiveObject
 		return (Double) this.values.get("xmimpflag");
 	}
 	
-	
+	/*
+	 * Year that voyage began
+	 */
 	public void setDatedepc(Integer obj) {
-		this.values.put("datedepc", obj);
+		Date dep = this.getDatedep();
+		if (dep != null) {			
+		    cal.setTime(dep);
+		    System.out.println("datedepc: " + cal.get(Calendar.YEAR));
+		    this.values.put("datedepc", new Integer(cal.get(Calendar.YEAR)));
+		}	
 	}
 	
 	public Integer getDatedepc() {
 		return (Integer) this.values.get("datedepc");
 	}
-	
-	
-	
+		
+	/*
+	 * Year that slave purchase began
+	 */
 	public void setD1slatrc(Integer obj) {
-		this.values.put("d1slatrc", obj);
+		Date dt = this.getDatebuy();
+		if (dt != null) {			
+		    cal.setTime(dt);
+		    System.out.println("d1slatrc: " + cal.get(Calendar.YEAR));
+		    this.values.put("d1slatrc", new Integer(cal.get(Calendar.YEAR)));
+		}
 	}
 	
 	public Integer getD1slatrc() {
 		return (Integer) this.values.get("d1slatrc");
 	}
 	
-	
-	
+	/*
+	 * Year that vessel left last slaving port - dateleftafr
+	 */
 	public void setDlslatrc(Integer obj) {
-		this.values.put("dlslatrc", obj);
+		Date dt = this.getDateleftafr();
+		if (dt != null) {			
+		    cal.setTime(dt);
+		    System.out.println("dlslatrc: " + cal.get(Calendar.YEAR));
+		    this.values.put("dlslatrc", new Integer(cal.get(Calendar.YEAR)));
+		}
 	}
 	
 	public Integer getDlslatrc() {
 		return (Integer) this.values.get("dlslatrc");
 	}
-	
-	
-	
+		
+	/*
+	 * Year that slaves landed at first place
+	 */
 	public void setDatarr34(Integer obj) {
-		this.values.put("datarr34", obj);
+		Date dt = this.getDateland1();
+		if (dt != null) {			
+		    cal.setTime(dt);
+		    System.out.println("datarr34: " + cal.get(Calendar.YEAR));
+		    this.values.put("datarr34", new Integer(cal.get(Calendar.YEAR)));
+		}
 	}
 	
 	public Integer getDatarr34() {
@@ -2672,9 +2717,16 @@ public class Voyage extends AbstractDescriptiveObject
 	}
 	
 	
-	
+	/*
+	 * Year left on return voyage
+	 */
 	public void setDdepamc(Integer obj) {
-		this.values.put("ddepamc", obj);
+		Date dt = this.getDatedepam();
+		if (dt != null) {			
+		    cal.setTime(dt);
+		    System.out.println("ddepamc: " + cal.get(Calendar.YEAR));
+		    this.values.put("ddepamc", new Integer(cal.get(Calendar.YEAR)));
+		}
 	}
 	
 	public Integer getDdepamc() {
@@ -2682,9 +2734,16 @@ public class Voyage extends AbstractDescriptiveObject
 	}
 	
 	
-	
+	/*
+	 * Year when voyage completed
+	 */
 	public void setDatarr45(Integer obj) {
-		this.values.put("datarr45", obj);
+		Date dt = this.getDateend();
+		if (dt != null) {			
+		    cal.setTime(dt);
+		    System.out.println("datarr45: " + cal.get(Calendar.YEAR));
+		    this.values.put("datarr45", new Integer(cal.get(Calendar.YEAR)));
+		}
 	}
 	
 	public Integer getDatarr45() {

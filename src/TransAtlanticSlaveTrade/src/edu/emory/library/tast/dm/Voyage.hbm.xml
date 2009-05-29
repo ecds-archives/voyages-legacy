@@ -102,6 +102,8 @@
 		<many-to-one name="arrport2" column="arrport2" class="edu.emory.library.tast.dm.Port" />
 		
 		<property name="yearam" column="yearam" />
+		<property name="yearaf" column="yearaf" />
+		<property name="yeardep" column="yeardep" />
 		<property name="year5" column="year5" />
 		<property name="year10" column="year10" />
 		<property name="year25" column="year25" />

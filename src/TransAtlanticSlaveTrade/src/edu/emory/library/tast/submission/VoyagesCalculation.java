@@ -37,13 +37,13 @@ public class VoyagesCalculation {
 	/*
 	 * Calls all the calculation functions in one shot
 	 */
-	public Voyage calculateImputedVariables() {
+	public Voyage calculateImputedVariables() {	
+		calculateYearVariables();
 		calculateFate2();
 		calculateFate3();
 		calculateFate4();
 		calculateTslmtimp();
 		calculateNatinimp();
-		calculateYearam();
 		calculateValuesYear();
 		calculateVoyLengths();
 		calculateMajbuypt();
@@ -112,51 +112,67 @@ public class VoyagesCalculation {
     */
 	public void calculateTonmod() {
 		//Create the needed variables for calculations
-		Integer tontype=voyage.getTontype(); 
-		Integer tonnage=voyage.getTonnage(); 
-		Integer yearam=voyage.getYearam(); 
-		Integer natinimp=null;
-		if(voyage.getNatinimp()!=null) {natinimp=voyage.getNatinimp().getId().intValue();}  //TODO imputed natinimp - should already have a function
+		int tontype = 0;
+		int tonnage = 0;
+		int yearam = 0;
+		int natinimp = 0;
+		Integer tontypeObj = voyage.getTontype();
+		if (tontypeObj != null) {
+			tontype = tontypeObj.intValue();
+		}
+		Integer tonnageObj = voyage.getTonnage();
+		if (tonnageObj != null) {
+			tonnage = tonnageObj.intValue();
+		}
+		Integer yearamObj = voyage.getYearam();
+		if (yearamObj != null) {
+			yearam = yearamObj.intValue();
+		}
+		Nation natinimpObj = voyage.getNatinimp();
+		if (natinimpObj != null) {
+			natinimp = natinimpObj.getId().intValue();
+		}
+		//TODO imputed natinimp - should already have a function
 		
-		Float tonmod=null;
-		if(tonnage!=null) {tonmod=tonnage.floatValue();}
+		float tonmod = 0f;
+		if(tonnageObj != null) {			
+			tonmod = tonnageObj.floatValue();
+		}
 		
 		//calculate
 	    try {
-			if (tontype !=null && tontype == 13) {tonmod=tonnage.floatValue();}
-			else if (yearam!=null && tonnage!=null && tontype !=null &&  (tontype < 3 || tontype == 4 || tontype == 5) && yearam > 1773) {tonmod = tonnage.floatValue();}
-			else if (yearam!=null && tonnage!=null && tontype !=null && (tontype < 3 || tontype == 4 || tontype == 5) && yearam < 1774 && tonnage < 151) {tonmod=2.3f + (1.8f * tonnage);}
-			else if (tonnage!=null && tontype !=null && (yearam!=null && tontype < 3 || tontype == 4 || tontype == 5) && yearam < 1774 && tonnage > 150 && tonnage < 251) {tonmod=65.3f + (1.2f * tonnage);}
-			else if (yearam!=null && tonnage!=null && tontype !=null && (tontype < 3 || tontype == 4 || tontype == 5) && yearam < 1774 && tonnage > 250) {tonmod=13.1f + (1.1f * tonnage);}
-			else if(yearam!=null && tontype !=null && tontype == 4 && yearam > 1783 && yearam < 1794) {tonmod=9999f;}
-			else if (tonnage!=null && tontype !=null && tontype == 3 || tontype == 6 || tontype == 9 || tontype == 16){tonmod = 71 + (0.86f * tonnage);}
-			else if (tonmod!=null && yearam!=null && tontype !=null && (tontype == 3 || tontype == 6 || tontype == 9 || tontype == 16) && yearam < 1774 && tonmod < 151) {tonmod=2.3f + (1.8f * tonnage);}
-			else if (tonmod!=null && yearam!=null && tontype !=null && (tontype == 3 || tontype == 6 || tontype == 9 || tontype == 16) && yearam < 1774 && tonmod > 150 && tonmod < 251) {tonmod=65.3f + (1.2f * tonnage);}
-			else if (tonmod!=null && yearam!=null && tontype !=null && (tontype == 3 || tontype == 6 || tontype == 9 || tontype == 16) && yearam < 1774 && tonmod > 250) {tonmod=13.1f + (1.1f * tonnage);}
-			else if (tontype !=null && tontype == 7) {tonmod=tonnage * 2f;}
-			else if (tonmod!=null && yearam!=null && tontype !=null && tontype == 7 && yearam > 1773 && tonmod < 151) {tonmod=2.3f + (1.8f * tonmod);}
-			else if (tonmod!=null && yearam!=null && tontype !=null && tontype == 7 && yearam > 1773 && tonmod > 150 && tonmod < 251) {tonmod=65.3f + (1.2f * tonmod);}
-			else if (tonmod!=null && yearam!=null && tontype !=null && tontype == 7 && yearam > 1773 && tonmod > 250) {tonmod=13.1f + (1.1f * tonmod);}
-			else if (tontype !=null && tontype == 21) {tonmod= -6.093f + (0.76155f * tonnage);}
-			else if (tonmod!=null && yearam!=null && tontype !=null && tontype == 21 && yearam > 1773 && tonmod < 151) {tonmod=2.3f + (1.8f * tonmod);}
-			else if (tonmod!=null && yearam!=null && tontype !=null && tontype == 21 && yearam > 1773 && tonmod > 150 && tonmod < 251) {tonmod=65.3f + (1.2f * tonmod);}
-			else if (tonmod!=null && yearam!=null && tontype !=null && tontype == 21 && yearam > 1773 && tonmod > 250) {tonmod=13.1f + (1.1f * tonmod);}
-			
-			if (tonnage!=null && natinimp!=null && yearam!=null && (tontype==null) && (yearam > 1714 && yearam < 1786) && tonnage > 0 && natinimp==7) {tontype=22;}
-			
-			if (tontype == 22 && tonnage < 151) {tonmod=2.3f + (1.8f * tonnage);}
-			else if (tontype !=null && tontype == 22 && tonnage > 150 && tonnage < 251) {tonmod=65.3f + (1.2f * tonnage);}
-			else if (tontype !=null && tontype == 22 && tonnage > 250) {tonmod=13.1f + (1.1f * tonnage);}
-			else if (tontype !=null && tontype == 15 || tontype == 14 || tontype == 17) {tonmod = 52.86f + (1.22f * tonnage);}
-			else if (tonmod==null) {tonmod=9999f;}
+	    	if ((tontypeObj == null) && yearam > 1714 && yearam < 1786 && tonnage > 0 && natinimp == 7) {tontype=22;}
+	    	
+	    	if (tonmod == 0f) { tonmod = 9999f; }
+ 			else if (tontype == 14 || tontype == 15 || tontype == 17) {tonmod = 52.86f + (1.22f * tonnage);}
+     		else if (tontype == 22 && tonnage > 250) {tonmod=13.1f + (1.1f * tonnage);}
+     		else if (tontype == 22 && tonnage > 150 && tonnage < 251) {tonmod=65.3f + (1.2f * tonnage);}
+     		else if (tontype == 22 && tonnage < 151) {tonmod=2.3f + (1.8f * tonnage);}     			
+     		else if (tontype == 21 && yearam > 1773 && tonmod > 250) {tonmod=13.1f + (1.1f * tonmod);}
+     		else if (tontype == 21 && yearam > 1773 && tonmod > 150 && tonmod < 251) {tonmod=65.3f + (1.2f * tonmod);}
+     		else if (tontype == 21 && yearam > 1773 && tonmod < 151) {tonmod=2.3f + (1.8f * tonmod);}
+     		else if (tontype == 21) {tonmod= -6.093f + (0.76155f * tonnage);}
+     		else if (tontype == 7 && yearam > 1773 && tonmod > 250) {tonmod=13.1f + (1.1f * tonmod);}     			
+     		else if (tontype == 7 && yearam > 1773 && tonmod > 150 && tonmod < 251) {tonmod=65.3f + (1.2f * tonmod);}
+     		else if (tontype == 7 && yearam > 1773 && tonmod < 151) {tonmod=2.3f + (1.8f * tonmod);}
+     		else if (tontype == 7) {tonmod=tonnage * 2f;}
+     		else if ((tontype == 3 || tontype == 6 || tontype == 9 || tontype == 16) && yearam < 1774 && tonmod > 250) {tonmod=13.1f + (1.1f * tonnage);}
+     		else if ((tontype == 3 || tontype == 6 || tontype == 9 || tontype == 16) && yearam < 1774 && tonmod > 150 && tonmod < 251) {tonmod=65.3f + (1.2f * tonnage);}
+     		else if ((tontype == 3 || tontype == 6 || tontype == 9 || tontype == 16) && yearam < 1774 && tonmod < 151) {tonmod=2.3f + (1.8f * tonnage);}
+     		else if ((tontype == 3 || tontype == 6 || tontype == 9 || tontype == 16)){tonmod = 71 + (0.86f * tonnage);}
+     		else if(tontype == 4 && yearam > 1783 && yearam < 1794) {tonmod=9999f;}
+     		else if ((tontype < 3 || tontype == 4 || tontype == 5) && yearam < 1774 && tonnage > 250) {tonmod=13.1f + (1.1f * tonnage);}
+     		else if ((tontype < 3 || tontype == 4 || tontype == 5) && yearam < 1774 && tonnage > 150 && tonnage < 251) {tonmod=65.3f + (1.2f * tonnage);}
+     		else if ((tontype < 3 || tontype == 4 || tontype == 5) && yearam < 1774 && tonnage < 151) {tonmod=2.3f + (1.8f * tonnage);}
+     		else if ((tontype < 3 || tontype == 4 || tontype == 5) && yearam > 1773) {tonmod = tonnage;}
+			else if (tontype == 13) {tonmod = tonnage;} 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	    
-        //Store the result in the object 
-	    if(tonmod!=null)
-	    {
-	    	voyage.setTonmod(tonmod);
+        //Store the result in the object
+		if(tonmod > 0f) {
+	    	voyage.setTonmod(new Float(tonmod));
 	    }
 	}	
 	
@@ -2743,9 +2759,11 @@ public class VoyagesCalculation {
 	}
 	
 	/*
-	 * Calculates yearam variable
+	 * yeardep - Imputed year in which voyage began
+	 * yearaf - Year departed Africa (imputed
+	 * yearam - Year of arrival at port of disembarkation (imputed)
 	 */
-	public void calculateYearam() {
+	public void calculateYearVariables() {
 		//Get Inputs
 		Integer datedepc=voyage.getDatedepc();
 		Integer d1slatrc=voyage.getD1slatrc();
@@ -2753,21 +2771,35 @@ public class VoyagesCalculation {
 		Integer datarr34=voyage.getDatarr34();
 		Integer ddepamc=voyage.getDdepamc(); 
 		Integer datarr45=voyage.getDatarr45();
-
 		
-		//Variables to impute
-		Integer yearam=null;
-		
-		//Calculate
-		yearam=datarr34; 
-		if (yearam==null){yearam=dlslatrc;}
-		if (yearam==null){yearam=d1slatrc;} 
-		if (yearam==null){yearam=datedepc;}
-		if (yearam==null){yearam=ddepamc;} 
-		if (yearam==null){yearam=datarr45;}
-		
-		//Store in voyage object
+		Integer yearam=null;		
+		yearam = datarr34; 
+		if (yearam == null) {yearam = dlslatrc;}
+		if (yearam == null) {yearam = d1slatrc;}
+		if (yearam == null) {yearam = datedepc;}
+		if (yearam == null) {yearam = ddepamc;} 
+		if (yearam == null) {yearam = datedepc;}
+		if (yearam == null) {yearam = datarr45;}
 		voyage.setYearam(yearam);
+		
+		Integer yearaf = null;		
+		yearaf = dlslatrc; 
+		if (yearaf == null) yearaf = d1slatrc;
+		if (yearaf == null) yearaf = datedepc;
+		if (yearaf == null) yearaf = datarr34;
+		if (yearaf == null) yearaf = ddepamc;
+		if (yearaf == null) yearaf = datarr45;
+		voyage.setYearaf(yearaf);
+		
+		Integer yeardep = null;
+		yeardep = datedepc;
+		if (yeardep == null) yeardep = d1slatrc;
+		if (yeardep == null) yeardep = dlslatrc;
+		if (yeardep == null) yeardep = datarr34;
+		if (yeardep == null) yeardep = ddepamc;
+		if (yeardep == null) yeardep = datarr45;
+		voyage.setYeardep(yeardep);		
+		
 	}
 	
 	
