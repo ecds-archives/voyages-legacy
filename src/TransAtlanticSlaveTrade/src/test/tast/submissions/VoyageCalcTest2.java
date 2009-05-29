@@ -763,7 +763,7 @@ public class VoyageCalcTest2 extends TestCase {
 			
 			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage);			
 			
-			voyageCalc.calculateYearam();
+			voyageCalc.calculateYearVariables();
 			
 			saveVoyage(voyage);
 			assertNull(voyage.getYearam());
@@ -790,7 +790,7 @@ public class VoyageCalcTest2 extends TestCase {
 			
 			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage);			
 			
-			voyageCalc.calculateYearam();
+			voyageCalc.calculateYearVariables();
 			
 			saveVoyage(voyage);
 			assertEquals(voyage.getYearam(), new Integer("3"));

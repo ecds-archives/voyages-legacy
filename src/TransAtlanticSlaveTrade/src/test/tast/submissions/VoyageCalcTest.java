@@ -88,8 +88,9 @@ public class VoyageCalcTest extends TestCase {
 		//suite.addTest(new VoyageCalcTest("testCalculateValueMajbuyptVariableValues"));
 		//suite.addTest(new VoyageCalcTest("testCalculateValueMajbuyptVariableValues1"));
 		//suite.addTest(new VoyageCalcTest("testCalculateValueMajselptVariableValues"));
-		suite.addTest(new VoyageCalcTest("testCalculateXmImpflag"));
-									
+		//suite.addTest(new VoyageCalcTest("testCalculateXmImpflag"));
+		suite.addTest(new VoyageCalcTest("testTonmodTest"));
+											
 		return suite;
 	}
 	
@@ -478,6 +479,30 @@ public class VoyageCalcTest extends TestCase {
 			setValuesVoyage(new Integer(99910), "shipName_99910");
 		}
 		catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testTonmodTest(){
+		try {	
+			setUpSession();
+			deleteVoyage(99901);
+			//add test specific variables in voyage object
+			setValuesVoyage(new Integer(99901), "shipName_99901");
+			
+			//Input variables for second region calculation
+			voyage.setTontype(4); 
+			voyage.setTonnage(100); 
+			voyage.setYearam(1770); 
+			voyage.setNatinimp(null);
+			
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage);			
+			voyageCalc.calculateTonmod();
+			saveVoyage(voyage);
+			assertEquals(voyage.getTonmod(), 182.3f);
+			voyage = null;
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
