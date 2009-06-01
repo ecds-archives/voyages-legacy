@@ -1,6 +1,9 @@
 package test.tast.submissions;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -81,7 +84,7 @@ public class VoyageCalcTest extends TestCase {
 		//suite.addTest(new VoyageCalcTest("testCalculateImputedValueFate3"));
 		//suite.addTest(new VoyageCalcTest("testCalculateImputedValueFate4"));
 		//suite.addTest(new VoyageCalcTest("testCalculatePtDepImpByPortdep"));
-		suite.addTest(new VoyageCalcTest("testCalculatePtDepImpByMajselpt"));
+		//suite.addTest(new VoyageCalcTest("testCalculatePtDepImpByMajselpt"));
 		//suite.addTest(new VoyageCalcTest("testCalculatePtDepImpByNullValues"));	
 		//suite.addTest(new VoyageCalcTest("testCalculateTslmtimp"));
 		//suite.addTest(new VoyageCalcTest("testCalculateTslmtimpWithAllVars"));
@@ -90,6 +93,8 @@ public class VoyageCalcTest extends TestCase {
 		//suite.addTest(new VoyageCalcTest("testCalculateValueMajselptVariableValues"));
 		//suite.addTest(new VoyageCalcTest("testCalculateXmImpflag"));
 		//suite.addTest(new VoyageCalcTest("testTonmodTest"));
+		suite.addTest(new VoyageCalcTest("testCalculateYearVariables"));
+		
 		return suite;
 	}
 	
@@ -518,5 +523,40 @@ public class VoyageCalcTest extends TestCase {
 			e.printStackTrace();
 		}
 	}
-
+	
+	@Test
+	public void testCalculateYearVariables(){
+		try {	
+			setUpSession();
+			deleteVoyage(99901);
+			//add test specific variables in voyage object
+			setValuesVoyage(new Integer(99901), "shipName_99901");
+			
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+			
+			Integer obj = new Integer(1);
+			voyage.setDatedep(df.parse("1800-01-01"));
+			voyage.setDatebuy(df.parse("1801-01-01"));
+			voyage.setDateleftafr(df.parse("1802-01-01"));
+			voyage.setDateland1(df.parse("1803-01-01"));
+			voyage.setDatedepam(df.parse("1804-01-01"));
+			voyage.setDateend(df.parse("1805-01-01"));
+			
+			voyage.setDatedepc();
+			voyage.setD1slatrc(obj);
+			voyage.setDlslatrc(obj);
+			voyage.setDatarr34(obj);
+			voyage.setDdepamc(obj); 
+			voyage.setDatarr45(obj);
+			
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage);			
+			voyageCalc.calculateYearVariables();
+			saveVoyage(voyage);
+			//assertEquals(voyage.getTonmod(), 182.3f);
+			voyage = null;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 }

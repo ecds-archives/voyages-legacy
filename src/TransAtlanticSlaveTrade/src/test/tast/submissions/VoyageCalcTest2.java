@@ -774,32 +774,5 @@ public class VoyageCalcTest2 extends TestCase {
 			e.printStackTrace();
 		}
 	}
-	
-	public void testYearam(){
-		try {	
-			deleteVoyage(99901);
-			
-			//add test specific variables in voyage object
-			setValuesVoyage(new Integer(99901), "shipName_99901");
-			//voyage.setDatarr34(4);
-			//voyage.setDlslatrc(2);
-			voyage.setD1slatrc(3); 
-			voyage.setDatedepc(4);
-			voyage.setDdepamc(5); 
-			voyage.setDatarr45(6);
-			
-			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage);			
-			
-			voyageCalc.calculateYearVariables();
-			
-			saveVoyage(voyage);
-			assertEquals(voyage.getYearam(), new Integer("3"));
-			
-			
-			voyage = null;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
+		
 }
