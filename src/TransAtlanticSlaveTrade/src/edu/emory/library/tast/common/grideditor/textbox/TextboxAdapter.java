@@ -67,14 +67,16 @@ public class TextboxAdapter extends Adapter
 
 	private void encodeReadOnlyMode(GridEditorComponent gridEditor, String inputPrefix, TextboxValue textboxValue, ResponseWriter writer) throws IOException
 	{
+		String text=null;
 
-		if (textboxValue.getText() != null) {
-			writer.write(textboxValue.getText());
+		if (textboxValue !=null && textboxValue.getText() != null) {
+			text=textboxValue.getText();
+			writer.write(text);
 		}
 		writer.startElement("input", gridEditor);
 		writer.writeAttribute("type", "hidden", null);
 		writer.writeAttribute("name", getInputName(inputPrefix), null);
-		writer.writeAttribute("value", textboxValue.getText(), null);
+		writer.writeAttribute("value", text, null);
 		writer.endElement("input");
 
 	}

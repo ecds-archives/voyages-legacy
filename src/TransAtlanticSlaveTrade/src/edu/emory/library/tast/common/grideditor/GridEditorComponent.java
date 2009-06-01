@@ -709,7 +709,7 @@ public class GridEditorComponent extends UIComponentBase
 
 	private void encodeCopyButton(FacesContext context, ResponseWriter writer, String mainId, Column column, Row row, Value value) throws IOException
 	{
-		if (value.isEmpty()) {
+		if (value != null && value.isEmpty()) {
 			return;
 		}
 		if (column.getCopyToColumn() != null) {
@@ -921,9 +921,9 @@ public class GridEditorComponent extends UIComponentBase
 						
 						JsfUtils.encodeHiddenInput(this, writer,
 								getValueErrorFlagFieldName(context, columnName, rowName),
-								Boolean.toString(value.isError()));
+								Boolean.toString((value==null) ? false : value.isError()));
 		
-						if (value.isError())
+						if (value !=null && value.isError())
 							encodeErrorMessage(context, writer, columnName, rowName, value);
 						
 						if (column.isCopyToEnabled() || row.isCopyEnabled())
