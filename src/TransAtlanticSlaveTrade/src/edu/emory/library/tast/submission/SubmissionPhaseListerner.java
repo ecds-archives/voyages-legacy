@@ -33,7 +33,7 @@ public class SubmissionPhaseListerner implements PhaseListener
 				JsfUtils.navigateTo("start");
 		}
 		
-		else if (viewId.equals("/submission/submission-select-voyage-merge.jsp"))
+		else if (viewId.equals("/submission/submission-select-voyages-merge.jsp"))
 		{
 			if (bean.getAuthenticatedUser() == null) {
 				JsfUtils.navigateTo("login");

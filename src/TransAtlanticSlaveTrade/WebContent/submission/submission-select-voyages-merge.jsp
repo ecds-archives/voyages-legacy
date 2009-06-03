@@ -26,7 +26,7 @@
 
 	<br>
 
-	<h1>Select voyages</h1>
+	<h1>Select voyage for merging</h1>
 	
 	<br>
 	
