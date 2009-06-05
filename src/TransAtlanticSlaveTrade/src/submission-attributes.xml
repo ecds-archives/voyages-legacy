@@ -51,7 +51,7 @@
 			<attribute name="rig"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="tonmod" group="Ship, nation, owners" editable="N" type="integer" userLabel="Standardized tonnage">
+	<submission-attributes name="tonmod" group="Ship, nation, owners" editable="N" type="float" userLabel="Standardized tonnage">
 		<attributes>
 			<attribute name="tonmod"/>
 		</attributes>
