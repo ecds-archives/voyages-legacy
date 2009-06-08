@@ -913,4 +913,9 @@ public class AdminSubmissionBean {
 		return applier.getRowGroupsSlave();
 	}
 	
+	public String logoutOnly() {
+		this.authenticateduser = null;
+		return null;
+	}
+	
 }

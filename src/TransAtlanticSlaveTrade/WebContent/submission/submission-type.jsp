@@ -55,7 +55,7 @@
 	<div style="width: 400px; border-bottom: 1px solid #CCCCCC; margin-bottom: 10px; margin-top: 5px; padding-bottom: 10px;">
 		<h:commandButton value="Merge voyages >" action="#{SubmissionBean.selectTypeMerge}"/>
 	</div>
-
+     <h:commandButton value="Logout" action="#{SubmissionBean.logoutOnly}"/>
 </h:form>
 </f:view>
 </body>

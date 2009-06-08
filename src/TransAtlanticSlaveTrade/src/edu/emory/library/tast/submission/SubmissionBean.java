@@ -959,6 +959,11 @@ public class SubmissionBean
 		return null;
 	}
 	
+	public String logoutOnly() {
+		this.authenticatedUser = null;
+		return null;
+	}
+	
 	public String saveStateSources() {
 		if (this.submission == null) {
 			this.createSubmission(SOURCES_STATE);
