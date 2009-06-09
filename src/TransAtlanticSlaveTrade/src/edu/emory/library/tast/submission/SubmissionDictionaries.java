@@ -45,6 +45,7 @@ public class SubmissionDictionaries {
 	public static final String TONTYPES = "tontypes";
 	public static final String NATIONALS = "nationals";
 	public static final String RESISTANCE = "resistance";
+	public static final String REGIONS = "regions";
 	
 	public static final String FATE2 = "fate2";
 	public static final String FATE3 = "fate3";
@@ -59,6 +60,7 @@ public class SubmissionDictionaries {
 	public static ListItem[] fates;
 	public static ListItem[] tontypes;
 	public static ListItem[] nationals;
+	public static ListItem[] regions;
 	
 	public static ListItem[] fate2;
 	public static ListItem[] fate3;
@@ -134,6 +136,9 @@ public class SubmissionDictionaries {
 		boolItems[1] = new ListItem("true", "Yes");
 		boolItems[2] = new ListItem("false", "No");
 		fieldTypes.put(BOOLEAN, new ListFieldType(BOOLEAN, boolItems));
+		regions = fillIn(session, Region.class);
+		fieldTypes.put(REGIONS, new ListFieldType(REGIONS, regions));
+		
 		
 		resistance = fillIn(session, Resistance.class);
 		fieldTypes.put(RESISTANCE, new ListFieldType(RESISTANCE, resistance));

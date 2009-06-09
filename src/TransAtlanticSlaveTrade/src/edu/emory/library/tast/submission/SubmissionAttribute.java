@@ -273,6 +273,13 @@ public class SubmissionAttribute {
 				return new Object[] {null};
 			}
 			return new Object[] {Dictionary.loadById(Nation.class, sess, id)};
+		} 
+		else if (type.equals(SubmissionDictionaries.REGIONS)) {
+			String id = ((ListValue)object).getValues()[0];
+			if (id.equals("-1")) {
+				return new Object[] {null};
+			}
+			return new Object[] {Dictionary.loadById(Region.class, sess, id)};
 		} else if (type.equals(SubmissionDictionaries.FATE2)) {
 			String id = ((ListValue)object).getValues()[0];
 			if (id.equals("-1")) {

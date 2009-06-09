@@ -43,12 +43,13 @@ public class VoyagesApplier
 	public static final String[] SLAVE_CHAR_COLS_LABELS = { "Men", "Women",
 			"Boys", "Girls", "Males", "Females", "Adults", "Children" };
 	public static final String[] SLAVE_CHAR_ROWS = { "e1", "e2", "e3", "died",
-			"d1", "d2" };
+			"d1", "d2", "i1" };
 	public static final String[] SLAVE_CHAR_ROWS_LABELS = {
 			"Embarked slaves (first port)", "Embarked slaves (second port)",
 			"Embarked slaves (third port)", "Died on voyage",
 			"Disembarked slaves (first port)",
-			"Disembarked slaves (second port)", };
+			"Disembarked slaves (second port)",
+			"Embarked slaves (Imputed)"};
 
 	private static final String REMOVE_EDITOR_ACTION = "removeEditor";
 
@@ -404,6 +405,9 @@ public class VoyagesApplier
 			for (int i = 0; i < attrs.length; i++)
 			{
 				SubmissionAttribute attribute = attrs[i];
+				if (attrs[i].getName().equals("saild2")){
+					System.out.println("attr:" + attrs[i].getName());
+				}
 				Object[] toBeFormatted = new Object[attribute.getAttribute().length];
 				for (int j = 0; j < toBeFormatted.length; j++)
 				{
@@ -412,6 +416,7 @@ public class VoyagesApplier
 				}
 				Value value = attrs[i].getValue(session, toBeFormatted,
 						sourceInformationUtils);
+				System.out.println("attr:" + attrs[i].getName());
 				value.setNote((String) attributeNotes[n]
 						.get(attrs[i].getName()));
 				vals.setValue(cols[n], attrs[i].getName(), value);
