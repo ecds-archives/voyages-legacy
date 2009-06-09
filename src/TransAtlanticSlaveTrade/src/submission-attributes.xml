@@ -467,27 +467,37 @@
 			<attribute name="slamimp"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="adlt1imp" group="Slaves (numbers)" editable="Y" type="integer" userLabel="Imputed number of adults at first port of purchase">
+	<submission-attributes name="slavmax1" group="Slaves (numbers)" editable="N" type="integer" userLabel="Total slaves embarked with age and gender identified">
 		<attributes>
-			<attribute name="adlt1imp"/>
+			<attribute name="slavmax1"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="chil1imp" group="Slaves (numbers)" editable="Y" type="integer" userLabel="Imputed number of children at first port of purchase">
+	<submission-attributes name="slavema1" group="Slaves (numbers)" editable="N" type="integer" userLabel="Total slaves embarked with age identified">
 		<attributes>
-			<attribute name="chil1imp"/>
+			<attribute name="slavema1"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="feml1imp" group="Slaves (numbers)" editable="Y" type="integer" userLabel="Imputed number of females at first port of purchase">
+	<submission-attributes name="slavemx1" group="Slaves (numbers)" editable="N" type="integer" userLabel="Total slaves embarked with gender identified">
 		<attributes>
-			<attribute name="feml1imp"/>
+			<attribute name="slavemx1"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="male1imp" group="Slaves (numbers)" editable="Y" type="integer" userLabel="Imputed number of males at first port of purchase">
+	<submission-attributes name="slavmax7" group="Slaves (numbers)" editable="N" type="integer" userLabel="Total slaves identified by age and gender when leaving Africa or arriving at port of landing">
 		<attributes>
-			<attribute name="male1imp"/>
+			<attribute name="slavmax7"/>
 		</attributes>
 	</submission-attributes>
-	
+	<submission-attributes name="slavema7" group="Slaves (numbers)" editable="N" type="integer" userLabel="Total slaves identified by age when leaving Africa or arriving at port of landing">
+		<attributes>
+			<attribute name="slavema7"/>
+		</attributes>
+	</submission-attributes>
+	<submission-attributes name="slavemx7" group="Slaves (numbers)" editable="N" type="integer" userLabel="Total slaves identified by gender when leaving Africa or arriving at port of landing">
+		<attributes>
+			<attribute name="slavemx7"/>
+		</attributes>
+	</submission-attributes>
+		
 	<submission-attributes name="malrat7" group="Slaves (characteristics)" editable="N" type="float" userLabel="Ratio male">
 		<attributes>
 			<attribute name="malrat7"/>
@@ -516,6 +526,37 @@
 	<submission-attributes name="boyrat7" group="Slaves (characteristics)" editable="N" type="float" userLabel="Ratio boys">
 		<attributes>
 			<attribute name="boyrat7"/>
+		</attributes>
+	</submission-attributes>
+	
+	<submission-attributes name="malrat3" group="Slaves (characteristics)" editable="N" type="float" userLabel="Ratio male at first port of landing">
+		<attributes>
+			<attribute name="malrat3"/>
+		</attributes>
+	</submission-attributes>
+	<submission-attributes name="chilrat3" group="Slaves (characteristics)" editable="N" type="float" userLabel="Ratio children at first port of landing">
+		<attributes>
+			<attribute name="chilrat3"/>
+		</attributes>
+	</submission-attributes>
+	<submission-attributes name="womrat3" group="Slaves (characteristics)" editable="N" type="float" userLabel="Ratio women at first port of landing">
+		<attributes>
+			<attribute name="womrat3"/>
+		</attributes>
+	</submission-attributes>
+	<submission-attributes name="menrat3" group="Slaves (characteristics)" editable="N" type="float" userLabel="Ratio men at first port of landing">
+		<attributes>
+			<attribute name="menrat3"/>
+		</attributes>
+	</submission-attributes>
+	<submission-attributes name="girlrat3" group="Slaves (characteristics)" editable="N" type="float" userLabel="Ratio girls at first port of landing">
+		<attributes>
+			<attribute name="girlrat3"/>
+		</attributes>
+	</submission-attributes>
+	<submission-attributes name="boyrat3" group="Slaves (characteristics)" editable="N" type="float" userLabel="Ratio boys at first port of landing">
+		<attributes>
+			<attribute name="boyrat3"/>
 		</attributes>
 	</submission-attributes>
 	
@@ -807,6 +848,9 @@
 			<attribute name="infant1"/>
 		</attributes>
 	</submission-attributes>
+	
+	
+	
 	<submission-attributes name="adult5" key="e3,adult" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Adults embarked at third port in Africa">
 		<attributes>
 			<attribute name="adult5"/>
@@ -886,6 +930,78 @@
 			<attribute name="sladied6"/>
 		</attributes>
 	</submission-attributes>
+	<!--   -->
+	<submission-attributes name="adlt1imp" group="Other" editable="N" type="integer" userLabel="Imputed number of adults at first port of purchase">
+		<attributes>
+			<attribute name="adlt1imp"/>
+		</attributes>
+	</submission-attributes>
+	<submission-attributes name="chil1imp" group="Other" editable="N" type="integer" userLabel="Imputed number of children at first port of purchase">
+		<attributes>
+			<attribute name="chil1imp"/>
+		</attributes>
+	</submission-attributes>
+	<submission-attributes name="feml1imp" group="Other" editable="N" type="integer" userLabel="Imputed number of females at first port of purchase">
+		<attributes>
+			<attribute name="feml1imp"/>
+		</attributes>
+	</submission-attributes>
+	<submission-attributes name="male1imp" group="Other" editable="N" type="integer" userLabel="Imputed number of males at first port of purchase">
+		<attributes>
+			<attribute name="male1imp"/>
+		</attributes>
+	</submission-attributes>
+	<submission-attributes name="adlt2imp" group="Other" editable="N" type="integer" userLabel="Imputed number of adults who died on middle passage">
+		<attributes>
+			<attribute name="adlt2imp"/>
+		</attributes>
+	</submission-attributes>
+	<submission-attributes name="chil2imp" group="Other" editable="N" type="integer" userLabel="Imputed number of children who died on middle passage">
+		<attributes>
+			<attribute name="chil2imp"/>
+		</attributes>
+	</submission-attributes>
+	<submission-attributes name="feml2imp" group="Other" editable="N" type="integer" userLabel="Imputed number of females who died on middle passage">
+		<attributes>
+			<attribute name="feml2imp"/>
+		</attributes>
+	</submission-attributes>
+	<submission-attributes name="male2imp" group="Other" editable="N" type="integer" userLabel="Imputed number of males who died on middle passage">
+		<attributes>
+			<attribute name="male2imp"/>
+		</attributes>
+	</submission-attributes> 
+	<submission-attributes name="adlt3imp" group="Other" editable="N" type="integer" userLabel="Imputed number of adults landed at first port">
+		<attributes>
+			<attribute name="adlt3imp"/>
+		</attributes>
+	</submission-attributes>
+	<submission-attributes name="chil3imp" group="Other" editable="N" type="integer" userLabel="Imputed number of children landed at first port">
+		<attributes>
+			<attribute name="chil3imp"/>
+		</attributes>
+	</submission-attributes>
+	<submission-attributes name="feml3imp" group="Other" editable="N" type="integer" userLabel="Imputed number of females landed at first port">
+		<attributes>
+			<attribute name="feml3imp"/>
+		</attributes>
+	</submission-attributes>
+	<submission-attributes name="male3imp" group="Other" editable="N" type="integer" userLabel="Imputed numbers of males landed at first port">
+		<attributes>
+			<attribute name="male3imp"/>
+		</attributes>
+	</submission-attributes>		
+	<submission-attributes name="vymrtimp" group="Other" editable="N" type="integer" userLabel="Imputed slave deaths during middle passage">
+		<attributes>
+			<attribute name="vymrtimp"/>
+		</attributes>
+	</submission-attributes>
+	<submission-attributes name="vymrtrat" group="Other" editable="N" type="float" userLabel="Slave mortality rate (slave deaths / slaves embarked)">
+		<attributes>
+			<attribute name="vymrtrat"/>
+		</attributes>
+	</submission-attributes>
+	<!--  -->
 	
 </submission-attributes>
 
