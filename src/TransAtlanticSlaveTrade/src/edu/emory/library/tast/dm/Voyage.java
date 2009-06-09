@@ -114,6 +114,7 @@ public class Voyage extends AbstractDescriptiveObject
 		attributes.add(new RegionAttribute("mjselimp", "Voyage", "mjselimp"));
 		attributes.add(new PortAttribute("portret", "Voyage", "portret"));
 		attributes.add(new RegionAttribute("retrnreg", "Voyage", "retrnreg"));
+		attributes.add(new RegionAttribute("retrnreg1", "Voyage", "retrnreg1"));
 		attributes.add(new NumericAttribute("yearam", "Voyage", NumericAttribute.TYPE_INTEGER, "yearam"));
 		attributes.add(new NumericAttribute("yearaf", "Voyage", NumericAttribute.TYPE_INTEGER, "yearaf"));
 		attributes.add(new NumericAttribute("yeardep", "Voyage", NumericAttribute.TYPE_INTEGER, "yeardep"));
@@ -365,6 +366,13 @@ public class Voyage extends AbstractDescriptiveObject
 		attributes.add(new NumericAttribute("year10", "Voyage", NumericAttribute.TYPE_INTEGER, "year10"));
 		attributes.add(new NumericAttribute("year25", "Voyage", NumericAttribute.TYPE_INTEGER, "year25"));
 		attributes.add(new NumericAttribute("year100", "Voyage", NumericAttribute.TYPE_INTEGER, "year100"));
+		attributes.add(new PortAttribute("majselpt", "Voyage", "majselpt"));
+		attributes.add(new RegionAttribute("majselrg", "Voyage", "majselrg"));
+		attributes.add(new RegionAttribute("mjselimp1", "Voyage", "mjselimp1"));
+		attributes.add(new RegionAttribute("regarr", "Voyage", "regarr"));
+		attributes.add(new RegionAttribute("regarr2", "Voyage", "regarr2"));
+		
+		
 		
 		for (Iterator iterator = attributes.iterator(); iterator.hasNext();)
 		{
