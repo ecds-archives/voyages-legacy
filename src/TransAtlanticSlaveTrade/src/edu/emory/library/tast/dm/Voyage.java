@@ -150,6 +150,14 @@ public class Voyage extends AbstractDescriptiveObject
 		attributes.add(new NumericAttribute("girlrat7", "Voyage", NumericAttribute.TYPE_FLOAT, "girlrat7"));
 		attributes.add(new NumericAttribute("malrat7", "Voyage", NumericAttribute.TYPE_FLOAT, "malrat7"));
 		attributes.add(new NumericAttribute("chilrat7", "Voyage", NumericAttribute.TYPE_FLOAT, "chilrat7"));
+		
+		attributes.add(new NumericAttribute("menrat3", "Voyage", NumericAttribute.TYPE_FLOAT, "menrat3"));
+		attributes.add(new NumericAttribute("womrat3", "Voyage", NumericAttribute.TYPE_FLOAT, "womrat3"));
+		attributes.add(new NumericAttribute("boyrat3", "Voyage", NumericAttribute.TYPE_FLOAT, "boyrat3"));
+		attributes.add(new NumericAttribute("girlrat3", "Voyage", NumericAttribute.TYPE_FLOAT, "girlrat3"));
+		attributes.add(new NumericAttribute("malrat3", "Voyage", NumericAttribute.TYPE_FLOAT, "malrat3"));
+		attributes.add(new NumericAttribute("chilrat3", "Voyage", NumericAttribute.TYPE_FLOAT, "chilrat3"));
+		
 		attributes.add(new NumericAttribute("jamcaspr", "Voyage", NumericAttribute.TYPE_FLOAT, "jamcaspr"));
 		attributes.add(new NumericAttribute("vymrtimp", "Voyage", NumericAttribute.TYPE_INTEGER, "vymrtimp"));
 		attributes.add(new NumericAttribute("vymrtrat", "Voyage", NumericAttribute.TYPE_FLOAT, "vymrtrat"));
@@ -236,7 +244,23 @@ public class Voyage extends AbstractDescriptiveObject
 		attributes.add(new NumericAttribute("adlt1imp", "Voyage", NumericAttribute.TYPE_INTEGER, "adlt1imp"));
 		attributes.add(new NumericAttribute("chil1imp", "Voyage", NumericAttribute.TYPE_INTEGER, "chil1imp"));
 		attributes.add(new NumericAttribute("feml1imp", "Voyage", NumericAttribute.TYPE_INTEGER, "feml1imp"));
-		attributes.add(new NumericAttribute("male1imp", "Voyage", NumericAttribute.TYPE_INTEGER, "male1imp"));
+		attributes.add(new NumericAttribute("male1imp", "Voyage", NumericAttribute.TYPE_INTEGER, "male1imp"));		
+		attributes.add(new NumericAttribute("adlt2imp", "Voyage", NumericAttribute.TYPE_INTEGER, "adlt2imp"));
+		attributes.add(new NumericAttribute("chil2imp", "Voyage", NumericAttribute.TYPE_INTEGER, "chil2imp"));
+		attributes.add(new NumericAttribute("feml2imp", "Voyage", NumericAttribute.TYPE_INTEGER, "feml2imp"));
+		attributes.add(new NumericAttribute("male2imp", "Voyage", NumericAttribute.TYPE_INTEGER, "male2imp"));
+		attributes.add(new NumericAttribute("adlt3imp", "Voyage", NumericAttribute.TYPE_INTEGER, "adlt3imp"));
+		attributes.add(new NumericAttribute("chil3imp", "Voyage", NumericAttribute.TYPE_INTEGER, "chil3imp"));
+		attributes.add(new NumericAttribute("feml3imp", "Voyage", NumericAttribute.TYPE_INTEGER, "feml3imp"));
+		attributes.add(new NumericAttribute("male3imp", "Voyage", NumericAttribute.TYPE_INTEGER, "male3imp"));
+		
+		attributes.add(new NumericAttribute("slavmax1", "Voyage", NumericAttribute.TYPE_INTEGER, "slavmax1"));
+		attributes.add(new NumericAttribute("slavema1", "Voyage", NumericAttribute.TYPE_INTEGER, "slavema1"));
+		attributes.add(new NumericAttribute("slavemx1", "Voyage", NumericAttribute.TYPE_INTEGER, "slavemx1"));
+
+		attributes.add(new NumericAttribute("slavmax7", "Voyage", NumericAttribute.TYPE_INTEGER, "slavmax7"));
+		attributes.add(new NumericAttribute("slavema7", "Voyage", NumericAttribute.TYPE_INTEGER, "slavema7"));
+		attributes.add(new NumericAttribute("slavemx7", "Voyage", NumericAttribute.TYPE_INTEGER, "slavemx7"));
 		
 		attributes.add(new NumericAttribute("crew2", "Voyage", NumericAttribute.TYPE_INTEGER, "crew2"));
 		attributes.add(new NumericAttribute("infantm3", "Voyage", NumericAttribute.TYPE_INTEGER, "infantm3"));
