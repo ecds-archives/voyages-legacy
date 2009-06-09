@@ -37,6 +37,7 @@
 			<searchable-attribute id="national"/>
 			<searchable-attribute id="natinimp"/>
 			<searchable-attribute id="placcons"/>
+			<searchable-attribute id="constreg"/>
 			<searchable-attribute id="yrcons"/>
 			<searchable-attribute id="placreg"/>
 			<searchable-attribute id="yrreg"/>
@@ -53,6 +54,7 @@
 			<table-attribute id="national"/>
 			<table-attribute id="natinimp"/>
 			<table-attribute id="placcons"/>
+			<table-attribute id="constreg"/>
 			<table-attribute id="yrcons"/>
 			<table-attribute id="placreg"/>
 			<table-attribute id="yrreg"/>

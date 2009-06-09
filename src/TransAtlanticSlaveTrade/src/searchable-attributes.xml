@@ -110,7 +110,19 @@
 			<port port="placcons" />
 		</ports>
 	</searchable-attribute>
-
+	
+	<searchable-attribute
+		type="simple"
+		id="constreg"
+		userLabel="Region constructed">
+		<user-categories>
+			<category name="general" />
+		</user-categories>
+		<attributes>
+			<attribute name="constreg" />
+		</attributes>
+	</searchable-attribute>
+	
 	<searchable-attribute
 		type="simple"
 		subType="year"

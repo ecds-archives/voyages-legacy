@@ -542,7 +542,7 @@ public class VoyageCalcTest extends TestCase {
 			voyage.setDatedepam(df.parse("1804-01-01"));
 			voyage.setDateend(df.parse("1805-01-01"));
 			
-			voyage.setDatedepc();
+			voyage.setDatedepc(obj);
 			voyage.setD1slatrc(obj);
 			voyage.setDlslatrc(obj);
 			voyage.setDatarr34(obj);

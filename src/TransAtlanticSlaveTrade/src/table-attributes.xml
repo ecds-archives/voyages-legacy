@@ -20,6 +20,11 @@
 			<attribute name="placcons"/>
 		</attributes>
 	</table-attribute>
+	<table-attribute id="constreg" userCategory="beginners,general" userLabel="Region constructed*">
+		<attributes>
+			<attribute name="constreg"/>
+		</attributes>
+	</table-attribute>
 	<table-attribute date="true" id="yrcons" userCategory="beginners,general" userLabel="Year constructed">
 		<attributes>
 			<attribute name="yrcons"/>

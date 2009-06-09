@@ -11,6 +11,11 @@
 			<attribute name="evgreen"/>
 		</attributes>
 	</submission-attributes>
+	<submission-attributes name="xmimpflag" group="Ship, nation, owners" editable="N" type="integer" userLabel="Voyage groupings for estimating imputed slaves">
+		<attributes>
+			<attribute name="xmimpflag"/>
+		</attributes>
+	</submission-attributes>
 	<submission-attributes name="shipname" group="Ship, nation, owners" editable="Y" type="string" userLabel="Name of slave ship">
 		<attributes>
 			<attribute name="shipname"/>
@@ -21,6 +26,12 @@
 			<attribute name="placcons"/>
 		</attributes>
 	</submission-attributes>
+ 	<submission-attributes name="constreg" group="Ship, nation, owners" editable="N" type="regions" userLabel="Region where ship constructed">
+		<attributes>
+			<attribute name="constreg"/>
+		</attributes>
+	</submission-attributes>  
+		
 	<submission-attributes name="yrcons" group="Ship, nation, owners" editable="Y" type="integer" userLabel="Year of ship construction">
 		<attributes>
 			<attribute name="yrcons"/>
@@ -31,6 +42,11 @@
 			<attribute name="placreg"/>
 		</attributes>
 	</submission-attributes>	
+	<submission-attributes name="regisreg" group="Ship, nation, owners" editable="N" type="regions" userLabel="Region where ship registered">
+		<attributes>
+			<attribute name="regisreg"/>
+		</attributes>
+	</submission-attributes>
 	<submission-attributes name="yrreg" group="Ship, nation, owners" editable="Y" type="integer" userLabel="Year of ship registration">
 		<attributes>
 			<attribute name="yrreg"/>
@@ -674,6 +690,8 @@
 			<attribute name="adult6"/>
 		</attributes>
 	</submission-attributes>
+	
+		
 	<submission-attributes name="infantm3" group="Other" editable="Y" type="integer" userLabel="Male infants at first disembarkation">
 		<attributes>
 			<attribute name="infantm3"/>
