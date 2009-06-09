@@ -361,6 +361,10 @@ public class Voyage extends AbstractDescriptiveObject
 		attributes.add(new NumericAttribute("embport2_area", "Voyage", NumericAttribute.TYPE_LONG, "embport2_area"));
 		attributes.add(new NumericAttribute("arrport2_area", "Voyage", NumericAttribute.TYPE_LONG, "arrport2_area"));	
 		attributes.add(new NumericAttribute("xmimpflag", "Voyage", NumericAttribute.TYPE_INTEGER, "xmimpflag"));
+		attributes.add(new NumericAttribute("year5", "Voyage", NumericAttribute.TYPE_INTEGER, "year5"));
+		attributes.add(new NumericAttribute("year10", "Voyage", NumericAttribute.TYPE_INTEGER, "year10"));
+		attributes.add(new NumericAttribute("year25", "Voyage", NumericAttribute.TYPE_INTEGER, "year25"));
+		attributes.add(new NumericAttribute("year100", "Voyage", NumericAttribute.TYPE_INTEGER, "year100"));
 		
 		for (Iterator iterator = attributes.iterator(); iterator.hasNext();)
 		{
