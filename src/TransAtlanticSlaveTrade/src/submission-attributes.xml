@@ -690,42 +690,42 @@
 			<attribute name="adult6"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="men7" key="i1,men" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Men at disembarkation">
+	<submission-attributes name="men7" key="i1,men" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Men at disembarkation">
 		<attributes>
 			<attribute name="men7"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="women7" key="i1,women" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Women at disembarkation">
+	<submission-attributes name="women7" key="i1,women" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Women at disembarkation">
 		<attributes>
 			<attribute name="women7"/>
 		</attributes>
 	</submission-attributes>	
-	<submission-attributes name="boy7" key="i1,boy" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Boys at disembarkation">
+	<submission-attributes name="boy7" key="i1,boy" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Boys at disembarkation">
 		<attributes>
 			<attribute name="boy7"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="girl7" key="i1,girl" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Girls at disembarkation">
+	<submission-attributes name="girl7" key="i1,girl" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Girls at disembarkation">
 		<attributes>
 			<attribute name="girl7"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="male7" key="i1,male" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Males at disembarkation">
+	<submission-attributes name="male7" key="i1,male" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Males at disembarkation">
 			<attributes>
 				<attribute name="male7"/>
 			</attributes>
 	</submission-attributes>
-	<submission-attributes name="female7" key="i1,female" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Females at disembarkation">
+	<submission-attributes name="female7" key="i1,female" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Females at disembarkation">
 			<attributes>
 				<attribute name="female7"/>
 			</attributes>
 	</submission-attributes>
-	<submission-attributes name="adult7" key="i1,adult" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Adults at disembarkation">
+	<submission-attributes name="adult7" key="i1,adult" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Adults at disembarkation">
 		<attributes>
 			<attribute name="adult7"/>
 		</attributes>
 	</submission-attributes> 
-	<submission-attributes name="child7" key="i1,child" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Children at disembarkation">
+	<submission-attributes name="child7" key="i1,child" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Children at disembarkation">
 			<attributes>
 				<attribute name="child7"/>
 			</attributes>
