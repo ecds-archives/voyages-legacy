@@ -224,14 +224,14 @@ public class Voyage extends AbstractDescriptiveObject
 		attributes.add(new NumericAttribute("girl6", "Voyage", NumericAttribute.TYPE_INTEGER, "girl6"));
 		attributes.add(new NumericAttribute("adult6", "Voyage", NumericAttribute.TYPE_INTEGER, "adult6"));
 		
-		/*attributes.add(new NumericAttribute("adult7", "Voyage", NumericAttribute.TYPE_INTEGER, "adult7"));
+		attributes.add(new NumericAttribute("adult7", "Voyage", NumericAttribute.TYPE_INTEGER, "adult7"));
 		attributes.add(new NumericAttribute("child7", "Voyage", NumericAttribute.TYPE_INTEGER, "child7"));
 		attributes.add(new NumericAttribute("female7", "Voyage", NumericAttribute.TYPE_INTEGER, "female7"));
 		attributes.add(new NumericAttribute("male7", "Voyage", NumericAttribute.TYPE_INTEGER, "male7"));
 		attributes.add(new NumericAttribute("men7", "Voyage", NumericAttribute.TYPE_INTEGER, "men7"));
 		attributes.add(new NumericAttribute("women7", "Voyage", NumericAttribute.TYPE_INTEGER, "women7"));
 		attributes.add(new NumericAttribute("boy7", "Voyage", NumericAttribute.TYPE_INTEGER, "boy7"));
-		attributes.add(new NumericAttribute("girl7", "Voyage", NumericAttribute.TYPE_INTEGER, "girl7"));*/
+		attributes.add(new NumericAttribute("girl7", "Voyage", NumericAttribute.TYPE_INTEGER, "girl7"));
 		
 		attributes.add(new NumericAttribute("crew2", "Voyage", NumericAttribute.TYPE_INTEGER, "crew2"));
 		attributes.add(new NumericAttribute("infantm3", "Voyage", NumericAttribute.TYPE_INTEGER, "infantm3"));
