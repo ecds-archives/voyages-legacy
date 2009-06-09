@@ -233,6 +233,11 @@ public class Voyage extends AbstractDescriptiveObject
 		attributes.add(new NumericAttribute("boy7", "Voyage", NumericAttribute.TYPE_INTEGER, "boy7"));
 		attributes.add(new NumericAttribute("girl7", "Voyage", NumericAttribute.TYPE_INTEGER, "girl7"));
 		
+		attributes.add(new NumericAttribute("adlt1imp", "Voyage", NumericAttribute.TYPE_INTEGER, "adlt1imp"));
+		attributes.add(new NumericAttribute("chil1imp", "Voyage", NumericAttribute.TYPE_INTEGER, "chil1imp"));
+		attributes.add(new NumericAttribute("feml1imp", "Voyage", NumericAttribute.TYPE_INTEGER, "feml1imp"));
+		attributes.add(new NumericAttribute("male1imp", "Voyage", NumericAttribute.TYPE_INTEGER, "male1imp"));
+		
 		attributes.add(new NumericAttribute("crew2", "Voyage", NumericAttribute.TYPE_INTEGER, "crew2"));
 		attributes.add(new NumericAttribute("infantm3", "Voyage", NumericAttribute.TYPE_INTEGER, "infantm3"));
 		attributes.add(new NumericAttribute("infantf3", "Voyage", NumericAttribute.TYPE_INTEGER, "infantf3"));

@@ -59,7 +59,7 @@ public class SubmissionBean
 	public static final String[] SLAVE_CHAR_ROWS = {"e1", "e2", "e3", "died", "d1", "d2", "i1"};
 	//public static final String[] SLAVE_CHAR_ROWS = {"e1", "e2", "e3", "died", "d1", "d2"};
 	public static final String[] SLAVE_CHAR_ROWS_LABELS = {
-			"Embarked slaves (first port)",
+			"Embarked slaves (first port)",			
 			"Embarked slaves (second port)",
 			"Embarked slaves (third port)",
 			"Died on voyage", 
@@ -67,8 +67,6 @@ public class SubmissionBean
 			"Disembarked slaves (second port)",
 			"Embarked slaves (Imputed)"
 	};
-	
-	//"Embarked slaves (Imputed)"
 	
 	private static SubmissionAttribute[] attrs = SubmissionAttributes.getConfiguration().getPublicAttributes();
 	
