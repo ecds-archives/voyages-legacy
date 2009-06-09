@@ -61,8 +61,10 @@ public class Voyage extends AbstractDescriptiveObject
 		attributes.add(new NumericAttribute("iid", "Voyage", NumericAttribute.TYPE_LONG, null));
 		attributes.add(new StringAttribute("shipname", "Voyage", "shipname"));
 		attributes.add(new PortAttribute("placcons", "Voyage", "placcons"));
+		attributes.add(new RegionAttribute("constreg", "Voyage", "constreg"));
 		attributes.add(new NumericAttribute("yrcons", "Voyage", NumericAttribute.TYPE_INTEGER, "yrcons"));
 		attributes.add(new PortAttribute("placreg", "Voyage", "placreg"));
+		attributes.add(new RegionAttribute("regisreg", "Voyage", "regisreg"));
 		attributes.add(new NumericAttribute("yrreg", "Voyage", NumericAttribute.TYPE_INTEGER, "yrreg"));
 		attributes.add(new NationAttribute("natinimp", "Voyage", "natinimp"));
 		attributes.add(new VesselRigAttribute("rig", "Voyage", "rig"));
@@ -221,6 +223,16 @@ public class Voyage extends AbstractDescriptiveObject
 		attributes.add(new NumericAttribute("boy6", "Voyage", NumericAttribute.TYPE_INTEGER, "boy6"));
 		attributes.add(new NumericAttribute("girl6", "Voyage", NumericAttribute.TYPE_INTEGER, "girl6"));
 		attributes.add(new NumericAttribute("adult6", "Voyage", NumericAttribute.TYPE_INTEGER, "adult6"));
+		
+		/*attributes.add(new NumericAttribute("adult7", "Voyage", NumericAttribute.TYPE_INTEGER, "adult7"));
+		attributes.add(new NumericAttribute("child7", "Voyage", NumericAttribute.TYPE_INTEGER, "child7"));
+		attributes.add(new NumericAttribute("female7", "Voyage", NumericAttribute.TYPE_INTEGER, "female7"));
+		attributes.add(new NumericAttribute("male7", "Voyage", NumericAttribute.TYPE_INTEGER, "male7"));
+		attributes.add(new NumericAttribute("men7", "Voyage", NumericAttribute.TYPE_INTEGER, "men7"));
+		attributes.add(new NumericAttribute("women7", "Voyage", NumericAttribute.TYPE_INTEGER, "women7"));
+		attributes.add(new NumericAttribute("boy7", "Voyage", NumericAttribute.TYPE_INTEGER, "boy7"));
+		attributes.add(new NumericAttribute("girl7", "Voyage", NumericAttribute.TYPE_INTEGER, "girl7"));*/
+		
 		attributes.add(new NumericAttribute("crew2", "Voyage", NumericAttribute.TYPE_INTEGER, "crew2"));
 		attributes.add(new NumericAttribute("infantm3", "Voyage", NumericAttribute.TYPE_INTEGER, "infantm3"));
 		attributes.add(new NumericAttribute("infantf3", "Voyage", NumericAttribute.TYPE_INTEGER, "infantf3"));
@@ -319,6 +331,7 @@ public class Voyage extends AbstractDescriptiveObject
 		attributes.add(new NumericAttribute("arrport_area", "Voyage", NumericAttribute.TYPE_LONG, "arrport_area"));
 		attributes.add(new NumericAttribute("embport2_area", "Voyage", NumericAttribute.TYPE_LONG, "embport2_area"));
 		attributes.add(new NumericAttribute("arrport2_area", "Voyage", NumericAttribute.TYPE_LONG, "arrport2_area"));	
+		attributes.add(new NumericAttribute("xmimpflag", "Voyage", NumericAttribute.TYPE_INTEGER, "xmimpflag"));
 		
 		for (Iterator iterator = attributes.iterator(); iterator.hasNext();)
 		{
