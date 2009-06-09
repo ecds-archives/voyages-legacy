@@ -150,7 +150,7 @@
 			<attribute name="deptregimp"/>
 			<attribute name="portdep"/>
 		</attributes>
-	</submission-attributes>
+	</submission-attributes>	
 	<submission-attributes name="plac1tra" group="Voyage itinerary" editable="Y" type="locations" userLabel="First place of slave purchase">
 		<attributes>
 			<attribute name="regem1"/>
@@ -303,6 +303,27 @@
 			<attribute name="voyage"/>
 		</attributes>
 	</submission-attributes>
+	<submission-attributes name="year5" group="Voyage dates" editable="N" type="integer" userLabel="Quinquennium in which voyage occurred">
+		<attributes>
+			<attribute name="year5"/>
+		</attributes>
+	</submission-attributes>
+	<submission-attributes name="year10" group="Voyage dates" editable="N" type="integer" userLabel="Decade in which voyage occurred">
+		<attributes>
+			<attribute name="year10"/>
+		</attributes>
+	</submission-attributes>
+	<submission-attributes name="year25" group="Voyage dates" editable="N" type="integer" userLabel="Quarter-century in which voyage occurred">
+		<attributes>
+			<attribute name="year25"/>
+		</attributes>
+	</submission-attributes>
+	<submission-attributes name="year100" group="Voyage dates" editable="N" type="integer" userLabel="Century in which voyage occurred">
+		<attributes>
+			<attribute name="year100"/>
+		</attributes>
+	</submission-attributes>
+	
 
 	<submission-attributes name="captaina" group="Captain and crew" editable="Y" type="string" userLabel="First captain of voyage">
 		<attributes>
