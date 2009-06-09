@@ -94,6 +94,7 @@ public class Voyage extends AbstractDescriptiveObject
 		attributes.add(new ResistanceAttribute("resistance", "Voyage", "resistance"));
 		attributes.add(new PortAttribute("ptdepimp", "Voyage", "ptdepimp"));
 		attributes.add(new RegionAttribute("deptregimp", "Voyage", "deptregimp"));
+		attributes.add(new RegionAttribute("deptregimp1", "Voyage", "deptregimp1"));
 		attributes.add(new PortAttribute("plac1tra", "Voyage", "plac1tra"));
 		attributes.add(new PortAttribute("plac2tra", "Voyage", "plac2tra"));
 		attributes.add(new PortAttribute("plac3tra", "Voyage", "plac3tra"));
@@ -102,6 +103,7 @@ public class Voyage extends AbstractDescriptiveObject
 		attributes.add(new RegionAttribute("regem2", "Voyage", "regem2"));
 		attributes.add(new RegionAttribute("regem3", "Voyage", "regem3"));
 		attributes.add(new RegionAttribute("majbyimp", "Voyage", "majbyimp"));
+		attributes.add(new RegionAttribute("majbyimp1", "Voyage", "majbyimp1"));
 		attributes.add(new PortAttribute("npafttra", "Voyage", "npafttra"));
 		attributes.add(new PortAttribute("sla1port", "Voyage", "sla1port"));
 		attributes.add(new PortAttribute("adpsale1", "Voyage", "adpsale1"));
@@ -371,6 +373,14 @@ public class Voyage extends AbstractDescriptiveObject
 		attributes.add(new RegionAttribute("mjselimp1", "Voyage", "mjselimp1"));
 		attributes.add(new RegionAttribute("regarr", "Voyage", "regarr"));
 		attributes.add(new RegionAttribute("regarr2", "Voyage", "regarr2"));
+		attributes.add(new RegionAttribute("deptreg", "Voyage", "deptreg"));
+		attributes.add(new RegionAttribute("deptreg1", "Voyage", "deptreg1"));
+		attributes.add(new RegionAttribute("embreg", "Voyage", "embreg"));
+		attributes.add(new RegionAttribute("embreg2", "Voyage", "embreg2"));
+		attributes.add(new PortAttribute("majbuypt", "Voyage", "majbuypt"));
+		attributes.add(new RegionAttribute("majbuyreg", "Voyage", "majbuyreg"));
+		
+		
 		
 		
 		

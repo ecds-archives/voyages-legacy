@@ -175,7 +175,7 @@
 			<attribute name="mjbyptimp"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="majbyimp" group="Voyage itinerary" editable="N" type="regions" userLabel="Imputed principal region of slave purchase">
+	<submission-attributes name="majbyimp" group="Voyage itinerary" editable="N" type="regions" userLabel="Imputed principal region of slave purchase(Imputed)">
 		<attributes>
 			<attribute name="majbyimp"/>			
 		</attributes>
@@ -209,7 +209,7 @@
 			<attribute name="mjslptimp"/>
 		</attributes>
 	</submission-attributes> 
-	<submission-attributes name="mjselimp" group="Voyage itinerary" editable="N" type="regions" userLabel="Imputed principal region of slave landing">
+	<submission-attributes name="mjselimp" group="Voyage itinerary" editable="N" type="regions" userLabel="Imputed principal region of slave landing(Imputed)">
 		<attributes>
 			<attribute name="mjselimp"/>		
 		</attributes>
@@ -250,6 +250,60 @@
 			<attribute name="arrport2"/>
 		</attributes>
 	</submission-attributes>
+	
+	<submission-attributes name="deptreg" group="Voyage itinerary" editable="N" type="regions" userLabel="Region of departure(Imputed)">
+		<attributes>
+			<attribute name="deptreg"/>
+		</attributes>
+    </submission-attributes>
+
+    <submission-attributes name="deptreg1" group="Voyage itinerary" editable="N" type="regions" userLabel="Broad region of departure(Imputed)">
+		<attributes>
+			<attribute name="deptreg1"/>
+		</attributes>
+    </submission-attributes>
+
+    <submission-attributes name="deptregimp" group="Voyage itinerary" editable="N" type="regions" userLabel="Imputed region where voyage began(Imputed)">
+		<attributes>
+			<attribute name="deptregimp"/>
+		</attributes>
+    </submission-attributes>
+
+    <submission-attributes name="deptregimp1" group="Voyage itinerary" editable="N" type="regions" userLabel="Imputed broad region where voyage began(Imputed)">
+		<attributes>
+			<attribute name="deptregimp1"/>
+		</attributes>
+    </submission-attributes>
+
+    <submission-attributes name="embreg" group="Voyage itinerary" editable="N" type="regions" userLabel="First intended region of purchase of slaves(Imputed)">
+		<attributes>
+			<attribute name="embreg"/>
+		</attributes>
+    </submission-attributes>
+
+    <submission-attributes name="embreg2" group="Voyage itinerary" editable="N" type="regions" userLabel="Second intended region of purchase of slaves(Imputed)">
+		<attributes>
+			<attribute name="embreg2"/>
+		</attributes>
+    </submission-attributes>
+
+    <submission-attributes name="majbuypt" group="Voyage itinerary" editable="N" type="ports" userLabel="Principal place of slave purchase(Imputed)">
+		<attributes>
+			<attribute name="majbuypt"/>
+		</attributes>
+    </submission-attributes>
+
+    <submission-attributes name="majbuyreg" group="Voyage itinerary" editable="N" type="regions" userLabel="Principal region of slave purchase(Imputed)">
+		<attributes>
+			<attribute name="majbuyreg"/>
+		</attributes>
+    </submission-attributes>
+
+    <submission-attributes name="majbyimp1" group="Voyage itinerary" editable="N" type="regions" userLabel="Imputed broad region of slave purchase(Imputed)">
+		<attributes>
+			<attribute name="majbyimp1"/>
+		</attributes>
+    </submission-attributes>
 	
 	<submission-attributes name="majselpt" group="Voyage itinerary" editable="N" type="ports" userLabel="Principal port of slave disembarkation(Imputed)">
 		<attributes>
