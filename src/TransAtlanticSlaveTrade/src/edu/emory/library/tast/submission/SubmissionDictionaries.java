@@ -132,9 +132,12 @@ public class SubmissionDictionaries {
 		fieldTypes.put(FATE4, new ListFieldType(FATE4, fate4));
 		
 		boolItems = new ListItem[3];
-		boolItems[0] = new ListItem("-1", "Unknown");
+		/*boolItems[0] = new ListItem("-1", "Unknown");
 		boolItems[1] = new ListItem("true", "Yes");
-		boolItems[2] = new ListItem("false", "No");
+		boolItems[2] = new ListItem("false", "No");*/
+		boolItems[0] = new ListItem("false", "No");
+		boolItems[1] = new ListItem("true", "Yes");
+		boolItems[2] = new ListItem("-1", "Unknown");
 		fieldTypes.put(BOOLEAN, new ListFieldType(BOOLEAN, boolItems));
 		regions = fillIn(session, Region.class);
 		fieldTypes.put(REGIONS, new ListFieldType(REGIONS, regions));
