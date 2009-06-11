@@ -13,7 +13,7 @@
 	<script src="../scripts/utils.js" language="javascript" type="text/javascript"></script>
 	<script src="../scripts/grid-editor.js" language="javascript" type="text/javascript"></script>
 	<link href="../admin/main.css" rel="stylesheet" type="text/css">
-	<script src="../scripts/tooltip.js" type="text/javascript" langiage="javascript"></script>
+	<script src="../scripts/tooltip.js" type="text/javascript" language="javascript"></script>
 </head>
 <body>
 <f:view>
@@ -83,17 +83,19 @@
 	
 	<br>
 	<br>
+		
 	<t:htmlTag value="div" rendered="#{!AdminSubmissionBean.isChiefEditor}">
-		<f:verbatim><h2>3. Request status</h2>
+		<h2>3. Request status</h2>
 		<table>
 			<tr>
-				<td><f:verbatim><h:selectBooleanCheckbox value="#{AdminSubmissionBean.finished}" /></f:verbatim>
+				<td><h:selectBooleanCheckbox value="#{AdminSubmissionBean.finished}" />
 				</td>
-				<td><f:verbatim> <h:outputText value="I am done with this submission and it does not require my further attention"/></f:verbatim>
+				<td><h:outputText value="I am done with this submission and it does not require my further attention"/>
 				</td>
 			</tr>
-		</table></f:verbatim>
+		</table>
 	</t:htmlTag>
+	
 	<br>
 	<br>
 	<h:commandButton value="< Back" action="back"/>
