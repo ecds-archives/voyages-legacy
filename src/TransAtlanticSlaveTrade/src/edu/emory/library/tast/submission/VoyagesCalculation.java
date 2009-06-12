@@ -669,10 +669,18 @@ public class VoyagesCalculation {
 		Date dateland1=voyage.getDateland1();
 		Date datedep=voyage.getDatedep(); 
 		Date dateleftafr=voyage.getDateleftafr();
+		Integer voyMid=voyage.getVoyage();
+		Integer voy2imp=null;
+		Integer voy1imp=null;
 		
-		//Calculate value
-		Integer voy1imp = dateDiff(datedep, dateland1);
-	    Integer voy2imp = dateDiff(dateland1, dateleftafr);
+		//Calculate values
+		voy1imp = dateDiff(datedep, dateland1);
+	    
+		//Use voyage filed if provided else calculate based on dates
+		if(voyMid==null)
+		voy2imp = dateDiff(dateland1, dateleftafr);
+		else 
+		voy2imp=voyMid;
 	    
 	    //update voyages object
 	    if (voy1imp != null){
