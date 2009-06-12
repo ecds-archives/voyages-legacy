@@ -730,7 +730,66 @@
 			<attribute name="boyrat3"/>
 		</attributes>
 	</submission-attributes>
-	
+	<submission-attributes name="adlt1imp" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Number of adults at first port of purchase*">
+		<attributes>
+			<attribute name="adlt1imp"/>
+		</attributes>
+	</submission-attributes>
+	<submission-attributes name="chil1imp" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Number of children at first port of purchase*">
+		<attributes>
+			<attribute name="chil1imp"/>
+		</attributes>
+	</submission-attributes>
+	<submission-attributes name="feml1imp" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Number of females at first port of purchase*">
+		<attributes>
+			<attribute name="feml1imp"/>
+		</attributes>
+	</submission-attributes>
+	<submission-attributes name="male1imp" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Number of males at first port of purchase*">
+		<attributes>
+			<attribute name="male1imp"/>
+		</attributes>
+	</submission-attributes>
+	<submission-attributes name="adlt2imp" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Number of adults who died on middle passage*">
+		<attributes>
+			<attribute name="adlt2imp"/>
+		</attributes>
+	</submission-attributes>
+	<submission-attributes name="chil2imp" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Number of children who died on middle passage*">
+		<attributes>
+			<attribute name="chil2imp"/>
+		</attributes>
+	</submission-attributes>
+	<submission-attributes name="feml2imp" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Number of females who died on middle passage*">
+		<attributes>
+			<attribute name="feml2imp"/>
+		</attributes>
+	</submission-attributes>
+	<submission-attributes name="male2imp" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Number of males who died on middle passage*">
+		<attributes>
+			<attribute name="male2imp"/>
+		</attributes>
+	</submission-attributes> 
+	<submission-attributes name="adlt3imp" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Number of adults landed at first port*">
+		<attributes>
+			<attribute name="adlt3imp"/>
+		</attributes>
+	</submission-attributes>
+	<submission-attributes name="chil3imp" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Number of children landed at first port*">
+		<attributes>
+			<attribute name="chil3imp"/>
+		</attributes>
+	</submission-attributes>
+	<submission-attributes name="feml3imp" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Number of females landed at first port*">
+		<attributes>
+			<attribute name="feml3imp"/>
+		</attributes>
+	</submission-attributes>
+	<submission-attributes name="male3imp" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Numbers of males landed at first port*">
+		<attributes>
+			<attribute name="male3imp"/>
+		</attributes>
+	</submission-attributes>
 	<submission-attributes name="adult1" key="e1,adult" group="Slaves (characteristics)" editable="Y" type="integer" userLabel="Adults leaving first port in Africa">
 		<attributes>
 			<attribute name="adult1"/>
@@ -1091,67 +1150,6 @@
 			<attribute name="sladied6"/>
 		</attributes>
 	</submission-attributes>
-	<!--   -->
-	<submission-attributes name="adlt1imp" group="Other" editable="N" type="integer" userLabel="Number of adults at first port of purchase*">
-		<attributes>
-			<attribute name="adlt1imp"/>
-		</attributes>
-	</submission-attributes>
-	<submission-attributes name="chil1imp" group="Other" editable="N" type="integer" userLabel="Number of children at first port of purchase*">
-		<attributes>
-			<attribute name="chil1imp"/>
-		</attributes>
-	</submission-attributes>
-	<submission-attributes name="feml1imp" group="Other" editable="N" type="integer" userLabel="Number of females at first port of purchase*">
-		<attributes>
-			<attribute name="feml1imp"/>
-		</attributes>
-	</submission-attributes>
-	<submission-attributes name="male1imp" group="Other" editable="N" type="integer" userLabel="Number of males at first port of purchase*">
-		<attributes>
-			<attribute name="male1imp"/>
-		</attributes>
-	</submission-attributes>
-	<submission-attributes name="adlt2imp" group="Other" editable="N" type="integer" userLabel="Number of adults who died on middle passage*">
-		<attributes>
-			<attribute name="adlt2imp"/>
-		</attributes>
-	</submission-attributes>
-	<submission-attributes name="chil2imp" group="Other" editable="N" type="integer" userLabel="Number of children who died on middle passage*">
-		<attributes>
-			<attribute name="chil2imp"/>
-		</attributes>
-	</submission-attributes>
-	<submission-attributes name="feml2imp" group="Other" editable="N" type="integer" userLabel="Number of females who died on middle passage*">
-		<attributes>
-			<attribute name="feml2imp"/>
-		</attributes>
-	</submission-attributes>
-	<submission-attributes name="male2imp" group="Other" editable="N" type="integer" userLabel="Number of males who died on middle passage*">
-		<attributes>
-			<attribute name="male2imp"/>
-		</attributes>
-	</submission-attributes> 
-	<submission-attributes name="adlt3imp" group="Other" editable="N" type="integer" userLabel="Number of adults landed at first port*">
-		<attributes>
-			<attribute name="adlt3imp"/>
-		</attributes>
-	</submission-attributes>
-	<submission-attributes name="chil3imp" group="Other" editable="N" type="integer" userLabel="Number of children landed at first port*">
-		<attributes>
-			<attribute name="chil3imp"/>
-		</attributes>
-	</submission-attributes>
-	<submission-attributes name="feml3imp" group="Other" editable="N" type="integer" userLabel="Number of females landed at first port*">
-		<attributes>
-			<attribute name="feml3imp"/>
-		</attributes>
-	</submission-attributes>
-	<submission-attributes name="male3imp" group="Other" editable="N" type="integer" userLabel="Numbers of males landed at first port*">
-		<attributes>
-			<attribute name="male3imp"/>
-		</attributes>
-	</submission-attributes>		
 	<submission-attributes name="vymrtimp" group="Other" editable="N" type="integer" userLabel="Slave deaths during middle passage*">
 		<attributes>
 			<attribute name="vymrtimp"/>

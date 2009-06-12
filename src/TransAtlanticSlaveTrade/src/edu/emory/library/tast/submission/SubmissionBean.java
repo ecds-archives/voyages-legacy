@@ -65,7 +65,7 @@ public class SubmissionBean
 			"Died on voyage", 
 			"Disembarked slaves (first port)",
 			"Disembarked slaves (second port)",
-			"Embarked slaves (Imputed)"
+			"Slaves on arrival or departure*"
 	};
 	
 	private static SubmissionAttribute[] attrs = SubmissionAttributes.getConfiguration().getPublicAttributes();

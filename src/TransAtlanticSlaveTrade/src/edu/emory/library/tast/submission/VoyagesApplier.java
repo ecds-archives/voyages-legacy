@@ -49,7 +49,7 @@ public class VoyagesApplier
 			"Embarked slaves (third port)", "Died on voyage",
 			"Disembarked slaves (first port)",
 			"Disembarked slaves (second port)",
-			"Embarked slaves (Imputed)"};
+			"Slaves on arrival or departure*"};
 			
 
 	private static final String REMOVE_EDITOR_ACTION = "removeEditor";
