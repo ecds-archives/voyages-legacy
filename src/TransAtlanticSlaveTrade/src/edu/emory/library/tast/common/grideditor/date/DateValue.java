@@ -29,7 +29,12 @@ public class DateValue extends Value
 	public DateValue(Date date)
 	{
 		Calendar cal = Calendar.getInstance();
-		cal.setTime(date);
+		//System.out.println("DATE:"+date);
+		cal.setTimeInMillis(date.getTime());
+		cal.set(Calendar.MONTH, cal.get(Calendar.MONTH)+1);
+		//System.out.println("YEAR:"+cal.get(Calendar.YEAR));
+		//System.out.println("MONTH:"+cal.get(Calendar.MONTH));
+		//System.out.println("DATE:"+cal.get(Calendar.DATE));
 		setDate(cal);
 	}
 
