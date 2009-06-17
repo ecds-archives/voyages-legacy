@@ -8,10 +8,10 @@ import edu.emory.library.tast.util.StringUtils;
 
 public class DateValue extends Value
 {
-	
 	private String day;
 	private String month;
 	private String year;
+	private Integer[] dt = new Integer[3];
 
 	private boolean parsed = false;
 	private boolean valid = false;
@@ -21,9 +21,9 @@ public class DateValue extends Value
 	
 	public DateValue(String day, String month, String year)
 	{
-		this.day = day;
-		this.month = month;
 		this.year = year;
+		this.month = month;				
+		this.day = day;
 	}
 	
 	public DateValue(Date date)
@@ -41,6 +41,26 @@ public class DateValue extends Value
 	public DateValue(Calendar cal)
 	{
 		setDate(cal);
+	}
+	
+	public DateValue(Integer[] dateArr)
+	{
+		Integer yearI = dateArr[0];
+		Integer monthI = dateArr[1];
+		Integer dayI = dateArr[2];
+		year = "";
+		month = "";
+		day = "";
+		if (yearI != null) {
+			year = yearI.toString();
+		}
+		if (monthI != null) {
+			month = monthI.toString();
+		}
+		if (dayI != null) {
+			day = dayI.toString();
+		}
+		//setDate(cal);
 	}
 	
 	public boolean isEmpty()
@@ -63,9 +83,15 @@ public class DateValue extends Value
 //			if ("YYYY".equals(year)) year = "" ;
 			try
 			{
-				dayInt = Integer.parseInt(StringUtils.trimAndUnNull(day));
-				monthInt = Integer.parseInt(StringUtils.trimAndUnNull(month));
-				yearInt = Integer.parseInt(StringUtils.trimAndUnNull(year));
+				if (!"DD".equals(day)) {
+					dayInt = Integer.parseInt(StringUtils.trimAndUnNull(day));
+				}
+				if (!"MM".equals(month)) {
+					monthInt = Integer.parseInt(StringUtils.trimAndUnNull(month));
+				}
+				if (!"YYYY".equals(year)) {
+					yearInt = Integer.parseInt(StringUtils.trimAndUnNull(year));
+				}
 				valid = true;
 			}
 			catch(NumberFormatException nfe)
@@ -88,6 +114,20 @@ public class DateValue extends Value
 			Calendar cal = Calendar.getInstance();
 			cal.set(yearInt, monthInt, dayInt);
 			return cal.getTime();
+		}
+	}
+	
+	public Integer[] getDateAsInt()
+	{
+		if (!isValid())
+		{
+			return null;
+		}
+		else{
+			dt[0] = yearInt;
+			dt[1] = monthInt;
+			dt[2] = dayInt;
+			return dt;
 		}
 	}
 	

@@ -403,42 +403,58 @@
 	</submission-attributes>
 	<submission-attributes name="datedep" group="Voyage dates" editable="Y" type="date" userLabel="Date of Departure (yyyy-mm-dd)">
 		<attributes>
-			<attribute name="datedep"/>
+			<attribute name="datedepc"/>									
+			<attribute name="datedepb"/>									
+			<attribute name="datedepa"/>									
 		</attributes>
 	</submission-attributes>
 	<submission-attributes name="datebuy" group="Voyage dates" editable="Y" type="date" userLabel="Date that slave purchase began (yyyy-mm-dd)">
 		<attributes>
-			<attribute name="datebuy"/>
+			<attribute name="d1slatrc"/>
+			<attribute name="d1slatrb"/>
+			<attribute name="d1slatra"/>
 		</attributes>
 	</submission-attributes>
 	<submission-attributes name="dateleftafr" group="Voyage dates" editable="Y" type="date" userLabel="Date that vessel left last slaving port (yyyy-mm-dd)">
 		<attributes>
-			<attribute name="dateleftafr"/>
+			<attribute name="dlslatrc"/>
+			<attribute name="dlslatrb"/>
+			<attribute name="dlslatra"/>
 		</attributes>
 	</submission-attributes>
 	<submission-attributes name="dateland1" group="Voyage dates" editable="Y" type="date" userLabel="Date of first disembarkation of slaves (yyyy-mm-dd)">
 		<attributes>
-			<attribute name="dateland1"/>
+			<attribute name="datarr34"/>
+			<attribute name="datarr33"/>
+			<attribute name="datarr32"/>
 		</attributes>
 	</submission-attributes>	
 	<submission-attributes name="dateland2" group="Voyage dates" editable="Y" type="date" userLabel="Date of second disembarkation of slaves (yyyy-mm-dd)">
 		<attributes>
-			<attribute name="dateland2"/>
+			<attribute name="datarr38"/>
+			<attribute name="datarr37"/>
+			<attribute name="datarr36"/>
 		</attributes>
 	</submission-attributes>
 	<submission-attributes name="dateland3" group="Voyage dates" editable="Y" type="date" userLabel="Date of third disembarkation of slaves (yyyy-mm-dd)">
 		<attributes>
-			<attribute name="dateland3"/>
+			<attribute name="datarr41"/>
+			<attribute name="datarr40"/>
+			<attribute name="datarr39"/>
 		</attributes>
 	</submission-attributes>	
 	<submission-attributes name="datedepam" group="Voyage dates" editable="Y" type="date" userLabel="Date that ship left on return voyage (yyyy-mm-dd)">
 		<attributes>
-			<attribute name="datedepam"/>
+			<attribute name="ddepamc"/>
+			<attribute name="ddepamb"/>
+			<attribute name="ddepam"/>
 		</attributes>
 	</submission-attributes> 
 	<submission-attributes name="dateend" group="Voyage dates" editable="Y" type="date" userLabel="Date when voyage completed (yyyy-mm-dd)">
 		<attributes>
-			<attribute name="dateend"/>
+			<attribute name="datarr45"/>
+			<attribute name="datarr44"/>
+			<attribute name="datarr43"/>
 		</attributes>
 	</submission-attributes> 
 	<submission-attributes name="voy1imp" group="Voyage dates" editable="N" type="integer" userLabel="Voyage length from departure to first port of landing*">

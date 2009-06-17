@@ -296,11 +296,36 @@
         <property name="male7" column="male7" />
         <property name="female7" column="female7" />		
         <property name="xmimpflag" column="xmimpflag" />
+        <property name="datedepa" column="datedepa" />
+        <property name="datedepb" column="datedepb" />
         <property name="datedepc" column="datedepc" />
+        
+        <property name="d1slatra" column="d1slatra" />
+        <property name="d1slatrb" column="d1slatrb" />
 		<property name="d1slatrc" column="d1slatrc" />
+		
+		<property name="dlslatra" column="dlslatra" />
+		<property name="dlslatrb" column="dlslatrb" />
 		<property name="dlslatrc" column="dlslatrc" />
+		
+		<property name="datarr32" column="datarr32" />
+		<property name="datarr33" column="datarr33" />
 		<property name="datarr34" column="datarr34" />
+		
+		<property name="datarr36" column="datarr36" />
+		<property name="datarr37" column="datarr37" />
+		<property name="datarr38" column="datarr38" />
+		
+		<property name="datarr39" column="datarr39" />
+		<property name="datarr40" column="datarr40" />
+		<property name="datarr41" column="datarr41" />
+				
+		<property name="ddepam" column="ddepam" />
+		<property name="ddepamb" column="ddepamb" />
 		<property name="ddepamc" column="ddepamc" />
+		
+		<property name="datarr43" column="datarr43" />
+		<property name="datarr44" column="datarr44" />
 		<property name="datarr45" column="datarr45" />
 	</class>
 </hibernate-mapping>

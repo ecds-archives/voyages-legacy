@@ -797,11 +797,11 @@ public class SubmissionBean
 				if (val.hasEditableNote()) {
 					notes.put(attrs[i].getName(), val.getNote().trim());
 				}
-				
+							
 				Object[] vals = attrs[i].getValues(sess, val);
 				for (int j = 0; j < vals.length; j++) {
-					voyage.setAttrValue(attrs[i].getAttribute()[j].getName(), vals[j]);			
-				}				
+					voyage.setAttrValue(attrs[i].getAttribute()[j].getName(), vals[j]);
+				}									
 			}
 			
 			for (int i = 0; i < SLAVE_CHAR_COLS.length; i++) {

@@ -99,7 +99,11 @@ public class SubmissionAttribute {
 			if (toBeFormatted[0] == null) {
 				return new DateValue(null, null, null);
 			}
-			return new DateValue((Date)toBeFormatted[0]);
+			Integer[] dateArr = new Integer[toBeFormatted.length];
+			for (int k = 0; k < toBeFormatted.length; k++) {
+				dateArr[k] = (Integer)toBeFormatted[k];
+			}		
+			return new DateValue(dateArr);
 		} else if (type.equals(TextboxIntegerAdapter.TYPE)) {
 			if (toBeFormatted[0] == null) {
 				return new TextboxIntegerValue((Integer)null);
@@ -215,7 +219,8 @@ public class SubmissionAttribute {
 			}
 			return new Object[]{((TextboxValue)object).getText()};
 		} else if (type.equals(DateAdapter.TYPE)) {
-			return new Object[]{((DateValue)object).getDate()};
+			//return new Object[]{((DateValue)object).getDate()};
+			return ((DateValue)object).getDateAsInt();
 		} else if (type.equals(TextboxIntegerAdapter.TYPE)) {
 			return new Object[]{((TextboxIntegerValue)object).getInteger()};
 		} else if (type.equals(TextboxFloatAdapter.TYPE)) {

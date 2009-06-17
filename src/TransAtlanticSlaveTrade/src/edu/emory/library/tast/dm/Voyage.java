@@ -35,6 +35,7 @@ import edu.emory.library.tast.dm.attributes.RegionAttribute;
 import edu.emory.library.tast.dm.attributes.ResistanceAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
 import edu.emory.library.tast.dm.attributes.VesselRigAttribute;
+import edu.emory.library.tast.util.StringUtils;
 
 /**
  * Voyage object.
@@ -120,14 +121,47 @@ public class Voyage extends AbstractDescriptiveObject
 		attributes.add(new NumericAttribute("yearam", "Voyage", NumericAttribute.TYPE_INTEGER, "yearam"));
 		attributes.add(new NumericAttribute("yearaf", "Voyage", NumericAttribute.TYPE_INTEGER, "yearaf"));
 		attributes.add(new NumericAttribute("yeardep", "Voyage", NumericAttribute.TYPE_INTEGER, "yeardep"));
-		attributes.add(new DateAttribute("datedep", "Voyage", "date_dep"));
-		attributes.add(new DateAttribute("datebuy", "Voyage", "date_buy"));
-		attributes.add(new DateAttribute("dateleftafr", "Voyage", "date_leftafr"));
-		attributes.add(new DateAttribute("dateland1", "Voyage", "date_land1"));
-		attributes.add(new DateAttribute("dateland2", "Voyage", "date_land2"));
-		attributes.add(new DateAttribute("dateland3", "Voyage", "date_land3"));
-		attributes.add(new DateAttribute("datedepam", "Voyage", "date_depam"));
-		attributes.add(new DateAttribute("dateend", "Voyage", "date_end"));
+		
+		attributes.add(new DateAttribute("datedep", "Voyage", "datedep"));
+		attributes.add(new NumericAttribute("datedepa", "Voyage", NumericAttribute.TYPE_INTEGER, "datedepa"));
+		attributes.add(new NumericAttribute("datedepb", "Voyage", NumericAttribute.TYPE_INTEGER, "datedepb"));
+		attributes.add(new NumericAttribute("datedepc", "Voyage", NumericAttribute.TYPE_INTEGER, "datedepc"));
+		
+		attributes.add(new DateAttribute("datebuy", "Voyage", "datebuy"));
+		attributes.add(new NumericAttribute("d1slatra", "Voyage", NumericAttribute.TYPE_INTEGER, "d1slatra"));
+		attributes.add(new NumericAttribute("d1slatrb", "Voyage", NumericAttribute.TYPE_INTEGER, "d1slatrb"));
+		attributes.add(new NumericAttribute("d1slatrc", "Voyage", NumericAttribute.TYPE_INTEGER, "d1slatrc"));
+		
+		attributes.add(new DateAttribute("dateleftafr", "Voyage", "dateleftafr"));
+		attributes.add(new NumericAttribute("dlslatra", "Voyage", NumericAttribute.TYPE_INTEGER, "dlslatra"));
+		attributes.add(new NumericAttribute("dlslatrb", "Voyage", NumericAttribute.TYPE_INTEGER, "dlslatrb"));
+		attributes.add(new NumericAttribute("dlslatrc", "Voyage", NumericAttribute.TYPE_INTEGER, "dlslatrc"));
+		
+		attributes.add(new DateAttribute("dateland1", "Voyage", "dateland1"));
+		attributes.add(new NumericAttribute("datarr32", "Voyage", NumericAttribute.TYPE_INTEGER, "datarr32"));
+		attributes.add(new NumericAttribute("datarr33", "Voyage", NumericAttribute.TYPE_INTEGER, "datarr33"));
+		attributes.add(new NumericAttribute("datarr34", "Voyage", NumericAttribute.TYPE_INTEGER, "datarr34"));
+				
+		attributes.add(new DateAttribute("dateland2", "Voyage", "dateland2"));
+		attributes.add(new NumericAttribute("datarr36", "Voyage", NumericAttribute.TYPE_INTEGER, "datarr36"));
+		attributes.add(new NumericAttribute("datarr37", "Voyage", NumericAttribute.TYPE_INTEGER, "datarr37"));
+		attributes.add(new NumericAttribute("datarr38", "Voyage", NumericAttribute.TYPE_INTEGER, "datarr38"));
+		
+		attributes.add(new DateAttribute("dateland3", "Voyage", "dateland3"));
+		attributes.add(new NumericAttribute("datarr39", "Voyage", NumericAttribute.TYPE_INTEGER, "datarr39"));
+		attributes.add(new NumericAttribute("datarr40", "Voyage", NumericAttribute.TYPE_INTEGER, "datarr40"));
+		attributes.add(new NumericAttribute("datarr41", "Voyage", NumericAttribute.TYPE_INTEGER, "datarr41"));
+		
+		attributes.add(new DateAttribute("datedepam", "Voyage", "datedepam"));
+		attributes.add(new NumericAttribute("ddepam", "Voyage", NumericAttribute.TYPE_INTEGER, "ddepam"));
+		attributes.add(new NumericAttribute("ddepamb", "Voyage", NumericAttribute.TYPE_INTEGER, "ddepamb"));
+		attributes.add(new NumericAttribute("ddepamc", "Voyage", NumericAttribute.TYPE_INTEGER, "ddepamc"));
+		
+		attributes.add(new DateAttribute("dateend", "Voyage", "dateend"));
+		attributes.add(new NumericAttribute("datarr43", "Voyage", NumericAttribute.TYPE_INTEGER, "datarr43"));
+		attributes.add(new NumericAttribute("datarr44", "Voyage", NumericAttribute.TYPE_INTEGER, "datarr44"));
+		attributes.add(new NumericAttribute("datarr45", "Voyage", NumericAttribute.TYPE_INTEGER, "datarr45"));
+		
 		attributes.add(new NumericAttribute("voy1imp", "Voyage", NumericAttribute.TYPE_INTEGER, "voy1imp"));
 		attributes.add(new NumericAttribute("voy2imp", "Voyage", NumericAttribute.TYPE_INTEGER, "voy2imp"));
 		attributes.add(new StringAttribute("captaina", "Voyage", "captaina"));
@@ -619,10 +653,10 @@ public class Voyage extends AbstractDescriptiveObject
 		this.values.put("captainc", captainc);
 	}
 
-	public void setDatedep(Date datedep) {
-		this.values.put("datedep", datedep);
+	public void setDatedep(Date datedep) {		
+		this.values.put("datedep", datedep);	
 	}
-
+	
 	public void setTslavesd(Integer tslavesd) {
 		this.values.put("tslavesd", tslavesd);
 	}
@@ -2286,10 +2320,7 @@ public class Voyage extends AbstractDescriptiveObject
 
 	public void setSuggestion(boolean suggestion) {
 		this.suggestion = suggestion;
-	}
-	
-	
-	
+	}	
 	
 	public Integer getNppretra() {
 		return (Integer)this.values.get("nppretra");
@@ -2716,32 +2747,59 @@ public class Voyage extends AbstractDescriptiveObject
 		return (Double) this.values.get("xmimpflag");
 	}
 	
-	/*
-	 * Year that voyage began
-	 */
-	public void setDatedepc(Integer obj) {
-		Date dep = this.getDatedep();
-		if (dep != null) {			
-		    cal.setTime(dep);
-		    System.out.println("datedepc: " + cal.get(Calendar.YEAR));
-		    this.values.put("datedepc", new Integer(cal.get(Calendar.YEAR)));
-		}	
+	public void setDatedepa(Integer obj) {		
+		this.values.put("datedepa", obj);			
+	}
+	
+	public Integer getDatedepa() {
+		return (Integer) this.values.get("datedepa");
+	}
+	
+	public void setDatedepb(Integer obj) {		
+		this.values.put("datedepb", obj);			
+	}
+	
+	public Integer getDatedepb() {
+		return (Integer) this.values.get("datedepb");
+	}
+	
+	public void setDatedepc(Integer obj) {		
+		this.values.put("datedepc", obj);			
 	}
 	
 	public Integer getDatedepc() {
 		return (Integer) this.values.get("datedepc");
 	}
+	
+	/*
+	 * Day that slave purchase began
+	 */
+	public void setD1slatra(Integer obj) {				    
+		this.values.put("d1slatra", obj);		
+	}
+	
+	public Integer getD1slatra() {
+		return (Integer) this.values.get("d1slatra");
+	}
+	
+	/*
+	 * Month that slave purchase began
+	 */
+	public void setD1slatrb(Integer obj) {				    
+		this.values.put("d1slatrb", obj);
 		
+	}
+	
+	public Integer getD1slatrb() {
+		return (Integer) this.values.get("d1slatrb");
+	}
+	
 	/*
 	 * Year that slave purchase began
 	 */
-	public void setD1slatrc(Integer obj) {
-		Date dt = this.getDatebuy();
-		if (dt != null) {			
-		    cal.setTime(dt);
-		    System.out.println("d1slatrc: " + cal.get(Calendar.YEAR));
-		    this.values.put("d1slatrc", new Integer(cal.get(Calendar.YEAR)));
-		}
+	public void setD1slatrc(Integer obj) {				    
+		this.values.put("d1slatrc", obj);
+		
 	}
 	
 	public Integer getD1slatrc() {
@@ -2749,69 +2807,202 @@ public class Voyage extends AbstractDescriptiveObject
 	}
 	
 	/*
+	 * Day that vessel left last slaving port - dateleftafr
+	 */
+	public void setDlslatra(Integer obj) {
+		 this.values.put("dlslatra", obj);
+	}
+	
+	public Integer getDlslatra() {
+		return (Integer) this.values.get("dlslatra");
+	}
+	
+	/*
+	 * Month that vessel left last slaving port - dateleftafr
+	 */
+	public void setDlslatrb(Integer obj) {
+		 this.values.put("dlslatrb", obj);
+	}
+	
+	public Integer getDlslatrb() {
+		return (Integer) this.values.get("dlslatrb");
+	}
+	
+	/*
 	 * Year that vessel left last slaving port - dateleftafr
 	 */
 	public void setDlslatrc(Integer obj) {
-		Date dt = this.getDateleftafr();
-		if (dt != null) {			
-		    cal.setTime(dt);
-		    System.out.println("dlslatrc: " + cal.get(Calendar.YEAR));
-		    this.values.put("dlslatrc", new Integer(cal.get(Calendar.YEAR)));
-		}
+		 this.values.put("dlslatrc", obj);
 	}
 	
 	public Integer getDlslatrc() {
 		return (Integer) this.values.get("dlslatrc");
+	}
+	
+	/*
+	 * Day that slaves landed at first place
+	 */
+	public void setDatarr32(Integer obj) {
+	    this.values.put("datarr32", obj);
+	}
+	
+	public Integer getDatarr32() {
+		return (Integer) this.values.get("datarr32");
+	}
+	
+	/*
+	 * Month that slaves landed at first place
+	 */
+	public void setDatarr33(Integer obj) {
+	    this.values.put("datarr33", obj);
+	}
+	
+	public Integer getDatarr33() {
+		return (Integer) this.values.get("datarr33");
 	}
 		
 	/*
 	 * Year that slaves landed at first place
 	 */
 	public void setDatarr34(Integer obj) {
-		Date dt = this.getDateland1();
-		if (dt != null) {			
-		    cal.setTime(dt);
-		    System.out.println("datarr34: " + cal.get(Calendar.YEAR));
-		    this.values.put("datarr34", new Integer(cal.get(Calendar.YEAR)));
-		}
+	    this.values.put("datarr34", obj);
 	}
 	
 	public Integer getDatarr34() {
 		return (Integer) this.values.get("datarr34");
 	}
 	
+	/*
+	 * Day left on return voyage
+	 */
+	public void setDdepam(Integer obj) {
+	    this.values.put("ddepam", obj);
+	}
+	
+	public Integer getDdepam() {
+		return (Integer) this.values.get("ddepam");
+	}
+
+	/*
+	 * Month left on return voyage
+	 */
+	public void setDdepamb(Integer obj) {
+	    this.values.put("ddepamb", obj);
+	}
+	
+	public Integer getDdepamb() {
+		return (Integer) this.values.get("ddepamb");
+	}
 	
 	/*
 	 * Year left on return voyage
-	 */
+	*/
 	public void setDdepamc(Integer obj) {
-		Date dt = this.getDatedepam();
-		if (dt != null) {			
-		    cal.setTime(dt);
-		    System.out.println("ddepamc: " + cal.get(Calendar.YEAR));
-		    this.values.put("ddepamc", new Integer(cal.get(Calendar.YEAR)));
-		}
+	    this.values.put("ddepamc", obj);
 	}
 	
 	public Integer getDdepamc() {
 		return (Integer) this.values.get("ddepamc");
 	}
 	
+	/*
+	 * Day when voyage completed
+	 */
+	public void setDatarr43(Integer obj) {
+		 this.values.put("datarr43", obj);
+	}
 	
+	public Integer getDatarr43() {
+		return (Integer) this.values.get("datarr43");
+	}
+	
+	/*
+	 * Month when voyage completed
+	 */
+	public void setDatarr44(Integer obj) {
+		 this.values.put("datarr44", obj);
+	}
+	
+	public Integer getDatarr44() {
+		return (Integer) this.values.get("datarr44");
+	}
+		
 	/*
 	 * Year when voyage completed
 	 */
 	public void setDatarr45(Integer obj) {
-		Date dt = this.getDateend();
-		if (dt != null) {			
-		    cal.setTime(dt);
-		    System.out.println("datarr45: " + cal.get(Calendar.YEAR));
-		    this.values.put("datarr45", new Integer(cal.get(Calendar.YEAR)));
-		}
+		 this.values.put("datarr45", obj);
 	}
 	
 	public Integer getDatarr45() {
 		return (Integer) this.values.get("datarr45");
+	}
+	
+	/*
+	 * Day that slaves arrived at second place
+	 */
+	public void setDatarr36(Integer obj) {
+		 this.values.put("datarr36", obj);
+	}
+	
+	public Integer getDatarr36() {
+		return (Integer) this.values.get("datarr36");
+	}
+	
+	/*
+	 * Month that slaves arrived at second place
+	 */
+	public void setDatarr37(Integer obj) {
+		 this.values.put("datarr37", obj);
+	}
+	
+	public Integer getDatarr37() {
+		return (Integer) this.values.get("datarr37");
+	}
+	
+	/*
+	 * Year that slaves arrived at second place
+	 */
+	public void setDatarr38(Integer obj) {
+		 this.values.put("datarr38", obj);
+	}
+	
+	public Integer getDatarr38() {
+		return (Integer) this.values.get("datarr38");
+	}
+	
+
+	/*
+	 * Day that slaves landed at third place
+	 */
+	public void setDatarr39(Integer obj) {
+		 this.values.put("datarr39", obj);
+	}
+	
+	public Integer getDatarr39() {
+		return (Integer) this.values.get("datarr39");
+	}
+	
+	/*
+	 * Month that slaves landed at third place
+	 */
+	public void setDatarr40(Integer obj) {
+		 this.values.put("datarr40", obj);
+	}
+	
+	public Integer getDatarr40() {
+		return (Integer) this.values.get("datarr40");
+	}
+	
+	/*
+	 * Year that slaves landed at third place
+	 */
+	public void setDatarr41(Integer obj) {
+		 this.values.put("datarr41", obj);
+	}
+	
+	public Integer getDatarr41() {
+		return (Integer) this.values.get("datarr41");
 	}
 	
 }
