@@ -2820,65 +2820,50 @@ public class VoyagesCalculation {
 		month = voyage.getDatedepb();
 		year = voyage.getDatedepc();
 		Date dt = getValidDate(day, month, year);
-		if (dt != null) {
-			voyage.setDatedep(dt);
-		}
+		voyage.setDatedep(dt);
+		
 		
 		day = voyage.getD1slatra();
 		month = voyage.getD1slatrb();
 		year = voyage.getD1slatrc();
 		dt = getValidDate(day, month, year);
-		if (dt != null) {
-			voyage.setDatebuy(dt);
-		}
-
+		voyage.setDatebuy(dt);
+	
 		day = voyage.getDlslatra();
 		month = voyage.getDlslatrb();
 		year = voyage.getDlslatrc();
 		dt = getValidDate(day, month, year);
-		if (dt != null) {
-			voyage.setDateleftafr(dt);
-		}
-		
+		voyage.setDateleftafr(dt);
+	
 		day = voyage.getDatarr32();
 		month = voyage.getDatarr33();
 		year = voyage.getDatarr34();
-		dt = getValidDate(day, month, year);
-		if (dt != null) {
-			voyage.setDateland1(dt);
-		}
-
+		dt = getValidDate(day, month, year);		
+		voyage.setDateland1(dt);
+		
 		day = voyage.getDatarr36();
 		month = voyage.getDatarr37();
 		year = voyage.getDatarr38();
 		dt = getValidDate(day, month, year);
-		if (dt != null) {
-			voyage.setDateland2(dt);
-		}
+		voyage.setDateland2(dt);
 		
 		day = voyage.getDatarr39();
 		month = voyage.getDatarr40();
 		year = voyage.getDatarr41();
 		dt = getValidDate(day, month, year);
-		if (dt != null) {
-			voyage.setDateland3(dt);
-		}
-		
+		voyage.setDateland3(dt);
+				
 		day = voyage.getDatarr43();
 		month = voyage.getDatarr44();
 		year = voyage.getDatarr45();
 		dt = getValidDate(day, month, year);
-		if (dt != null) {
-			voyage.setDateend(dt);
-		}
+		voyage.setDateend(dt);
 		
 		day = voyage.getDdepam();
 		month = voyage.getDdepamb();
 		year = voyage.getDdepamc();
 		dt = getValidDate(day, month, year);
-		if (dt != null) {
-			voyage.setDatedepam(dt);
-		}		
+		voyage.setDatedepam(dt);				
 	}
 	
 	public Date getValidDate(Integer day, Integer month, Integer year) {
