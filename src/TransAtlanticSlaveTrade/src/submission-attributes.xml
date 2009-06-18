@@ -169,13 +169,13 @@
 			<attribute name="plac3tra"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="plac3tra" group="Voyage itinerary" editable="N" type="locations" userLabel="Principal place of slave purchase">
+	<submission-attributes name="majbuypt" group="Voyage itinerary" editable="N" type="locations" userLabel="Principal place of slave purchase">
 		<attributes>
 			<attribute name="majbyimp"/>
 			<attribute name="mjbyptimp"/>
 		</attributes>
 	</submission-attributes>
-	 <submission-attributes name="majbyimp" group="Voyage itinerary" editable="N" type="regions" userLabel="Principal region of slave purchase*">
+	 <submission-attributes name="majbyreg" group="Voyage itinerary" editable="Y" type="regions" userLabel="Principal region of slave purchase">
 		<attributes>
 			<attribute name="majbyimp"/>			
 		</attributes>
@@ -203,13 +203,13 @@
 			<attribute name="adpsale2"/>
 		</attributes>
 	</submission-attributes> 
-	<submission-attributes name="adpsale2" group="Voyage itinerary" editable="N" type="locations" userLabel="Principal place of slave landing">
+	<submission-attributes name="mjslptimp" group="Voyage itinerary" editable="N" type="locations" userLabel="Principal place of slave landing">
 		<attributes>
 			<attribute name="mjselimp"/>
 			<attribute name="mjslptimp"/>
 		</attributes>
 	</submission-attributes> 
-	<submission-attributes name="mjselimp" group="Voyage itinerary" editable="N" type="regions" userLabel="Principal region of slave landing*">
+	<submission-attributes name="X" group="Voyage itinerary" editable="N" type="regions" userLabel="Principal region of slave landing*">
 		<attributes>
 			<attribute name="mjselimp"/>		
 		</attributes>
@@ -286,14 +286,7 @@
 			<attribute name="embreg2"/>
 		</attributes>
     </submission-attributes>
-
-    <submission-attributes name="majbuypt" group="Voyage itinerary" editable="N" type="ports" userLabel="Principal place of slave purchase*">
-		<attributes>
-			<attribute name="majbuypt"/>
-		</attributes>
-    </submission-attributes>
-
-    <submission-attributes name="majbuyreg" group="Voyage itinerary" editable="N" type="regions" userLabel="Principal region of slave purchase*">
+    <submission-attributes name="majbuyimp" group="Voyage itinerary" editable="N" type="regions" userLabel="Principal region of slave purchase*">
 		<attributes>
 			<attribute name="majbuyreg"/>
 		</attributes>
@@ -312,7 +305,7 @@
     </submission-attributes>
 
 
-    <submission-attributes name="majselrg" group="Voyage itinerary" editable="N" type="regions" userLabel="Principal region of slave disembarkation*">
+    <submission-attributes name="majselrg" group="Voyage itinerary" editable="Y" type="regions" userLabel="Principal region of slave disembarkation">
 		<attributes>
 			<attribute name="majselrg"/>
 		</attributes>
