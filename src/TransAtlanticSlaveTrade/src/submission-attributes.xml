@@ -203,13 +203,13 @@
 			<attribute name="adpsale2"/>
 		</attributes>
 	</submission-attributes> 
-	<submission-attributes name="mjslptimp" group="Voyage itinerary" editable="N" type="locations" userLabel="Principal place of slave landing">
+	<submission-attributes name="mjslptimp" group="Voyage itinerary" editable="N" type="locations" userLabel="Principal place of slave landing*">
 		<attributes>
 			<attribute name="mjselimp"/>
 			<attribute name="mjslptimp"/>
 		</attributes>
 	</submission-attributes> 
-	<submission-attributes name="X" group="Voyage itinerary" editable="N" type="regions" userLabel="Principal region of slave landing*">
+	<submission-attributes name="mjselimp" group="Voyage itinerary" editable="N" type="regions" userLabel="Principal region of slave landing*">
 		<attributes>
 			<attribute name="mjselimp"/>		
 		</attributes>
@@ -310,13 +310,6 @@
 			<attribute name="majselrg"/>
 		</attributes>
     </submission-attributes>
-
-    <submission-attributes name="mjselimp" group="Voyage itinerary" editable="N" type="regions" userLabel="Principal region of slave disembarkation*">
-		<attributes>
-			<attribute name="mjselimp"/>
-		</attributes>
-    </submission-attributes>
-
     <submission-attributes name="mjselimp1" group="Voyage itinerary" editable="N" type="regions" userLabel="Broad region of slave disembarkation*">
 		<attributes>
 			<attribute name="mjselimp1"/>
