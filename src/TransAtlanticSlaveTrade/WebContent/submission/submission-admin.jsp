@@ -99,7 +99,7 @@
 					<f:verbatim>
 					<h:selectOneMenu value="#{AdminSubmissionBean.requestType}"><f:selectItems value="#{AdminSubmissionBean.requestTypes}"/></h:selectOneMenu>
 					</f:verbatim></td>
-				<td style="padding-right: 5px">
+				<td style="padding-right: 5px"></td>
 				
 				<td style="padding-right: 5px">Status of request</td>
 				<td style="padding-right: 10px"><f:verbatim>
