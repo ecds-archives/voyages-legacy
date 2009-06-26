@@ -180,7 +180,7 @@ public class DateValue extends Value
 
 	public String getDayOrEmpty()
 	{
-		if (day == null)
+		if (day == null || day.trim().equals("") || day.trim().equals("0"))
 		{
 			return "DD";
 		}
@@ -206,8 +206,9 @@ public class DateValue extends Value
 
 	public String getMonthOrEmpty()
 	{
-		if (month == null)
+		if (month == null || month.trim().equals("") || month.trim().equals("0"))
 		{
+			
 			return "MM";
 		}
 		else
@@ -232,7 +233,7 @@ public class DateValue extends Value
 
 	public String getYearOrEmpty()
 	{
-		if (year == null)
+		if (year == null || year.trim().equals("") || year.trim().equals("0"))
 		{
 			return "YYYY";
 		}

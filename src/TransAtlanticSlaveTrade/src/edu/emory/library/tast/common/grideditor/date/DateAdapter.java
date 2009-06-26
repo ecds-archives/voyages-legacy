@@ -138,14 +138,12 @@ public class DateAdapter extends Adapter
 				getDayFieldName(inputPrefix),
 				dateValue.getDayOrEmpty());
 
-		if (dateValue.isValid())
-		{
-			writer.write(dateValue.getYearOrEmpty());
+		    writer.write(dateValue.getYearOrEmpty());
 			writer.write("/");
 			writer.write(dateValue.getMonthOrEmpty());
 			writer.write("/");
 			writer.write(dateValue.getDayOrEmpty());
-		}
+		
 
 	}
 
