@@ -14,6 +14,7 @@ import org.hibernate.Transaction;
 import org.junit.Test;
 
 import edu.emory.library.tast.db.HibernateConn;
+import edu.emory.library.tast.dm.Area;
 import edu.emory.library.tast.dm.Fate;
 import edu.emory.library.tast.dm.Nation;
 import edu.emory.library.tast.dm.Port;
@@ -454,7 +455,7 @@ public class VoyageCalcTest extends TestCase {
 				voyage.setMajbyimp(majbyimp);
 				Region mjselimp = Region.loadById(session, (long)mjselimpArray[i]);
 				voyage.setMjselimp(mjselimp);
-				Region mjselimp1 = Region.loadById(session, (long)mjselimp1Array[i]);
+				Area mjselimp1 = Area.loadById(session, (long)mjselimp1Array[i]);
 				voyage.setMjselimp1(mjselimp1);
 				Nation natinimp = Nation.loadById(session, (long)natinimpArray[i]);
 				voyage.setNatinimp(natinimp);				

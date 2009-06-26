@@ -13,6 +13,7 @@ public class NumericAttribute extends ImportableAttribute
 	public final static int TYPE_INTEGER = 0;
 	public final static int TYPE_LONG = 1;
 	public final static int TYPE_FLOAT = 2;
+	public final static int TYPE_DOUBLE = 3;
 	
 	private int type;
 	private boolean percentage = false;
@@ -136,6 +137,23 @@ public class NumericAttribute extends ImportableAttribute
 						"Imported as NULL (MISSING).");
 				return null;
 			}
+		case TYPE_DOUBLE:
+
+			try
+			{
+				double doubleValue = Double.parseDouble(value);
+				if (percentage) doubleValue *= 100;
+				return new Double(doubleValue);
+			}
+			catch (NumberFormatException nfe)
+			{
+				log.logWarn(
+						"Variable " + getName() + ", " +
+						"record " + recordNo + ": " +
+						"value '" + value + "' is not an decimal number. " +
+						"Imported as NULL (MISSING).");
+				return null;
+			}
 		}
 		return null;
 	}
@@ -147,6 +165,8 @@ public class NumericAttribute extends ImportableAttribute
 		case TYPE_LONG:
 			return "Integer";
 		case TYPE_FLOAT:
+			return "Decimal";
+		case TYPE_DOUBLE:
 			return "Decimal";
 		default:
 			return null;

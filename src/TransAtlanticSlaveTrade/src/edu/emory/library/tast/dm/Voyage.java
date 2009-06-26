@@ -17,6 +17,7 @@ import org.hibernate.criterion.Restrictions;
 import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.db.TastDbConditions;
 import edu.emory.library.tast.db.TastDbQuery;
+import edu.emory.library.tast.dm.attributes.AreaAttribute;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.BooleanAttribute;
 import edu.emory.library.tast.dm.attributes.DateAttribute;
@@ -95,7 +96,7 @@ public class Voyage extends AbstractDescriptiveObject
 		attributes.add(new ResistanceAttribute("resistance", "Voyage", "resistance"));
 		attributes.add(new PortAttribute("ptdepimp", "Voyage", "ptdepimp"));
 		attributes.add(new RegionAttribute("deptregimp", "Voyage", "deptregimp"));
-		attributes.add(new RegionAttribute("deptregimp1", "Voyage", "deptregimp1"));
+		attributes.add(new AreaAttribute("deptregimp1", "Voyage", "deptregimp1"));
 		attributes.add(new PortAttribute("plac1tra", "Voyage", "plac1tra"));
 		attributes.add(new PortAttribute("plac2tra", "Voyage", "plac2tra"));
 		attributes.add(new PortAttribute("plac3tra", "Voyage", "plac3tra"));
@@ -104,7 +105,7 @@ public class Voyage extends AbstractDescriptiveObject
 		attributes.add(new RegionAttribute("regem2", "Voyage", "regem2"));
 		attributes.add(new RegionAttribute("regem3", "Voyage", "regem3"));
 		attributes.add(new RegionAttribute("majbyimp", "Voyage", "majbyimp"));
-		attributes.add(new RegionAttribute("majbyimp1", "Voyage", "majbyimp1"));
+		attributes.add(new AreaAttribute("majbyimp1", "Voyage", "majbyimp1"));
 		attributes.add(new PortAttribute("npafttra", "Voyage", "npafttra"));
 		attributes.add(new PortAttribute("sla1port", "Voyage", "sla1port"));
 		attributes.add(new PortAttribute("adpsale1", "Voyage", "adpsale1"));
@@ -117,7 +118,7 @@ public class Voyage extends AbstractDescriptiveObject
 		attributes.add(new RegionAttribute("mjselimp", "Voyage", "mjselimp"));
 		attributes.add(new PortAttribute("portret", "Voyage", "portret"));
 		attributes.add(new RegionAttribute("retrnreg", "Voyage", "retrnreg"));
-		attributes.add(new RegionAttribute("retrnreg1", "Voyage", "retrnreg1"));
+		attributes.add(new AreaAttribute("retrnreg1", "Voyage", "retrnreg1"));
 		attributes.add(new NumericAttribute("yearam", "Voyage", NumericAttribute.TYPE_INTEGER, "yearam"));
 		attributes.add(new NumericAttribute("yearaf", "Voyage", NumericAttribute.TYPE_INTEGER, "yearaf"));
 		attributes.add(new NumericAttribute("yeardep", "Voyage", NumericAttribute.TYPE_INTEGER, "yeardep"));
@@ -188,12 +189,12 @@ public class Voyage extends AbstractDescriptiveObject
 		attributes.add(new NumericAttribute("malrat7", "Voyage", NumericAttribute.TYPE_FLOAT, "malrat7"));
 		attributes.add(new NumericAttribute("chilrat7", "Voyage", NumericAttribute.TYPE_FLOAT, "chilrat7"));
 		
-		attributes.add(new NumericAttribute("menrat3", "Voyage", NumericAttribute.TYPE_FLOAT, "menrat3"));
-		attributes.add(new NumericAttribute("womrat3", "Voyage", NumericAttribute.TYPE_FLOAT, "womrat3"));
-		attributes.add(new NumericAttribute("boyrat3", "Voyage", NumericAttribute.TYPE_FLOAT, "boyrat3"));
-		attributes.add(new NumericAttribute("girlrat3", "Voyage", NumericAttribute.TYPE_FLOAT, "girlrat3"));
-		attributes.add(new NumericAttribute("malrat3", "Voyage", NumericAttribute.TYPE_FLOAT, "malrat3"));
-		attributes.add(new NumericAttribute("chilrat3", "Voyage", NumericAttribute.TYPE_FLOAT, "chilrat3"));
+		attributes.add(new NumericAttribute("menrat3", "Voyage", NumericAttribute.TYPE_DOUBLE, "menrat3"));
+		attributes.add(new NumericAttribute("womrat3", "Voyage", NumericAttribute.TYPE_DOUBLE, "womrat3"));
+		attributes.add(new NumericAttribute("boyrat3", "Voyage", NumericAttribute.TYPE_DOUBLE, "boyrat3"));
+		attributes.add(new NumericAttribute("girlrat3", "Voyage", NumericAttribute.TYPE_DOUBLE, "girlrat3"));
+		attributes.add(new NumericAttribute("malrat3", "Voyage", NumericAttribute.TYPE_DOUBLE, "malrat3"));
+		attributes.add(new NumericAttribute("chilrat3", "Voyage", NumericAttribute.TYPE_DOUBLE, "chilrat3"));
 		
 		attributes.add(new NumericAttribute("jamcaspr", "Voyage", NumericAttribute.TYPE_FLOAT, "jamcaspr"));
 		attributes.add(new NumericAttribute("vymrtimp", "Voyage", NumericAttribute.TYPE_INTEGER, "vymrtimp"));
@@ -279,25 +280,25 @@ public class Voyage extends AbstractDescriptiveObject
 		attributes.add(new NumericAttribute("girl7", "Voyage", NumericAttribute.TYPE_INTEGER, "girl7"));
 		
 		attributes.add(new NumericAttribute("adlt1imp", "Voyage", NumericAttribute.TYPE_INTEGER, "adlt1imp"));
-		attributes.add(new NumericAttribute("chil1imp", "Voyage", NumericAttribute.TYPE_INTEGER, "chil1imp"));
-		attributes.add(new NumericAttribute("feml1imp", "Voyage", NumericAttribute.TYPE_INTEGER, "feml1imp"));
-		attributes.add(new NumericAttribute("male1imp", "Voyage", NumericAttribute.TYPE_INTEGER, "male1imp"));		
+		attributes.add(new NumericAttribute("chil1imp", "Voyage", NumericAttribute.TYPE_DOUBLE, "chil1imp"));
+		attributes.add(new NumericAttribute("feml1imp", "Voyage", NumericAttribute.TYPE_DOUBLE, "feml1imp"));
+		attributes.add(new NumericAttribute("male1imp", "Voyage", NumericAttribute.TYPE_DOUBLE, "male1imp"));		
 		attributes.add(new NumericAttribute("adlt2imp", "Voyage", NumericAttribute.TYPE_INTEGER, "adlt2imp"));
 		attributes.add(new NumericAttribute("chil2imp", "Voyage", NumericAttribute.TYPE_INTEGER, "chil2imp"));
 		attributes.add(new NumericAttribute("feml2imp", "Voyage", NumericAttribute.TYPE_INTEGER, "feml2imp"));
 		attributes.add(new NumericAttribute("male2imp", "Voyage", NumericAttribute.TYPE_INTEGER, "male2imp"));
-		attributes.add(new NumericAttribute("adlt3imp", "Voyage", NumericAttribute.TYPE_INTEGER, "adlt3imp"));
-		attributes.add(new NumericAttribute("chil3imp", "Voyage", NumericAttribute.TYPE_INTEGER, "chil3imp"));
-		attributes.add(new NumericAttribute("feml3imp", "Voyage", NumericAttribute.TYPE_INTEGER, "feml3imp"));
-		attributes.add(new NumericAttribute("male3imp", "Voyage", NumericAttribute.TYPE_INTEGER, "male3imp"));
+		attributes.add(new NumericAttribute("adlt3imp", "Voyage", NumericAttribute.TYPE_DOUBLE, "adlt3imp"));
+		attributes.add(new NumericAttribute("chil3imp", "Voyage", NumericAttribute.TYPE_DOUBLE, "chil3imp"));
+		attributes.add(new NumericAttribute("feml3imp", "Voyage", NumericAttribute.TYPE_DOUBLE, "feml3imp"));
+		attributes.add(new NumericAttribute("male3imp", "Voyage", NumericAttribute.TYPE_DOUBLE, "male3imp"));
 		
 		attributes.add(new NumericAttribute("slavmax1", "Voyage", NumericAttribute.TYPE_INTEGER, "slavmax1"));
-		attributes.add(new NumericAttribute("slavema1", "Voyage", NumericAttribute.TYPE_INTEGER, "slavema1"));
-		attributes.add(new NumericAttribute("slavemx1", "Voyage", NumericAttribute.TYPE_INTEGER, "slavemx1"));
+		attributes.add(new NumericAttribute("slavema1", "Voyage", NumericAttribute.TYPE_DOUBLE, "slavema1"));
+		attributes.add(new NumericAttribute("slavemx1", "Voyage", NumericAttribute.TYPE_DOUBLE, "slavemx1"));
 
 		attributes.add(new NumericAttribute("slavmax7", "Voyage", NumericAttribute.TYPE_INTEGER, "slavmax7"));
-		attributes.add(new NumericAttribute("slavema7", "Voyage", NumericAttribute.TYPE_INTEGER, "slavema7"));
-		attributes.add(new NumericAttribute("slavemx7", "Voyage", NumericAttribute.TYPE_INTEGER, "slavemx7"));
+		attributes.add(new NumericAttribute("slavema7", "Voyage", NumericAttribute.TYPE_DOUBLE, "slavema7"));
+		attributes.add(new NumericAttribute("slavemx7", "Voyage", NumericAttribute.TYPE_DOUBLE, "slavemx7"));
 		
 		attributes.add(new NumericAttribute("crew2", "Voyage", NumericAttribute.TYPE_INTEGER, "crew2"));
 		attributes.add(new NumericAttribute("infantm3", "Voyage", NumericAttribute.TYPE_INTEGER, "infantm3"));
@@ -397,18 +398,18 @@ public class Voyage extends AbstractDescriptiveObject
 		attributes.add(new NumericAttribute("arrport_area", "Voyage", NumericAttribute.TYPE_LONG, "arrport_area"));
 		attributes.add(new NumericAttribute("embport2_area", "Voyage", NumericAttribute.TYPE_LONG, "embport2_area"));
 		attributes.add(new NumericAttribute("arrport2_area", "Voyage", NumericAttribute.TYPE_LONG, "arrport2_area"));	
-		attributes.add(new NumericAttribute("xmimpflag", "Voyage", NumericAttribute.TYPE_INTEGER, "xmimpflag"));
+		attributes.add(new NumericAttribute("xmimpflag", "Voyage", NumericAttribute.TYPE_DOUBLE, "xmimpflag"));
 		attributes.add(new NumericAttribute("year5", "Voyage", NumericAttribute.TYPE_INTEGER, "year5"));
 		attributes.add(new NumericAttribute("year10", "Voyage", NumericAttribute.TYPE_INTEGER, "year10"));
 		attributes.add(new NumericAttribute("year25", "Voyage", NumericAttribute.TYPE_INTEGER, "year25"));
 		attributes.add(new NumericAttribute("year100", "Voyage", NumericAttribute.TYPE_INTEGER, "year100"));
 		attributes.add(new PortAttribute("majselpt", "Voyage", "majselpt"));
 		attributes.add(new RegionAttribute("majselrg", "Voyage", "majselrg"));
-		attributes.add(new RegionAttribute("mjselimp1", "Voyage", "mjselimp1"));
+		attributes.add(new AreaAttribute("mjselimp1", "Voyage", "mjselimp1"));
 		attributes.add(new RegionAttribute("regarr", "Voyage", "regarr"));
 		attributes.add(new RegionAttribute("regarr2", "Voyage", "regarr2"));
 		attributes.add(new RegionAttribute("deptreg", "Voyage", "deptreg"));
-		attributes.add(new RegionAttribute("deptreg1", "Voyage", "deptreg1"));
+		attributes.add(new AreaAttribute("deptreg1", "Voyage", "deptreg1"));
 		attributes.add(new RegionAttribute("embreg", "Voyage", "embreg"));
 		attributes.add(new RegionAttribute("embreg2", "Voyage", "embreg2"));
 		attributes.add(new PortAttribute("majbuypt", "Voyage", "majbuypt"));
@@ -1117,23 +1118,23 @@ public class Voyage extends AbstractDescriptiveObject
 		this.values.put("majselrg", obj);
 	}
 	
-	public void setDeptreg1(Region obj) {
+	public void setDeptreg1(Area obj) {
 		this.values.put("deptreg1", obj);
 	}
 	
-	public void setDeptregimp1(Region obj) {
+	public void setDeptregimp1(Area obj) {
 		this.values.put("deptregimp1", obj);
 	}
 	
-	public void setMajbyimp1(Region obj) {
+	public void setMajbyimp1(Area obj) {
 		this.values.put("majbyimp1", obj);
 	}
 	
-	public void setMjselimp1(Region obj) {
+	public void setMjselimp1(Area obj) {
 		this.values.put("mjselimp1", obj);
 	}
 	
-	public void setRetrnreg1(Region obj) {
+	public void setRetrnreg1(Area obj) {
 		this.values.put("retrnreg1", obj);
 	}
 
@@ -1234,24 +1235,24 @@ public class Voyage extends AbstractDescriptiveObject
 		return (Region) this.values.get("majselrg");
 	}
 	
-	public Region getDeptreg1() {
-		return (Region) this.values.get("deptreg1");
+	public Area getDeptreg1() {
+		return (Area) this.values.get("deptreg1");
 	}
 	
-	public Region getDeptregimp1() {
-		return (Region) this.values.get("deptregimp1");
+	public Area getDeptregimp1() {
+		return (Area) this.values.get("deptregimp1");
 	}
 	
-	public Region getMajbyimp1() {
-		return (Region) this.values.get("majbyimp1");
+	public Area getMajbyimp1() {
+		return (Area) this.values.get("majbyimp1");
 	}
 	
-	public Region getMjselimp1() {
-		return (Region) this.values.get("mjselimp1");
+	public Area getMjselimp1() {
+		return (Area) this.values.get("mjselimp1");
 	}
 	
-	public Region getRetrnreg1() {
-		return (Region) this.values.get("retrnreg1");
+	public Area getRetrnreg1() {
+		return (Area) this.values.get("retrnreg1");
 	}
 
 	public EstimatesExportRegion getE_majbyimp() {
@@ -2507,16 +2508,16 @@ public class Voyage extends AbstractDescriptiveObject
 		return (Integer) this.values.get("slavmax3");
 	}
 	
-	public Double getChild7() {
-		return (Double) this.values.get("child7");
+	public Integer getChild7() {
+		return (Integer) this.values.get("child7");
 	}
 	
-	public Double getAdult7() {
-		return (Double) this.values.get("adult7");
+	public Integer getAdult7() {
+		return (Integer) this.values.get("adult7");
 	}
 	
-	public Double getGirl7() {
-		return (Double) this.values.get("girl7");
+	public Integer getGirl7() {
+		return (Integer) this.values.get("girl7");
 	}
 	
 	public Double getChilrat3() {
@@ -2527,16 +2528,16 @@ public class Voyage extends AbstractDescriptiveObject
 		return (Double) this.values.get("malrat3");
 	}
 	
-	public Double getBoy7() {
-		return (Double) this.values.get("boy7");
+	public Integer getBoy7() {
+		return (Integer) this.values.get("boy7");
 	}
 	
-	public Double getWomen7() {
-		return (Double) this.values.get("women7");
+	public Integer getWomen7() {
+		return (Integer) this.values.get("women7");
 	}
 	
-	public Double getMen7() {
-		return (Double) this.values.get("men7");
+	public Integer getMen7() {
+		return (Integer) this.values.get("men7");
 	}
 	
 	public Integer getSlavmax7() {
@@ -2567,12 +2568,12 @@ public class Voyage extends AbstractDescriptiveObject
 		return (Double) this.values.get("slavemx7");
 	}
 	
-	public Double getMale7() {
-		return (Double) this.values.get("male7");
+	public Integer getMale7() {
+		return (Integer) this.values.get("male7");
 	}
 	
-	public Double getFemale7() {
-		return (Double) this.values.get("female7");
+	public Integer getFemale7() {
+		return (Integer) this.values.get("female7");
 	}
 	
 	public void setAdlt1imp(Integer obj){
@@ -2671,15 +2672,15 @@ public class Voyage extends AbstractDescriptiveObject
 		this.values.put("slavmax3", obj);
 	}
 	
-	public void setChild7(Double obj){
+	public void setChild7(Integer obj){
 		this.values.put("child7", obj);
 	}
 	
-	public void setAdult7(Double obj){
+	public void setAdult7(Integer obj){
 		this.values.put("adult7", obj);
 	}
 	
-	public void setGirl7(Double obj){
+	public void setGirl7(Integer obj){
 		this.values.put("girl7", obj);
 	}
 	
@@ -2691,15 +2692,15 @@ public class Voyage extends AbstractDescriptiveObject
 		this.values.put("malrat3", obj);
 	}
 	
-	public void setBoy7(Double obj){
+	public void setBoy7(Integer obj){
 		this.values.put("boy7", obj);
 	}
 	
-	public void setWomen7(Double obj){
+	public void setWomen7(Integer obj){
 		this.values.put("women7", obj);
 	}
 	
-	public void setMen7(Double obj){
+	public void setMen7(Integer obj){
 		this.values.put("men7", obj);
 	}
 	
@@ -2731,11 +2732,11 @@ public class Voyage extends AbstractDescriptiveObject
 		this.values.put("slavemx7", obj);
 	}
 	
-	public void setMale7(Double obj){
+	public void setMale7(Integer obj){
 		this.values.put("male7", obj);
 	}
 	
-	public void setFemale7(Double obj){
+	public void setFemale7(Integer obj){
 		this.values.put("female7", obj);
 	}	
 	

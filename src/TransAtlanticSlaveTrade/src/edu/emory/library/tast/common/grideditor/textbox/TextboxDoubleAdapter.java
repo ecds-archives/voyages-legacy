@@ -12,7 +12,7 @@ public class TextboxDoubleAdapter extends TextboxAdapter
 	
 	public Value decode(FacesContext context, String inputPrefix, GridEditorComponent gridEditor)
 	{
-		return new TextboxIntegerValue(getSubmittedValue(context, inputPrefix));
+		return new TextboxDoubleValue(getSubmittedValue(context, inputPrefix));
 	}
 	
 }

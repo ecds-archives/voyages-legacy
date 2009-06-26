@@ -86,6 +86,13 @@ public class SearchableAttributeSimpleNumeric extends SearchableAttributeSimpleR
 					div = 100;
 				}
 				return new Float(Float.parseFloat(number) / div);
+
+			case NumericAttribute.TYPE_DOUBLE:
+				double div2 = 1;
+				if (percent) {
+					div2 = 100;
+				}
+				return new Double(Double.parseDouble(number) / div2);
 			
 			case NumericAttribute.TYPE_LONG:
 				return new Long(number);

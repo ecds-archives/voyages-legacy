@@ -12,6 +12,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import edu.emory.library.tast.db.HibernateConn;
+import edu.emory.library.tast.dm.Area;
 import edu.emory.library.tast.dm.Fate;
 import edu.emory.library.tast.dm.FateOwner;
 import edu.emory.library.tast.dm.FateSlaves;
@@ -830,6 +831,8 @@ public class VoyagesCalculation {
 			if (vymrtrat != 0) {
 				voyage.setVymrtrat(vymrtrat);
 			}
+			
+			voyage.setVymrtimp(vymrtimp);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -1110,28 +1113,28 @@ public class VoyagesCalculation {
 	    //Store the values back to the voyage object
 	    if(deptreg1!=null && deptreg1!=-1)
 	    {
-	    	Region region = Region.loadById(session, deptreg1);
-	    	voyage.setDeptreg1(region);	    
+	    	Area area = Area.loadById(session, deptreg1);
+	    	voyage.setDeptreg1(area);	    
 	    }
 	    if(deptregimp1!=null && deptregimp1!=-1)
 	    {
-	    	Region region = Region.loadById(session, deptregimp1);
-	    	voyage.setDeptregimp1(region);	    
+	    	Area area = Area.loadById(session, deptregimp1);
+	    	voyage.setDeptregimp1(area);	    
 	    }
 	    if(majbyimp1!=null && majbyimp1!=-1)
 	    {
-	    	Region region = Region.loadById(session, majbyimp1);
-	    	voyage.setMajbyimp1(region);	    
+	    	Area area = Area.loadById(session, majbyimp1);
+	    	voyage.setMajbyimp1(area);	    
 	    }
 	    if(mjselimp1!=null && mjselimp1!=-1)
 	    {
-	    	Region region = Region.loadById(session, mjselimp1);
-	    	voyage.setMjselimp1(region);	    
+	    	Area area = Area.loadById(session, mjselimp1);
+	    	voyage.setMjselimp1(area);	    
 	    }
 	    if(retrnreg1!=null && retrnreg1!=-1)
 	    {
-	    	Region region = Region.loadById(session, retrnreg1);
-	    	voyage.setRetrnreg1(region);	    
+	    	Area area = Area.loadById(session, retrnreg1);
+	    	voyage.setRetrnreg1(area);	    
 	    }
    	    
 	}
@@ -2260,14 +2263,14 @@ public class VoyagesCalculation {
 	      Double slavema7=null;
 	      Double slavemx7=null;
 	      Double slavmax7=null;
-	      Double men7=null;
-	      Double women7=null;
-          Double boy7=null;
-	      Double girl7=null;
-	      Double adult7=null;
-	      Double child7=null;
-	      Double male7=null;
-	      Double female7=null;
+	      Integer men7=null;
+	      Integer women7=null;
+	      Integer boy7=null;
+	      Integer girl7=null;
+	      Integer adult7=null;
+	      Integer child7=null;
+	      Integer male7=null;
+	      Integer female7=null;
 	      Double menrat7=null;
 	      Double womrat7=null;
 	      Double boyrat7=null;
@@ -2421,14 +2424,14 @@ public class VoyagesCalculation {
 			 if(slavema3!=null && slavema3 >= 20) {slavema7=slavema3;}
 			 if(slavemx3!=null && slavemx3 >= 20) {slavemx7=slavemx3;}
 			 if(slavmax3!=null && slavmax3 >= 20) {slavmax7=slavmax3;}
-			 if(slavmax7!=null && slavmax7 >= 20) {men7=new Double(men3+men6);}
-			 if(slavmax7!=null && slavmax7 >= 20) {women7=new Double(women3+women6);}
-			 if(slavmax7!=null && slavmax7 >= 20) {boy7=new Double(boy3+boy6);}
-			 if(slavmax7!=null && slavmax7 >= 20) {girl7=new Double(girl3+girl6);}
-			 if(slavema7!=null && slavema7 >= 20) {adult7=adlt3imp;}
-			 if(slavema7!=null && slavema7 >= 20) {child7=chil3imp;}
-			 if(slavemx7!=null && slavemx7 >=20) {male7=male3imp;}
-			 if(slavemx7!=null && slavemx7 >= 20) {female7=feml3imp;}
+			 if(slavmax7!=null && slavmax7 >= 20) {men7=new Integer(men3+men6);}
+			 if(slavmax7!=null && slavmax7 >= 20) {women7=new Integer(women3+women6);}
+			 if(slavmax7!=null && slavmax7 >= 20) {boy7=new Integer(boy3+boy6);}
+			 if(slavmax7!=null && slavmax7 >= 20) {girl7=new Integer(girl3+girl6);}
+			 if(slavema7!=null && slavema7 >= 20 && adlt3imp!=null) {adult7=adlt3imp.intValue();}
+			 if(slavema7!=null && slavema7 >= 20 && chil3imp!=null) {child7=chil3imp.intValue();}
+			 if(slavemx7!=null && slavemx7 >=20 && male3imp!=null) {male7=male3imp.intValue();}
+			 if(slavemx7!=null && slavemx7 >= 20 && feml3imp!=null) {female7=feml3imp.intValue();}
 			 if(menrat3!=null && menrat3 >= 0) {menrat7=menrat3;}
 			 if(womrat3!=null && womrat3 >= 0) {womrat7=womrat3;}
 			 if(boyrat3!=null && boyrat3 >= 0) {boyrat7=boyrat3;}
@@ -2439,14 +2442,14 @@ public class VoyagesCalculation {
 			 if (slavema3==null && slavema1!=null && slavema1 >=20) {slavema7=slavema1.doubleValue();}
 			 if (slavemx3==null && slavemx1!=null && slavemx1 >=20) {slavemx7=slavemx1.doubleValue();}
 			 if (slavmax3==null && slavmax1!=null && slavmax1 >=20) {slavmax7=slavmax1.doubleValue();}
-			 if (slavmax3==null && slavmax1!=null && slavmax1 >= 20) {men7= new Double(men1+men4 +men5);}
-			 if (slavmax3==null && slavmax1!=null && slavmax1 >= 20) {women7= new Double(women1+women4+women5);}
-			 if (slavmax3==null && slavmax1!=null && slavmax1 >= 20) {boy7= new Double(boy1+boy4+boy5);}
-			 if (slavmax3==null && slavmax1!=null && slavmax1 >= 20) {girl7= new Double(girl1+girl4+girl5);}
-			 if (slavema3==null && slavema1!=null && slavema1 >= 20 && adlt1imp!=null) {adult7=adlt1imp.doubleValue();}
-			 if (slavema3==null && slavema1!=null && slavema1 >= 20 && chil1imp!=null) {child7=chil1imp.doubleValue();}
-			 if (slavemx3==null && slavemx1!=null && slavemx1 >=20 && male1imp!=null) {male7=male1imp.doubleValue();}
-			 if (slavemx3==null && slavemx1!=null && slavemx1 >= 20 && feml1imp!=null) {female7=feml1imp.doubleValue();}
+			 if (slavmax3==null && slavmax1!=null && slavmax1 >= 20) {men7= new Integer(men1+men4 +men5);}
+			 if (slavmax3==null && slavmax1!=null && slavmax1 >= 20) {women7= new Integer(women1+women4+women5);}
+			 if (slavmax3==null && slavmax1!=null && slavmax1 >= 20) {boy7= new Integer(boy1+boy4+boy5);}
+			 if (slavmax3==null && slavmax1!=null && slavmax1 >= 20) {girl7= new Integer(girl1+girl4+girl5);}
+			 if (slavema3==null && slavema1!=null && slavema1 >= 20 && adlt1imp!=null) {adult7=adlt1imp;}
+			 if (slavema3==null && slavema1!=null && slavema1 >= 20 && chil1imp!=null) {child7=chil1imp;}
+			 if (slavemx3==null && slavemx1!=null && slavemx1 >=20 && male1imp!=null) {male7=male1imp;}
+			 if (slavemx3==null && slavemx1!=null && slavemx1 >= 20 && feml1imp!=null) {female7=feml1imp;}
 			 if (menrat3==null && menrat1!=null && menrat1 >= 0) {menrat7=menrat1;}
 			 if (womrat3==null && womrat1!=null && womrat1 >= 0) {womrat7=womrat1;}
 			 if (boyrat3==null && boyrat1!=null && boyrat1 >= 0) {boyrat7=boyrat1;}
@@ -2552,7 +2555,7 @@ public class VoyagesCalculation {
 			mjselimp_int = mjselimp.getId().intValue();
 		}
 		//Principal place of slave landing
-		Region mjselimp1 = voyage.getMjselimp1();
+		Area mjselimp1 = voyage.getMjselimp1();
 		if (mjselimp1 != null){
 			mjselimp1_int = mjselimp1.getId().intValue();
 		}

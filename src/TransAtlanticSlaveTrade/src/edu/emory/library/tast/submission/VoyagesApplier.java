@@ -18,6 +18,7 @@ import edu.emory.library.tast.common.grideditor.Row;
 import edu.emory.library.tast.common.grideditor.RowGroup;
 import edu.emory.library.tast.common.grideditor.Value;
 import edu.emory.library.tast.common.grideditor.Values;
+import edu.emory.library.tast.common.grideditor.textbox.TextboxDoubleAdapter;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxIntegerAdapter;
 import edu.emory.library.tast.database.SourceInformationLookup;
 import edu.emory.library.tast.db.HibernateConn;
@@ -1233,11 +1234,14 @@ public class VoyagesApplier
 				wasError = true;
 			}
 			Object[] vals = attrs[i].getValues(session, val);
+
+			if(vals!=null){
 			for (int j = 0; j < vals.length; j++)
 			{
 				vNew
 						.setAttrValue(attrs[i].getAttribute()[j].getName(),
 								vals[j]);
+			}
 			}
 			if (!StringUtils.isNullOrEmpty(val.getNote()))
 			{

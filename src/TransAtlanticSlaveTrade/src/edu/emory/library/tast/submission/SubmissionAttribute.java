@@ -15,6 +15,8 @@ import edu.emory.library.tast.common.grideditor.list.ListValue;
 import edu.emory.library.tast.common.grideditor.textbox.TextareaAdapter;
 import edu.emory.library.tast.common.grideditor.textbox.TextareaValue;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxAdapter;
+import edu.emory.library.tast.common.grideditor.textbox.TextboxDoubleAdapter;
+import edu.emory.library.tast.common.grideditor.textbox.TextboxDoubleValue;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxFloatAdapter;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxFloatValue;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxIntegerAdapter;
@@ -23,6 +25,7 @@ import edu.emory.library.tast.common.grideditor.textbox.TextboxLongAdapter;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxLongValue;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxValue;
 import edu.emory.library.tast.database.SourceInformationLookup;
+import edu.emory.library.tast.dm.Area;
 import edu.emory.library.tast.dm.Dictionary;
 import edu.emory.library.tast.dm.Fate;
 import edu.emory.library.tast.dm.FateOwner;
@@ -114,7 +117,12 @@ public class SubmissionAttribute {
 				return new TextboxFloatValue((Float)null);
 			}
 			return new TextboxFloatValue(toBeFormatted[0].toString());
-		} else if (type.equals(TextboxLongAdapter.TYPE)) {
+		} else if (type.equals(TextboxDoubleAdapter.TYPE)) {
+			if (toBeFormatted[0] == null) {
+				return new TextboxDoubleValue((Double)null);
+			}
+			return new TextboxDoubleValue(toBeFormatted[0].toString());
+		}else if (type.equals(TextboxLongAdapter.TYPE)) {
 			if (toBeFormatted[0] == null) {
 				return new TextboxLongValue((Integer)null);
 			}
@@ -196,7 +204,9 @@ public class SubmissionAttribute {
 			return new TextboxIntegerValue((Integer)null);
 		} else if (type.equals(TextboxFloatAdapter.TYPE)) {
 			return new TextboxFloatValue((Float)null);
-		} else if (type.equals(TextboxLongAdapter.TYPE)) {
+		} else if (type.equals(TextboxDoubleAdapter.TYPE)) {
+			return new TextboxDoubleValue((Double)null);
+		}else if (type.equals(TextboxLongAdapter.TYPE)) {
 			return new TextboxLongValue((Integer)null);
 		} else if (type.equals(TextareaAdapter.TYPE)) {
 			return new TextareaValue((String)null);
@@ -225,6 +235,8 @@ public class SubmissionAttribute {
 			return new Object[]{((TextboxIntegerValue)object).getInteger()};
 		} else if (type.equals(TextboxFloatAdapter.TYPE)) {
 			return new Object[]{((TextboxFloatValue)object).getFloat()};
+		}else if (type.equals(TextboxDoubleAdapter.TYPE)) {
+			return new Object[]{((TextboxDoubleValue)object).getDoubleValue()};
 		} else if (type.equals(TextboxLongAdapter.TYPE)) {
 			return new Object[]{((TextboxLongValue)object).getInteger()};
 		} else if (type.equals(TextareaAdapter.TYPE)) {
@@ -317,7 +329,15 @@ public class SubmissionAttribute {
 			}
 			//return new Object[] {"true".equals(id) ? new Integer(1) : new Integer(0)};
 			return new Object[] {"true".equals(id) ? new Boolean(true) : new Boolean(false)};
-		} else {
+		} 
+		else if (type.equals(SubmissionDictionaries.AREAS)) {
+			String id = ((ListValue)object).getValues()[0];
+			if (id.equals("-1")) {
+				return new Object[] {null};
+			}
+			return new Object[] {Dictionary.loadById(Area.class, sess, id)};
+		}
+		else {
 			throw new RuntimeException("Attribute type " + type + " not defined in Submission attribute");
 		}
 		
@@ -374,6 +394,8 @@ public class SubmissionAttribute {
 			attrType = TextboxIntegerAdapter.TYPE;
 		} else if (type.equals("float")) {
 			attrType = TextboxFloatAdapter.TYPE;
+		}else if (type.equals("double")) {
+			attrType = TextboxDoubleAdapter.TYPE;
 		} else if (type.equals("date")) {
 			attrType = DateAdapter.TYPE;
 		} else if (type.equals("port")) {

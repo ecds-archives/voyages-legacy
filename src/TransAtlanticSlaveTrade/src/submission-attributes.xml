@@ -11,7 +11,7 @@
 			<attribute name="evgreen"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="xmimpflag" group="Ship, nation, owners" editable="N" type="integer" userLabel="Voyage groupings for estimating slaves*">
+	<submission-attributes name="xmimpflag" group="Ship, nation, owners" editable="N" type="double" userLabel="Voyage groupings for estimating slaves*">
 		<attributes>
 			<attribute name="xmimpflag"/>
 		</attributes>
@@ -175,9 +175,9 @@
 			<attribute name="mjbyptimp"/>
 		</attributes>
 	</submission-attributes>
-	 <submission-attributes name="majbyreg" group="Voyage itinerary" editable="Y" type="regions" userLabel="Principal region of slave purchase">
+	 <submission-attributes name="majbuyreg" group="Voyage itinerary" editable="Y" type="regions" userLabel="Principal region of slave purchase">
 		<attributes>
-			<attribute name="majbyimp"/>			
+			<attribute name="majbuyreg"/>			
 		</attributes>
 	</submission-attributes>
 	<submission-attributes name="npafttra" group="Voyage itinerary" editable="Y" type="locations" userLabel="Places of call before Atlantic crossing">
@@ -245,7 +245,7 @@
 			<attribute name="embport2"/>
 		</attributes>
 	</submission-attributes> 	
-	<submission-attributes name="arrport2" group="Voyage itinerary" editable="Y" type="port" userLabel="Second port of intended disembarkation">
+	<submission-attributes name="arrport2" group="Voyage itinerary" editable="Y" type="locations" userLabel="Second port of intended disembarkation">
 		<attributes>
 			<attribute name="arrport2"/>
 		</attributes>
@@ -257,7 +257,7 @@
 		</attributes>
     </submission-attributes>
 
-    <submission-attributes name="deptreg1" group="Voyage itinerary" editable="N" type="regions" userLabel="Broad region of departure*">
+    <submission-attributes name="deptreg1" group="Voyage itinerary" editable="N" type="areas" userLabel="Broad region of departure*">
 		<attributes>
 			<attribute name="deptreg1"/>
 		</attributes>
@@ -269,7 +269,7 @@
 		</attributes>
     </submission-attributes>
 
-    <submission-attributes name="deptregimp1" group="Voyage itinerary" editable="N" type="regions" userLabel="Broad region where voyage began*">
+    <submission-attributes name="deptregimp1" group="Voyage itinerary" editable="N" type="areas" userLabel="Broad region where voyage began*">
 		<attributes>
 			<attribute name="deptregimp1"/>
 		</attributes>
@@ -286,19 +286,19 @@
 			<attribute name="embreg2"/>
 		</attributes>
     </submission-attributes>
-    <submission-attributes name="majbuyimp" group="Voyage itinerary" editable="N" type="regions" userLabel="Principal region of slave purchase*">
+    <submission-attributes name="majbyimp" group="Voyage itinerary" editable="N" type="regions" userLabel="Principal region of slave purchase*">
 		<attributes>
-			<attribute name="majbuyreg"/>
+			<attribute name="majbyimp"/>
 		</attributes>
     </submission-attributes>
 
-    <submission-attributes name="majbyimp1" group="Voyage itinerary" editable="N" type="regions" userLabel="Broad region of slave purchase*">
+    <submission-attributes name="majbyimp1" group="Voyage itinerary" editable="N" type="areas" userLabel="Broad region of slave purchase*">
 		<attributes>
 			<attribute name="majbyimp1"/>
 		</attributes>
     </submission-attributes>
 	
-	<submission-attributes name="majselpt" group="Voyage itinerary" editable="N" type="ports" userLabel="Principal port of slave disembarkation*">
+	<submission-attributes name="majselpt" group="Voyage itinerary" editable="N" type="locations" userLabel="Principal port of slave disembarkation*">
 		<attributes>
 			<attribute name="majselpt"/>
 		</attributes>
@@ -310,13 +310,13 @@
 			<attribute name="majselrg"/>
 		</attributes>
     </submission-attributes>
-    <submission-attributes name="mjselimp1" group="Voyage itinerary" editable="N" type="regions" userLabel="Broad region of slave disembarkation*">
+    <submission-attributes name="mjselimp1" group="Voyage itinerary" editable="N" type="areas" userLabel="Broad region of slave disembarkation*">
 		<attributes>
 			<attribute name="mjselimp1"/>
 		</attributes>
     </submission-attributes>
 
-    <submission-attributes name="ptdepimp" group="Voyage itinerary" editable="N" type="ports" userLabel="Port where voyage began*">
+    <submission-attributes name="ptdepimp" group="Voyage itinerary" editable="N" type="locations" userLabel="Port where voyage began*">
 		<attributes>
 			<attribute name="ptdepimp"/>
 		</attributes>
@@ -376,7 +376,7 @@
 		</attributes>
 	 </submission-attributes>
 	 
-	 <submission-attributes name="retrnreg1" group="Voyage itinerary" editable="N" type="regions" userLabel="Broad region of return*">
+	 <submission-attributes name="retrnreg1" group="Voyage itinerary" editable="N" type="areas" userLabel="Broad region of return*">
 		<attributes>
 			<attribute name="retrnreg1"/>
 		</attributes>
@@ -645,12 +645,12 @@
 			<attribute name="slavmax1"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="slavema1" group="Slaves (numbers)" editable="N" type="integer" userLabel="Total slaves embarked with age identified*">
+	<submission-attributes name="slavema1" group="Slaves (numbers)" editable="N" type="double" userLabel="Total slaves embarked with age identified*">
 		<attributes>
 			<attribute name="slavema1"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="slavemx1" group="Slaves (numbers)" editable="N" type="integer" userLabel="Total slaves embarked with gender identified*">
+	<submission-attributes name="slavemx1" group="Slaves (numbers)" editable="N" type="double" userLabel="Total slaves embarked with gender identified*">
 		<attributes>
 			<attribute name="slavemx1"/>
 		</attributes>
@@ -660,12 +660,12 @@
 			<attribute name="slavmax7"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="slavema7" group="Slaves (numbers)" editable="N" type="integer" userLabel="Total slaves identified by age either leaving or arriving*">
+	<submission-attributes name="slavema7" group="Slaves (numbers)" editable="N" type="double" userLabel="Total slaves identified by age either leaving or arriving*">
 		<attributes>
 			<attribute name="slavema7"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="slavemx7" group="Slaves (numbers)" editable="N" type="integer" userLabel="Total slaves identified by gender either leaving or arriving*">
+	<submission-attributes name="slavemx7" group="Slaves (numbers)" editable="N" type="double" userLabel="Total slaves identified by gender either leaving or arriving*">
 		<attributes>
 			<attribute name="slavemx7"/>
 		</attributes>
@@ -702,32 +702,32 @@
 		</attributes>
 	</submission-attributes>
 	
-	<submission-attributes name="malrat3" group="Slaves (characteristics)" editable="N" type="float" userLabel="Ratio male at first port of landing*">
+	<submission-attributes name="malrat3" group="Slaves (characteristics)" editable="N" type="double" userLabel="Ratio male at first port of landing*">
 		<attributes>
 			<attribute name="malrat3"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="chilrat3" group="Slaves (characteristics)" editable="N" type="float" userLabel="Ratio children at first port of landing*">
+	<submission-attributes name="chilrat3" group="Slaves (characteristics)" editable="N" type="double" userLabel="Ratio children at first port of landing*">
 		<attributes>
 			<attribute name="chilrat3"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="womrat3" group="Slaves (characteristics)" editable="N" type="float" userLabel="Ratio women at first port of landing*">
+	<submission-attributes name="womrat3" group="Slaves (characteristics)" editable="N" type="double" userLabel="Ratio women at first port of landing*">
 		<attributes>
 			<attribute name="womrat3"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="menrat3" group="Slaves (characteristics)" editable="N" type="float" userLabel="Ratio men at first port of landing*">
+	<submission-attributes name="menrat3" group="Slaves (characteristics)" editable="N" type="double" userLabel="Ratio men at first port of landing*">
 		<attributes>
 			<attribute name="menrat3"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="girlrat3" group="Slaves (characteristics)" editable="N" type="float" userLabel="Ratio girls at first port of landing*">
+	<submission-attributes name="girlrat3" group="Slaves (characteristics)" editable="N" type="double" userLabel="Ratio girls at first port of landing*">
 		<attributes>
 			<attribute name="girlrat3"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="boyrat3" group="Slaves (characteristics)" editable="N" type="float" userLabel="Ratio boys at first port of landing*">
+	<submission-attributes name="boyrat3" group="Slaves (characteristics)" editable="N" type="double" userLabel="Ratio boys at first port of landing*">
 		<attributes>
 			<attribute name="boyrat3"/>
 		</attributes>
@@ -737,17 +737,17 @@
 			<attribute name="adlt1imp"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="chil1imp" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Number of children at first port of purchase*">
+	<submission-attributes name="chil1imp" group="Slaves (characteristics)" editable="N" type="double" userLabel="Number of children at first port of purchase*">
 		<attributes>
 			<attribute name="chil1imp"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="feml1imp" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Number of females at first port of purchase*">
+	<submission-attributes name="feml1imp" group="Slaves (characteristics)" editable="N" type="double" userLabel="Number of females at first port of purchase*">
 		<attributes>
 			<attribute name="feml1imp"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="male1imp" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Number of males at first port of purchase*">
+	<submission-attributes name="male1imp" group="Slaves (characteristics)" editable="N" type="double" userLabel="Number of males at first port of purchase*">
 		<attributes>
 			<attribute name="male1imp"/>
 		</attributes>
@@ -772,22 +772,22 @@
 			<attribute name="male2imp"/>
 		</attributes>
 	</submission-attributes> 
-	<submission-attributes name="adlt3imp" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Number of adults landed at first port*">
+	<submission-attributes name="adlt3imp" group="Slaves (characteristics)" editable="N" type="double" userLabel="Number of adults landed at first port*">
 		<attributes>
 			<attribute name="adlt3imp"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="chil3imp" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Number of children landed at first port*">
+	<submission-attributes name="chil3imp" group="Slaves (characteristics)" editable="N" type="double" userLabel="Number of children landed at first port*">
 		<attributes>
 			<attribute name="chil3imp"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="feml3imp" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Number of females landed at first port*">
+	<submission-attributes name="feml3imp" group="Slaves (characteristics)" editable="N" type="double" userLabel="Number of females landed at first port*">
 		<attributes>
 			<attribute name="feml3imp"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="male3imp" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Numbers of males landed at first port*">
+	<submission-attributes name="male3imp" group="Slaves (characteristics)" editable="N" type="double" userLabel="Numbers of males landed at first port*">
 		<attributes>
 			<attribute name="male3imp"/>
 		</attributes>
@@ -1095,11 +1095,6 @@
 			<attribute name="adult4"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="infant4" group="Other" editable="N" type="integer" userLabel="Girls embarked at second port in Africa*">
-		<attributes>
-			<attribute name="infant4"/>
-		</attributes>
-	</submission-attributes>
 	<submission-attributes name="sources" group="Source" editable="N" type="string" userLabel="Sources*">
 		<attributes>
 			<attribute name="sourcea"/>
@@ -1122,36 +1117,6 @@
 			<attribute name="sourcer"/>
 		</attributes>
 	</submission-attributes> 
-	<submission-attributes name="sladied5" group="Other" editable="N" type="integer" userLabel="Slaves died - middle passage and sale*">
-		<attributes>
-			<attribute name="sladied5"/>
-		</attributes>
-	</submission-attributes>
-	<submission-attributes name="sladied4" group="Other" editable="N" type="integer" userLabel="Slaves died - purchase and middle passage*">
-		<attributes>
-			<attribute name="sladied4"/>
-		</attributes>
-	</submission-attributes>
-	<submission-attributes name="sladied2" group="Other" editable="N" type="integer" userLabel="Slaves died - purchase, middle passage and sale*">
-		<attributes>
-			<attribute name="sladied2"/>
-		</attributes>
-	</submission-attributes>
-	<submission-attributes name="sladied1" group="Other" editable="N" type="integer" userLabel="Slaves died - unspecified*">
-		<attributes>
-			<attribute name="sladied1"/>
-		</attributes>
-	</submission-attributes>
-	<submission-attributes name="sladied3" group="Other" editable="N" type="integer" userLabel="Slaves died because of revolt*">
-		<attributes>
-			<attribute name="sladied3"/>
-		</attributes>
-	</submission-attributes>
-	<submission-attributes name="sladied6" group="Other" editable="N" type="integer" userLabel="Slaves died - revolt, middle passage and sale*">
-		<attributes>
-			<attribute name="sladied6"/>
-		</attributes>
-	</submission-attributes>
 	<submission-attributes name="vymrtimp" group="Other" editable="N" type="integer" userLabel="Slave deaths during middle passage*">
 		<attributes>
 			<attribute name="vymrtimp"/>
@@ -1172,7 +1137,8 @@ Type can be:
 	2. integer
 	3. float
 	4. date
-	5. port
+	5. ports
 	6. dictionary
+    7. areas
 	
  -->
