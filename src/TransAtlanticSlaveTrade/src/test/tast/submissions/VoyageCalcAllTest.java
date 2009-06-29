@@ -237,7 +237,9 @@ public class VoyageCalcAllTest extends TestCase {
 		//overrides so that test can be executed for localized change
 		System.out.println("Running Specific Tests");
 		TestSuite suite = new TestSuite(this.getClass().getName());
-		suite.addTest(new VoyageCalcAllTest("testCalculateImputedVariables"));
+		//suite.addTest(new VoyageCalcAllTest("testCalculateImputedVariables"));
+		suite.addTest(new VoyageCalcAllTest("testImputedVars"));
+		
 		return suite;
 	}
 	
@@ -259,7 +261,7 @@ public class VoyageCalcAllTest extends TestCase {
 			deleteVoyage(99910);
 			setAllValuesVoyage(new Integer(99910), "shipName_99910");
 						
-			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage);
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voyage);
 			System.out.println("voyage before: " + voyage.toString());
 			voyageCalc.calculateFate2();
 			voyageCalc.calculateFate3();
@@ -282,6 +284,25 @@ public class VoyageCalcAllTest extends TestCase {
 
 			saveVoyage(voyage);		
 			System.out.println("voyage after: " + voyage.toString());			
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testImputedVars(){
+		try{
+			setUpSession();		
+			int voyageId = 28;			
+			int revision = 1;						
+			Voyage voy = Voyage.loadByVoyageId(session, voyageId, revision);
+			System.out.println("voyage before: " + voy.toString());
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voy);	
+			Voyage voy1 = voyageCalc.calculateImputedVariables();
+			tran.commit();
+			session.close();
+			System.out.println("voyage after: " + voy1.toString());
 		}
 		catch(Exception e){
 			e.printStackTrace();

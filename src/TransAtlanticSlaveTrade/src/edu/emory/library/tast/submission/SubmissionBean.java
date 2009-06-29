@@ -828,7 +828,7 @@ public class SubmissionBean
 				return null;
 			}
 			
-			imputeVariables(voyage);
+			imputeVariables(sess, voyage);
 			
 			sess.save(voyage);
 			if (submissionType == SUBMISSION_TYPE_NEW) {
@@ -1041,7 +1041,7 @@ public class SubmissionBean
 				return false;
 			}
 			
-			imputeVariables(voyage);
+			imputeVariables(sess, voyage);
 			
 			submission.setSavedState(phase);
 			storedEditedVoyage.setAttributeNotes(notes);
@@ -1056,8 +1056,8 @@ public class SubmissionBean
 		return true;
 	}
 	 
-	private void imputeVariables(Voyage voyage) {
-		VoyagesCalculation voyagesCalc = new VoyagesCalculation(voyage);
+	private void imputeVariables(Session sess, Voyage voyage) {
+		VoyagesCalculation voyagesCalc = new VoyagesCalculation(sess, voyage);
 		voyage = voyagesCalc.calculateImputedVariables();
 	}
 	

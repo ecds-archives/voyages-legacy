@@ -133,7 +133,7 @@ public class VoyageCalcTest extends TestCase {
 			long portId = 50105;//Rio Amazona
 			Port portdep = Port.loadById(session, portId);			
 			voyage.setPortdep(portdep);
-			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage);			
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voyage);			
 			voyageCalc.calculatePtDepImp();
 			saveVoyage(voyage);
 			assertEquals(voyage.getPtdepimp().getId().longValue(), portId);
@@ -152,7 +152,7 @@ public class VoyageCalcTest extends TestCase {
 			long portId = 50420;//Parati
 			Port majselpt = Port.loadById(session, portId);
 			voyage.setMajselpt(majselpt);
-			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage);			
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voyage);			
 			voyageCalc.calculatePtDepImp();
 			saveVoyage(voyage);			
 			assertEquals(voyage.getPtdepimp().getId().longValue(), 50422);
@@ -168,7 +168,7 @@ public class VoyageCalcTest extends TestCase {
 			setUpSession();
 			deleteVoyage(99902);
 			setValuesVoyage(new Integer(99902), "shipName_99902");
-			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage);			
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voyage);			
 			voyageCalc.calculatePtDepImp();
 			saveVoyage(voyage);
 			voyage = null;
@@ -187,7 +187,7 @@ public class VoyageCalcTest extends TestCase {
 			long rigId = 15;
 			Fate fate = Fate.loadById(session, rigId);
 			voyage.setFate(fate);
-			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage);			
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voyage);			
 			voyageCalc.calculateFate2();
 			saveVoyage(voyage);
 			assertEquals(voyage.getFate2().getId().longValue(), 1);
@@ -207,7 +207,7 @@ public class VoyageCalcTest extends TestCase {
 			long rigId = 15;
 			Fate fate = Fate.loadById(session, rigId);
 			voyage.setFate(fate);
-			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage);			
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voyage);			
 			voyageCalc.calculateFate3();
 			saveVoyage(voyage);
 			assertEquals(voyage.getFate3().getId().longValue(), 4);
@@ -227,7 +227,7 @@ public class VoyageCalcTest extends TestCase {
 			long rigId = 15;
 			Fate fate = Fate.loadById(session, rigId);
 			voyage.setFate(fate);
-			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage);			
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voyage);			
 			voyageCalc.calculateFate4();
 			saveVoyage(voyage);
 			assertEquals(voyage.getFate4().getId().longValue(), 3);
@@ -250,7 +250,7 @@ public class VoyageCalcTest extends TestCase {
 			setValuesVoyage(new Integer(99900), "shipName_99900");
 			voyage.setSladvoy(new Integer(75));
 			
-			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage);			
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voyage);			
 			voyageCalc.calculateTslmtimp();
 			saveVoyage(voyage);
 			//assertEquals(voyage.getPtdepimp().getId().longValue(), portId);
@@ -270,7 +270,7 @@ public class VoyageCalcTest extends TestCase {
 			voyage.setSladvoy(new Integer(200));
 			//voyage.setSlaarriv(new Integer(60));
 			
-			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage);			
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voyage);			
 			voyageCalc.calculateTslmtimp();
 			saveVoyage(voyage);
 			//assertEquals(voyage.getPtdepimp().getId().longValue(), portId);
@@ -318,7 +318,7 @@ public class VoyageCalcTest extends TestCase {
 				voyage.setTslavesd(tslavesdArray[i]);
 				voyage.setTslavesp(tslavespArray[i]);
 				
-				VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage);			
+				VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voyage);			
 				voyageCalc.calculateMajbuypt();
 				saveVoyage(voyage);
 				assertEquals(voyage.getMajbuypt().getId().longValue(), (long)rsltArray[i]);				
@@ -372,7 +372,7 @@ public class VoyageCalcTest extends TestCase {
 				voyage.setTslavesd(tslavesdArray[i]);
 				voyage.setTslavesp(tslavespArray[i]);
 				
-				VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage);			
+				VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voyage);			
 				voyageCalc.calculateMajbuypt();
 				saveVoyage(voyage);		
 				if (voyage.getMajbuypt() != null) {
@@ -417,7 +417,7 @@ public class VoyageCalcTest extends TestCase {
 			
 				voyage.setSlaarriv(slaarrivArray[i]);
 				
-				VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage);			
+				VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voyage);			
 				voyageCalc.calculateMajselpt();
 				saveVoyage(voyage);	
 				System.out.println("voyage after:" + voyage.toString());
@@ -461,7 +461,7 @@ public class VoyageCalcTest extends TestCase {
 				voyage.setNatinimp(natinimp);				
 				voyage.setYearam((Integer)yearamArray[i]);
 								
-				VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage);			
+				VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voyage);			
 				voyageCalc.calculateXmImpflag();
 				saveVoyage(voyage);			
 				if (voyage.getXmimpflag() != null) {
@@ -515,7 +515,7 @@ public class VoyageCalcTest extends TestCase {
 			voyage.setYearam(1770); 
 			voyage.setNatinimp(null);
 			
-			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage);			
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voyage);			
 			voyageCalc.calculateTonmod();
 			saveVoyage(voyage);
 			assertEquals(voyage.getTonmod(), 182.3f);
@@ -550,7 +550,7 @@ public class VoyageCalcTest extends TestCase {
 			voyage.setDdepamc(obj); 
 			voyage.setDatarr45(obj);
 			
-			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage);			
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voyage);			
 			voyageCalc.calculateYearVariables();
 			saveVoyage(voyage);
 			//assertEquals(voyage.getTonmod(), 182.3f);

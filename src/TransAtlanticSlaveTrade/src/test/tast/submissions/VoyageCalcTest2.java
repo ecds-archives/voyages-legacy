@@ -120,7 +120,7 @@ public class VoyageCalcTest2 extends TestCase {
 	  Integer I1 =null;
 	  Integer I2=10;
 	  Integer result=null;
-	  VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage);
+	  VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voyage);
 	  
 	   result= voyageCalc.defVal(I1, 5);
 	   assertEquals((Integer)result, (Integer)5);
@@ -134,7 +134,7 @@ public class VoyageCalcTest2 extends TestCase {
 	  Double D1 =null;
 	  Double D2=10.5;
 	  Double result=null;
-	  VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage);
+	  VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voyage);
 	  
 	   result= voyageCalc.defVal(D1, 5.5);
 	   assertEquals(result, 5.5);
@@ -149,7 +149,7 @@ public class VoyageCalcTest2 extends TestCase {
 		Long L2=null;
 		Long result=null;
 		
-		 VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage);
+		 VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voyage);
 		 
 		 result=voyageCalc.round(L1);
 		 assertEquals(result, (Long)5l);
@@ -167,7 +167,7 @@ public class VoyageCalcTest2 extends TestCase {
 		Double D5=null;
 		Double result=null;
 		
-		 VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage);
+		 VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voyage);
 		 
 		 result=voyageCalc.round(D1);
 		 assertEquals(result, (Double)5d);
@@ -194,7 +194,7 @@ public class VoyageCalcTest2 extends TestCase {
 			Date D1 = sdf.parse("2009-05-11 10:00");
 			Date D2 = sdf.parse("2009-05-16 20:00");
 			
-			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage);
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voyage);
 			
 			Integer result = voyageCalc.dateDiff(D1, D2);
 			assertEquals(result, (Integer)5);
@@ -211,7 +211,7 @@ public class VoyageCalcTest2 extends TestCase {
 	
 	public void testRecode()
 	{
-		VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage);
+		VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voyage);
 		
 		//Include Endpoints
 		ArrayList inputs = new ArrayList();
@@ -262,7 +262,7 @@ public class VoyageCalcTest2 extends TestCase {
 			Nation nation = Nation.loadById(session, nat);
 			voyage.setNational(nation);
 			
-			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage);			
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voyage);			
 			
 			voyageCalc.calculateNatinimp();
 			
@@ -287,7 +287,7 @@ public class VoyageCalcTest2 extends TestCase {
 			Nation nation = Nation.loadById(session, nat);
 			voyage.setNational(nation);
 			
-			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage);			
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voyage);			
 			
 			voyageCalc.calculateNatinimp();
 			
@@ -317,7 +317,7 @@ public class VoyageCalcTest2 extends TestCase {
 			voyage.setDateland1(dateland1);
 			voyage.setDateleftafr(dateleftafr);
 			
-			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage);			
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voyage);			
 			
 			voyageCalc.calculateVoyLengths();
 			
@@ -348,7 +348,7 @@ public class VoyageCalcTest2 extends TestCase {
 			voyage.setDateland1(dateland1);
 			voyage.setDateleftafr(dateleftafr);
 			
-			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage);			
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voyage);			
 			
 			voyageCalc.calculateVoyLengths();
 			
@@ -391,7 +391,7 @@ public class VoyageCalcTest2 extends TestCase {
 			voyage.setMjslptimp(null);
 			voyage.setPortret(null);
 			
-			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage);			
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voyage);			
 			
 			voyageCalc.calculateValuesRegion1();
 			
@@ -420,7 +420,7 @@ public class VoyageCalcTest2 extends TestCase {
 			voyage.setMjslptimp(null);  
 			voyage.setPortret(null);
 			
-			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage);			
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voyage);			
 			
 			voyageCalc.calculateValuesRegion2();
 			
@@ -450,7 +450,7 @@ public class VoyageCalcTest2 extends TestCase {
 			voyage.setYearam(1770); 
 			voyage.setNatinimp(null);
 			
-			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage);			
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voyage);			
 			
 			voyageCalc.calculateTonmod();
 			
@@ -477,7 +477,7 @@ public class VoyageCalcTest2 extends TestCase {
 			voyage.setYearam(1770); 
 			voyage.setNatinimp(null);
 			
-			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage);			
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voyage);			
 			
 			voyageCalc.calculateTonmod();
 			
@@ -499,7 +499,7 @@ public class VoyageCalcTest2 extends TestCase {
 			setValuesVoyage(new Integer(99900), "shipName_99900");			
 			//Input variables for second region calculation
 			voyage.setYearam(1770); 
-			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage);		
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voyage);		
 			voyageCalc.calculateValuesYear();			
 			saveVoyage(voyage);
 			assertEquals(voyage.getYear5(), new Integer("49"));
@@ -537,7 +537,7 @@ public class VoyageCalcTest2 extends TestCase {
 			voyage.setFate2(FateSlaves.loadById(session, 5)); 
 ;
 			
-			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage);			
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voyage);			
 			
 			voyageCalc.calculateSlavesEmbarkDisembark();
 			
@@ -575,7 +575,7 @@ public class VoyageCalcTest2 extends TestCase {
 			voyage.setFate2(FateSlaves.loadById(session, 2)); 
 ;
 			
-			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage);			
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voyage);			
 			
 			voyageCalc.calculateSlavesEmbarkDisembark();
 			
@@ -657,7 +657,7 @@ public class VoyageCalcTest2 extends TestCase {
 			 
 ;
 			
-			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage);			
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voyage);			
 			
 			voyageCalc.calculateValuesPeople();
 			
@@ -740,7 +740,7 @@ public class VoyageCalcTest2 extends TestCase {
 			 
 ;
 			
-			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage);			
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voyage);			
 			
 			voyageCalc.calculateValuesPeople();
 			
@@ -761,7 +761,7 @@ public class VoyageCalcTest2 extends TestCase {
 			setValuesVoyage(new Integer(99900), "shipName_99900");
 
 			
-			VoyagesCalculation voyageCalc = new VoyagesCalculation(voyage);			
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voyage);			
 			
 			voyageCalc.calculateYearVariables();
 			
