@@ -192,17 +192,21 @@ public class VoyageCalcSystemTest extends TestCase {
 	@Test
 	public void testImputedVars(){
 		try{
-			setUpSession();		
-			int voyageId = 28;			
-			int revision = 1;						
-			Voyage voy = Voyage.loadByVoyageId(session, voyageId, revision);
-			initAllValuesVoyage(voy);
-			System.out.println("voyage before: " + voy.toString());
-			VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voy);	
-			Voyage voy1 = voyageCalc.calculateImputedVariables();
-			tran.commit();
-			session.close();
-			System.out.println("voyage after: " + voy1.toString());
+			/*28,32,36,38,56,72,99,100,106,109*/
+			Integer[] voyageIdArray = {28,32,36,38,56,72,99,100,106,109};						
+			int revision = 1;
+			for (int i=0; i < voyageIdArray.length; i++){
+				setUpSession();
+				Voyage voy = null;
+				voy = Voyage.loadByVoyageId(session, voyageIdArray[i], revision);
+				initAllValuesVoyage(voy);
+				System.out.println("voyage before: " + voy.toString());
+				VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voy);	
+				voy = voyageCalc.calculateImputedVariables();
+				tran.commit();
+				session.close();
+				System.out.println("voyage after: " + voy.toString());
+			}
 		}
 		catch(Exception e){
 			e.printStackTrace();
