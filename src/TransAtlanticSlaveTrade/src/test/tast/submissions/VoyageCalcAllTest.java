@@ -237,9 +237,7 @@ public class VoyageCalcAllTest extends TestCase {
 		//overrides so that test can be executed for localized change
 		System.out.println("Running Specific Tests");
 		TestSuite suite = new TestSuite(this.getClass().getName());
-		//suite.addTest(new VoyageCalcAllTest("testCalculateImputedVariables"));
-		suite.addTest(new VoyageCalcAllTest("testImputedVars"));
-		
+		suite.addTest(new VoyageCalcAllTest("testCalculateImputedVariables"));
 		return suite;
 	}
 	
@@ -290,23 +288,4 @@ public class VoyageCalcAllTest extends TestCase {
 		}
 	}
 	
-	@Test
-	public void testImputedVars(){
-		try{
-			setUpSession();		
-			int voyageId = 28;			
-			int revision = 1;						
-			Voyage voy = Voyage.loadByVoyageId(session, voyageId, revision);
-			System.out.println("voyage before: " + voy.toString());
-			VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voy);	
-			Voyage voy1 = voyageCalc.calculateImputedVariables();
-			tran.commit();
-			session.close();
-			System.out.println("voyage after: " + voy1.toString());
-		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
-	}
-
 }
