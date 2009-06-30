@@ -29,7 +29,7 @@ public class VoyagesCalculation {
 	
 	public VoyagesCalculation(Session sess, Voyage voy) {
 		voyage = voy;
-		this.session = sess;
+		session = sess;
 		/*session = HibernateConn.getSession();
 		trans = session.beginTransaction();*/
 	}
@@ -805,7 +805,7 @@ public class VoyagesCalculation {
 	public void calculateTslmtimp() {
 		try {
 			float vymrtrat = 0f;		
-			
+					
 			Integer sladvoy = voyage.getSladvoy();
 			Integer vymrtimp = sladvoy;			
 			Integer tslavesd = voyage.getTslavesd();			
@@ -820,7 +820,7 @@ public class VoyagesCalculation {
 				tslmtimp = slaarriv + vymrtimp;
 			}
 			if ( (vymrtimp!=null && vymrtimp >= 1) && (tslmtimp != null) ) {
-				vymrtrat = vymrtimp / tslmtimp;
+				vymrtrat = vymrtimp.floatValue() / tslmtimp;
 			}
 			
 			if (tslmtimp != null && tslmtimp != 0) {
@@ -2881,3 +2881,4 @@ public class VoyagesCalculation {
 	
 	
 }
+
