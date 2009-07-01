@@ -178,8 +178,8 @@ public class VoyageCalcSystemTest extends TestCase {
 		//overrides so that test can be executed for localized change
 		System.out.println("Running Specific Tests");
 		TestSuite suite = new TestSuite(this.getClass().getName());
-		//suite.addTest(new VoyageCalcSystemTest("testImputedVars"));
-		suite.addTest(new VoyageCalcSystemTest("testImputedVars1"));
+		suite.addTest(new VoyageCalcSystemTest("testImputedVars"));
+		//suite.addTest(new VoyageCalcSystemTest("testImputedVars1"));
 		
 		return suite;
 	}
@@ -198,7 +198,8 @@ public class VoyageCalcSystemTest extends TestCase {
 	public void testImputedVars(){
 		try{
 			/*28,32,36,38,56,72,99,100,106,109*/
-			Integer[] voyageIdArray = {28,32,36,38,56,72,99,100,106,109};						
+			//Integer[] voyageIdArray = {28,32,36,38,56,72,99,100,106,109};						
+			Integer[] voyageIdArray = {452};
 			int revision = 1;
 			for (int i=0; i < voyageIdArray.length; i++){
 				setUpSession();
@@ -228,13 +229,8 @@ public class VoyageCalcSystemTest extends TestCase {
 		    BufferedReader br = new BufferedReader(new InputStreamReader(in));
 		    String strLine;
 		    Integer revision = 1;
+		    		    
 		    /*while ((strLine = br.readLine()) != null)   {		    
-			      //System.out.println (strLine);
-			      Integer voyageId = Integer.valueOf(strLine);
-			      System.out.println (voyageId);
-		    }*/
-		    
-		    while ((strLine = br.readLine()) != null)   {		    
 		      //System.out.println (strLine);
 		      Integer voyageId = Integer.valueOf(strLine);
 		      setUpSession();
@@ -246,7 +242,7 @@ public class VoyageCalcSystemTest extends TestCase {
 			  voy = voyageCalc.calculateImputedVariables();
 			  saveVoyage(voy);			  
 			  System.out.println("voyage after: " + voy.toString());		      
-		    }
+		    }*/
 		    //Close the input stream
 		    in.close();
 		}
