@@ -1,5 +1,9 @@
 package test.tast.submissions;
 
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -45,7 +49,7 @@ public class VoyageCalcSystemTest extends TestCase {
 		session.close();		
 	}
 	
-	private void initAllValuesVoyage(Voyage voy) {
+	private void initAllImputedValuesVoyage(Voyage voy) {
 		voy.setFate2(null);
 		voy.setFate3(null);		 
 		voy.setFate4(null);
@@ -174,7 +178,8 @@ public class VoyageCalcSystemTest extends TestCase {
 		//overrides so that test can be executed for localized change
 		System.out.println("Running Specific Tests");
 		TestSuite suite = new TestSuite(this.getClass().getName());
-		suite.addTest(new VoyageCalcSystemTest("testImputedVars"));
+		//suite.addTest(new VoyageCalcSystemTest("testImputedVars"));
+		suite.addTest(new VoyageCalcSystemTest("testImputedVars1"));
 		
 		return suite;
 	}
@@ -199,7 +204,7 @@ public class VoyageCalcSystemTest extends TestCase {
 				setUpSession();
 				Voyage voy = null;
 				voy = Voyage.loadByVoyageId(session, voyageIdArray[i], revision);
-				initAllValuesVoyage(voy);
+				initAllImputedValuesVoyage(voy);
 				System.out.println("voyage before: " + voy.toString());
 				VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voy);	
 				voy = voyageCalc.calculateImputedVariables();
@@ -207,6 +212,43 @@ public class VoyageCalcSystemTest extends TestCase {
 				session.close();
 				System.out.println("voyage after: " + voy.toString());
 			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testImputedVars1(){
+		try{			
+			String fPath = "/dev/slavevoyages/src/test/tast/submissions/batch_voyages.txt";		
+			FileInputStream fstream = new FileInputStream(fPath);
+			//Get the object of DataInputStream
+		    DataInputStream in = new DataInputStream(fstream);
+		    BufferedReader br = new BufferedReader(new InputStreamReader(in));
+		    String strLine;
+		    Integer revision = 1;
+		    /*while ((strLine = br.readLine()) != null)   {		    
+			      //System.out.println (strLine);
+			      Integer voyageId = Integer.valueOf(strLine);
+			      System.out.println (voyageId);
+		    }*/
+		    
+		    while ((strLine = br.readLine()) != null)   {		    
+		      //System.out.println (strLine);
+		      Integer voyageId = Integer.valueOf(strLine);
+		      setUpSession();
+			  Voyage voy = null;
+			  voy = Voyage.loadByVoyageId(session, voyageId, revision);
+			  initAllImputedValuesVoyage(voy);
+			  System.out.println("voyage before: " + voy.toString());
+			  VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voy);	
+			  voy = voyageCalc.calculateImputedVariables();
+			  saveVoyage(voy);			  
+			  System.out.println("voyage after: " + voy.toString());		      
+		    }
+		    //Close the input stream
+		    in.close();
 		}
 		catch(Exception e){
 			e.printStackTrace();
