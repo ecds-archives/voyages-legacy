@@ -415,7 +415,7 @@ public class VoyageCalcTest2 extends TestCase {
 			
 			//Input variables for second region calculation
 			voyage.setPortdep(Port.loadById(session, 10101));  
-			voyage.setPtdepimp(Port.loadById(session, 41202)); //look-up not in DB 
+			voyage.setPtdepimp(Port.loadById(session, 2)); //look-up not in DB 
 			voyage.setMjbyptimp(null); 
 			voyage.setMjslptimp(null);  
 			voyage.setPortret(null);
@@ -425,7 +425,7 @@ public class VoyageCalcTest2 extends TestCase {
 			voyageCalc.calculateValuesRegion2();
 			
 			saveVoyage(voyage);
-			assertNull(voyage.getDeptreg1()); //look-up not in DB
+			assertNotNull(voyage.getDeptreg1()); //look-up in DB
 			assertNull(voyage.getDeptregimp1()); //look-up not in DB
 			
 			
@@ -597,7 +597,7 @@ public class VoyageCalcTest2 extends TestCase {
 			//add test specific variables in voyage object
 			setValuesVoyage(new Integer(99900), "shipName_99900");
 			
-			//Input variables for second region calculation
+			//Input variables for people calculation
 			voyage.setMen1(100);
 			voyage.setWomen1(100);
 			voyage.setBoy1(100);
@@ -655,7 +655,7 @@ public class VoyageCalcTest2 extends TestCase {
 			voyage.setMale2(200);
 			voyage.setFemale2(200);
 			 
-;
+
 			
 			VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voyage);			
 			
@@ -672,6 +672,92 @@ public class VoyageCalcTest2 extends TestCase {
 			e.printStackTrace();
 		}
 	}
+	
+	public void testPeopleNull(){
+		try {	
+			deleteVoyage(99900);
+			
+			//add test specific variables in voyage object
+			setValuesVoyage(new Integer(99900), "shipName_99900");
+			
+			//Input variables for people calculation
+			voyage.setMen1(null);
+			voyage.setWomen1(null);
+			voyage.setBoy1(null);
+			voyage.setGirl1(null);
+			voyage.setChild1(null);
+			voyage.setInfant1(null);
+			voyage.setAdult1(null);
+			voyage.setMen4(null);
+			voyage.setWomen4(null);
+			voyage.setBoy4(null);
+			voyage.setGirl4(null);
+			voyage.setChild4(null);
+			voyage.setInfant4(null);
+			voyage.setAdult4(null);
+			voyage.setMen5(null);
+			voyage.setWomen5(null);
+			voyage.setBoy5(null);
+			voyage.setGirl5(null);
+			voyage.setChild5(null);
+			voyage.setAdult5(null);
+			voyage.setMale1(null);
+			voyage.setFemale1(null);
+			voyage.setMale4(null);
+			voyage.setFemale4(null);
+			voyage.setMale5(null);
+			voyage.setFemale5(null);
+			voyage.setTslavesd(null);
+			voyage.setTslavesp(null);
+			voyage.setMen3(null);
+			voyage.setWomen3(null);
+			voyage.setBoy3(null);
+			voyage.setGirl3(null);
+			voyage.setChild3(null);
+			voyage.setInfant3(null);
+			voyage.setinfantm3(null);
+			voyage.setInfantf3(null);
+			voyage.setAdult3(null);
+			voyage.setMen6(null);
+			voyage.setWomen6(null);
+			voyage.setBoy6(null);
+			voyage.setGirl6(null);
+			voyage.setChild6(null);
+			voyage.setAdult6(null);
+			voyage.setMale3(null);
+			voyage.setFemale3(null);
+			voyage.setMale6(null);
+			voyage.setFemale6(null);
+			voyage.setSlaarriv(null);
+			voyage.setMen2(null);
+			voyage.setWomen2(null);
+			voyage.setBoy2(null);
+			voyage.setGirl2(null);
+			voyage.setChild2(null);
+			voyage.setAdult2(null);
+			voyage.setMale2(null);
+			voyage.setFemale2(null);
+			 
+
+			
+			VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voyage);			
+			
+			voyageCalc.calculateValuesPeople();
+			
+			saveVoyage(voyage);
+			assertNull(voyage.getAdlt1imp());
+			assertNull(voyage.getBoyrat1());
+			//assertNull(voyage.getSlamimp());
+						
+			
+			voyage = null;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
 	
 	public void testPeopleTest2(){
 		try {	
@@ -773,6 +859,31 @@ public class VoyageCalcTest2 extends TestCase {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void testAddWithNulls()
+	{
+		
+		VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voyage);			
+		
+		Integer I = voyageCalc.addIntWithNulls(new Integer[]{5, null, 10});
+		assertEquals(I, new Integer(15));
+		
+		voyageCalc = new VoyagesCalculation(session, voyage);			
+		I = voyageCalc.addIntWithNulls(new Integer[]{null, null,null});
+		assertNull(I);
+		
+		Double D = voyageCalc.addDoubWithNulls(new Integer[]{5, null, 10});
+		assertEquals(D, new Double(15));
+		
+		D = voyageCalc.addDoubWithNulls(new Double[]{5.5, null, 10.5});
+		assertEquals(D, new Double(16));
+		
+		D = voyageCalc.addDoubWithNulls(new Integer[]{null, null, null});
+		assertNull(D);
+		
+		D = voyageCalc.addDoubWithNulls(new Double[]{null, null, null});
+		assertNull(D);
 	}
 		
 }

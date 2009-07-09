@@ -1,8 +1,11 @@
 package test.tast.submissions;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,6 +25,7 @@ import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.dm.VesselRig;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.submission.VoyagesCalculation;
+import test.tast.submissions.Test1;
 
 public class VoyageCalcSystemTest extends TestCase {
 	
@@ -178,8 +182,8 @@ public class VoyageCalcSystemTest extends TestCase {
 		//overrides so that test can be executed for localized change
 		System.out.println("Running Specific Tests");
 		TestSuite suite = new TestSuite(this.getClass().getName());
-		suite.addTest(new VoyageCalcSystemTest("testImputedVars"));
-		//suite.addTest(new VoyageCalcSystemTest("testImputedVars1"));
+		//suite.addTest(new VoyageCalcSystemTest("testImputedVars"));
+		suite.addTest(new VoyageCalcSystemTest("testImputedVars1"));
 		
 		return suite;
 	}
@@ -196,23 +200,73 @@ public class VoyageCalcSystemTest extends TestCase {
 	
 	@Test
 	public void testImputedVars(){
+		Test1 t1 = new Test1(); // comparison class
+		BufferedWriter fOut=null; //writes to output file
+		
+		try
+		{
+		  fOut = new BufferedWriter(new FileWriter("/temp/tests.csv"));
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
 		try{
 			/*28,32,36,38,56,72,99,100,106,109*/
-			//Integer[] voyageIdArray = {28,32,36,38,56,72,99,100,106,109};						
-			Integer[] voyageIdArray = {452};
+			Integer[] voyageIdArray = {28,32,36,38,56,72,99,100,106,109};						
+			//Integer[] voyageIdArray = {452, 72};
 			int revision = 1;
 			for (int i=0; i < voyageIdArray.length; i++){
+				
+				System.out.println("Processing...."+voyageIdArray[i]);
 				setUpSession();
 				Voyage voy = null;
 				voy = Voyage.loadByVoyageId(session, voyageIdArray[i], revision);
+				
+				if(voy==null)  //If voyage does not exist skip the rest of the loop
+				  {
+					  fOut.write("VoyageId: "+voyageIdArray[i]+" MISSING");
+					  fOut.newLine();
+					  fOut.write(",,");
+					  fOut.newLine();
+					  continue;
+				  }	
+				
 				initAllImputedValuesVoyage(voy);
-				System.out.println("voyage before: " + voy.toString());
+				//System.out.println("voyage before: " + voy.toString());
 				VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voy);	
 				voy = voyageCalc.calculateImputedVariables();
 				tran.commit();
 				session.close();
-				System.out.println("voyage after: " + voy.toString());
+				//System.out.println("voyage after: " + voy.toString());
+				//put check code here
+				String[][] voyAnswer = t1.answer(voyageIdArray[i]);
+				
+								
+				fOut.write("VoyageId: "+voyageIdArray[i]+",,");
+				fOut.newLine();
+				
+				for(int j=0; j < voyAnswer.length; j++)
+				{
+					if( 
+						(voyAnswer[j][1]!=null && voyAnswer[j][2]!=null && !voyAnswer[j][1].equals(voyAnswer[j][2]) ) || 
+						(voyAnswer[j][1]==null && voyAnswer[j][2]!=null) || 
+						(voyAnswer[j][2]==null && voyAnswer[j][1]!=null) 
+						)
+					{
+						fOut.write(voyAnswer[j][0]+","+ voyAnswer[j][1] + "," + voyAnswer[j][2]);
+						fOut.newLine();
+						//System.out.println(voyAnswer[j][0]+": "+ voyAnswer[j][1] + " " + voyAnswer[j][2]);                                                           
+					}
+					
+					
+				}
+				fOut.write(",,");
+				fOut.newLine();
 			}
+			fOut.close();
+			
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -221,8 +275,20 @@ public class VoyageCalcSystemTest extends TestCase {
 	
 	@Test
 	public void testImputedVars1(){
+		Test1 t1 = new Test1(); // comparison class
+		BufferedWriter fOut=null; //writes to output file
+		
+		try
+		{
+		  fOut = new BufferedWriter(new FileWriter("/temp/tests.csv"));
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
 		try{			
-			String fPath = "/dev/slavevoyages/src/test/tast/submissions/batch_voyages.txt";		
+			String fPath = "/dev/_workspace/tast/src/test/tast/submissions/batch_voyages.txt";		
 			FileInputStream fstream = new FileInputStream(fPath);
 			//Get the object of DataInputStream
 		    DataInputStream in = new DataInputStream(fstream);
@@ -230,21 +296,59 @@ public class VoyageCalcSystemTest extends TestCase {
 		    String strLine;
 		    Integer revision = 1;
 		    		    
-		    /*while ((strLine = br.readLine()) != null)   {		    
+		    while ((strLine = br.readLine()) != null)   {		    
 		      //System.out.println (strLine);
 		      Integer voyageId = Integer.valueOf(strLine);
+		      System.out.println("Processing...."+voyageId);
 		      setUpSession();
 			  Voyage voy = null;
 			  voy = Voyage.loadByVoyageId(session, voyageId, revision);
+
+			  if(voy==null)  //If voyage does not exist skip the rest of the loop
+			  {
+				  fOut.write("VoyageId: "+voyageId+" MISSING");
+				  fOut.newLine();
+				  fOut.write(",,");
+				  fOut.newLine();
+				  continue;
+			  }
+			  
 			  initAllImputedValuesVoyage(voy);
-			  System.out.println("voyage before: " + voy.toString());
+			  //System.out.println("voyage before: " + voy.toString());
 			  VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voy);	
 			  voy = voyageCalc.calculateImputedVariables();
 			  saveVoyage(voy);			  
-			  System.out.println("voyage after: " + voy.toString());		      
-		    }*/
-		    //Close the input stream
+			  //System.out.println("voyage after: " + voy.toString());
+			  
+			  String[][] voyAnswer = t1.answer(voyageId);
+				
+								
+				fOut.write("VoyageId: "+voyageId+",,");
+				fOut.newLine();
+				
+				for(int j=0; j < voyAnswer.length; j++)
+				{
+					if( 
+						(voyAnswer[j][1]!=null && voyAnswer[j][2]!=null && !voyAnswer[j][1].equals(voyAnswer[j][2]) ) || 
+						(voyAnswer[j][1]==null && voyAnswer[j][2]!=null) || 
+						(voyAnswer[j][2]==null && voyAnswer[j][1]!=null) 
+						)
+					{
+						fOut.write(voyAnswer[j][0]+","+ voyAnswer[j][1] + "," + voyAnswer[j][2]);
+						fOut.newLine();
+						//System.out.println(voyAnswer[j][0]+": "+ voyAnswer[j][1] + " " + voyAnswer[j][2]);                                                           
+					}
+					
+					
+				}
+				fOut.write(",,");
+				fOut.newLine();
+			  		      
+		    }
+		    //Close the input and output streams
 		    in.close();
+		    fOut.close();
+		    System.out.println("END");
 		}
 		catch(Exception e){
 			e.printStackTrace();

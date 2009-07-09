@@ -340,9 +340,9 @@ public class VoyagesCalculation {
 		  * slas39 - Slaves disembarked at third port
 		  * slaarriv - Total slaves arrived at first port of disembarkation
 		  */
-		 Integer slas32 = voyage.getSlas32();
-		 Integer slas36 = voyage.getSlas36();
-		 Integer slas39 = voyage.getSlas39();
+		 int slas32_int = (voyage.getSlas32()==null ? 0: voyage.getSlas32().intValue());
+		 int slas36_int = (voyage.getSlas36()==null ? 0 : voyage.getSlas36().intValue());
+		 int slas39_int = (voyage.getSlas39()==null ? 0 : voyage.getSlas39().intValue());
 	      
 		 slastot = getSlastot();
 		 
@@ -380,31 +380,31 @@ public class VoyagesCalculation {
 	     else if (slaarriv==null && slastot >=1 && sla1port_int >= 1 && adpsale1_int >= 1 && adpsale2==null) {
 	     	    	 majselpt = adpsale1;
 	     }
-	     else if (slaarriv==null && slastot >=1 && sla1port_int >= 1 && adpsale1_int >= 1 && adpsale2_int >= 1 && slas39 >= slas32 && slas39 >= slas36) {
+	     else if (slaarriv==null && slastot >=1 && sla1port_int >= 1 && adpsale1_int >= 1 && adpsale2_int >= 1 && slas39_int >= slas32_int && slas39_int >= slas36_int) {
 	     	    	 majselpt = adpsale2;
 	     }
-	     else if (slaarriv==null && slastot >=1 && sla1port_int >= 1 && adpsale1_int >= 1 && adpsale2_int >= 1 && slas36 >= slas32 && slas36 >= slas39) {
+	     else if (slaarriv==null && slastot >=1 && sla1port_int >= 1 && adpsale1_int >= 1 && adpsale2_int >= 1 && slas36_int >= slas32_int && slas36_int >= slas39_int) {
 	     	    	 majselpt = adpsale1;
 	     }
-	     else if (slaarriv==null && slastot >=1 && sla1port_int >= 1 && adpsale1_int >= 1 && adpsale2_int >= 1 && slas32 >= slas36 && slas32 >= slas39) {
+	     else if (slaarriv==null && slastot >=1 && sla1port_int >= 1 && adpsale1_int >= 1 && adpsale2_int >= 1 && slas32_int >= slas36_int && slas32_int >= slas39_int) {
 	     	    	 majselpt = sla1port;
 	     }
-	     else if (slaarriv != null && sla1port_int >=1 && adpsale1_int >=1 && adpsale2_int >= 1 && rslt_sla < 0.5d && slas32 >=1 && slas39==0) {
+	     else if (slaarriv != null && sla1port_int >=1 && adpsale1_int >=1 && adpsale2_int >= 1 && rslt_sla < 0.5d && slas32_int >=1 && slas39_int==0) {
 	     	    	 majselpt = adpsale2;
 	     }
-	     else if (slaarriv != null && sla1port_int >=1 && adpsale1_int >=1 && adpsale2_int >= 1 && rslt_sla < 0.5d && slas32 >=1 && slas36==0) {
+	     else if (slaarriv != null && sla1port_int >=1 && adpsale1_int >=1 && adpsale2_int >= 1 && rslt_sla < 0.5d && slas32_int >=1 && slas36_int==0) {
 	     	    	 majselpt = adpsale1;
 	     }
-	     else if (slaarriv != null && sla1port_int >=1 && adpsale1_int >=1 && adpsale2_int >= 1 && rslt_sla < 0.5d && slas32 == 0) {
+	     else if (slaarriv != null && sla1port_int >=1 && adpsale1_int >=1 && adpsale2_int >= 1 && rslt_sla < 0.5d && slas32_int == 0) {
 	     	    	 majselpt = sla1port;
 	     }
-	     else if (slaarriv != null && sla1port_int >=1 && adpsale1_int >=1 && adpsale2_int >= 1 && rslt_sla >= 0.5d && slas39 >= slas32 && slas39 >= slas36) {
+	     else if (slaarriv != null && sla1port_int >=1 && adpsale1_int >=1 && adpsale2_int >= 1 && rslt_sla >= 0.5d && slas39_int >= slas32_int && slas39_int >= slas36_int) {
 	     	    	 majselpt = adpsale2;
 	     }
-	     else if (slaarriv != null && sla1port_int >=1 && adpsale1_int >=1 && adpsale2_int >= 1 && rslt_sla >= 0.5d && slas36 >= slas32 && slas36 >= slas39) {
+	     else if (slaarriv != null && sla1port_int >=1 && adpsale1_int >=1 && adpsale2_int >= 1 && rslt_sla >= 0.5d && slas36_int >= slas32_int && slas36_int >= slas39_int) {
 	    	majselpt = adpsale1;
 	     }
-	     else if (slaarriv != null && sla1port_int >=1 && adpsale1_int >=1 && adpsale2_int >= 1 && rslt_sla >= 0.5d && slas32 >= slas36 && slas32 >= slas39) {
+	     else if (slaarriv != null && sla1port_int >=1 && adpsale1_int >=1 && adpsale2_int >= 1 && rslt_sla >= 0.5d && slas32_int >= slas36_int && slas32_int >= slas39_int) {
 	     	    	 majselpt = sla1port;
 	     }
 	     else if (sla1port_int >=1 && adpsale2_int >=1 && adpsale1 == null) {
@@ -413,25 +413,25 @@ public class VoyagesCalculation {
 	     else if (sla1port_int >= 1 && adpsale1_int >= 1 && adpsale2==null && slaarriv==null && getNcartot()==null) {
 	     	    	 majselpt = adpsale1;
 	     }
-	     else if (sla1port_int >= 1 && adpsale1_int >= 1 && adpsale2==null && slaarriv==null && slas36 > slas32) {
+	     else if (sla1port_int >= 1 && adpsale1_int >= 1 && adpsale2==null && slaarriv==null && slas36_int > slas32_int) {
 	     	    	 majselpt = adpsale1;
 	     }
-	     else if (sla1port_int >= 1 && adpsale1_int >= 1 && adpsale2==null && slaarriv==null && slas32 >= slas36) {
+	     else if (sla1port_int >= 1 && adpsale1_int >= 1 && adpsale2==null && slaarriv==null && slas32_int >= slas36_int) {
 	     	    	 majselpt = sla1port;
 	     }
 	     else if (slastot==null && sla1port_int >= 1 && adpsale1_int >= 1 && adpsale2==null) {
 	     	    	 majselpt = adpsale1;
 	     }
-	     else if (sla1port_int >=1 && adpsale1_int >=1 && adpsale2==null && slaarriv != null && rslt_sla < 0.5d && slas36 < slas32) {
+	     else if (sla1port_int >=1 && adpsale1_int >=1 && adpsale2==null && slaarriv != null && rslt_sla < 0.5d && slas36_int < slas32_int) {
 	     	    	 majselpt = adpsale1;
 	     }
-	     else if (sla1port_int >=1 && adpsale1_int >=1 && adpsale2==null && slaarriv != null && rslt_sla < 0.5d && slas32 < slas36) {
+	     else if (sla1port_int >=1 && adpsale1_int >=1 && adpsale2==null && slaarriv != null && rslt_sla < 0.5d && slas32_int < slas36_int) {
 	     	    	 majselpt = sla1port;
 	     }
-	     else if (sla1port_int >=1 && adpsale1_int >=1 && adpsale2==null && slaarriv != null && rslt_sla >= 0.5d && slas36 >= slas32) {
+	     else if (sla1port_int >=1 && adpsale1_int >=1 && adpsale2==null && slaarriv != null && rslt_sla >= 0.5d && slas36_int >= slas32_int) {
 	     	    	 majselpt = adpsale1;
 	     }
-	     else if (sla1port_int  >=1 && adpsale1_int  >=1 && adpsale2==null && slaarriv != null && rslt_sla >= 0.5d && slas32 >= slas36) {
+	     else if (sla1port_int  >=1 && adpsale1_int  >=1 && adpsale2==null && slaarriv != null && rslt_sla >= 0.5d && slas32_int >= slas36_int) {
 	    	 majselpt = sla1port;
 	     }
 	     else if (sla1port==null && adpsale1 == null && adpsale2_int >= 1) {
@@ -677,11 +677,11 @@ public class VoyagesCalculation {
 		//Calculate values
 		voy1imp = dateDiff(datedep, dateland1);
 	    
-		//Use voyage filed if provided else calculate based on dates
-		if(voyMid==null)
+		//Use voyage filed if  voyimp2 missing
 		voy2imp = dateDiff(dateland1, dateleftafr);
-		else 
-		voy2imp=voyMid;
+		if(voy2imp==null)
+		voy2imp = voyMid;
+		
 	    
 	    //update voyages object
 	    if (voy1imp != null){
@@ -817,9 +817,9 @@ public class VoyagesCalculation {
 			Integer tslmtimp = tslavesd;
 			
 			if ((tslavesd == null) && slaarriv!= null && slaarriv > 0) {
-				tslmtimp = slaarriv + vymrtimp;
+				tslmtimp = addIntWithNulls(new Integer[]{slaarriv, vymrtimp});
 			}
-			if ( (vymrtimp!=null && vymrtimp >= 1) && (tslmtimp != null) ) {
+			if ( (vymrtimp!=null && vymrtimp >= 1) && (tslmtimp != null  && tslmtimp!=0) ) {
 				vymrtrat = vymrtimp.floatValue() / tslmtimp;
 			}
 			
@@ -1538,7 +1538,7 @@ public class VoyagesCalculation {
 			}
 			else if(xmimpflag!=null && xmimpflag==25){
 			if(slaximp!=null && slaximp >= 1 &&  slaarriv==null&& slastot==null) {slamimp = slaximp - (slaximp*0.101742168136026);}
-			if(slamimp!=null && slamimp >= 1 &&  tslavesd==null&&  tslavesp==null&& ncartot==null) {slaximp = slamimp / (1- 0.101742168136026);}
+			if(slamimp!=null && slamimp >= 1 &&  tslavesd==null &&  tslavesp==null && ncartot==null) {slaximp = slamimp / (1- 0.101742168136026);}
 			if(tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slamimp =279.357142857143;}
 			if(tslavesd==null&&  tslavesp==null&&  ncartot==null&&  slaarriv==null&& slastot==null) {slaximp =279.357142857143/ (1-0.101742168136026 );}
 			}
@@ -2278,54 +2278,99 @@ public class VoyagesCalculation {
 	      Double chilrat7=null;
 		  
 		  
-		  //set default values
-		  men1=defVal(men1, 0);
-		  women1=defVal(women1, 0);
-		  boy1=defVal(boy1, 0);
-		  girl1=defVal(girl1, 0);
-		  child1=defVal(child1, 0);
-		  infant1=defVal(infant1, 0);
-		  adult1=defVal(adult1, 0);
-		  men4=defVal(men4, 0);
-		  women4=defVal(women4, 0);
-		  boy4=defVal(boy4, 0);
-		  girl4=defVal(girl4, 0);
-		  child4=defVal(child4, 0);
-		  infant4=defVal(infant4, 0);
-		  adult4=defVal(adult4, 0);
-		  men5=defVal(men5, 0);
-		  women5=defVal(women5, 0);
-		  boy5=defVal(boy5, 0);
-		  girl5=defVal(girl5, 0);
-		  child5=defVal(child5, 0);
-		  adult5 = defVal(adult5, 0);
-		  male1=defVal(male1,0);
-		  female1=defVal(female1, 0);
-		  male4=defVal(male4, 0);
-		  female4=defVal(female4, 0);
-		  male5=defVal(male5, 0);
-		  female5=defVal(female5, 0);
+		  //set defaults
+		  
+	      if((men1 != null && men1 >= 1) || (women1 != null && women1 >= 1) || (boy1 != null && boy1 >= 1) || (girl1 != null && girl1 >= 1) || (child1 != null && child1 >= 1) || (infant1 != null && infant1 >= 1) || (adult1 != null && adult1 >= 1) ||  
+	    		  (men4 != null && men4 >= 1) || (women4 != null && women4 >= 1) || (boy4 != null && boy4 >= 1) || (girl4 != null && girl4 >= 1) || (child4 != null && child4 >= 1) || (infant4 != null && infant4 >= 1) || (adult4 != null && adult4 >= 1) || 
+	    		  (men5 != null && men5 >= 1) || (women5 != null && women5 >= 1) || (boy5 != null && boy5 >= 1) || (girl5 != null && girl5 >= 1) || (child5 != null && child5 >= 1) || (adult5 !=null && adult5 >=1))
+	      {
+	        men1=defVal(men1, 0);
+		    women1=defVal(women1, 0);
+		    boy1=defVal(boy1, 0);
+		    girl1=defVal(girl1, 0);
+		    child1=defVal(child1, 0);
+		    infant1=defVal(infant1, 0);
+		    adult1=defVal(adult1, 0);
+		    men4=defVal(men4, 0);
+		    women4=defVal(women4, 0);
+		    boy4=defVal(boy4, 0);
+		    girl4=defVal(girl4, 0);
+		    child4=defVal(child4, 0);
+		    infant4=defVal(infant4, 0);
+		    adult4=defVal(adult4, 0);
+		    men5=defVal(men5, 0);
+		    women5=defVal(women5, 0);
+		    boy5=defVal(boy5, 0);
+		    girl5=defVal(girl5, 0);
+		    child5=defVal(child5, 0);
+		    adult5 = defVal(adult5, 0);
+		    	    
+	      }
+	      
+	      //do calculations
+	      Integer[] adlt1impInputs = {men1, women1, adult1, men4, women4, adult4, men5, women5, adult5};
+	      adlt1imp = addIntWithNulls(adlt1impInputs);
+	      
+	      Integer[] chil1impInputs = {boy1, girl1, child1, infant1, boy4, girl4, child4, infant4, boy5, girl5, child5};
+		  chil1imp = addIntWithNulls(chil1impInputs);
+		  
+		  
+	    //set more default values
+	      if((male1 !=null && male1 >= 1) || (female1 !=null && female1 >= 1) || (male4 !=null && male4 >= 1) || (female4 !=null && female4 >= 1) || (male5 !=null && male5 >= 1) || (female5 != null && female5 >= 1))
+	      {
+	        male1=defVal(male1,0);
+		    female1=defVal(female1, 0);
+		    male4=defVal(male4, 0);
+		    female4=defVal(female4, 0);
+		    male5=defVal(male5, 0);
+		    female5=defVal(female5, 0);
+	      }
 
            
-		  try {
-			//Do the calculations
-			 adlt1imp = men1+women1+adult1+men4+women4+adult4+men5+women5+adult5;
-			 chil1imp = boy1+girl1+child1+infant1+boy4+girl4+child4+infant4+boy5+girl5+child5;
-			 male1imp = male1+men1+boy1+male4+men4+boy4+male5+men5+boy5;
-			 feml1imp = female1+women1+girl1+female4+women4+girl4+female5+women5+girl5;
+			//Do more calculations
+			 
+			 
+			  Integer[] male1impInputs = {male1, male4, male5};
+			  male1imp = addIntWithNulls(male1impInputs);
+			 
+			 Integer[] feml1impInputs = {female1, female4, female5};
+			  feml1imp = addIntWithNulls(feml1impInputs);
+			  
+			  if(male1imp==null) 
+			  {
+				 Integer[] male1impInputs2 = {men1, boy1, men4, boy4, men5, boy5};
+				 male1imp = addIntWithNulls(male1impInputs2);
+			      
+			  }
+			  
+			  if(feml1imp==null)
+			  {
+				  Integer[] feml1impInputs2 = {women1, girl1, women4, girl4, women5,girl5};
+				  feml1imp = addIntWithNulls(feml1impInputs2);
+			  }
 
- 			 if (tslavesd!=null && tslavesd >=1 && adlt1imp!=null && adlt1imp==0) {adlt1imp = tslavesd - chil1imp;}
-			 if (tslavesd==null && tslavesp!=null && tslavesp >=1 && adlt1imp!=null && adlt1imp==0) {adlt1imp = tslavesp - chil1imp;}
-			 if (tslavesd!=null && tslavesd >=1 && chil1imp!=null && chil1imp==0) {chil1imp = tslavesd - adlt1imp;}
-			 if (tslavesd==null && tslavesp!=null && tslavesp >=1 && chil1imp!=null && chil1imp==0) {chil1imp = tslavesp - adlt1imp;}
+			  
 
-			 slavema1 = adlt1imp+chil1imp;
-			 slavemx1 = male1imp+feml1imp;
-			 if (slavema1 >=1) {slavmax1=men1+women1+boy1+girl1+men4+women4+boy4+girl4+men5+women5+boy5+girl5;}
+ 			 if (tslavesd!=null && tslavesd >=1 && adlt1imp!=null && adlt1imp==0 && chil1imp !=null && chil1imp >= 1 ) {adlt1imp = tslavesd - chil1imp;}
+			 if (tslavesd==null && tslavesp!=null && tslavesp >=1 && adlt1imp!=null && adlt1imp==0 && chil1imp !=null && chil1imp >= 1) {adlt1imp = tslavesp - chil1imp;}
+			 if (tslavesd!=null && tslavesd >=1 && chil1imp!=null && chil1imp==0  && adlt1imp != null && adlt1imp >= 1) {chil1imp = tslavesd - adlt1imp;}
+			 if (tslavesd==null && tslavesp!=null && tslavesp >=1 && chil1imp!=null && chil1imp==0 && adlt1imp != null && adlt1imp >= 1) {chil1imp = tslavesp - adlt1imp;}
+			 
+			 Integer[] slavema1Inputs={adlt1imp,chil1imp};
+			 slavema1 = addIntWithNulls(slavema1Inputs);
+			 
+			 Integer[] slavemx1Inputs = {male1imp, feml1imp}; 
+			 slavemx1 = addIntWithNulls(slavemx1Inputs);
+			 if(slavema1!=null && slavema1 >= 1)
+				 {
+				    Integer[] slavmax1Inputs = {men1, women1, boy1, girl1, men4, women4, boy4, girl4, men5, women5, boy5, girl5};
+				    slavmax1= addIntWithNulls(slavmax1Inputs);
+				 }
+
 			 if(slavema1!=null && slavema1 >=0 && slavema1 <= 19) {slavema1=null;}
 			 if(slavemx1!=null && slavemx1 >=0 && slavemx1 <=19) {slavemx1=null;}
 			 if(slavmax1!=null && slavmax1 >=0 && slavmax1 <=19) {slavmax1=null;}
-
+			 
 			 if (slavema1==null)
 			 {
 			     if(adlt1imp!=null && adlt1imp >=0) {adlt1imp=null;}
@@ -2337,17 +2382,33 @@ public class VoyagesCalculation {
 			  if(feml1imp!=null && feml1imp >=0) {feml1imp=null;}
 			  if(male1imp!=null && male1imp >=0) {male1imp=null;}
 			 }
+			 
 			 if(chil1imp!=null && slavema1!=null && slavema1!=0){chilrat1=chil1imp.doubleValue()/slavema1.doubleValue();} //Added If to check for null
-
 			 if(male1imp!=null && slavemx1!=null && slavemx1!=0) {malrat1= male1imp.doubleValue()/slavemx1.doubleValue();} //Added If to check for null
-
-			 if (slavmax1!=null && slavmax1 >= 20 && slavmax1!=0) {menrat1=(men1.doubleValue()+men4.doubleValue()+men5.doubleValue())/slavmax1.doubleValue();} //Added null check
-			 if (slavmax1!=null && slavmax1 >= 20 && slavmax1 !=0) {womrat1=(women1.doubleValue()+women4.doubleValue()+women5.doubleValue())/slavmax1.doubleValue();} //Added null check
-			 if (slavmax1!=null && slavmax1 >= 20 && slavmax1!=0) {boyrat1=(boy1.doubleValue()+boy4.doubleValue()+boy5.doubleValue())/slavmax1.doubleValue();} //Added null check
-			 if (slavmax1!=null && slavmax1 >= 20 && slavmax1!=0) {girlrat1= (girl1.doubleValue()+girl4.doubleValue()+girl5.doubleValue())/slavmax1.doubleValue();} //Added null check
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+			 
+			 if (slavmax1!=null && slavmax1 >= 20 && slavmax1!=0) 
+			 {
+				 Integer temp=addIntWithNulls(new Integer[]{men1, men4,men5});
+				 if(temp !=null) menrat1=temp.doubleValue()/slavmax1.doubleValue();
+			 }
+			 
+			 if (slavmax1!=null && slavmax1 >= 20 && slavmax1 !=0) 
+			 {
+				 Integer temp = addIntWithNulls(new Integer[]{women1, women4,women5});
+				 if(temp !=null) {womrat1=temp.doubleValue()/slavmax1.doubleValue();} 
+			 }
+			 
+			 if (slavmax1!=null && slavmax1 >= 20 && slavmax1!=0) 
+			 {
+				 Integer temp = addIntWithNulls(new Integer[]{boy1, boy4, boy5});
+				 if (temp!=null) {boyrat1=temp.doubleValue()/slavmax1.doubleValue();}
+			 }
+			 
+			 if (slavmax1!=null && slavmax1 >= 20 && slavmax1!=0) 
+			 {
+				 Integer temp = addIntWithNulls(new Integer[]{girl1, girl4,girl5});
+			 	 if(temp!=null) {girlrat1=temp.doubleValue()/slavmax1.doubleValue();}
+			 }
 		
 		 //Set Defaults
 		 men3=defVal(men3, 0);
@@ -2365,39 +2426,34 @@ public class VoyagesCalculation {
 		 girl6=defVal(girl6, 0);
 		 child6=defVal(child6, 0);
 		 adult6=defVal(adult6, 0);
-		 male3=defVal(male3, 0);
-		 female3=defVal(female3, 0);
-		 men3=defVal(men3, 0);
-		 women3=defVal(women3, 0);
-		 boy3=defVal(boy3, 0);
-		 girl3=defVal(girl3, 0);
-		 infantm3=defVal(infantm3, 0);
-		 infantf3=defVal(infantf3, 0);
-		 male6=defVal(male6, 0);
-		 female6=defVal(female6, 0);
-		 men6=defVal(men6, 0);
-		 women6=defVal(women6, 0);
-		 boy6=defVal(boy6, 0);
-		 girl6=defVal(girl6, 0);
+		 
+		 adlt3imp = addDoubWithNulls(new Integer[]{men3,women3,adult3,men6,women6,adult6});
+		 chil3imp = addDoubWithNulls(new Integer[]{boy3,girl3,child3,infant3,boy6,girl6,child6});
+		 
+		 if((male3 != null && male3 >= 1) || (female3 != null && female3 >= 1) || (male6 != null && male6 >=1) || (female6!=null && female6 >=1))
+		 {
+		   male3=defVal(male3, 0);
+		   female3=defVal(female3, 0);
+		   male6=defVal(male6, 0);
+		   female6=defVal(female6, 0);
+		 }
 
+			
+			 male3imp = addDoubWithNulls(new Integer[]{male3,male6});
+			 feml3imp = addDoubWithNulls(new Integer[]{female3,female6});
+			 
+			 if(male3imp==null) male3imp = addDoubWithNulls(new Integer[]{men3,boy3,infantm3,men6,boy6});
+			 if(feml3imp==null) feml3imp = addDoubWithNulls(new Integer[]{women3,girl3,infantf3,women6,girl6});
 
-		 try {
-			adlt3imp = new Double(men3+women3+adult3+men6+women6+adult6);
-			 chil3imp = new Double( boy3+girl3+child3+infant3+boy6+girl6+child6);
-			 male3imp = new Double( male3+men3+boy3+infantm3+male6+men6+boy6+male5+men5+boy5);
-			 feml3imp = new Double( female3+women3+girl3+infantf3+female6+women6+girl6);
 
 			 if (slaarriv!=null && slaarriv >=1 && adlt3imp!=null && adlt3imp==0) {adlt3imp = slaarriv - chil3imp;}
 			 if (slaarriv!=null && slaarriv >=1 && chil3imp!=null && chil3imp==0) {chil3imp = slaarriv - adlt3imp;}
+			 
+			 
 
 			 if(adlt3imp!=null && chil3imp!=null){slavema3 = adlt3imp+chil3imp;}
 			 if(male3imp!=null&& feml3imp!=null){slavemx3 = male3imp+feml3imp;}
-			 if (slavema3!=null&& slavema3 >=1) {slavmax3=new Double(men3+women3+boy3+girl3+men6+women6+boy6+girl6);}
-
-
-			 if(slavema3!=null && slavema3 >=0 && slavema3<=19) {slavema3=null;}
-			 if(slavemx3!=null && slavemx3  >=0 && slavemx3<=19) {slavemx3=null;}
-			 if(slavmax3!=null && slavmax3 >=0 && slavmax3<=19) {slavmax3=null;}
+			 if (slavema3!=null&& slavema3 >=1) {slavmax3= addDoubWithNulls(new Integer[]{men3,women3,boy3,girl3,men6,women6,boy6,girl6});}
 
 
 			 if (slavema3==null)
@@ -2412,25 +2468,46 @@ public class VoyagesCalculation {
 			  if(male3imp!=null && male3imp >=0) {male3imp=null;}
 			 }
 
-			 if(chil3imp!=null && slavema3!=null && slavema3!=0) {chilrat3=chil3imp/slavema3;} //Added If to check for null
-			 if(male3imp!=null && slavemx3!=null && slavemx3!=0) {malrat3= male3imp/slavemx3;} //Added If to check for null
-			 if(slavmax3!=null && slavmax3 >= 20 && slavmax3!=0) {menrat3=(men3+men6)/slavmax3;}
-			 if(slavmax3!=null && slavmax3 >= 20 && slavmax3!=0) {womrat3=(women3+women6)/slavmax3;}
-			 if(slavmax3!=null && slavmax3 >= 20 && slavmax3!=0) {boyrat3=(boy3+boy6)/slavmax3;}
-			 if(slavmax3!=null && slavmax3 >= 20 && slavmax3!=0) {girlrat3= (girl3+girl6)/slavmax3;}
-
+			 if(chil3imp!=null && slavema3!=null && slavema3!=0) {chilrat3=chil3imp/slavema3;} 
+			 if(male3imp!=null && slavemx3!=null && slavemx3!=0) {malrat3= male3imp/slavemx3;} 
+			 
+			 if(slavmax3!=null && slavmax3 >= 20 && slavmax3!=0) 
+			 {
+				 Integer temp = addIntWithNulls(new Integer[]{men3,men6});
+				 if(temp != null) {menrat3=temp/slavmax3;}
+			 }
+			 
+			 if(slavmax3!=null && slavmax3 >= 20 && slavmax3!=0) 
+			 {
+				 Integer temp=addIntWithNulls(new Integer[]{women3,women6});
+				 if(temp != null) {womrat3=temp/slavmax3;}
+			 }
+			 
+			 if(slavmax3!=null && slavmax3 >= 20 && slavmax3!=0) 
+			 {
+				 Integer temp = addIntWithNulls(new Integer[] {boy3,boy6});
+				 if(temp!=null) {boyrat3=temp/slavmax3;}
+			 }
+			 
+			 if(slavmax3!=null && slavmax3 >= 20 && slavmax3!=0) 
+			 {
+				 Integer temp = addIntWithNulls(new Integer[] {girl3,girl6});
+				 if(temp!=null) {girlrat3=temp/slavmax3;}
+			}
 
 			 if(slavema3!=null && slavema3 >= 20) {slavema7=slavema3;}
 			 if(slavemx3!=null && slavemx3 >= 20) {slavemx7=slavemx3;}
 			 if(slavmax3!=null && slavmax3 >= 20) {slavmax7=slavmax3;}
-			 if(slavmax7!=null && slavmax7 >= 20) {men7=new Integer(men3+men6);}
-			 if(slavmax7!=null && slavmax7 >= 20) {women7=new Integer(women3+women6);}
-			 if(slavmax7!=null && slavmax7 >= 20) {boy7=new Integer(boy3+boy6);}
-			 if(slavmax7!=null && slavmax7 >= 20) {girl7=new Integer(girl3+girl6);}
-			 if(slavema7!=null && slavema7 >= 20 && adlt3imp!=null) {adult7=adlt3imp.intValue();}
-			 if(slavema7!=null && slavema7 >= 20 && chil3imp!=null) {child7=chil3imp.intValue();}
-			 if(slavemx7!=null && slavemx7 >=20 && male3imp!=null) {male7=male3imp.intValue();}
-			 if(slavemx7!=null && slavemx7 >= 20 && feml3imp!=null) {female7=feml3imp.intValue();}
+
+			 if(slavmax7!=null && slavmax7 >= 20) {men7=addIntWithNulls(new Integer[]{men3,men6});}
+			 if(slavmax7!=null && slavmax7 >= 20) {women7=addIntWithNulls(new Integer[]{women3,women6});}
+			 if(slavmax7!=null && slavmax7 >= 20) {boy7=addIntWithNulls(new Integer[]{boy3,boy6});}
+			 if(slavmax7!=null && slavmax7 >= 20) {girl7=addIntWithNulls(new Integer[]{girl3,girl6});}
+			 if(slavema7!=null && slavema7 >= 20) {adult7=(adlt3imp==null ? null : adlt3imp.intValue());}
+			 if(slavema7!=null && slavema7 >= 20) {child7=(chil3imp==null ? null : chil3imp.intValue());}
+			 if(slavemx7!=null && slavemx7 >=20 ) {male7=(male3imp==null ? null : male3imp.intValue());}
+			 if(slavemx7!=null && slavemx7 >= 20) {female7=(feml3imp==null ? null : feml3imp.intValue());}
+
 			 if(menrat3!=null && menrat3 >= 0) {menrat7=menrat3;}
 			 if(womrat3!=null && womrat3 >= 0) {womrat7=womrat3;}
 			 if(boyrat3!=null && boyrat3 >= 0) {boyrat7=boyrat3;}
@@ -2441,50 +2518,63 @@ public class VoyagesCalculation {
 			 if (slavema3==null && slavema1!=null && slavema1 >=20) {slavema7=slavema1.doubleValue();}
 			 if (slavemx3==null && slavemx1!=null && slavemx1 >=20) {slavemx7=slavemx1.doubleValue();}
 			 if (slavmax3==null && slavmax1!=null && slavmax1 >=20) {slavmax7=slavmax1.doubleValue();}
-			 if (slavmax3==null && slavmax1!=null && slavmax1 >= 20) {men7= new Integer(men1+men4 +men5);}
-			 if (slavmax3==null && slavmax1!=null && slavmax1 >= 20) {women7= new Integer(women1+women4+women5);}
-			 if (slavmax3==null && slavmax1!=null && slavmax1 >= 20) {boy7= new Integer(boy1+boy4+boy5);}
-			 if (slavmax3==null && slavmax1!=null && slavmax1 >= 20) {girl7= new Integer(girl1+girl4+girl5);}
-			 if (slavema3==null && slavema1!=null && slavema1 >= 20 && adlt1imp!=null) {adult7=adlt1imp;}
-			 if (slavema3==null && slavema1!=null && slavema1 >= 20 && chil1imp!=null) {child7=chil1imp;}
-			 if (slavemx3==null && slavemx1!=null && slavemx1 >=20 && male1imp!=null) {male7=male1imp;}
-			 if (slavemx3==null && slavemx1!=null && slavemx1 >= 20 && feml1imp!=null) {female7=feml1imp;}
+			 if (slavmax3==null && slavmax1!=null && slavmax1 >= 20) {men7=addIntWithNulls(new Integer[]{men1+men4,men5});}
+			 if (slavmax3==null && slavmax1!=null && slavmax1 >= 20) {women7=addIntWithNulls(new Integer[]{women1,women4,women5});}
+			 if (slavmax3==null && slavmax1!=null && slavmax1 >= 20) {boy7=addIntWithNulls(new Integer[]{boy1,boy4,boy5});}
+			 if (slavmax3==null && slavmax1!=null && slavmax1 >= 20) {girl7=addIntWithNulls(new Integer[]{girl1,girl4,girl5});}
+			 if (slavema3==null && slavema1!=null && slavema1 >= 20) {adult7=adlt1imp;}
+			 if (slavema3==null && slavema1!=null && slavema1 >= 20) {child7=chil1imp;}
+			 if (slavemx3==null && slavemx1!=null && slavemx1 >=20) {male7=male1imp;}
+			 if (slavemx3==null && slavemx1!=null && slavemx1 >= 20) {female7=feml1imp;}
+			 
 			 if (menrat3==null && menrat1!=null && menrat1 >= 0) {menrat7=menrat1;}
 			 if (womrat3==null && womrat1!=null && womrat1 >= 0) {womrat7=womrat1;}
 			 if (boyrat3==null && boyrat1!=null && boyrat1 >= 0) {boyrat7=boyrat1;}
 			 if (girlrat3==null && girlrat1!=null && girlrat1 >= 0) {girlrat7=girlrat1;}
 			 if (malrat3==null && malrat1!=null && malrat1 >= 0) {malrat7=malrat1;}
 			 if (chilrat3==null&& chilrat1!=null && chilrat1 >= 0) {chilrat7=chilrat1;}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 
 		 //more defaults
-		 men2=defVal(men2, 0);
-		 women2=defVal(women2, 0);
-		 boy2=defVal(boy2, 0);
-		 girl2=defVal(girl2, 0);
-		 child2=defVal(child2, 0);
-		 adult2=defVal(adult2, 0);
-		 male2=defVal(male2, 0);
-		 female2=defVal(female2, 0);
 		 
-		 adlt2imp = men2+women2;
-		 chil2imp = boy2+girl2+child2;
-		 male2imp=men2+boy2;
-		 feml2imp=women2+girl2;
+		if((men2 != null && men2 >= 1) || (women2 != null && women2 >= 1) || (boy2 != null && boy2 >= 1) || (girl2 != null && girl2 >= 1) || (child2 != null && child2 >= 1) ||
+				  (adult2 != null && adult2 >= 1))
+		{	
+		  men2=defVal(men2, 0);
+		  women2=defVal(women2, 0);
+		  boy2=defVal(boy2, 0);
+		  girl2=defVal(girl2, 0);
+		  child2=defVal(child2, 0);
+		  adult2=defVal(adult2, 0);
+		}
+
+		 adlt2imp = addIntWithNulls(new Integer[]{men2,women2});
+		 chil2imp = addIntWithNulls(new Integer[]{boy2,girl2,child2});
+		 
+		 if((male2 != null && male2 >= 1) || (female2 != null && female2 >= 1))
+		 {
+		   male2=defVal(male2, 0);
+		   female2=defVal(female2, 0);
+		 }
+		 
+		 
+		 male2imp=male2;
+		 feml2imp=female2;
+		 
+		 if(male2imp==null){male2imp=addIntWithNulls(new Integer[]{men2,boy2});}
+		 if(feml2imp==null){feml2imp=addIntWithNulls(new Integer[]{women2,girl2});}
+
 		 
 		 //Save back to voyage object
 		 voyage.setAdlt1imp(adlt1imp); 
-		 if(chil1imp !=null) {voyage.setChil1imp(chil1imp.doubleValue());}
-		 if(male1imp !=null) {voyage.setMale1imp(male1imp.doubleValue());}
-		 if(feml1imp !=null) {voyage.setFeml1imp(feml1imp.doubleValue());}
+		 voyage.setChil1imp((chil1imp==null ? null : chil1imp.doubleValue()));
+		 voyage.setMale1imp((male1imp==null ? null : male1imp.doubleValue()));
+		 voyage.setFeml1imp((feml1imp==null ? null : feml1imp.doubleValue()));
 		 voyage.setAdlt2imp(adlt2imp);
 		 voyage.setChil2imp(chil2imp);
 		 voyage.setMale2imp(male2imp);
 		 voyage.setFeml2imp(feml2imp);
-		 if(slavema1!=null) {voyage.setSlavema1(slavema1.doubleValue());}
-		 if(slavemx1 !=null) {voyage.setSlavemx1(slavemx1.doubleValue());}
+		 voyage.setSlavema1((slavema1==null ? null : slavema1.doubleValue()));
+		 voyage.setSlavemx1((slavemx1==null ? null : slavemx1.doubleValue()));
 		 voyage.setSlavmax1(slavmax1);
 		 voyage.setChilrat1(chilrat1);
 		 voyage.setMalrat1(malrat1);  
@@ -2498,7 +2588,7 @@ public class VoyagesCalculation {
 		 voyage.setFeml3imp(feml3imp);
 		 voyage.setSlavema3(slavema3);
 		 voyage.setSlavemx3(slavemx3);
-		 if(slavmax3 !=null) {voyage.setSlavmax3(slavmax3.intValue());}
+		 voyage.setSlavmax3((slavmax3==null ? null : slavmax3.intValue()));
 		 voyage.setChilrat3(chilrat3);
 	     voyage.setMalrat3(malrat3);
 	     voyage.setMenrat3(menrat3);
@@ -2507,7 +2597,7 @@ public class VoyagesCalculation {
 	     voyage.setGirlrat3(girlrat3);
 	     voyage.setSlavema7(slavema7);
 	     voyage.setSlavemx7(slavemx7);
-	     if(slavmax7 !=null) {voyage.setSlavmax7(slavmax7.intValue());}
+	     voyage.setSlavmax7((slavmax7==null ? null : slavmax7.intValue()));
 	     voyage.setMen7(men7);
 	     voyage.setWomen7(women7);
          voyage.setBoy7(boy7);
@@ -2516,12 +2606,12 @@ public class VoyagesCalculation {
 	     voyage.setChild7(child7);
 	     voyage.setMale7(male7);
 	     voyage.setFemale7(female7);
-		 if(menrat7 !=null) {voyage.setMenrat7(menrat7.floatValue());}
-		 if(womrat7 !=null) {voyage.setWomrat7(womrat7.floatValue());}
-		 if(boyrat7 !=null) {voyage.setBoyrat7(boyrat7.floatValue());}
-		 if(girlrat7 !=null) {voyage.setGirlrat7(girlrat7.floatValue());}
-		 if(malrat7 !=null) {voyage.setMalrat7(malrat7.floatValue());}
-		 if(chilrat7 !=null) {voyage.setChilrat7(chilrat7.floatValue());}
+		 voyage.setMenrat7((menrat7==null ? null : menrat7.floatValue()));
+		 voyage.setWomrat7((womrat7==null ? null : womrat7.floatValue()));
+		 voyage.setBoyrat7((boyrat7==null ? null : boyrat7.floatValue()));
+		 voyage.setGirlrat7((girlrat7==null ? null : girlrat7.floatValue()));
+		 voyage.setMalrat7((malrat7==null ? null : malrat7.floatValue()));
+		 voyage.setChilrat7((chilrat7==null ? null : chilrat7.floatValue()));
 	}
 	
 	public void calculateXmImpflag(){
@@ -2879,6 +2969,81 @@ public class VoyagesCalculation {
 		return dt;
 	}
 	
+	/*
+	 * Takes array of integers and returns an Integer with the sum, skipping the null values
+	 * If all are null it returns null
+	 */
+	public Integer addIntWithNulls(Integer[] input)
+	{
+		Integer ret=0;
+		boolean allNull=true;
+		
+		for(int i=0; i < input.length; i++)
+		{
+			if(input[i] != null)
+			{
+				ret+= input[i];
+				allNull=false;
+			}
+				
+		}
+		
+		if(allNull==true)
+			return null;
+		else
+		    return ret;
+	}
+	
+	
+	/*
+	 * Takes array of integers and returns a Double with the sum, skipping the null values
+	 * If all are null it returns null
+	 */
+	public Double addDoubWithNulls(Integer[] input)
+	{
+		Integer ret=0;
+		boolean allNull=true;
+		
+		for(int i=0; i < input.length; i++)
+		{
+			if(input[i] != null)
+			{
+				ret+= input[i];
+				allNull=false;
+			}
+				
+		}
+		
+		if(allNull==true)
+			return null;
+		else
+		    return ret.doubleValue();
+	}
+	
+	
+	/*
+	 * Takes array of Doubles and returns a Double with the sum, skipping the null values
+	 * If all are null it returns null
+	 */
+	public Double addDoubWithNulls(Double[] input)
+	{
+		Double ret=0d;
+		boolean allNull=true;
+		
+		for(int i=0; i < input.length; i++)
+		{
+			if(input[i] != null)
+			{
+				ret+= input[i];
+				allNull=false;
+			}
+				
+		}
+		
+		if(allNull==true)
+			return null;
+		else
+		    return ret;
+	}
 	
 }
-
