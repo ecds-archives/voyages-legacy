@@ -9,6 +9,7 @@ import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Enumeration;
 
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -17,6 +18,8 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import org.junit.Test;
+
+import com.sun.org.apache.xalan.internal.xsltc.runtime.Hashtable;
 
 import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.dm.Fate;
@@ -202,6 +205,7 @@ public class VoyageCalcSystemTest extends TestCase {
 	public void testImputedVars(){
 		Test1 t1 = new Test1(); // comparison class
 		BufferedWriter fOut=null; //writes to output file
+		Hashtable ht = new Hashtable();
 		
 		try
 		{
@@ -214,8 +218,8 @@ public class VoyageCalcSystemTest extends TestCase {
 		
 		try{
 			/*28,32,36,38,56,72,99,100,106,109*/
-			Integer[] voyageIdArray = {28,32,36,38,56,72,99,100,106,109};						
-			//Integer[] voyageIdArray = {452, 72};
+			//Integer[] voyageIdArray = {28,32,36,38,56,72,99,100,106,109};						
+			Integer[] voyageIdArray = {28, 72, 245};
 			int revision = 1;
 			for (int i=0; i < voyageIdArray.length; i++){
 				
@@ -257,6 +261,10 @@ public class VoyageCalcSystemTest extends TestCase {
 					{
 						fOut.write(voyAnswer[j][0]+","+ voyAnswer[j][1] + "," + voyAnswer[j][2]);
 						fOut.newLine();
+						
+						Integer temp = (Integer)ht.get(voyAnswer[j][0]);
+						if(temp==null) {temp=0;}
+						ht.put(voyAnswer[j][0],temp+1);
 						//System.out.println(voyAnswer[j][0]+": "+ voyAnswer[j][1] + " " + voyAnswer[j][2]);                                                           
 					}
 					
@@ -265,7 +273,27 @@ public class VoyageCalcSystemTest extends TestCase {
 				fOut.write(",,");
 				fOut.newLine();
 			}
+			
+			fOut.write(",,");
+			fOut.newLine();
+			fOut.write("REPORT,,");
+			fOut.newLine();
+			System.out.println("REPORT:");
+			
+			Enumeration e = ht.keys();
+			
+			while (e.hasMoreElements())
+			{
+				String key = (String) e.nextElement ();
+				Integer val = (Integer)ht.get(key);
+				fOut.write(key+","+val+",");
+				fOut.newLine();
+				System.out.println(key + ": " + val);
+			}
+			
+			
 			fOut.close();
+			System.out.println("END");
 			
 		}
 		catch(Exception e){
@@ -277,6 +305,7 @@ public class VoyageCalcSystemTest extends TestCase {
 	public void testImputedVars1(){
 		Test1 t1 = new Test1(); // comparison class
 		BufferedWriter fOut=null; //writes to output file
+		Hashtable ht = new Hashtable();
 		
 		try
 		{
@@ -336,6 +365,11 @@ public class VoyageCalcSystemTest extends TestCase {
 					{
 						fOut.write(voyAnswer[j][0]+","+ voyAnswer[j][1] + "," + voyAnswer[j][2]);
 						fOut.newLine();
+						
+						Integer temp = (Integer)ht.get(voyAnswer[j][0]);
+						if(temp==null) {temp=0;}
+						ht.put(voyAnswer[j][0],temp+1);
+						
 						//System.out.println(voyAnswer[j][0]+": "+ voyAnswer[j][1] + " " + voyAnswer[j][2]);                                                           
 					}
 					
@@ -345,7 +379,25 @@ public class VoyageCalcSystemTest extends TestCase {
 				fOut.newLine();
 			  		      
 		    }
-		    //Close the input and output streams
+		    //write report close the input / output 
+		    
+		    fOut.write(",,");
+			fOut.newLine();
+			fOut.write("REPORT,,");
+			fOut.newLine();
+			System.out.println("REPORT:");
+			
+			Enumeration e = ht.keys();
+			
+			while (e.hasMoreElements())
+			{
+				String key = (String) e.nextElement ();
+				Integer val = (Integer)ht.get(key);
+				fOut.write(key+","+val+",");
+				fOut.newLine();
+				System.out.println(key + ": " + val);
+			}
+		    
 		    in.close();
 		    fOut.close();
 		    System.out.println("END");
