@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="TAST" basedir="." default="war">	
+	<property name="webdir" location="WebContent" />
+	<property name="libdir" location="${webdir}/WEB-INF/lib" />
+	<property name="build" location="build" />
+	<!-- change servletlib property as necessary -->
+	<property name="servletlib" location="C:/tools/apache-5.5.25/common/lib" /> 	
+	<property name="src" location="src" />
+		 	
+	<fail message="Usage ant -f build.xml -Denv=env (env=dev/qa/prod)" unless="env"/>
+
+	<target name="clean">
+		<delete dir="${build}"/>
+		<delete file="tast.jar"/>
+		<delete file="tast.war"/>		
+	</target>
+	
+	<target name="compile">
+		<mkdir dir="${build}" />
+			 
+		<javac srcdir="${src}" destdir="${build}"  failonerror="true" fork="true"  
+			  excludes="test/**" target="1.5" source="1.5">		
+				<classpath>
+					<fileset dir="${libdir}">
+						<include name="*.jar" />
+					</fileset>
+					<fileset dir="${servletlib}">
+						<include name="jsp-api.jar" />
+						<include name="servlet-api.jar" />
+					</fileset> 
+				</classpath>
+		</javac> 
+	</target>
+	
+	<target name="jar" depends="compile">
+		<copy file="${src}\hibernate.${env}.properties" todir="${build}"/>
+		<move file="${build}\hibernate.${env}.properties" tofile="${build}\hibernate.properties"/>
+		<copy file="${src}\tast.${env}.properties" todir="${build}"/>
+		<move file="${build}\tast.${env}.properties" tofile="${build}\tast.properties"/>
+					 
+		<jar destfile="tast.jar">
+		    <fileset dir="${build}" />
+			<fileset dir="${src}">
+				<include name="edu/emory/library/tast/dm/*.hbm.xml" />				
+				<include name="hibernate.cfg.xml" />
+				<include name="resources.properties" />
+				<include name="symbols.xml" />
+				<include name="languages.xml" />
+				<include name="attribute-groups.xml" />
+				<include name="searchable-attributes.xml" />
+				<include name="table-attributes.xml" />
+				<include name="submission-attributes.xml" />
+			</fileset>
+		</jar>
+	</target> 
+	
+	<target name="war" depends="compile">
+		<copy file="${src}\hibernate.${env}.properties" todir="${build}"/>
+		<move file="${build}\hibernate.${env}.properties" tofile="${build}\hibernate.properties"/>
+		<copy file="${src}\tast.${env}.properties" todir="${build}"/>
+		<move file="${build}\tast.${env}.properties" tofile="${build}\tast.properties"/>
+		
+		<war warfile="tast.war" webxml="${webdir}/WEB-INF/web.xml">
+			<classes dir="${build}" />
+			<classes dir="${src}">
+				<include name="edu/emory/library/tast/dm/*.hbm.xml" />	
+				<include name="log4j.properties" />
+				<include name="hibernate.cfg.xml" />
+				<include name="resources.properties" />
+				<include name="symbols.xml" />
+				<include name="languages.xml" />
+				<include name="attribute-groups.xml" />
+				<include name="searchable-attributes.xml" />
+				<include name="table-attributes.xml" />
+				<include name="submission-attributes.xml" />
+			</classes>
+			<fileset dir="${webdir}">
+				<exclude name="tests/**" />			
+				<exclude name="images-list.jsp" />
+				<exclude name="images-detail.jsp" />
+				<exclude name="lookup.jsp" />
+				<exclude name="WEB-INF/web.xml" />
+			</fileset>
+		</war>
+	</target>	
+	
+</project>
