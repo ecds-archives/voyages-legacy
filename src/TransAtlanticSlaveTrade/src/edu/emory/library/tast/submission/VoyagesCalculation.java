@@ -144,8 +144,7 @@ public class VoyagesCalculation {
 	    try {
 	    	if ((tontypeObj == null) && yearam > 1714 && yearam < 1786 && tonnage > 0 && natinimp == 7) {tontype=22;}
 	    	
-	    	if (tonmod == 0f) { tonmod = 9999f; }
- 			else if (tontype == 14 || tontype == 15 || tontype == 17) {tonmod = 52.86f + (1.22f * tonnage);}
+	    	if (tontype == 14 || tontype == 15 || tontype == 17) {tonmod = 52.86f + (1.22f * tonnage);}
      		else if (tontype == 22 && tonnage > 250) {tonmod=13.1f + (1.1f * tonnage);}
      		else if (tontype == 22 && tonnage > 150 && tonnage < 251) {tonmod=65.3f + (1.2f * tonnage);}
      		else if (tontype == 22 && tonnage < 151) {tonmod=2.3f + (1.8f * tonnage);}     			
@@ -173,7 +172,7 @@ public class VoyagesCalculation {
 	    
         //Store the result in the object
 		if(tonmod > 0f) {
-	    	voyage.setTonmod(new Float(tonmod));
+	    	voyage.setTonmod(new Float(round(tonmod,1)));
 	    }
 	}	
 	
@@ -721,7 +720,7 @@ public class VoyagesCalculation {
 	    
 	    //convert dates to long, subtract, convert to days
 	    Long diff = (end.getTime() - start.getTime())/(1000 * 60 * 60 * 24);
-	    diff = round(diff);
+	    diff = round(diff,0);
 	    
 	    if(diff < 0)
 	    	diff=diff*-1;
@@ -732,13 +731,13 @@ public class VoyagesCalculation {
 	/*
 	 * Rounds a value to the closest double value
 	 */
-	public static Double round(Double d)
+	public static Double round(Double d, int pre)
 	{
 		if(d==null)
 			return null; //returns null when input is null
 		
 	    Double ret=0d;
-	    int decimalPlace = 0;
+	    int decimalPlace = pre;
 	    BigDecimal bd = new BigDecimal(d);
 	    bd = bd.setScale(decimalPlace,BigDecimal.ROUND_HALF_UP);
 	    ret = bd.doubleValue();
@@ -748,18 +747,36 @@ public class VoyagesCalculation {
 	/*
 	 * Rounds a value to the closest long value
 	 */
-	public static Long round(Long l)
+	public static Long round(Long l, int pre)
 	{
 		if(l==null)
 			return null; //returns null when input is null
 		
 	    Long ret=0l;
-	    int decimalPlace = 0;
+	    int decimalPlace = pre;
 	    BigDecimal bd = new BigDecimal(l);
 	    bd = bd.setScale(decimalPlace,BigDecimal.ROUND_HALF_UP);
 	    ret = bd.longValue();
 	    return ret;
 	}
+	
+	
+	/*
+	 * Rounds a value to the closest float value
+	 */
+	public static Float round(Float f, int pre)
+	{
+		if(f==null)
+			return null; //returns null when input is null
+		
+	    Float ret=0f;
+	    int decimalPlace = pre;
+	    BigDecimal bd = new BigDecimal(f);
+	    bd = bd.setScale(decimalPlace,BigDecimal.ROUND_HALF_UP);
+	    ret = bd.floatValue();
+	    return ret;
+	}
+	
 	
 	/*
 	 * ptdepimp: Imputed port where voyage began
@@ -828,7 +845,7 @@ public class VoyagesCalculation {
 			}
 			
 			if (vymrtrat != 0) {
-				voyage.setVymrtrat(vymrtrat);
+				voyage.setVymrtrat(round(vymrtrat,6));
 			}
 			
 			voyage.setVymrtimp(vymrtimp);
@@ -1147,10 +1164,13 @@ public class VoyagesCalculation {
 		//Variables to calculate
 		Double slaximp=null;
 		Double slamimp=null;
+		
+		//Input
 		Integer xmimpflag=null;
 		Long fate2=null;
+		
 		try {
-			//Get variables for calculation
+			//Get more variables for calculation
 			Integer tslavesd = voyage.getTslavesd();
 			if(voyage.getXmimpflag()!=null) {xmimpflag =voyage.getXmimpflag().intValue();} //TODO imputed
 			Integer tslavesp = voyage.getTslavesp();
@@ -2092,8 +2112,8 @@ public class VoyagesCalculation {
 			   slamimp=null;
 			}
 
-			slaximp = round(slaximp);
-			slamimp = round(slamimp);
+			slaximp = round(slaximp,0);
+			slamimp = round(slamimp,0);
 			
 			
 		
@@ -2620,37 +2640,37 @@ public class VoyagesCalculation {
 		 
 		 //Save back to voyage object
 		 voyage.setAdlt1imp(adlt1imp); 
-		 voyage.setChil1imp((chil1imp==null ? null : chil1imp.doubleValue()));
-		 voyage.setMale1imp((male1imp==null ? null : male1imp.doubleValue()));
-		 voyage.setFeml1imp((feml1imp==null ? null : feml1imp.doubleValue()));
+		 voyage.setChil1imp((chil1imp==null ? null : round(chil1imp.doubleValue(), 6)));
+		 voyage.setMale1imp((male1imp==null ? null : round(male1imp.doubleValue(), 6)));
+		 voyage.setFeml1imp((feml1imp==null ? null : round(feml1imp.doubleValue(), 6)));
 		 voyage.setAdlt2imp(adlt2imp);
 		 voyage.setChil2imp(chil2imp);
 		 voyage.setMale2imp(male2imp);
 		 voyage.setFeml2imp(feml2imp);
-		 voyage.setSlavema1((slavema1==null ? null : slavema1.doubleValue()));
-		 voyage.setSlavemx1((slavemx1==null ? null : slavemx1.doubleValue()));
+		 voyage.setSlavema1((slavema1==null ? null : round(slavema1.doubleValue(), 6)));
+		 voyage.setSlavemx1((slavemx1==null ? null : round(slavemx1.doubleValue(), 6)));
 		 voyage.setSlavmax1(slavmax1);
-		 voyage.setChilrat1(chilrat1);
-		 voyage.setMalrat1(malrat1);  
-		 voyage.setMenrat1(menrat1);
-		 voyage.setWomrat1(womrat1);
-		 voyage.setBoyrat1(boyrat1);
-		 voyage.setGirlrat1(girlrat1);
-		 voyage.setAdlt3imp(adlt3imp);
-		 voyage.setChil3imp(chil3imp);
-		 voyage.setMale3imp(male3imp);
-		 voyage.setFeml3imp(feml3imp);
-		 voyage.setSlavema3(slavema3);
-		 voyage.setSlavemx3(slavemx3);
+		 voyage.setChilrat1(round(chilrat1,6));
+		 voyage.setMalrat1(round(malrat1,6));  
+		 voyage.setMenrat1(round(menrat1,6));
+		 voyage.setWomrat1(round(womrat1,6));
+		 voyage.setBoyrat1(round(boyrat1,6));
+		 voyage.setGirlrat1(round(girlrat1,6));
+		 voyage.setAdlt3imp(round(adlt3imp, 6));
+		 voyage.setChil3imp(round(chil3imp, 6));
+		 voyage.setMale3imp(round(male3imp, 6));
+		 voyage.setFeml3imp(round(feml3imp, 6));
+		 voyage.setSlavema3(round(slavema3, 6));
+		 voyage.setSlavemx3(round(slavemx3, 6));
 		 voyage.setSlavmax3((slavmax3==null ? null : slavmax3.intValue()));
-		 voyage.setChilrat3(chilrat3);
-	     voyage.setMalrat3(malrat3);
-	     voyage.setMenrat3(menrat3);
-	     voyage.setWomrat3(womrat3);
-	     voyage.setBoyrat3(boyrat3);
-	     voyage.setGirlrat3(girlrat3);
-	     voyage.setSlavema7(slavema7);
-	     voyage.setSlavemx7(slavemx7);
+		 voyage.setChilrat3(round(chilrat3,6));
+	     voyage.setMalrat3(round(malrat3,6));
+	     voyage.setMenrat3(round(menrat3,6));
+	     voyage.setWomrat3(round(womrat3,6));
+	     voyage.setBoyrat3(round(boyrat3,6));
+	     voyage.setGirlrat3(round(girlrat3,6));
+	     voyage.setSlavema7(round(slavema7, 6));
+	     voyage.setSlavemx7(round(slavemx7, 6));
 	     voyage.setSlavmax7((slavmax7==null ? null : slavmax7.intValue()));
 	     voyage.setMen7(men7);
 	     voyage.setWomen7(women7);
@@ -2660,12 +2680,12 @@ public class VoyagesCalculation {
 	     voyage.setChild7(child7);
 	     voyage.setMale7(male7);
 	     voyage.setFemale7(female7);
-		 voyage.setMenrat7((menrat7==null ? null : menrat7.floatValue()));
-		 voyage.setWomrat7((womrat7==null ? null : womrat7.floatValue()));
-		 voyage.setBoyrat7((boyrat7==null ? null : boyrat7.floatValue()));
-		 voyage.setGirlrat7((girlrat7==null ? null : girlrat7.floatValue()));
-		 voyage.setMalrat7((malrat7==null ? null : malrat7.floatValue()));
-		 voyage.setChilrat7((chilrat7==null ? null : chilrat7.floatValue()));
+		 voyage.setMenrat7((menrat7==null ? null : round(menrat7.floatValue(),6)));
+		 voyage.setWomrat7((womrat7==null ? null : round(womrat7.floatValue(),6)));
+		 voyage.setBoyrat7((boyrat7==null ? null : round(boyrat7.floatValue(),6)));
+		 voyage.setGirlrat7((girlrat7==null ? null : round(girlrat7.floatValue(),6)));
+		 voyage.setMalrat7((malrat7==null ? null : round(malrat7.floatValue(),6)));
+		 voyage.setChilrat7((chilrat7==null ? null : round(chilrat7.floatValue(),6)));
 	}
 	
 	public void calculateXmImpflag(){
@@ -2862,7 +2882,7 @@ public class VoyagesCalculation {
 		else if  ((rig == null || (Arrays.binarySearch(rigArray, rig_int)) >= 0) && (yearam!= null && yearam >= 1626 && yearam < 1651)) {xmimpflag = 127d ;}			
 		
 		if (xmimpflag != 0){
-			voyage.setXmimpflag(xmimpflag);
+			voyage.setXmimpflag(round(xmimpflag, 6));
 			//System.out.println("xmimpflag:" + xmimpflag);
 		}
 	}

@@ -151,10 +151,10 @@ public class VoyageCalcTest2 extends TestCase {
 		
 		 VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voyage);
 		 
-		 result=voyageCalc.round(L1);
+		 result=voyageCalc.round(L1,0);
 		 assertEquals(result, (Long)5l);
 		 
-		 result=voyageCalc.round(L2);
+		 result=voyageCalc.round(L2,0);
 		 assertNull(result);
 	}
 	
@@ -169,19 +169,19 @@ public class VoyageCalcTest2 extends TestCase {
 		
 		 VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voyage);
 		 
-		 result=voyageCalc.round(D1);
+		 result=voyageCalc.round(D1,0);
 		 assertEquals(result, (Double)5d);
 		 
-		 result=voyageCalc.round(D2);
+		 result=voyageCalc.round(D2,0);
 		 assertEquals(result, (Double)11d);
 		 
-		 result=voyageCalc.round(D3);
-		 assertEquals(result, (Double)21d);
+		 result=voyageCalc.round(D3,0);
+		 assertEquals(result, (Double)21d,0);
 		 
-		 result=voyageCalc.round(D4);
+		 result=voyageCalc.round(D4,0);
 		 assertEquals(result, (Double)20d);
 		 
-		 result=voyageCalc.round(D5);
+		 result=voyageCalc.round(D5,0);
 		 assertNull(result);
 	}
 	
@@ -482,7 +482,7 @@ public class VoyageCalcTest2 extends TestCase {
 			voyageCalc.calculateTonmod();
 			
 			saveVoyage(voyage);
-			assertEquals(voyage.getTonmod(), 9999f);
+			//assertEquals(voyage.getTonmod(), 9999f); No loger valid
 			
 			
 			voyage = null;
