@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="TAST" basedir="." default="war">	
 	<property name="webdir" location="WebContent" />
+	<property environment="env" />
 	<property name="libdir" location="${webdir}/WEB-INF/lib" />
 	<property name="build" location="build" />
 	<!-- change servletlib property as necessary -->
-	<property name="servletlib" location="C:/tools/apache-5.5.25/common/lib" /> 	
+	<property name="servletlib" location="${env.servletlib}" /> 	
 	<property name="src" location="src" />
 		 	
 	<fail message="Usage ant -f build.xml -Denv=env (env=dev/qa/prod)" unless="env"/>
