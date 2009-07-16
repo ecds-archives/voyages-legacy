@@ -5,9 +5,10 @@
 	<property name="libdir" location="${webdir}/WEB-INF/lib" />
 	<property name="build" location="build" />
 	<!-- change servletlib property as necessary -->
-	<property name="servletlib" location="${env.servletlib}" /> 	
+	<property name="servletlib" location="${env.tomcat}/lib" /> 	
 	<property name="src" location="src" />
-		 	
+	<echo message="${env.tomcat}"></echo>
+	
 	<fail message="Usage ant -f build.xml -Denv=env (env=dev/qa/prod)" unless="env"/>
 
 	<target name="clean">
@@ -38,7 +39,10 @@
 		<move file="${build}\hibernate.${env}.properties" tofile="${build}\hibernate.properties"/>
 		<copy file="${src}\tast.${env}.properties" todir="${build}"/>
 		<move file="${build}\tast.${env}.properties" tofile="${build}\tast.properties"/>
-					 
+		<!-- <loadfile property="imgDir" srcFile="${build}\tast.properties"/>
+		<propertyregex property="imgEdit" input="${imgDir}" override="true" regexp="images\.dir = .*" replace="images\.dir = ${env.tomcat}/webapps/images-database" />
+		<echo file="${build}\tast.properties">${imgEdit}</echo> -->
+							 
 		<jar destfile="tast.jar">
 		    <fileset dir="${build}" />
 			<fileset dir="${src}">
