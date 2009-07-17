@@ -4,11 +4,10 @@
 	<property environment="env" />
 	<property name="libdir" location="${webdir}/WEB-INF/lib" />
 	<property name="build" location="build" />
-	<!-- change servletlib property as necessary -->
+	<!-- servletlib property should come from env var -->
 	<property name="servletlib" location="${env.tomcat}/lib" /> 	
 	<property name="src" location="src" />
-	<echo message="${env.tomcat}"></echo>
-	
+		
 	<fail message="Usage ant -f build.xml -Denv=env (env=dev/qa/prod)" unless="env"/>
 
 	<target name="clean">
@@ -35,13 +34,39 @@
 	</target>
 	
 	<target name="jar" depends="compile">
+		<echo message="You are in: ${env}" />
 		<copy file="${src}\hibernate.${env}.properties" todir="${build}"/>
 		<move file="${build}\hibernate.${env}.properties" tofile="${build}\hibernate.properties"/>
 		<copy file="${src}\tast.${env}.properties" todir="${build}"/>
 		<move file="${build}\tast.${env}.properties" tofile="${build}\tast.properties"/>
-		<!-- <loadfile property="imgDir" srcFile="${build}\tast.properties"/>
-		<propertyregex property="imgEdit" input="${imgDir}" override="true" regexp="images\.dir = .*" replace="images\.dir = ${env.tomcat}/webapps/images-database" />
-		<echo file="${build}\tast.properties">${imgEdit}</echo> -->
+		<copy file="${src}\pass.${env}.txt" todir="${build}"/>
+		<move file="${build}\pass.${env}.txt" tofile="${build}\pass.txt"/>
+		  
+		<!-- Set passwords in hibernate..propertiees -->
+		<loadfile property="passFile" srcFile="${build}\pass.txt"/>
+		<propertyregex property="user" input="${passFile}" override="true" regexp="user=(.*)" select="\1" />
+		<propertyregex property="pass" input="${passFile}" override="true" regexp="pass=(.*)" select="\1" />
+		
+		<!-- <echo message="${user} ${pass}" /> -->
+		
+		<loadfile property="hibFile" srcFile="${build}\hibernate.properties"/>
+		<propertyregex property= "hibFile" input="${hibFile}" override="true" regexp="(hibernate\.connection\.username\s*=).*" replace="\1 ${user}" />
+		<propertyregex property= "hibFile" input="${hibFile}" override="true" regexp="(hibernate\.connection\.password\s*=)\s*.*" replace="\1 ${pass}" />
+		
+		<echo file="${build}\hibernate.properties">${hibFile}</echo>
+		
+		
+		<!-- Set path to images directory based on location of Tomcat install for DEV only -->
+		<if>
+		 <equals arg1="${env}" arg2="dev"/>
+		 <then>
+		 	<loadfile property="imgDir" srcFile="${build}\tast.properties"/>
+		 	<propertyregex property="imgEdit" input="${imgDir}" override="true" regexp="(images\.dir\s*=)\s*.*" replace="\1 ${env.tomcat}/webapps/images-database" />
+		 	<echo file="${build}\tast.properties">${imgEdit}</echo>
+		 </then>
+		</if>
+
+
 							 
 		<jar destfile="tast.jar">
 		    <fileset dir="${build}" />
@@ -60,10 +85,37 @@
 	</target> 
 	
 	<target name="war" depends="compile">
+		<echo message="You are in: ${env}" />
+		
 		<copy file="${src}\hibernate.${env}.properties" todir="${build}"/>
 		<move file="${build}\hibernate.${env}.properties" tofile="${build}\hibernate.properties"/>
 		<copy file="${src}\tast.${env}.properties" todir="${build}"/>
 		<move file="${build}\tast.${env}.properties" tofile="${build}\tast.properties"/>
+		<copy file="${src}\pass.${env}.txt" todir="${build}"/>
+		<move file="${build}\pass.${env}.txt" tofile="${build}\pass.txt"/>
+		
+		<!-- Set passwords in hibernate..propertiees -->
+		<loadfile property="passFile" srcFile="${build}\pass.txt"/>
+		<propertyregex property="user" input="${passFile}" override="true" regexp="user=(.*)" select="\1" />
+		<propertyregex property="pass" input="${passFile}" override="true" regexp="pass=(.*)" select="\1" />
+		
+		<!-- <echo message="${user} ${pass}" /> -->
+		
+		<loadfile property="hibFile" srcFile="${build}\hibernate.properties"/>
+		<propertyregex property= "hibFile" input="${hibFile}" override="true" regexp="(hibernate\.connection\.username\s*=).*" replace="\1 ${user}" />
+		<propertyregex property= "hibFile" input="${hibFile}" override="true" regexp="(hibernate\.connection\.password\s*=)\s*.*" replace="\1 ${pass}" />
+			
+		<echo file="${build}\hibernate.properties">${hibFile}</echo>
+		
+		<!-- Set path to images directory based on location of Tomcat install for DEV only -->
+		<if>
+			<equals arg1="${env}" arg2="dev"/>
+				 <then>
+				 	<loadfile property="imgDir" srcFile="${build}\tast.properties"/>
+				 	<propertyregex property="imgEdit" input="${imgDir}" override="true" regexp="(images\.dir\s*=)\s*.*" replace="\1 ${env.tomcat}/webapps/images-database" />
+				 	<echo file="${build}\tast.properties">${imgEdit}</echo>
+				 </then>
+		</if>
 		
 		<war warfile="tast.war" webxml="${webdir}/WEB-INF/web.xml">
 			<classes dir="${build}" />

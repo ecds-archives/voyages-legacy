@@ -2376,17 +2376,33 @@ public class VoyagesCalculation {
 			 
 			 
 			  
-			  if(male1imp==null) 
-			  {
-				 male1imp = addIntWithNulls(new Integer[]{men1, boy1, men4, boy4, men5, boy5});
-			      
-			  }
-			  
-			  if(feml1imp==null)
-			  {
-				  
-				  feml1imp = addIntWithNulls(new Integer[]{women1, girl1, women4, girl4, women5,girl5});
-			  }
+			 if (male1imp==null && 
+					 adult1 != null && adult1 == 0 && 
+					 adult4 != null && adult4 == 0 && 
+					 adult5 != null && adult5 == 0 && 
+					 child1 != null && child1 == 0 && 
+					 child4 != null && child4 == 0 
+					 && child5 != null && child5 == 0 
+					 && infant1 != null && infant1 == 0 && 
+					 infant4 != null && infant4 == 0) 
+			 {
+				male1imp = addIntWithNulls(new Integer[]{men1,boy1,men4,boy4,men5,boy5});
+			 }
+					 
+			if (feml1imp==null && 
+					adult1 != null && adult1 == 0 && 
+					adult4 != null && adult4 == 0 && 
+					adult5 != null && adult5 == 0 && 
+					child1 != null && child1 == 0 && 
+					child4 != null && child4 == 0 && 
+					child5 != null && child5 == 0 && 
+					infant1 != null && infant1 == 0 && 
+					infant4 != null && infant4 == 0)
+			{
+				feml1imp = addIntWithNulls(new Integer[]{women1,girl1,women4,girl4,women5,girl5});
+			}
+				
+
 			  
 
  			 if (tslavesd!=null && tslavesd >=1 && adlt1imp!=null && adlt1imp==0 && chil1imp !=null && chil1imp >= 1 ) {adlt1imp = tslavesd - chil1imp;}
@@ -2398,10 +2414,10 @@ public class VoyagesCalculation {
 			 slavema1 = addIntWithNulls(new Integer[]{adlt1imp,chil1imp});
 			 slavemx1 = addIntWithNulls(new Integer[]{male1imp, feml1imp});
 			 
-			 if(slavema1!=null && slavema1 >= 1)
-				 {
-				    slavmax1= addIntWithNulls(new Integer[]{men1, women1, boy1, girl1, men4, women4, boy4, girl4, men5, women5, boy5, girl5});
-				 }
+			 if (slavema1!=null &&  slavema1 >= 1 && slavemx1!=null && slavemx1 >= 1) 
+			 {
+				 slavmax1=addIntWithNulls(new Integer[]{men1,women1,boy1,girl1,men4,women4,boy4,girl4,men5,women5,boy5,girl5});
+			}
 
 			 if(slavema1!=null && slavema1 >=0 && slavema1 <= 19) {slavema1=null;}
 			 if(slavemx1!=null && slavemx1 >=0 && slavemx1 <=19) {slavemx1=null;}
@@ -2505,8 +2521,26 @@ public class VoyagesCalculation {
 			 male3imp = addDoubWithNulls(new Integer[]{male3,male6});
 			 feml3imp = addDoubWithNulls(new Integer[]{female3,female6});
 			 
-			 if(male3imp==null) male3imp = addDoubWithNulls(new Integer[]{men3,boy3,infantm3,men6,boy6});
-			 if(feml3imp==null) feml3imp = addDoubWithNulls(new Integer[]{women3,girl3,infantf3,women6,girl6});
+		if (male3imp==null && 
+				adult3 != null && adult3 == 0 && 
+				adult6 != null && adult6 == 0 && 
+				child3 != null && child3 == 0 && 
+				child6 != null && child6 == 0 && 
+				infant3 != null && infant3 == 0)
+		{
+			male3imp = addDoubWithNulls(new Integer[]{men3,boy3,men6,boy6});
+		}
+		
+		if (feml3imp==null && 
+				adult3 != null && adult3 == 0 && 
+				adult6 != null && adult6 == 0 && 
+				child3 != null && child3 == 0 && 
+				child6 != null && child6 == 0 && 
+				infant3 != null && infant3 == 0) 
+		{
+			feml3imp = addDoubWithNulls(new Integer[]{women3,girl3,women6,girl6});
+		}
+
 
 
 			 if (slaarriv!=null && slaarriv >=1 && adlt3imp!=null && adlt3imp==0 && chil3imp!=null) {adlt3imp = slaarriv - chil3imp;}
@@ -2517,7 +2551,10 @@ public class VoyagesCalculation {
 			 slavema3 = addDoubWithNulls(new Double[]{adlt3imp,chil3imp});
 			 slavemx3 = addDoubWithNulls(new Double[]{male3imp,feml3imp});
 			 
-			 if (slavema3!=null&& slavema3 >=1) {slavmax3= addDoubWithNulls(new Integer[]{men3,women3,boy3,girl3,men6,women6,boy6,girl6});}
+			 if (slavema3 !=null && slavema3 >= 1 && slavemx3!=null && slavemx3 >=1) 
+			 {
+				 slavmax3=addDoubWithNulls(new Integer[]{men3,women3,boy3,girl3,men6,women6,boy6,girl6});
+			 }
 
              if(slavema3!=null && slavema3 >= 0 && slavema3 <= 19) {slavema3=null;}
              if(slavemx3!=null && slavemx3 >= 0 && slavemx3 <= 19) {slavemx3=null;}
