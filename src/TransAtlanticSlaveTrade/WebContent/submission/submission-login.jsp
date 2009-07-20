@@ -93,9 +93,8 @@
 				
 				</div>
 				
-<!-- 				<p>If you don't have an account, <a href="new-user.faces">click here</a>.</p> -->
-				<p>If you don't have an account, <a href="#">click here</a>.</p>
-		
+ 				<p>If you don't have an account, <a href="new-user.faces">click here</a>.</p>
+						
 				</s:simpleBox>
 			</td>
 		</tr>
