@@ -5,7 +5,7 @@
 	<property name="libdir" location="${webdir}/WEB-INF/lib" />
 	<property name="build" location="build" />
 	<!-- servletlib property should come from env var -->
-	<property name="servletlib" location="${env.tomcat}/lib" /> 	
+	<property name="servletlib" location="${env.servletlib}" /> 	
 	<property name="src" location="src" />
 		
 	<fail message="Usage ant -f build.xml -Denv=env (env=dev/qa/prod)" unless="env"/>
@@ -46,6 +46,7 @@
 		<loadfile property="passFile" srcFile="${build}\pass.txt"/>
 		<propertyregex property="user" input="${passFile}" override="true" regexp="user=(.*)" select="\1" />
 		<propertyregex property="pass" input="${passFile}" override="true" regexp="pass=(.*)" select="\1" />
+		<delete file="${build}\pass.txt"/>
 		
 		<!-- <echo message="${user} ${pass}" /> -->
 		
@@ -56,13 +57,14 @@
 		<echo file="${build}\hibernate.properties">${hibFile}</echo>
 		
 		
-		<!-- Set path to images directory based on location of Tomcat install for DEV only -->
+		<!-- Set path to images and export directories based on location of Tomcat install for DEV only -->
 		<if>
 		 <equals arg1="${env}" arg2="dev"/>
 		 <then>
-		 	<loadfile property="imgDir" srcFile="${build}\tast.properties"/>
-		 	<propertyregex property="imgEdit" input="${imgDir}" override="true" regexp="(images\.dir\s*=)\s*.*" replace="\1 ${env.tomcat}/webapps/images-database" />
-		 	<echo file="${build}\tast.properties">${imgEdit}</echo>
+		 	<loadfile property="TASEdit" srcFile="${build}\tast.properties"/>
+		 	<propertyregex property="TASEdit" input="${TASEdit}" override="true" regexp="(images\.dir\s*=)\s*.*" replace="\1 ${env.webapps}/images-database" />
+		 	<propertyregex property="TASEdit" input="${TASEdit}" override="true" regexp="(export\.dir\s*=)\s*.*" replace="\1 ${env.webapps}/export" />
+		 	<echo file="${build}\tast.properties">${TASEdit}</echo>
 		 </then>
 		</if>
 
@@ -98,6 +100,7 @@
 		<loadfile property="passFile" srcFile="${build}\pass.txt"/>
 		<propertyregex property="user" input="${passFile}" override="true" regexp="user=(.*)" select="\1" />
 		<propertyregex property="pass" input="${passFile}" override="true" regexp="pass=(.*)" select="\1" />
+		<delete file="${build}\pass.txt"/>
 		
 		<!-- <echo message="${user} ${pass}" /> -->
 		
@@ -107,14 +110,15 @@
 			
 		<echo file="${build}\hibernate.properties">${hibFile}</echo>
 		
-		<!-- Set path to images directory based on location of Tomcat install for DEV only -->
+		<!-- Set path to images and export directories based on location of Tomcat install for DEV only -->
 		<if>
-			<equals arg1="${env}" arg2="dev"/>
-				 <then>
-				 	<loadfile property="imgDir" srcFile="${build}\tast.properties"/>
-				 	<propertyregex property="imgEdit" input="${imgDir}" override="true" regexp="(images\.dir\s*=)\s*.*" replace="\1 ${env.tomcat}/webapps/images-database" />
-				 	<echo file="${build}\tast.properties">${imgEdit}</echo>
-				 </then>
+		<equals arg1="${env}" arg2="dev"/>
+			<then>
+				<loadfile property="TASEdit" srcFile="${build}\tast.properties"/>
+				<propertyregex property="TASEdit" input="${TASEdit}" override="true" regexp="(images\.dir\s*=)\s*.*" replace="\1 ${env.webapps}/images-database" />
+				<propertyregex property="TASEdit" input="${TASEdit}" override="true" regexp="(export\.dir\s*=)\s*.*" replace="\1 ${env.webapps}/export" />
+				<echo file="${build}\tast.properties">${TASEdit}</echo>
+			</then>
 		</if>
 		
 		<war warfile="tast.war" webxml="${webdir}/WEB-INF/web.xml">
