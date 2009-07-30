@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="TAST" basedir="." default="war">	
 	<property name="webdir" location="WebContent" />
-	<property environment="env" />
+	<property environment="environ" />
 	<property name="libdir" location="${webdir}/WEB-INF/lib" />
 	<property name="build" location="build" />
 	<!-- servletlib property should come from env var -->
-	<property name="servletlib" location="${env.servletlib}" /> 	
+	<property name="servletlib" location="${environ.servletlib}" /> 	
 	<property name="src" location="src" />
 		
 	<fail message="Usage ant -f build.xml -Denv=env (env=dev/qa/prod)" unless="env"/>
@@ -62,8 +62,8 @@
 		 <equals arg1="${env}" arg2="dev"/>
 		 <then>
 		 	<loadfile property="TASEdit" srcFile="${build}\tast.properties"/>
-		 	<propertyregex property="TASEdit" input="${TASEdit}" override="true" regexp="(images\.dir\s*=)\s*.*" replace="\1 ${env.webapps}/images-database" />
-		 	<propertyregex property="TASEdit" input="${TASEdit}" override="true" regexp="(export\.dir\s*=)\s*.*" replace="\1 ${env.webapps}/export" />
+		 	<propertyregex property="TASEdit" input="${TASEdit}" override="true" regexp="(images\.dir\s*=)\s*.*" replace="\1 ${environ.webapps}/images-database" />
+		 	<propertyregex property="TASEdit" input="${TASEdit}" override="true" regexp="(export\.dir\s*=)\s*.*" replace="\1 ${environ.webapps}/export" />
 		 	<echo file="${build}\tast.properties">${TASEdit}</echo>
 		 </then>
 		</if>
@@ -115,8 +115,8 @@
 		<equals arg1="${env}" arg2="dev"/>
 			<then>
 				<loadfile property="TASEdit" srcFile="${build}\tast.properties"/>
-				<propertyregex property="TASEdit" input="${TASEdit}" override="true" regexp="(images\.dir\s*=)\s*.*" replace="\1 ${env.webapps}/images-database" />
-				<propertyregex property="TASEdit" input="${TASEdit}" override="true" regexp="(export\.dir\s*=)\s*.*" replace="\1 ${env.webapps}/export" />
+				<propertyregex property="TASEdit" input="${TASEdit}" override="true" regexp="(images\.dir\s*=)\s*.*" replace="\1 ${environ.webapps}/images-database" />
+				<propertyregex property="TASEdit" input="${TASEdit}" override="true" regexp="(export\.dir\s*=)\s*.*" replace="\1 ${environ.webapps}/export" />
 				<echo file="${build}\tast.properties">${TASEdit}</echo>
 			</then>
 		</if>
