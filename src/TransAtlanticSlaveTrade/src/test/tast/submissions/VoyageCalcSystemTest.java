@@ -317,7 +317,7 @@ public class VoyageCalcSystemTest extends TestCase {
 		}
 		
 		try{			
-			String fPath = "/dev/_workspace/tast/src/test/tast/submissions/batch_voyages.txt";		
+			String fPath = "/dev/voyages/src/test/tast/submissions/batch_voyages.txt";		
 			FileInputStream fstream = new FileInputStream(fPath);
 			//Get the object of DataInputStream
 		    DataInputStream in = new DataInputStream(fstream);
