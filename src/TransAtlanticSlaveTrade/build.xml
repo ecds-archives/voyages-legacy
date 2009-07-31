@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="TAST" basedir="." default="war">	
 	<property name="webdir" location="WebContent" />
-	<property environment="environ" />
+	<!-- <property environment="environ" /> -->
 	<property name="libdir" location="${webdir}/WEB-INF/lib" />
 	<property name="build" location="build" />
-	<!-- servletlib property should come from env var -->
-	<property name="servletlib" location="${environ.servletlib}" /> 	
+	<!-- servletlib property should be configured -->
+	<property name="servletlib" location="xxx" /> 	
 	<property name="src" location="src" />
 		
 	<fail message="Usage ant -f build.xml -Denv=env (env=dev/qa/prod)" unless="env"/>
@@ -39,25 +39,24 @@
 		<move file="${build}\hibernate.${env}.properties" tofile="${build}\hibernate.properties"/>
 		<copy file="${src}\tast.${env}.properties" todir="${build}"/>
 		<move file="${build}\tast.${env}.properties" tofile="${build}\tast.properties"/>
-		<copy file="${src}\pass.${env}.txt" todir="${build}"/>
+		<!-- <copy file="${src}\pass.${env}.txt" todir="${build}"/>
 		<move file="${build}\pass.${env}.txt" tofile="${build}\pass.txt"/>
 		  
-		<!-- Set passwords in hibernate..propertiees -->
+		Set passwords in hibernate..propertiees
 		<loadfile property="passFile" srcFile="${build}\pass.txt"/>
 		<propertyregex property="user" input="${passFile}" override="true" regexp="user=(.*)" select="\1" />
 		<propertyregex property="pass" input="${passFile}" override="true" regexp="pass=(.*)" select="\1" />
 		<delete file="${build}\pass.txt"/>
 		
-		<!-- <echo message="${user} ${pass}" /> -->
 		
 		<loadfile property="hibFile" srcFile="${build}\hibernate.properties"/>
 		<propertyregex property= "hibFile" input="${hibFile}" override="true" regexp="(hibernate\.connection\.username\s*=).*" replace="\1 ${user}" />
 		<propertyregex property= "hibFile" input="${hibFile}" override="true" regexp="(hibernate\.connection\.password\s*=)\s*.*" replace="\1 ${pass}" />
 		
-		<echo file="${build}\hibernate.properties">${hibFile}</echo>
+		<echo file="${build}\hibernate.properties">${hibFile}</echo>  
 		
 		
-		<!-- Set path to images and export directories based on location of Tomcat install for DEV only -->
+		Set path to images and export directories based on location of Tomcat install for DEV only
 		<if>
 		 <equals arg1="${env}" arg2="dev"/>
 		 <then>
@@ -66,7 +65,7 @@
 		 	<propertyregex property="TASEdit" input="${TASEdit}" override="true" regexp="(export\.dir\s*=)\s*.*" replace="\1 ${environ.webapps}/export" />
 		 	<echo file="${build}\tast.properties">${TASEdit}</echo>
 		 </then>
-		</if>
+		</if> -->
 
 
 							 
@@ -93,24 +92,23 @@
 		<move file="${build}\hibernate.${env}.properties" tofile="${build}\hibernate.properties"/>
 		<copy file="${src}\tast.${env}.properties" todir="${build}"/>
 		<move file="${build}\tast.${env}.properties" tofile="${build}\tast.properties"/>
-		<copy file="${src}\pass.${env}.txt" todir="${build}"/>
+		<!-- <copy file="${src}\pass.${env}.txt" todir="${build}"/>
 		<move file="${build}\pass.${env}.txt" tofile="${build}\pass.txt"/>
 		
-		<!-- Set passwords in hibernate..propertiees -->
+		Set passwords in hibernate..propertiees
 		<loadfile property="passFile" srcFile="${build}\pass.txt"/>
 		<propertyregex property="user" input="${passFile}" override="true" regexp="user=(.*)" select="\1" />
 		<propertyregex property="pass" input="${passFile}" override="true" regexp="pass=(.*)" select="\1" />
 		<delete file="${build}\pass.txt"/>
 		
-		<!-- <echo message="${user} ${pass}" /> -->
-		
+				
 		<loadfile property="hibFile" srcFile="${build}\hibernate.properties"/>
 		<propertyregex property= "hibFile" input="${hibFile}" override="true" regexp="(hibernate\.connection\.username\s*=).*" replace="\1 ${user}" />
 		<propertyregex property= "hibFile" input="${hibFile}" override="true" regexp="(hibernate\.connection\.password\s*=)\s*.*" replace="\1 ${pass}" />
 			
 		<echo file="${build}\hibernate.properties">${hibFile}</echo>
 		
-		<!-- Set path to images and export directories based on location of Tomcat install for DEV only -->
+		Set path to images and export directories based on location of Tomcat install for DEV only
 		<if>
 		<equals arg1="${env}" arg2="dev"/>
 			<then>
@@ -119,7 +117,7 @@
 				<propertyregex property="TASEdit" input="${TASEdit}" override="true" regexp="(export\.dir\s*=)\s*.*" replace="\1 ${environ.webapps}/export" />
 				<echo file="${build}\tast.properties">${TASEdit}</echo>
 			</then>
-		</if>
+		</if> -->
 		
 		<war warfile="tast.war" webxml="${webdir}/WEB-INF/web.xml">
 			<classes dir="${build}" />
