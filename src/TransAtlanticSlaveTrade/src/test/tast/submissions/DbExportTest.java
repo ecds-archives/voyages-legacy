@@ -1,0 +1,115 @@
+package test.tast.submissions;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.junit.Test;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.xml.sax.SAXException;
+
+import au.com.bytecode.opencsv.CSVWriter;
+
+import junit.framework.TestCase;
+import edu.emory.library.tast.db.HibernateConn;
+import edu.emory.library.tast.db.TastDbConditions;
+import edu.emory.library.tast.db.TastDbQuery;
+import edu.emory.library.tast.dm.Voyage;
+import edu.emory.library.tast.util.CSVUtils;
+
+
+public class DbExportTest extends TestCase{
+
+	Session session = null;	
+	Transaction tran = null;
+
+	public void setUpSession() throws Exception {
+		session = HibernateConn.getSession();
+		tran = session.beginTransaction();
+	}
+	
+	@Test
+	public void testDbExport(){
+		try {
+			setUpSession();
+			long startTime = System.currentTimeMillis();
+			
+			TastDbQuery query = getQuery();
+			CSVUtils.writeResponse(session, query, false, true);
+			tran.commit();
+			session.close();
+			long endTime = System.currentTimeMillis();
+			long elapsed = endTime - startTime;			
+			System.out.println("time taken: " + elapsed);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private TastDbQuery getQuery() {
+		long startTime = System.currentTimeMillis();
+		TastDbConditions cond = new TastDbConditions();
+		int revision = -1;
+		cond.addCondition(Voyage.getAttribute("revision"), new Integer(revision), TastDbConditions.OP_EQUALS);
+		TastDbQuery q = new TastDbQuery(new String[] {"Voyage"}, new String[] {}, cond, 1000);
+		//TastDbQuery q = new TastDbQuery("Voyage", cond);
+		String[] attrs = Voyage.getAllAttrNames();
+		for (int i = 0; i < attrs.length; i++) {
+			q.addPopulatedAttribute(Voyage.getAttribute(attrs[i]));
+		}
+		return q;
+	}
+	
+	//@Test
+	public void testDbExportToCSV(){
+		try {			
+			long startTime = System.currentTimeMillis();
+			
+			String DB_CONN_STRING = "jdbc:postgresql://localhost/tast";
+			String DB_USER = "tast";
+			String DB_PASS = "pass_1234";
+
+			File file = new File("c:\\tmp\\voyage.csv");
+			FileOutputStream fout = new FileOutputStream(file);
+			CSVWriter writer = new CSVWriter(new OutputStreamWriter(fout), ',');
+			
+			Class.forName("org.postgresql.Driver");
+				
+			Connection conn = DriverManager.getConnection(DB_CONN_STRING, DB_USER, DB_PASS);
+			conn.setAutoCommit(false);
+				
+			Statement stSelectVoyages = conn.createStatement();
+			ResultSet rs = stSelectVoyages.executeQuery("select voyageid, suggestion, revision, iid, adlt1imp, adlt2imp, adlt3imp, adpsale1, adpsale2, adult1, adult2, adult3, adult4, adult5, adult6, adult7, arrport, arrport2, boy1, boy2, boy3, boy4, boy5, boy6, boy7, boyrat1, boyrat3, boyrat7, captaina, captainb, captainc, chil1imp, chil2imp, chil3imp, child1, child2, child3, child4, child5, child6, child7, chilrat1, chilrat3, chilrat7, constreg, crew, crew1, crew2, crew3, crew4, crew5, crewdied, datedepa, datedepb, datedepc, d1slatra, d1slatrb, d1slatrc, dlslatra, dlslatrb, dlslatrc, ddepam, ddepamb, ddepamc, datarr32, datarr33, datarr34, datarr36, datarr37, datarr38, datarr39, datarr40, datarr41, datarr43, datarr44, datarr45, datedep, datebuy, dateleftafr, dateland1, dateland2, dateland3, datedepam, dateend, deptregimp, deptregimp1, embport, embport2, embreg, embreg2, evgreen, fate, fate2, fate3, fate4, female1, female2, female3, female4, female5, female6, female7, feml1imp, feml2imp, feml3imp, girl1, girl2, girl3, girl4, girl5, girl6, girl7, girlrat1, girlrat3, girlrat7, guns, infant1, infant3, infant4, jamcaspr, majbuypt, majbyimp, majbyimp1, majselpt, male1, male1imp, male2, male2imp, male3, male3imp, male4, male5, male6, male7, malrat1, malrat3, malrat7, men1, men2, men3, men4, men5, men6, men7, menrat1, menrat3, menrat7, mjbyptimp, mjselimp, mjselimp1, mjslptimp, natinimp, national, ncar13, ncar15, ncar17, ndesert, npafttra, nppretra, npprior, ownera, ownerb, ownerc, ownerd, ownere, ownerf, ownerg, ownerh, owneri, ownerj, ownerk, ownerl, ownerm, ownern, ownero, ownerp, plac1tra, plac2tra, plac3tra, placcons, placreg, portdep, portret, ptdepimp, regarr, regarr2, regdis1, regdis2, regdis3, regem1, regem2, regem3, regisreg, resistance, retrnreg, retrnreg1, rig, saild1, saild2, saild3, saild4, saild5, shipname, sla1port, slaarriv, sladafri, sladamer, sladied1, sladied2, sladied3, sladied4, sladied5, sladied6, sladvoy, slamimp, slas32, slas36, slas39, slavema1, slavema3, slavema7, slavemx1, slavemx3, slavemx7, slavmax1, slavmax3, slavmax7, slaximp, slinten2, slintend, sourcea, sourceb, sourcec, sourced, sourcee, sourcef, sourceg, sourceh, sourcei, sourcej, sourcek, sourcel, sourcem, sourcen, sourceo, sourcep, sourceq, sourcer, tonmod, tonnage, tontype, tslavesd, tslavesp, tslmtimp, voy1imp, voy2imp, voyage, vymrtimp, vymrtrat, women1, women2, women3, women4, women5, women6, women7, womrat1, womrat3, womrat7, xmimpflag, year10, year100, year25, year5, yearaf, yearam, yeardep, yrcons, yrreg FROM voyages where revision = 1");
+			//int colCount = rs.getMetaData().getColumnCount();
+			String[] str = {"voyageid", "suggestion", "revision", "iid", "adlt1imp*", "adlt2imp*", "adlt3imp*", "adpsale1", "adpsale2", "adult1", "adult2", "adult3", "adult4", "adult5", "adult6", "adult7*", "arrport", "arrport2", "boy1", "boy2", "boy3", "boy4", "boy5", "boy6", "boy7*", "boyrat1*", "boyrat3*", "boyrat7*", "captaina", "captainb", "captainc", "chil1imp*", "chil2imp*", "chil3imp*", "child1", "child2", "child3", "child4", "child5", "child6", "child7*", "chilrat1*", "chilrat3*", "chilrat7*", "constreg*", "crew", "crew1", "crew2", "crew3", "crew4", "crew5", "crewdied", "datedepa", "datedepb", "datedepc", "d1slatra", "d1slatrb", "d1slatrc", "dlslatra", "dlslatrb", "dlslatrc", "ddepam", "ddepamb", "ddepamc", "datarr32", "datarr33", "datarr34", "datarr36", "datarr37", "datarr38", "datarr39", "datarr40", "datarr41", "datarr43", "datarr44", "datarr45", "datedep", "datebuy", "dateleftafr", "dateland1", "dateland2", "dateland3", "datedepam", "dateend", "deptregimp*", "deptregimp1*", "embport", "embport2", "embreg*", "embreg2*", "evgreen", "fate", "fate2*", "fate3*", "fate4*", "female1", "female2", "female3", "female4", "female5", "female6", "female7", "feml1imp*", "feml2imp*", "feml3imp*", "girl1", "girl2", "girl3", "girl4", "girl5", "girl6", "girl7*", "girlrat1*", "girlrat3*", "girlrat7*", "guns", "infant1", "infant3", "infant4", "jamcaspr", "majbuypt", "majbyimp*", "majbyimp1*", "majselpt", "male1", "male1imp*", "male2", "male2imp*", "male3", "male3imp*", "male4", "male5", "male6", "male7*", "malrat1*", "malrat3*", "malrat7*", "men1", "men2", "men3", "men4", "men5", "men6", "men7*", "menrat1*", "menrat3*", "menrat7*", "mjbyptimp*", "mjselimp*", "mjselimp1*", "mjslptimp*", "natinimp*", "national", "ncar13", "ncar15", "ncar17", "ndesert", "npafttra", "nppretra", "npprior", "ownera", "ownerb", "ownerc", "ownerd", "ownere", "ownerf", "ownerg", "ownerh", "owneri", "ownerj", "ownerk", "ownerl", "ownerm", "ownern", "ownero", "ownerp", "plac1tra", "plac2tra", "plac3tra", "placcons", "placreg", "portdep", "portret", "ptdepimp*", "regarr*", "regarr2*", "regdis1*", "regdis2*", "regdis3*", "regem1*", "regem2*", "regem3*", "regisreg*", "resistance", "retrnreg*", "retrnreg1*", "rig", "saild1", "saild2", "saild3", "saild4", "saild5", "shipname", "sla1port", "slaarriv", "sladafri", "sladamer", "sladied1", "sladied2", "sladied3", "sladied4", "sladied5", "sladied6", "sladvoy", "slamimp*", "slas32", "slas36", "slas39", "slavema1*", "slavema3*", "slavema7*", "slavemx1*", "slavemx3*", "slavemx7*", "slavmax1*", "slavmax3*", "slavmax7*", "slaximp*", "slinten2", "slintend", "sourcea", "sourceb", "sourcec", "sourced", "sourcee", "sourcef", "sourceg", "sourceh", "sourcei", "sourcej", "sourcek", "sourcel", "sourcem", "sourcen", "sourceo", "sourcep", "sourceq", "sourcer", "tonmod*", "tonnage", "tontype", "tslavesd", "tslavesp", "tslmtimp*", "voy1imp*", "voy2imp*", "voyage", "vymrtimp*", "vymrtrat*", "women1", "women2", "women3", "women4", "women5", "women6", "women7*", "womrat1*", "womrat3*", "womrat7*", "xmimpflag*", "year10*", "year100*", "year25*", "year5*", "yearaf*", "yearam*", "yeardep*", "yrcons", "yrreg"};
+			writer.writeNext(str);
+			writer.writeAll(rs, false);
+			rs.close();
+			writer.close();
+			
+			long endTime = System.currentTimeMillis();
+			long elapsed = endTime - startTime;			
+			System.out.println("time taken: " + elapsed);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+}
