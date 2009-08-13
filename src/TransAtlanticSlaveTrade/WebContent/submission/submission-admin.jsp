@@ -17,25 +17,32 @@
 <f:view>
 <h:form id="main">
 
-	<h1>Slave voyages - <h:outputText value="Administration" rendered = "#{AdminSubmissionBean.isAdmin}"/><h:outputText value="Reviewer" rendered = "#{!AdminSubmissionBean.isAdmin}"/> panel (<h:commandLink value="logout" action="#{AdminSubmissionBean.logout}"/>)</h1>
-	
+	<h1>Slave voyages - <h:outputText value="Administration panel" rendered = "#{AdminSubmissionBean.isAdmin}"/> 
+	<h:outputText value="Reviewer panel" rendered = "#{!AdminSubmissionBean.isAdmin}"/> </h1>
+	<br> 
+	<h:commandButton value="Download" action="#{AdminSubmissionBean.getFileAllData}" />
+	<t:outputText escape="false" value="&nbsp;"/>
+	<h:commandButton value="Logout" action="#{AdminSubmissionBean.logout}"/>	
+	<br>
 	<br>
 	
 	<t:htmlTag rendered="#{!AdminSubmissionBean.isAdmin}" value="div">
 		<s:tabBar id="bar" selectedTabId="#{AdminSubmissionBean.selectedTab}" onTabChanged="#{AdminSubmissionBean.onTabChanged}">
 			<s:tab text="Voyages list" tabId="voyages" />
-			<s:tab text="Requests list" tabId="requests" />
+			<s:tab text="Requests list" tabId="requests" />			
 		</s:tabBar>
 	</t:htmlTag>
 	
 	<t:htmlTag rendered="#{AdminSubmissionBean.isAdmin}" value="div">
+	<tr>
 		<s:tabBar id="bar" selectedTabId="#{AdminSubmissionBean.selectedTab}" onTabChanged="#{AdminSubmissionBean.onTabChanged}">
 			<s:tab text="Voyages list" tabId="voyages" />
 			<s:tab text="Requests list" tabId="requests" />
 			<s:tab text="Users list" tabId="users" />
-			<s:tab text="Publish new database revision" tabId="publish" />
-		</s:tabBar>
-	</t:htmlTag>
+			<s:tab text="Publish new database revision" tabId="publish" />						
+		</s:tabBar>	
+		</tr>
+	</t:htmlTag>	
 	
 	<h:panelGroup rendered="#{AdminSubmissionBean.voyagesListSelected}">
 	
@@ -176,7 +183,8 @@
 		<t:htmlTag value="br"></t:htmlTag>
 		<h:commandButton value="Publish new revision" onclick="if (confirm('Are you sure you want to publish new database revision?')) return true; return false;" action="#{AdminSubmissionBean.publish}"/>
 	</h:panelGroup>
-
+	
+	
 </h:form>
 </f:view>
 </body>
