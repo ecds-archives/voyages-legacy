@@ -2,28 +2,15 @@ package test.tast.submissions;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
-
-import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletResponse;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.junit.Test;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.xml.sax.SAXException;
 
 import au.com.bytecode.opencsv.CSVWriter;
 
@@ -31,7 +18,13 @@ import junit.framework.TestCase;
 import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.db.TastDbConditions;
 import edu.emory.library.tast.db.TastDbQuery;
+import edu.emory.library.tast.dm.EditedVoyage;
+import edu.emory.library.tast.dm.Submission;
+import edu.emory.library.tast.dm.SubmissionEdit;
+import edu.emory.library.tast.dm.SubmissionMerge;
+import edu.emory.library.tast.dm.SubmissionNew;
 import edu.emory.library.tast.dm.Voyage;
+import edu.emory.library.tast.submission.AdminSubmissionBean;
 import edu.emory.library.tast.util.CSVUtils;
 
 
@@ -40,7 +33,7 @@ public class DbExportTest extends TestCase{
 	Session session = null;	
 	Transaction tran = null;
 
-	public void setUpSession() throws Exception {
+	/*public void setUpSession() throws Exception {
 		session = HibernateConn.getSession();
 		tran = session.beginTransaction();
 	}
@@ -110,6 +103,30 @@ public class DbExportTest extends TestCase{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}*/
+	
+	//@Test
+	public void testBuildQuery() {
+		long startTime = System.currentTimeMillis();
+		
+		TastDbQuery q = new TastDbQuery(new String("SubmissionNew"));
+		session = HibernateConn.getSession();
+		tran = session.beginTransaction();
+		Object[] rslt = q.executeQuery(session);
+		for (int i=0; i < rslt.length; i++) {
+			Submission sub = (Submission)rslt[i];
+			EditedVoyage voy= ((SubmissionNew) sub).getNewVoyage();
+			String name = ((SubmissionNew) sub) .getUser().getUserName();
+			System.out.println("voyage iid:" + voy.getVoyage().getIid());
+			System.out.println("user name:" + name);
+			
+		}
+	
 	}
 	
+	@Test
+	public void testAdminBean() {
+		AdminSubmissionBean bean = new AdminSubmissionBean(); 
+		bean.getFileAllData();
+	}
 }
