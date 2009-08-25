@@ -328,11 +328,15 @@ public class Voyage extends AbstractDescriptiveObject
 		attributes.add(new NumericAttribute("women5", "Voyage", NumericAttribute.TYPE_INTEGER, "women5"));
 		attributes.add(new NumericAttribute("boy5", "Voyage", NumericAttribute.TYPE_INTEGER, "boy5"));
 		attributes.add(new NumericAttribute("girl5", "Voyage", NumericAttribute.TYPE_INTEGER, "girl5"));
-		attributes.add(new NumericAttribute("infant3", "Voyage", NumericAttribute.TYPE_INTEGER, "infant3"));
-		attributes.add(new NumericAttribute("infant1", "Voyage", NumericAttribute.TYPE_INTEGER, "infant1"));
 		attributes.add(new NumericAttribute("adult5", "Voyage", NumericAttribute.TYPE_INTEGER, "adult5"));
 		attributes.add(new NumericAttribute("adult4", "Voyage", NumericAttribute.TYPE_INTEGER, "adult4"));
+		attributes.add(new NumericAttribute("infant1", "Voyage", NumericAttribute.TYPE_INTEGER, "infant1"));
+		attributes.add(new NumericAttribute("infant2", "Voyage", NumericAttribute.TYPE_INTEGER, "infant2"));
+		attributes.add(new NumericAttribute("infant3", "Voyage", NumericAttribute.TYPE_INTEGER, "infant3"));
 		attributes.add(new NumericAttribute("infant4", "Voyage", NumericAttribute.TYPE_INTEGER, "infant4"));
+		attributes.add(new NumericAttribute("infant5", "Voyage", NumericAttribute.TYPE_INTEGER, "infant5"));
+		attributes.add(new NumericAttribute("infant6", "Voyage", NumericAttribute.TYPE_INTEGER, "infant6"));		
+		attributes.add(new NumericAttribute("infant7", "Voyage", NumericAttribute.TYPE_INTEGER, "infant7"));
 		attributes.add(new NumericAttribute("crew", "Voyage", NumericAttribute.TYPE_INTEGER, "crew"));
 		attributes.add(new PortAttribute("embport", "Voyage", "embport"));
 		attributes.add(new PortAttribute("embport2", "Voyage", "embport2"));
@@ -1972,13 +1976,33 @@ public class Voyage extends AbstractDescriptiveObject
 	public Integer getGirl5() {
 		return (Integer) this.values.get("girl5");
 	}
+	
+	public Integer getInfant1() {
+		return (Integer) this.values.get("infant1");
+	}
+
+	public Integer getInfant2() {
+		return (Integer) this.values.get("infant2");
+	}
 
 	public Integer getInfant3() {
 		return (Integer) this.values.get("infant3");
 	}
-
-	public Integer getInfant1() {
-		return (Integer) this.values.get("infant1");
+	
+	public Integer getInfant4() {
+		return (Integer) this.values.get("infant4");
+	}
+	
+	public Integer getInfant5() {
+		return (Integer) this.values.get("infant5");
+	}
+	
+	public Integer getInfant6() {
+		return (Integer) this.values.get("infant6");
+	}
+	
+	public Integer getInfant7() {
+		return (Integer) this.values.get("infant7");
 	}
 
 	public Integer getAdult5() {
@@ -1987,10 +2011,6 @@ public class Voyage extends AbstractDescriptiveObject
 
 	public Integer getAdult4() {
 		return (Integer) this.values.get("adult4");
-	}
-
-	public Integer getInfant4() {
-		return (Integer) this.values.get("infant4");
 	}
 
 	public Integer getCrew() {
@@ -2285,12 +2305,32 @@ public class Voyage extends AbstractDescriptiveObject
 		this.values.put("girl5", val);
 	}
 
+	public void setInfant1(Integer val) {
+		this.values.put("infant1", val);
+	}
+	
+	public void setInfant2(Integer val) {
+		this.values.put("infant2", val);
+	}
+	
 	public void setInfant3(Integer val) {
 		this.values.put("infant3", val);
 	}
-
-	public void setInfant1(Integer val) {
-		this.values.put("infant1", val);
+	
+	public void setInfant4(Integer val) {
+		this.values.put("infant4", val);
+	}
+	
+	public void setInfant5(Integer val) {
+		this.values.put("infant5", val);
+	}
+	
+	public void setInfant6(Integer val) {
+		this.values.put("infant6", val);
+	}
+	
+	public void setInfant7(Integer val) {
+		this.values.put("infant7", val);
 	}
 
 	public void setAdult5(Integer val) {
@@ -2299,10 +2339,6 @@ public class Voyage extends AbstractDescriptiveObject
 
 	public void setAdult4(Integer val) {
 		this.values.put("adult4", val);
-	}
-
-	public void setInfant4(Integer val) {
-		this.values.put("infant4", val);
 	}
 
 	public void setCrew(Integer val) {

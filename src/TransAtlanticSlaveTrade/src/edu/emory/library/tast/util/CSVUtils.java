@@ -33,7 +33,7 @@ import edu.emory.library.tast.dm.attributes.Attribute;
 
 public class CSVUtils {
 	
-	private static String encoding = "UTF8";
+	private static String encoding = "UTF-8";
 	private static class DictionaryInfo
 	{
 		public Class dictionary;
@@ -170,12 +170,17 @@ public class CSVUtils {
 	private static void getAllData(Session sess, TastDbQuery query, boolean useSQL, ZipOutputStream zipStream, boolean codes) throws FileNotFoundException, IOException
 	{
 		SimpleDateFormat dateFormatter = new SimpleDateFormat(AppConfig.getConfiguration().getString(AppConfig.FORMAT_DATE_CVS));
+		//insert the bom - byte order marker
+		final byte[] bom = new byte[] { (byte)0xEF, (byte)0xBB, (byte)0xBF };	
+		zipStream.write(bom);
 		CSVWriter writer = new CSVWriter(new OutputStreamWriter(zipStream, encoding), ',');
 		
-		//TODO this snippet below is used for testing purposes only 
+       	//TODO this snippet below is used for testing purposes only 
 		/*File file = new File("c:\\tmp\\voyage.csv");
 		FileOutputStream fout = new FileOutputStream(file);
-		CSVWriter writer = new CSVWriter(new OutputStreamWriter(fout), ',');*/
+		final byte[] bom = new byte[] { (byte)0xEF, (byte)0xBB, (byte)0xBF };	        	
+	    fout.write(bom);	    
+		CSVWriter writer = new CSVWriter(new OutputStreamWriter(fout, encoding), ',');*/
 		
 		ScrollableResults queryResponse = null;
 		
@@ -247,7 +252,7 @@ public class CSVUtils {
 				writer.writeNext(row);
 			}
 			
-			writer.flush();		
+			writer.flush();			
 		}
 		catch (IOException io)
 		{

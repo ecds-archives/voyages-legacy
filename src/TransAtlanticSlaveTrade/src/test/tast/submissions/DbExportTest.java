@@ -1,7 +1,9 @@
 package test.tast.submissions;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -59,7 +61,10 @@ public class DbExportTest extends TestCase{
 		System.out.println("Running Specific Tests");
 		TestSuite suite = new TestSuite(this.getClass().getName());
 
-		suite.addTest(new DbExportTest("testBuildSubmissionQuery"));
+		//suite.addTest(new DbExportTest("testBuildSubmissionQuery"));
+	//	suite.addTest(new DbExportTest("testSaveFile"));
+		suite.addTest(new DbExportTest("testAdminBean"));
+			
 		//suite.addTest(new DbExportTest("testAccentCharacters"));
 				
 		return suite;
@@ -231,5 +236,31 @@ public class DbExportTest extends TestCase{
 		      System.out.println(e.toString());
 		    }
 	}
+	
+	@Test
+	public void testSaveFile() throws IOException {
+	      BufferedWriter bw = null;
+	      OutputStreamWriter osw = null;
+			
+	      File f = new File("c:\\tmp\\test1.csv");
+	      FileOutputStream fos = new FileOutputStream(f, true);
+	      try {
+	         // write UTF8 BOM mark if file is empty
+	         if (f.length() < 1) {
+	            final byte[] bom = new byte[] { (byte)0xEF, (byte)0xBB, (byte)0xBF };	        	
+	            fos.write(bom);
+	         }
+
+	         osw = new OutputStreamWriter(fos, "UTF-8");
+	         bw = new BufferedWriter(osw);
+	         String data = "Coelho, Joăo Batista";
+	         if (data != null) bw.write(data);
+	      } catch (IOException ex) {
+	         throw ex;
+	      } finally {
+	         try { bw.close(); fos.close(); } catch (Exception ex) { }
+	      }
+	   }
+
 
 }
