@@ -20,7 +20,7 @@
 	<h1>Slave voyages - <h:outputText value="Administration panel" rendered = "#{AdminSubmissionBean.isAdmin}"/> 
 	<h:outputText value="Reviewer panel" rendered = "#{!AdminSubmissionBean.isAdmin}"/> </h1>
 	<br> 
-	<h:commandButton value="Download" action="#{AdminSubmissionBean.getFileAllData}" />
+	<h:commandButton value="Download" rendered = "#{AdminSubmissionBean.isAdmin}" action="#{AdminSubmissionBean.getFileAllData}" />
 	<t:outputText escape="false" value="&nbsp;"/>
 	<h:commandButton value="Logout" action="#{AdminSubmissionBean.logout}"/>	
 	<br>
