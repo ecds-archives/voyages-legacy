@@ -351,7 +351,7 @@ public class Voyage extends AbstractDescriptiveObject
 		attributes.add(new NumericAttribute("ndesert", "Voyage", NumericAttribute.TYPE_INTEGER, "ndesert"));
 		attributes.add(new NumericAttribute("sladafri", "Voyage", NumericAttribute.TYPE_INTEGER, "sladafri"));
 		
-		/*attributes.add(new StringAttribute("shipname_index", "Voyage", "shipname_index"));
+		attributes.add(new StringAttribute("shipname_index", "Voyage", "shipname_index"));
 		attributes.add(new StringAttribute("owners_index", "Voyage", "owners_index"));
 		attributes.add(new StringAttribute("captains_index", "Voyage", "captains_index"));
 		attributes.add(new StringAttribute("sources_index", "Voyage", "sources_index"));
@@ -412,7 +412,7 @@ public class Voyage extends AbstractDescriptiveObject
 		attributes.add(new NumericAttribute("arrport_area", "Voyage", NumericAttribute.TYPE_LONG, "arrport_area"));
 		attributes.add(new NumericAttribute("embport2_area", "Voyage", NumericAttribute.TYPE_LONG, "embport2_area"));
 		attributes.add(new NumericAttribute("arrport2_area", "Voyage", NumericAttribute.TYPE_LONG, "arrport2_area"));
-		attributes.add(new NumericAttribute("insurrec", "Voyage", NumericAttribute.TYPE_INTEGER, "insurrec"));*/
+		attributes.add(new NumericAttribute("insurrec", "Voyage", NumericAttribute.TYPE_INTEGER, "insurrec"));
 		
 		attributes.add(new NumericAttribute("xmimpflag", "Voyage", NumericAttribute.TYPE_DOUBLE, "xmimpflag"));
 		attributes.add(new NumericAttribute("year5", "Voyage", NumericAttribute.TYPE_INTEGER, "year5"));

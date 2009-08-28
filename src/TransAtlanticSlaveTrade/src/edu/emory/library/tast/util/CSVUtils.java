@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 import au.com.bytecode.opencsv.CSVWriter;
 import edu.emory.library.tast.AppConfig;
@@ -29,6 +30,7 @@ import edu.emory.library.tast.dm.Dictionary;
 import edu.emory.library.tast.dm.EditedVoyage;
 import edu.emory.library.tast.dm.Submission;
 import edu.emory.library.tast.dm.SubmissionNew;
+import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 
 public class CSVUtils {
@@ -44,8 +46,13 @@ public class CSVUtils {
 	{
 
 		SimpleDateFormat dateFormatter = new SimpleDateFormat(AppConfig.getConfiguration().getString(AppConfig.FORMAT_DATE_CVS));
+		
+		//insert the bom - byte order marker
+		final byte[] bom = new byte[] { (byte)0xEF, (byte)0xBB, (byte)0xBF };	
+		zipStream.write(bom);
+		CSVWriter writer = new CSVWriter(new OutputStreamWriter(zipStream, encoding), ',');
 
-		CSVWriter writer = new CSVWriter(new OutputStreamWriter(zipStream), ',');
+		//CSVWriter writer = new CSVWriter(new OutputStreamWriter(zipStream), ',');
 		ScrollableResults queryResponse = null;
 
 		Map dictionaries = new HashMap();
@@ -184,22 +191,12 @@ public class CSVUtils {
 		
 		ScrollableResults queryResponse = null;
 		
-		Map dictionaries = new HashMap();
-		Map users = new HashMap();
+		Map dictionaries = new HashMap();	
 		
 		try
 		{
 			//query to retrieve users for the submissions 
-			TastDbQuery q = new TastDbQuery(new String("SubmissionNew"));
-			Object[] rslt = q.executeQuery(sess);
-			if (rslt != null) {
-				for (int i=0; i < rslt.length; i++) {
-					Submission sub = (Submission)rslt[i];
-					EditedVoyage voy= ((SubmissionNew) sub).getNewVoyage();
-					String name = ((SubmissionNew) sub) .getUser().getUserName();					
-					users.put(voy.getVoyage().getIid(), name);				
-				}
-			}
+			HashMap users = getUsersForSubmissions(sess);
 			//query for all the voyages
 			queryResponse = query.executeScrollableQuery(sess, useSQL);
 			
@@ -265,6 +262,29 @@ public class CSVUtils {
 				queryResponse.close();
 			}
 		}
+	}
+	
+	private static HashMap getUsersForSubmissions(Session session){
+		TastDbQuery q = new TastDbQuery(new String("SubmissionNew"));
+		//retrieving all new submissions
+		Object[] rslt = q.executeQuery(session);
+		HashMap voyMap = null; 
+		for (int i=0; i < rslt.length; i++) {
+			SubmissionNew sub = (SubmissionNew)rslt[i];			
+			String name = sub.getUser().getUserName();
+			EditedVoyage editVoy= sub.getEditorVoyage();
+			if (editVoy != null) {
+				List voyages = session.createCriteria(Voyage.class).add(Restrictions.eq("voyageid", editVoy.getVoyage().getVoyageid())).list();
+				if (voyages != null) {
+					voyMap = new HashMap();
+					for (int j=0; j < voyages.size(); j++){
+						Voyage voyg = (Voyage)voyages.get(j); 
+						voyMap.put(voyg.getIid(), name);
+					}				
+				}
+			}
+		}
+		return voyMap;
 	}
 
 	public static void writeResponse(Session sess, TastDbQuery query, boolean useSQL, boolean codes, String conditions)
@@ -427,7 +447,13 @@ public class CSVUtils {
 			response.setHeader("content-disposition", "attachment; filename=data.zip");
 			zipOS = new ZipOutputStream(response.getOutputStream());
 			zipOS.putNextEntry(new ZipEntry("data.csv"));
-			CSVWriter writer = new CSVWriter(new OutputStreamWriter(zipOS), ',');
+			
+			//insert the bom - byte order marker
+			final byte[] bom = new byte[] { (byte)0xEF, (byte)0xBB, (byte)0xBF };	
+			zipOS.write(bom);
+			CSVWriter writer = new CSVWriter(new OutputStreamWriter(zipOS, encoding), ',');
+			
+			//CSVWriter writer = new CSVWriter(new OutputStreamWriter(zipOS), ',');
 			for (int i = 0; i < data.length; i++)
 			{
 				writer.writeNext(data[i]);

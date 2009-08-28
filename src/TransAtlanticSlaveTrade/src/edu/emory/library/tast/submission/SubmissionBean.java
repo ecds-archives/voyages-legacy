@@ -57,16 +57,6 @@ public class SubmissionBean
 
 	public static final String[] SLAVE_CHAR_COLS = {"men", "women", "boy", "girl", "male", "female", "adult", "child", "infant"};
 	public static final String[] SLAVE_CHAR_COLS_LABELS = {"Men", "Women", "Boys", "Girls", "Males", "Females", "Adults", "Children", "Infants"};
-	/*public static final String[] SLAVE_CHAR_ROWS = {"e1", "e2", "e3", "died", "d1", "d2", "i1"};
-	public static final String[] SLAVE_CHAR_ROWS_LABELS = {
-			"Embarked slaves (first port)",			
-			"Embarked slaves (second port)",
-			"Embarked slaves (third port)",
-			"Died on voyage", 
-			"Disembarked slaves (first port)",
-			"Disembarked slaves (second port)",
-			"Slaves on arrival or departure*"
-	};*/
 	public static final String[] SLAVE_CHAR_ROWS = {"e1", "e2", "e3", "died", "d1", "d2"};
 	public static final String[] SLAVE_CHAR_ROWS_LABELS = {
 			"Embarked slaves (first port)",			
