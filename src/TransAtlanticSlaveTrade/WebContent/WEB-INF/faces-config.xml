@@ -876,7 +876,7 @@
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>logged-in</from-outcome>
-			<to-view-id>/submission/submission-type.jsp</to-view-id>
+			<to-view-id>/submission/legal.jsp</to-view-id>
 		</navigation-case>				
 		<navigation-case>
 			<from-outcome>submission-restore</from-outcome>
@@ -885,6 +885,18 @@
 		<navigation-case>
 			<from-outcome>sources-restore</from-outcome>
 			<to-view-id>/submission/submission-sources.jsp</to-view-id>
+		</navigation-case>	
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/submission/legal.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>accept</from-outcome>
+			<to-view-id>/submission/submission-type.jsp</to-view-id>
+		</navigation-case>	
+		<navigation-case>
+			<from-outcome>decline</from-outcome>
+			<to-view-id>/submission/submission-login.jsp</to-view-id>
 		</navigation-case>	
 	</navigation-rule>
 	
