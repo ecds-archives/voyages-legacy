@@ -7,7 +7,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>User detals</title>
+	<title>User details</title>
 	<link href="../styles/main.css" rel="stylesheet" type="text/css">
 </head>
 <body style="margin: 15px;">
@@ -19,7 +19,7 @@
 	<br>
 	
 	<div style="width: 400px;">
-	In order to be able to access prortected contents, please sign in.
+	In order to be able to access protected contents, please sign in.
 	</div>
 	<div style="width: 400px; border-bottom: 1px solid #CCCCCC; margin-bottom: 10px; margin-top: 5px; padding-bottom: 10px;">
 		<table>
