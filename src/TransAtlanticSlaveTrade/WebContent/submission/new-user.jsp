@@ -29,7 +29,7 @@
 	<s:siteHeader activeSectionId="database">
 		<h:outputLink value="../index.faces"><h:outputText value="Home"/></h:outputLink>
 		<h:outputLink value="submission-login.faces"><h:outputText value="Contribute" /></h:outputLink>
-		<h:outputText value="Resgister" />
+		<h:outputText value="Register" />
 	</s:siteHeader>
 
 	<div id="content">
