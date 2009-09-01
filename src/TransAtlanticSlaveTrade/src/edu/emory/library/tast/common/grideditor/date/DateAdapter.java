@@ -139,9 +139,9 @@ public class DateAdapter extends Adapter
 				dateValue.getDayOrEmpty());
 
 		    writer.write(dateValue.getYearOrEmpty());
-			writer.write("/");
+			writer.write("-");
 			writer.write(dateValue.getMonthOrEmpty());
-			writer.write("/");
+			writer.write("-");
 			writer.write(dateValue.getDayOrEmpty());
 		
 
