@@ -14,6 +14,7 @@
 <body style="margin: 15px;">
 <f:view>
 <h:form id="main">
+	<%@ include file="../top-logo-bar.jsp" %>
 	
 	<table cellpadding="0" cellspacing="0">
 		<tr>
