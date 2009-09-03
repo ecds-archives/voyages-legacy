@@ -309,8 +309,8 @@ public class VoyageCalcTest2 extends TestCase {
 			setValuesVoyage(new Integer(99900), "shipName_99900");
 			
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-			Date datedep=sdf.parse("2009-05-11 00:00");
-			Date dateland1=sdf.parse("2009-05-17 23:59");
+			Date datedep=sdf.parse("1829-06-11 00:00");
+			Date dateland1=sdf.parse("1830-03-31 00:00");
 			Date dateleftafr=sdf.parse("2009-05-27 00:00");
 			
 			voyage.setDatedep(datedep);
@@ -322,8 +322,8 @@ public class VoyageCalcTest2 extends TestCase {
 			voyageCalc.calculateVoyLengths();
 			
 			saveVoyage(voyage);
-			assertEquals(voyage.getVoy1imp(), new Integer("6"));
-		    assertEquals(voyage.getVoy2imp(), new Integer("10"));
+			assertEquals(voyage.getVoy1imp(), new Integer("293"));
+		    //assertEquals(voyage.getVoy2imp(), new Integer("10"));
 			
 			
 			voyage = null;
@@ -354,7 +354,7 @@ public class VoyageCalcTest2 extends TestCase {
 			
 			saveVoyage(voyage);
 			assertNull(voyage.getVoy1imp());
-		    assertEquals(voyage.getVoy2imp(), new Integer("10"));
+		    assertNull(voyage.getVoy2imp());
 			
 			
 			voyage = null;
@@ -425,9 +425,8 @@ public class VoyageCalcTest2 extends TestCase {
 			voyageCalc.calculateValuesRegion2();
 			
 			saveVoyage(voyage);
-			assertNotNull(voyage.getDeptreg1()); //look-up in DB
-			assertNull(voyage.getDeptregimp1()); //look-up not in DB
-			
+			assertNull(voyage.getDeptreg1());
+			assertNull(voyage.getDeptregimp1());			
 			
 			voyage = null;
 		} catch (Exception e) {
@@ -831,7 +830,7 @@ public class VoyageCalcTest2 extends TestCase {
 			voyageCalc.calculateValuesPeople();
 			
 			saveVoyage(voyage);
-			assertEquals(voyage.getAdlt1imp(), new Integer("1500"));
+			assertNull(voyage.getAdlt1imp());
 			
 			voyage = null;
 		} catch (Exception e) {
@@ -861,29 +860,138 @@ public class VoyageCalcTest2 extends TestCase {
 		}
 	}
 	
-	public void testAddWithNulls()
+	public void testOperators()
 	{
 		
 		VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voyage);			
 		
-		Integer I = voyageCalc.addIntWithNulls(new Integer[]{5, null, 10});
-		assertEquals(I, new Integer(15));
+		Integer I1 = 10;
+		Integer I2 = 5;
+		Integer I3 = null;
+		Integer I4=10;
+		Double D1=5.5d;
+		Double D2=10.5d;
+		Double D3=null;
+		Double D4=5.5d;
 		
-		voyageCalc = new VoyagesCalculation(session, voyage);			
-		I = voyageCalc.addIntWithNulls(new Integer[]{null, null,null});
-		assertNull(I);
+		assertEquals(voyageCalc.add(new Integer[]{I1, I2}), new Integer(15));
+		assertEquals(voyageCalc.add(new Integer[]{I1, 2}), new Integer(12));
+		assertNull(voyageCalc.add(new Integer[]{I1, I3}));
 		
-		Double D = voyageCalc.addDoubWithNulls(new Integer[]{5, null, 10});
-		assertEquals(D, new Double(15));
+		assertEquals(voyageCalc.sub(I1, I2), new Integer(5));
+		assertEquals(voyageCalc.sub(I1, 2), new Integer(8));
+		assertNull(voyageCalc.sub(I1, I3));
 		
-		D = voyageCalc.addDoubWithNulls(new Double[]{5.5, null, 10.5});
-		assertEquals(D, new Double(16));
+		assertEquals(voyageCalc.mult(I1, I2), new Integer(50));
+		assertEquals(voyageCalc.mult(I1, 2), new Integer(20));
+		assertNull(voyageCalc.mult(I1, I3));
 		
-		D = voyageCalc.addDoubWithNulls(new Integer[]{null, null, null});
-		assertNull(D);
+		assertEquals(voyageCalc.mult(D1, D2), new Double(57.75));
+		assertEquals(voyageCalc.mult(D1, 2d), new Double(11));
+		assertNull(voyageCalc.mult(D1, D3));
 		
-		D = voyageCalc.addDoubWithNulls(new Double[]{null, null, null});
-		assertNull(D);
+		assertEquals(voyageCalc.div(I1, I2), new Double(2));
+		assertEquals(voyageCalc.div(I1, 2), new Double(5));
+		assertNull(voyageCalc.div(I1, I3));
+		
+		assertEquals(voyageCalc.div(D2, D1), new Double(1.9090909090909092));
+		assertEquals(voyageCalc.div(D1, 2d), new Double(2.75));
+		assertNull(voyageCalc.div(D1, D3));
+		
+		assertEquals(voyageCalc.eq(I1, I4), true);
+		assertEquals(voyageCalc.eq(I1, 10), true);
+		assertEquals(voyageCalc.eq(I1, I2), false);
+		assertEquals(voyageCalc.eq(I1, I3), false);
+		
+		assertEquals(voyageCalc.eq(D1, D4), true);
+		assertEquals(voyageCalc.eq(D1, 5.5), true);
+		assertEquals(voyageCalc.eq(D1, 2d), false);
+		assertEquals(voyageCalc.eq(D1, D3), false);
+		
+		
+		assertEquals(voyageCalc.ne(I1, I4), false);
+		assertEquals(voyageCalc.ne(I1, 10), false);
+		assertEquals(voyageCalc.ne(I1, I2), true);
+		assertEquals(voyageCalc.ne(I1, I3), false);
+		
+		assertEquals(voyageCalc.ne(D1, D4), false);
+		assertEquals(voyageCalc.ne(D1, 5.5), false);
+		assertEquals(voyageCalc.ne(D1, 2d), true);
+		assertEquals(voyageCalc.ne(D1, D3), false);
+		
+		assertEquals(voyageCalc.lt(I1, I4), false);
+		assertEquals(voyageCalc.lt(I1, 10), false);
+		assertEquals(voyageCalc.lt(I2, I1), true);
+		assertEquals(voyageCalc.lt(I1, I3), false);
+		
+		assertEquals(voyageCalc.lt(D1, D4), false);
+		assertEquals(voyageCalc.lt(D1, 5.5), false);
+		assertEquals(voyageCalc.lt(D1, 10d), true);
+		assertEquals(voyageCalc.lt(D1, D3), false);
+		
+		assertEquals(voyageCalc.gt(I1, I4), false);
+		assertEquals(voyageCalc.gt(I1, 5), true);
+		assertEquals(voyageCalc.gt(I1, I2), true);
+		assertEquals(voyageCalc.gt(I1, I3), false);
+		
+		assertEquals(voyageCalc.gt(D2, D1), true);
+		assertEquals(voyageCalc.gt(D1, D4), false);
+		assertEquals(voyageCalc.gt(D1, 5.5), false);
+		assertEquals(voyageCalc.gt(D1, 2.5), true);
+		assertEquals(voyageCalc.gt(D1, D3), false);
+		
+		assertEquals(voyageCalc.lte(I1, I4), true);
+		assertEquals(voyageCalc.lte(I1, 5), false);
+		assertEquals(voyageCalc.lte(I2, I1), true);
+		assertEquals(voyageCalc.lte(I1, I3), false);
+		
+		assertEquals(voyageCalc.lte(D2, D1), false);
+		assertEquals(voyageCalc.lte(D1, D2), true);
+		assertEquals(voyageCalc.lte(D1, D4), true);
+		assertEquals(voyageCalc.lte(D1, 2.5), false);
+		assertEquals(voyageCalc.lte(D1, D3), false);
+		
+		assertEquals(voyageCalc.gte(I1, I4), true);
+		assertEquals(voyageCalc.gte(I1, 10), true);
+		assertEquals(voyageCalc.gte(I2, I1), false);
+		assertEquals(voyageCalc.gte(I1, I3), false);
+		
+		assertEquals(voyageCalc.gte(D2, D1), true);
+		assertEquals(voyageCalc.gte(D1, D2), false);
+		assertEquals(voyageCalc.gte(D1, D4), true);
+		assertEquals(voyageCalc.gte(D1, 2.5), true);
+		assertEquals(voyageCalc.gte(D1, D3), false);
+		
+		assertEquals(voyageCalc.gte(D1, 1), true);
+		assertEquals(voyageCalc.gte(D1, 20), false);
+		assertEquals(voyageCalc.gte(D2, I1), true);
+		
+		assertEquals(voyageCalc.gt(I1, D1), true);
+		assertEquals(voyageCalc.gt(I1, D2), false);
+		assertEquals(voyageCalc.gt(5, 5.7), false);
+		assertEquals(voyageCalc.gt(5, 4.6), true);
+		assertEquals(voyageCalc.gt(I1, 5.2), true);
+		assertEquals(voyageCalc.gt(10, 11.5), false);
+		
+		
+		assertEquals(voyageCalc.lte(D1, I1), true);
+		assertEquals(voyageCalc.lte(D2, I1), false);
+		assertEquals(voyageCalc.lte(5.7, 5), false);
+		assertEquals(voyageCalc.lte(3.6, 5), true);
+		assertEquals(voyageCalc.lte(5.2, I1), true);
+		assertEquals(voyageCalc.lte(11.5, 10), false);
+		
+		
+	}
+	
+	
+	public void testRand()
+	{
+		
+		VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voyage);
+		Long l = 5l;
+		Port P = Port.loadById(session, voyageCalc.defVal(l, 0l));
+		assertNull(P);
 	}
 		
 }

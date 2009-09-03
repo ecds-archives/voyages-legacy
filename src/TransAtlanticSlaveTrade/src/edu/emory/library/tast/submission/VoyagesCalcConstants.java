@@ -297,9 +297,6 @@ public class VoyagesCalcConstants
            fate2Hash.put(new Integer("193"), new Integer("2"));
            fate2Hash.put(new Integer("198"), new Integer("2"));
            fate2Hash.put(new Integer("202"), new Integer("2"));
-           fate2Hash.put(new Integer("3"), new Integer("2"));
-           fate2Hash.put(new Integer("66"), new Integer("2"));
-           fate2Hash.put(new Integer("99"), new Integer("2"));
            fate2Hash.put(new Integer("42"), new Integer("3"));
            fate2Hash.put(new Integer("44"), new Integer("3"));
            fate2Hash.put(new Integer("69"), new Integer("3"));

@@ -264,13 +264,13 @@ public class VoyageCalcAllTest extends TestCase {
 			voyageCalc.calculateFate2();
 			voyageCalc.calculateFate3();
 			voyageCalc.calculateFate4();
-			voyageCalc.calculateTslmtimp();
+			voyageCalc.calculateMortality();
 			voyageCalc.calculateNatinimp();
 			voyageCalc.calculateValuesYear();
 			voyageCalc.calculateVoyLengths();		
-			voyageCalc.calculateMajbuypt();
-			voyageCalc.calculateMajselpt();
 			voyageCalc.calculateMjbyptimp();
+			//voyageCalc.calculateMajselpt();
+			//voyageCalc.calculateMjbyptimp();
 			voyageCalc.calculateMjslptimp();			
 			voyageCalc.calculateTonmod();
 			voyageCalc.calculateValuesPeople();

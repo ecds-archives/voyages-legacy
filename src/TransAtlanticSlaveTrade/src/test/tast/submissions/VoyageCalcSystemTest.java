@@ -185,8 +185,9 @@ public class VoyageCalcSystemTest extends TestCase {
 		//overrides so that test can be executed for localized change
 		System.out.println("Running Specific Tests");
 		TestSuite suite = new TestSuite(this.getClass().getName());
-		//suite.addTest(new VoyageCalcSystemTest("testImputedVars"));
-		suite.addTest(new VoyageCalcSystemTest("testImputedVars1"));
+		//suite.addTest(new VoyageCalcSystemTest("testImputedVars"));  //run from array and compare
+		//suite.addTest(new VoyageCalcSystemTest("testImputedVars1")); //run from file and compare
+		suite.addTest(new VoyageCalcSystemTest("testImputedVars2"));  //run from file and DO NOT compare
 		
 		return suite;
 	}
@@ -202,6 +203,7 @@ public class VoyageCalcSystemTest extends TestCase {
 	}	
 	
 	@Test
+	//read from array and compare
 	public void testImputedVars(){
 		Test1 t1 = new Test1(); // comparison class
 		BufferedWriter fOut=null; //writes to output file
@@ -219,7 +221,9 @@ public class VoyageCalcSystemTest extends TestCase {
 		try{
 			/*28,32,36,38,56,72,99,100,106,109*/
 			//Integer[] voyageIdArray = {28,32,36,38,56,72,99,100,106,109};						
-			Integer[] voyageIdArray = {28, 72, 245};
+			//Integer[] voyageIdArray = {28, 72, 245};
+			//Integer [] voyageIdArray = {115, 162, 255, 557, 991, 1177, 1509, 1845, 1860, 1939, 1942, 1960, 2110, 2142, 2171, 2380, 4313, 4407, 4925, 4993, 5503, 7395, 24770, 25511, 25514, 25516, 25530, 25537, 34161, 36375, 36798, 36850, 36915, 37225, 40306, 40800, 41846, 46258, 46260, 46274, 46751, 46987, 47027, 49221, 51065, 51080, 51222, 51855, 51856, 51857, 51858, 78078, 78146, 78811, 80685, 83487, 84108, 90660};
+			Integer[] voyageIdArray = {32904};
 			int revision = 1;
 			for (int i=0; i < voyageIdArray.length; i++){
 				
@@ -302,6 +306,7 @@ public class VoyageCalcSystemTest extends TestCase {
 	}
 	
 	@Test
+	//read from file and compare
 	public void testImputedVars1(){
 		Test1 t1 = new Test1(); // comparison class
 		BufferedWriter fOut=null; //writes to output file
@@ -401,6 +406,51 @@ public class VoyageCalcSystemTest extends TestCase {
 		    in.close();
 		    fOut.close();
 		    System.out.println("END");
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	//read from file and DO NOT compare
+	public void testImputedVars2(){
+				
+				
+		try{			
+			String fPath = "/dev/voyages/src/test/tast/submissions/batch_voyages.txt";		
+			FileInputStream fstream = new FileInputStream(fPath);
+			//Get the object of DataInputStream
+		    DataInputStream in = new DataInputStream(fstream);
+		    BufferedReader br = new BufferedReader(new InputStreamReader(in));
+		    String strLine;
+		    Integer revision = 1;
+		    		    
+		    while ((strLine = br.readLine()) != null)   {		    
+		      //System.out.println (strLine);
+		      Integer voyageId = Integer.valueOf(strLine);
+		      System.out.println("Processing...."+voyageId);
+		      setUpSession();
+			  Voyage voy = null;
+			  voy = Voyage.loadByVoyageId(session, voyageId, revision);
+
+			  if(voy==null)  //If voyage does not exist skip the rest of the loop
+			  {
+				   continue;
+			  }
+			  
+			  initAllImputedValuesVoyage(voy);
+			  //System.out.println("voyage before: " + voy.toString());
+			  VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voy);	
+			  voy = voyageCalc.calculateImputedVariables();
+			  saveVoyage(voy);			  
+			  //System.out.println("voyage after: " + voy.toString());
+			  
+
+			  		      
+		    }
+		    			
+			System.out.println("END");
 		}
 		catch(Exception e){
 			e.printStackTrace();
