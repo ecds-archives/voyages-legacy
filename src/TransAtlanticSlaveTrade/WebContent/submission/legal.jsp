@@ -34,7 +34,7 @@
 					<h1>Legal</h1>
 					
 					<p>I warrant that I have the right to contribute the following data to the Voyages Database and its inclusion
-					 in the Voyages Database will not infringe anyoneâ€™s intellectual property rights. I also agree that this data 
+					 in the Voyages Database will not infringe anyone's intellectual property rights. I also agree that this data 
 					 will become part of the Voyages: The Trans-Atlantic Slave Trade Database website and will be governed by any 
 					 applicable licenses.</p> 
 					
