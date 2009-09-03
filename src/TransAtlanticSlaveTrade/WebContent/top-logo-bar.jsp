@@ -8,7 +8,6 @@
 	<tr>
 	<td class="top-logo">	
 	<img height="60" border="0" width="240" src="/tast/images/main-menu/logo.png"/>
-	</a>
 	</td>
 	<td class="top-bar-menu">
 	</td>
