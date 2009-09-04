@@ -196,7 +196,7 @@ public class CSVUtils {
 		try
 		{
 			//query to retrieve users for the submissions 
-			HashMap users = getUsersForSubmissions(sess);
+			//HashMap users = getUsersForSubmissions(sess);
 			//query for all the voyages
 			queryResponse = query.executeScrollableQuery(sess, useSQL);
 			
@@ -221,10 +221,10 @@ public class CSVUtils {
 				int j;
 				for (j = 0;j < populatedAttrs.length; j++)
 				{
-					if (populatedAttrs[j].getName().equals("iid")) {
+					/*if (populatedAttrs[j].getName().equals("iid")) {
 						userName = null;
 						userName = (String)users.get(result[j]);					
-					}
+					}*/
 					if (result[j] == null)	{
 						row[j] = "";
 					}
