@@ -1122,9 +1122,9 @@
 				<attribute name="infant1"/>
 			</attributes>
 	</submission-attributes>
-	<submission-attributes name="infant2" key="e2,infant" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Infants embarked at second port in Africa*">
+	<submission-attributes name="infant4" key="e2,infant" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Infants embarked at second port in Africa*">
 				<attributes>
-					<attribute name="infant2"/>
+					<attribute name="infant4"/>
 				</attributes>
 	</submission-attributes>
 	<submission-attributes name="infant3" key="e3,infant" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Infants embarked at third port in Africa">
@@ -1132,9 +1132,9 @@
 					<attribute name="infant3"/>
 				</attributes>
 	</submission-attributes>
-	<submission-attributes name="infant4" key="died,infant" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Infants died on middle passage">
+	<submission-attributes name="infant2" key="died,infant" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Infants died on middle passage">
 				<attributes>
-					<attribute name="infant4"/>
+					<attribute name="infant2"/>
 				</attributes>
 	</submission-attributes>
 	<submission-attributes name="infant5" key="d1,infant" group="Slaves (characteristics)" editable="N" type="integer" userLabel="Infants at first disembarkation*">
