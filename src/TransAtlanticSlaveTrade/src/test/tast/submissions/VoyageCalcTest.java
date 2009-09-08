@@ -19,6 +19,7 @@ import edu.emory.library.tast.dm.Fate;
 import edu.emory.library.tast.dm.Nation;
 import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.dm.Region;
+import edu.emory.library.tast.dm.TonType;
 import edu.emory.library.tast.dm.VesselRig;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.submission.VoyagesCalculation;
@@ -510,7 +511,7 @@ public class VoyageCalcTest extends TestCase {
 			setValuesVoyage(new Integer(99901), "shipName_99901");
 			
 			//Input variables for second region calculation
-			voyage.setTontype(4); 
+			voyage.setTontype(TonType.loadById(session, 4)); 
 			voyage.setTonnage(100); 
 			voyage.setYearam(1770); 
 			voyage.setNatinimp(null);

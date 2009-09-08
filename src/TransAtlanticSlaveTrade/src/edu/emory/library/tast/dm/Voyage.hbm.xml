@@ -32,7 +32,7 @@
 		<property name="tonnage" column="tonnage" />
 		<property name="tonmod" column="tonmod" />
 		<property name="guns" column="guns" />
-		<property name="tontype" column="tontype" />
+		<many-to-one name="tontype" column="tontype" class="edu.emory.library.tast.dm.TonType" />
 		
 		<property name="ownera" column="ownera" />
 		<property name="ownerb" column="ownerb" />

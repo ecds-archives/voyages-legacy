@@ -271,7 +271,7 @@
     <attribute name="adpsale1" type="SecondDemPort" userLabel=""/>
     <attribute name="adpsale2" type="ThirdDemPort" userLabel=""/>
     <attribute name="portret" type="RetPort" userLabel=""/>
-    <attribute name="tontype" type="TonesType" userLabel=""/>
+    <attribute name="tontype" type="TonsType" userLabel=""/>
     <attribute name="national" type="ShipNationality" userLabel=""/>
     <attribute name="embport2" type="PurchasePort" userLabel=""/>
     <attribute name="portdep" type="DeparturePort" userLabel=""/>

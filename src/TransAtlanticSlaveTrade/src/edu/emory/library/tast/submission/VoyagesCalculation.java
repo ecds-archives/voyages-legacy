@@ -133,7 +133,7 @@ public class VoyagesCalculation {
     */
 	public void calculateTonmod() {
 		//Create the needed variables for calculations
-		Integer tontype = voyage.getTontype();
+		Integer tontype = (voyage.getTontype()==null ? null : voyage.getTontype().getId().intValue());
 		Integer tonnage = voyage.getTonnage();;
 		Integer yearam = voyage.getYearam();
 		Integer natinimp = (voyage.getNatinimp() == null ? null : voyage.getNatinimp().getId().intValue());

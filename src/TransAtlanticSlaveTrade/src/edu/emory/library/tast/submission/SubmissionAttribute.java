@@ -36,6 +36,7 @@ import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.dm.Resistance;
 import edu.emory.library.tast.dm.Source;
+import edu.emory.library.tast.dm.TonType;
 import edu.emory.library.tast.dm.VesselRig;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
@@ -284,7 +285,13 @@ public class SubmissionAttribute {
 				return new Object[] {null};
 			}
 			return new Object[] {Dictionary.loadById(VesselRig.class, sess, id)};
-		} else if (type.equals(SubmissionDictionaries.NATIONALS)) {
+		} else if (type.equals(SubmissionDictionaries.TONTYPES)) {
+			String id = ((ListValue)object).getValues()[0];
+			if (id.equals("-1")) {
+				return new Object[] {null};
+			}
+			return new Object[] {Dictionary.loadById(TonType.class, sess, id)};
+		}else if (type.equals(SubmissionDictionaries.NATIONALS)) {
 			String id = ((ListValue)object).getValues()[0];
 			if (id.equals("-1")) {
 				return new Object[] {null};

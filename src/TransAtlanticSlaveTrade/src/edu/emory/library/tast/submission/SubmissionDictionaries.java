@@ -35,6 +35,7 @@ import edu.emory.library.tast.dm.FateVessel;
 import edu.emory.library.tast.dm.Nation;
 import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.dm.Region;
+import edu.emory.library.tast.dm.TonType;
 import edu.emory.library.tast.dm.VesselRig;
 import edu.emory.library.tast.dm.Resistance;
 
@@ -149,6 +150,9 @@ public class SubmissionDictionaries {
 		fieldTypes.put(FATES, new ListFieldType(FATES, fates));
 		nationals = fillIn(session, Nation.class);
 		fieldTypes.put(NATIONALS, new ListFieldType(NATIONALS, nationals));
+
+		tontypes = fillIn(session, TonType.class);
+		fieldTypes.put(TONTYPES, new ListFieldType(TONTYPES, tontypes));
 
 		fate2 = fillIn(session, FateSlaves.class);
 		fieldTypes.put(FATE2, new ListFieldType(FATE2, fate2));

@@ -77,7 +77,7 @@
 			<attribute name="tonnage"/>
 		</attributes>
 	</submission-attributes> 	
-	<submission-attributes name="tontype" group="Ship, nation, owners" editable="Y" type="integer" userLabel="Definition of ton">
+	<submission-attributes name="tontype" group="Ship, nation, owners" editable="Y" type="tontypes" userLabel="Definition of ton">
 		<attributes>
 			<attribute name="tontype"/>
 		</attributes>

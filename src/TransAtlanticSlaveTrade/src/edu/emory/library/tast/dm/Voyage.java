@@ -35,6 +35,7 @@ import edu.emory.library.tast.dm.attributes.PortAttribute;
 import edu.emory.library.tast.dm.attributes.RegionAttribute;
 import edu.emory.library.tast.dm.attributes.ResistanceAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
+import edu.emory.library.tast.dm.attributes.TonTypeAttribute;
 import edu.emory.library.tast.dm.attributes.VesselRigAttribute;
 import edu.emory.library.tast.util.StringUtils;
 
@@ -70,6 +71,7 @@ public class Voyage extends AbstractDescriptiveObject
 		attributes.add(new NumericAttribute("yrreg", "Voyage", NumericAttribute.TYPE_INTEGER, "yrreg"));
 		attributes.add(new NationAttribute("natinimp", "Voyage", "natinimp"));
 		attributes.add(new VesselRigAttribute("rig", "Voyage", "rig"));
+		attributes.add(new TonTypeAttribute("tontype", "Voyage", "tontype"));
 		attributes.add(new NumericAttribute("tonnage", "Voyage", NumericAttribute.TYPE_INTEGER, "tonnage"));
 		attributes.add(new NumericAttribute("tonmod", "Voyage", NumericAttribute.TYPE_FLOAT, "tonmod"));
 		attributes.add(new NumericAttribute("guns", "Voyage", NumericAttribute.TYPE_INTEGER, "guns"));
@@ -230,7 +232,6 @@ public class Voyage extends AbstractDescriptiveObject
 		attributes.add(new EstimatesNationAttribute("e_natinimp", "Voyage", "e_natinimp"));
 		attributes.add(new EstimatesExportRegionAttribute("e_majbyimp", "Voyage", "e_majbyimp"));
 		attributes.add(new EstimatesImportRegionAttribute("e_mjselimp", "Voyage", "e_mjselimp"));
-		attributes.add(new NumericAttribute("tontype", "Voyage", NumericAttribute.TYPE_INTEGER, "tontype"));
 		attributes.add(new NumericAttribute("sladamer", "Voyage", NumericAttribute.TYPE_INTEGER, "sladamer"));
 		attributes.add(new NumericAttribute("saild1", "Voyage", NumericAttribute.TYPE_INTEGER, "saild1"));
 		attributes.add(new NumericAttribute("saild2", "Voyage", NumericAttribute.TYPE_INTEGER, "saild2"));
@@ -1709,8 +1710,8 @@ public class Voyage extends AbstractDescriptiveObject
 		return (Port) this.values.get("arrport2");
 	}
 
-	public Integer getTontype() {
-		return (Integer) this.values.get("tontype");
+	public TonType getTontype() {
+		return (TonType) this.values.get("tontype");
 	}
 
 	public Integer getSladamer() {
@@ -2033,7 +2034,7 @@ public class Voyage extends AbstractDescriptiveObject
 		this.values.put("arrport2", val);
 	}
 
-	public void setTontype(Integer val) {
+	public void setTontype(TonType val) {
 		this.values.put("tontype", val);
 	}
 

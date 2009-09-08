@@ -64,5 +64,15 @@
         </id>
         <property name="name" column="name"/>
     </class>
+    
+    <class name="edu.emory.library.tast.dm.TonType" table="ton_type">
+		<!-- 
+		<cache usage="read-write" />
+		-->
+        <id name="id">
+        	<generator class="native"/>
+        </id>
+        <property name="name" column="name"/>
+    </class>
 
 </hibernate-mapping>
