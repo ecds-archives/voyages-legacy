@@ -826,7 +826,7 @@ public class SubmissionBean
 				return null;
 			}
 			
-			imputeVariables(sess, voyage);
+			//imputeVariables(sess, voyage);
 			
 			sess.save(voyage);
 			if (submissionType == SUBMISSION_TYPE_NEW) {
@@ -1039,7 +1039,7 @@ public class SubmissionBean
 				return false;
 			}
 			
-			imputeVariables(sess, voyage);
+			//imputeVariables(sess, voyage);
 			
 			submission.setSavedState(phase);
 			storedEditedVoyage.setAttributeNotes(notes);

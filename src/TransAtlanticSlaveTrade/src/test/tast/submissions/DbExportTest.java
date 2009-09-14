@@ -30,6 +30,7 @@ import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.EditedVoyage;
 import edu.emory.library.tast.dm.Submission;
 import edu.emory.library.tast.dm.SubmissionEdit;
+import edu.emory.library.tast.dm.SubmissionMerge;
 import edu.emory.library.tast.dm.SubmissionNew;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
@@ -188,26 +189,46 @@ public class DbExportTest extends TestCase{
 	@Test
 	public void testBuildSubmissionQuery() {
 		long startTime = System.currentTimeMillis();
+		EditedVoyage voy = null;
 		
-		TastDbQuery q = new TastDbQuery(new String("SubmissionNew"));
+		/*TastDbConditions c = new TastDbConditions();
+		c.addCondition(getAttribute("id"), id, TastDbConditions.OP_EQUALS);
+		TastDbQuery qValue = new TastDbQuery("Submission", c);
+		Object[] ret = qValue.executeQuery(session);
+		if (ret.length == 0) {
+			return null;
+		} else {
+			return (Submission) ret[0];
+		}*/
+		
+		TastDbQuery q = new TastDbQuery("Submission");
 		session = HibernateConn.getSession();
 		tran = session.beginTransaction();
 		Object[] rslt = q.executeQuery(session);
 		HashMap voyMap = new HashMap(); 
-		for (int i=0; i < rslt.length; i++) {
-			SubmissionNew sub = (SubmissionNew)rslt[i];
-			EditedVoyage voy= sub.getNewVoyage();
+		for (int i=0; i < rslt.length; i++) {			
+			Submission sub = (Submission) rslt[i];
+			if (sub instanceof SubmissionNew) {
+				//EditedVoyage voy= (SubmissionNew)sub.getNewVoyage();
+				voy= ((SubmissionNew) sub).getEditorVoyage();
+			}
+			else if (sub instanceof SubmissionEdit){
+				voy = ((SubmissionEdit) sub).getEditorVoyage();
+			}
+			else if (sub instanceof SubmissionMerge){
+				voy = ((SubmissionMerge) sub).getEditorVoyage();
+			}
 			String name = sub.getUser().getUserName();
 			System.out.println("submission id:" + sub.getId());
 			System.out.println("voyage iid:" + voy.getVoyage().getIid());
 			System.out.println("shipname:" + voy.getVoyage().getShipname());
 			System.out.println("user name:" + name);
-			EditedVoyage editVoy= sub.getEditorVoyage();
-			if (editVoy != null) {
-				System.out.println("edit voyage iid:" + editVoy.getVoyage().getIid());
-				System.out.println("edit shipname:" + editVoy.getVoyage().getShipname());
-				System.out.println("edit voyageid:" + editVoy.getVoyage().getVoyageid());				
-				List voyages = session.createCriteria(Voyage.class).add(Restrictions.eq("voyageid", editVoy.getVoyage().getVoyageid())).list();
+			//EditedVoyage editVoy= sub.getEditorVoyage();
+			if (voy != null) {
+				System.out.println("edit voyage iid:" + voy.getVoyage().getIid());
+				System.out.println("edit shipname:" + voy.getVoyage().getShipname());
+				System.out.println("edit voyageid:" + voy.getVoyage().getVoyageid());				
+				List voyages = session.createCriteria(Voyage.class).add(Restrictions.eq("voyageid", voy.getVoyage().getVoyageid())).list();
 				for (int j=0; j < voyages.size(); j++){
 					Voyage voyg = (Voyage)voyages.get(j); 
 					System.out.println("voyg iid:" + voyg.getIid());

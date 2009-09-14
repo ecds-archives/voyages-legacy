@@ -1289,9 +1289,13 @@ public class VoyagesApplier
 			}
 		}
 
-		vNew.setSuggestion(true);
+		vNew.setSuggestion(true);		
+		
 		if (!wasError)
 		{
+			if (this.adminBean.getAuthenticateduser().isAdmin()) {
+				imputeVariables(session, vNew);
+			}
 			session.saveOrUpdate(vNew);
 			if (editedVoyage == null)
 			{
@@ -1356,13 +1360,18 @@ public class VoyagesApplier
 					editor.setEditedVoyage(editedVoyage);
 					session.update(editor);
 				}
-			}
-
+			}			
+			
 			return vNew;
 		} else
 		{
 			return null;
 		}
+	}
+	
+	private void imputeVariables(Session sess, Voyage voyage) {
+		VoyagesCalculation voyagesCalc = new VoyagesCalculation(sess, voyage);
+		voyagesCalc.calculateImputedVariables();		
 	}
 
 	private SubmissionEditor getSubmissionEditor(Submission submission,
