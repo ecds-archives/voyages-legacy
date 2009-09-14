@@ -196,7 +196,11 @@ public class CSVUtils {
 		try
 		{
 			//query to retrieve users for the submissions 
-			//HashMap users = getUsersForSubmissions(sess);
+			HashMap users = getUsersForSubmissions(sess);
+			boolean usersExist = false;
+			if (users != null && users.size() > 0){
+				usersExist = true;
+			}
 			//query for all the voyages
 			queryResponse = query.executeScrollableQuery(sess, useSQL);
 			
@@ -221,10 +225,12 @@ public class CSVUtils {
 				int j;
 				for (j = 0;j < populatedAttrs.length; j++)
 				{
-					/*if (populatedAttrs[j].getName().equals("iid")) {
+					if (populatedAttrs[j].getName().equals("iid")) {
 						userName = null;
-						userName = (String)users.get(result[j]);					
-					}*/
+						if (usersExist) {
+							userName = (String)users.get(result[j]);
+						}
+					}
 					if (result[j] == null)	{
 						row[j] = "";
 					}
@@ -268,19 +274,21 @@ public class CSVUtils {
 		TastDbQuery q = new TastDbQuery(new String("SubmissionNew"));
 		//retrieving all new submissions
 		Object[] rslt = q.executeQuery(session);
-		HashMap voyMap = null; 
+		HashMap voyMap = new HashMap(); 
 		for (int i=0; i < rslt.length; i++) {
 			SubmissionNew sub = (SubmissionNew)rslt[i];			
 			String name = sub.getUser().getUserName();
 			EditedVoyage editVoy= sub.getEditorVoyage();
 			if (editVoy != null) {
-				List voyages = session.createCriteria(Voyage.class).add(Restrictions.eq("voyageid", editVoy.getVoyage().getVoyageid())).list();
-				if (voyages != null) {
-					voyMap = new HashMap();
-					for (int j=0; j < voyages.size(); j++){
-						Voyage voyg = (Voyage)voyages.get(j); 
-						voyMap.put(voyg.getIid(), name);
-					}				
+				Integer voyageId = editVoy.getVoyage().getVoyageid();
+				if (voyageId != null){
+					List voyages = session.createCriteria(Voyage.class).add(Restrictions.eq("voyageid", voyageId)).list();
+					if (voyages != null) {						
+						for (int j=0; j < voyages.size(); j++){
+							Voyage voyg = (Voyage)voyages.get(j); 
+							voyMap.put(voyg.getIid(), name);
+						}				
+					}
 				}
 			}
 		}
