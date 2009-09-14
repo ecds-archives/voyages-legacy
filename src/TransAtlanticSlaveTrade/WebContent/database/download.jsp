@@ -20,14 +20,6 @@
 	
 	<script src="../scripts/main-menu.js" language="javascript" type="text/javascript"></script>
 	
-	<script language="javascript" type="text/javascript">
-	function popitup(url) {
-		newwindow=window.open(url,'name','height=768,width=1024,resizable, scrollbars, location=0');
-		if (window.focus) {newwindow.focus()}
-		return false;
-	}
-	</script>
-	
 </head>
 <body>
 <f:view>
@@ -97,10 +89,7 @@
 					<ul>
 						<li>Expanded dataset (2008, SPSS format): <a href="http://www.slavevoyages.org/downloads/tastdb-exp-2008.sav">tastdb-exp-2008.sav</a></li>
 						<li>Original CD-ROM dataset (1999, SPSS format): <a href="http://www.slavevoyages.org/downloads/tastdb-1999.sav">tastdb-1999.sav</a></li>
-						<li>Codebook: 
-							<a href="http://www.slavevoyages.org/downloads/Codebook-SPSS2008.pdf" 
-							   onclick="return popitup('http://www.slavevoyages.org/downloads/Codebook-SPSS2008.pdf')">SPSS codebook</a>
-						</li>
+						<li>Codebook: <a href="http://www.slavevoyages.org/downloads/Codebook-SPSS2008.pdf" target="_blank">SPSS codebook</a></li>
 					</ul>		
 					
 					<a name="voyages"></a> 
@@ -130,11 +119,13 @@
 					estimates than the database itself. Users interested in exploring the complex methodology involved 
 					in generating the estimates, or in testing the extent to which alternative assumptions lower or 
 					augment estimates of the full volume of the slave trade (in its entirety or for a national carrier 
-					or period of time), can download an Excel-formatted copy of the spreadsheet below. </p>
+					or period of time), can download below an Excel-formatted copy of the spreadsheet and a PDF version
+					of the essay detailing the methodology used.</p>
 		
 					<h3>Download:</h3>
 					<ul>
-						<li>2008 Estimates, Excel: <a href="#">2008-Estimates.xls</a> (This file will be available later.)</li>
+						<li>2009 Estimates, Excel: <a href="http://www.slavevoyages.org/downloads/estimates-2009.xls">estimates-2009.xls</a></li>
+						<li>2009 Methodology essay, PDF: <a href="http://www.slavevoyages.org/downloads/estimates-method.pdf">estimates-method.pdf</a></li>
 					</ul>
 		
 					Questions about downloading or using these datasets? Please contact 

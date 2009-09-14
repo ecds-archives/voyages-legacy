@@ -156,6 +156,10 @@
 									<span class="place">(Owenworks, Inc., Blacksburg, Virginia USA)</span>
 								</li>
 								<li>
+									<span class="person">Smita Patel</span> &ndash;
+									<span class="function">Emory Libraries Senior Software Engineer</span>
+								</li>
+								<li>
 									<span class="person">Brian Pitts</span> &ndash;
 									<span class="function">Programmer</span>
 								</li>
@@ -183,9 +187,17 @@
 									<span class="place">(Emory Libraries)</span>
 								</li>
 								<li>
+									<span class="person">Alex Thomas</span> &ndash;
+									<span class="function">Emory Libraries Applications Developer and Analyst</span>
+								</li>
+								<li>
 									<span class="person">Kathleen Turaski</span> &ndash;
 									<span class="function">Web Design Consultant</span>
 									<span class="place">(Resonance, Decatur, Georgia, USA)</span>
+								</li>
+								<li>
+									<span class="person">Scott Turnbull</span> &ndash;
+									<span class="function">Emory Libraries Information Technology Manager</span>
 								</li>
 								<li>
 									<span class="person">Jelmer Vos</span> &ndash;

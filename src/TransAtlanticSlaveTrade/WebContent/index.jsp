@@ -198,13 +198,7 @@
 				Alternatively, we could create this as an image. -->
 			
 				<div id="welcome-text">
-					<div id="welcome-text-big"><img src="./images/index/welcome-text.png" width="530" height="75" border="0" /></div>
-					<div id="welcome-text-small">
-						<div>that forcibly embarked over 10 million Africans for transport to the Americas</div>
-						<div>between the sixteenth and nineteenth centuries.  It offers researchers, </div>
-						<div>students and the general public a chance to rediscover the reality of </div>
-						<div>one of the largest forced movements of peoples in world history.</div>
-					</div>
+					<img src="./images/index/welcome-text.png" width="500" height="170" border="0" />
 				</div>
 				
 				<table border="0" cellspacing="0" cellpadding="0" id="featured-sections">
@@ -286,7 +280,6 @@
 		</table>
 		
 		<div class="footer">
-		
 			<table border="0" cellspacing="0" cellpadding="0">
 			<tr>
 				<td colspan="5"><div class="footer-section">Sponsors</div></td>
@@ -304,19 +297,26 @@
 				<td style="padding-right: 0px;"><a href="http://www.vuw.ac.nz" class="footer-link">Victoria University of<br>Wellington (New Zealand)</a></td>
 			</tr>
 			</table>
-			<br>
-			<table border="0" cellspacing="0" cellpadding="0">
-			<tr>
-			<td style="padding-right:5px;">2008 &copy; Emory University</td>
-			<td> <a rel="license" href="http://creativecommons.org/licenses/by-nc/3.0/us/">
-			         <img src="./images/ccl.png" style="border-width:0px;"/>
-			     </a> 
-			 </td>
-			</tr> 
-			</table>
-			
 		</div>
 	
+		<div class="licence">
+			<table border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td style="padding-right: 10px;"><a rel="license" href="http://creativecommons.org/licenses/by-nc/3.0/us/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc/3.0/us/88x31.png" /></a></td>
+				<td>
+					<span xmlns:dc="http://purl.org/dc/elements/1.1/" property="dc:title">Voyages: The Trans-Atlantic Slave Trade Database</span>
+					by <a xmlns:cc="http://creativecommons.org/ns#" href="http://www.slavevoyages.org" property="cc:attributionName" rel="cc:attributionURL">Emory University</a>
+					is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/3.0/us/">Creative Commons Attribution-Noncommercial 3.0 United States License</a>.<br>
+					Permissions beyond the scope of this license may be available at <a xmlns:cc="http://creativecommons.org/ns#" href="mailto:&#118;&#111;&#121;&#97;&#103;&#101;s&#64;&#101;mo&#114;y&#46;&#101;&#100;&#117;" rel="cc:morePermissions">&#118;&#111;&#121;&#97;&#103;&#101;s&#64;&#101;mo&#114;y&#46;&#101;&#100;&#117;</a>.
+				</td>
+			</tr>
+			</table>
+		</div>
+		
+		<div class="copyright">
+			2008 &copy; Emory University
+		</div>
+
 	</div>
 
 </f:view>  

@@ -42,7 +42,7 @@ public class SiteHeaderComponent extends UIComponentBase
 	private static HelpLink[] helpLinks = {
 		new HelpLink("Sitemap", "help/sitemap.faces"),
 		new HelpLink("FAQs", "help/faq.faces"),
-		new HelpLink("Demos", "help/demos.faces"),
+		new HelpLink("Demos", "help/demo-overview.faces"),
 		new HelpLink("Glossary", "help/glossary.faces") };
 
 	public String getFamily()

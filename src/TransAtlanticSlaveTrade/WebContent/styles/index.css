@@ -6,19 +6,8 @@ div.main-content {
 	background-repeat: repeat-x; }
 	
 div#welcome-text {
+	padding-top: 15px;
 	height: 245px; }
-
-div#welcome-text-big {
-	padding-top: 15px; }
-
-div#welcome-text-small {
-	color: #404A49;
-	font-size: 12pt;
-	line-height: 140%;
-	margin-left: 5px; }
-	
-div#welcome-text-small div {
-	white-space: nowrap; }
 	
 /* feature sections */
 
@@ -111,3 +100,25 @@ div.footer {
 	
 a.footer-link {
 	color: #57807B; }
+
+
+/* licence */
+
+div.licence {
+	border-top: 1px dotted #D2E2E1;
+	margin: 0px 20px;
+	padding-top: 10px;
+	padding-bottom: 10px; }
+
+div.licence a {
+	text-decoration: none;
+	color: #57807B; }
+	
+
+/* copyright */
+
+div.copyright {
+	border-top: 1px dotted #D2E2E1;
+	margin: 0px 20px;
+	padding-top: 10px;
+	padding-bottom: 10px; }

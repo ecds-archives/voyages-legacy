@@ -74,3 +74,25 @@ div.top-bar-menu td.tabs-tab-right-selected {
 div#help-section-title {
 	background-color: #B5DEE6; }
 	
+td.demo-links {
+	color: White;
+	padding-left: 20px; }
+
+td.demo-links a {
+	display: inline-block;
+	text-decoration: none;
+	padding: 2px 5px;
+	color: #008CA5; }
+	
+td.demo-links a:hover {
+	background-color: #40A9BE;
+	color: White;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px; }
+
+td.demo-links a.demo-link-active {
+	background-color: #008CA5;
+	color: White;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px; }
+	

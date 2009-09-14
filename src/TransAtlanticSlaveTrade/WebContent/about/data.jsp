@@ -82,7 +82,7 @@
 						<li>Jean-Pierre Le Glaunec</li>						
 						<li>Pedro Machado</li>
 						<li>Antonio de Almeida Mendes</li>
-						<li>Philp Misevich</li>
+						<li>Philip Misevich</li>
 						<li>Greg O’Malley</li>
 						<li>Cláudia Paixão</li>
 						<li>Manuel Barcia Paz</li>
