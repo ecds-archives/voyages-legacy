@@ -3,6 +3,11 @@
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
 <%@ taglib uri="http://tas.library.emory.edu" prefix="s"%>
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
+
+<%
+String dlUrl = AppConfig.getConfiguration().getString(AppConfig.DOWNLOADS_URL);
+%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -87,9 +92,9 @@
 				
 					<h3>Downloads:</h3>
 					<ul>
-						<li>Expanded dataset (2008, SPSS format): <a href="http://www.slavevoyages.org/downloads/tastdb-exp-2008.sav">tastdb-exp-2008.sav</a></li>
-						<li>Original CD-ROM dataset (1999, SPSS format): <a href="http://www.slavevoyages.org/downloads/tastdb-1999.sav">tastdb-1999.sav</a></li>
-						<li>Codebook: <a href="http://www.slavevoyages.org/downloads/Codebook-SPSS2008.pdf" target="_blank">SPSS codebook</a></li>
+						<li>Expanded dataset (2008, SPSS format): <a href="<%=dlUrl%>/tastdb-exp-2008.sav">tastdb-exp-2008.sav</a></li>
+						<li>Original CD-ROM dataset (1999, SPSS format): <a href="<%=dlUrl%>/tastdb-1999.sav">tastdb-1999.sav</a></li>
+						<li>Codebook: <a href="<%=dlUrl%>/Codebook-SPSS2008.pdf" target="_blank">SPSS codebook</a></li>
 					</ul>		
 					
 					<a name="voyages"></a> 
@@ -104,9 +109,9 @@
 					
 					<h3>Downloads:</h3>
 					<ul>
-						<li>2008, SPSS: <a href="http://www.slavevoyages.org/downloads/tastdb-2008.sav">tastdb-2008.sav</a></li>
-						<li>2008, comma-delimited: <a href="http://www.slavevoyages.org/downloads/tastdb-2008.csv">tastdb-2008.cvs</a></li>
-						<li>2008, dBase: <a href="http://www.slavevoyages.org/downloads/tastdb-2008.dbf">tastdb-2008.dbf</a></li>
+						<li>2008, SPSS: <a href="<%=dlUrl%>/tastdb-2008.sav">tastdb-2008.sav</a></li>
+						<li>2008, comma-delimited: <a href="<%=dlUrl%>/tastdb-2008.csv">tastdb-2008.cvs</a></li>
+						<li>2008, dBase: <a href="<%=dlUrl%>/tastdb-2008.dbf">tastdb-2008.dbf</a></li>
 					</ul>
 						
 					<a name="estimates"></a> 
@@ -124,8 +129,8 @@
 		
 					<h3>Download:</h3>
 					<ul>
-						<li>2009 Estimates, Excel: <a href="http://www.slavevoyages.org/downloads/estimates-2009.xls">estimates-2009.xls</a></li>
-						<li>2009 Methodology essay, PDF: <a href="http://www.slavevoyages.org/downloads/estimates-method.pdf">estimates-method.pdf</a></li>
+						<li>2009 Estimates, Excel: <a href="<%=dlUrl%>/estimates-2009.xls">estimates-2009.xls</a></li>
+						<li>2009 Methodology essay, PDF: <a href="<%=dlUrl%>/estimates-method.pdf">estimates-method.pdf</a></li>
 					</ul>
 		
 					Questions about downloading or using these datasets? Please contact 

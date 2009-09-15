@@ -39,6 +39,8 @@ public class AppConfig
 	public static final String SLAVES_HAVANA_ID = "slaves.havana.id";
 	
 	public static final String GOOGLE_ANALYTICS = "google.analytics";
+	
+	public static final String DOWNLOADS_URL = "downloads.url";
 
 	private static void load()
 	{

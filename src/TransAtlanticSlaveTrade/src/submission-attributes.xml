@@ -432,7 +432,7 @@
 			<attribute name="datarr39"/>
 		</attributes>
 	</submission-attributes>	
-	<submission-attributes name="datedepam" group="Voyage dates" editable="Y" type="date" userLabel="Date that ship left on return voyage)">
+	<submission-attributes name="datedepam" group="Voyage dates" editable="Y" type="date" userLabel="Date that ship left on return voyage">
 		<attributes>
 			<attribute name="ddepamc"/>
 			<attribute name="ddepamb"/>
