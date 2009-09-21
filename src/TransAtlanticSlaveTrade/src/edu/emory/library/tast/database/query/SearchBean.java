@@ -48,7 +48,7 @@ import edu.emory.library.tast.util.StringUtils;
  */
 public class SearchBean
 {
-	
+
 	public static final String TAB_ID_LISTING = "listing";
 	public static final String TAB_ID_BASIC_GRAPH = "basic-graph";
 	public static final String TAB_ID_TABLE = "tableview";
@@ -59,35 +59,35 @@ public class SearchBean
 	private boolean totalMinMaxYearDetermined = false;
 	private String totalMinYear;
 	private String totalMaxYear;
-	
+
 	private UserCategory selectedCategory = UserCategory.General;
 	private String mainSectionId = TAB_ID_LISTING;
 
 	private History history;
 	private Query workingQuery;
 	private SearchParameters searchParameters;
-	
+
 	private String selectedRevision = AppConfig.getConfiguration().getString(AppConfig.DEFAULT_REVISION);
-	
+
 	private SelectItem[] revisions = null;
-	
+
 	private String expandedGroup = "basic";
-	
+
 	private PopupComponent permlinkPopup = null;
 	private String lastPermLink = null;
-	
+
 	private boolean numberOfResultsValid = false;
 	private int numberOfResults;
-	
+
 	private boolean showVoygeDetail = false;
-	
+
 	public SearchBean()
 	{
 		history = new History();
 		initNewQuery();
 		searchInternal(false);
 	}
-	
+
 	/**
 	 * Reinitialises the working query to its default state, i.e. it creates a
 	 * new one. Also determines min and max year. Used in the constructor and
@@ -99,27 +99,28 @@ public class SearchBean
 		numberOfResultsValid = false;
 		setMaxTimeFrameExtent();
 	}
-	
+
 	/**
 	 * Finds the min a max year among all voyages in the database. The "yearam"
 	 * field is used.
 	 */
 	private void setMaxTimeFrameExtent()
 	{
-		
+
 		if (!totalMinMaxYearDetermined)
 		{
+			TastDbConditions cond = new TastDbConditions();
+			cond.addCondition(Voyage.getAttribute("yearam"), 0, TastDbConditions.OP_GREATER);
+			TastDbQuery query = new TastDbQuery("Voyage", cond);
 
-			TastDbQuery query = new TastDbQuery("Voyage");
-			
 			query.addPopulatedAttribute(
 					new FunctionAttribute("min",
 							new Attribute[] {Voyage.getAttribute("yearam")}));
-			
+
 			query.addPopulatedAttribute(
 					new FunctionAttribute("max",
 							new Attribute[] {Voyage.getAttribute("yearam")}));
-			
+
 			List ret = query.executeQueryList();
 			if (ret != null && ret.size() == 1)
 			{
@@ -127,11 +128,11 @@ public class SearchBean
 				totalMinYear = row[0] != null ? row[0].toString() : null;
 				totalMaxYear = row[1] != null ? row[1].toString() : null;
 			}
-			
+
 			totalMinMaxYearDetermined = true;
-		
+
 		}
-		
+
 		workingQuery.setYearFrom(totalMinYear);
 		workingQuery.setYearTo(totalMaxYear);
 
@@ -142,26 +143,26 @@ public class SearchBean
 		setMaxTimeFrameExtent();
 		return null;
 	}
-	
+
 	/**
 	 * Bound to UI. Event handler for adding a new condition to the current
 	 * working query.
-	 * 
+	 *
 	 * @param event
 	 */
 	public void addConditionFromMenu(MenuItemSelectedEvent event)
 	{
 		workingQuery.addConditionOn(event.getMenuId());
 	}
-	
+
 	/**
 	 * Bound to UI to the "Reset to defaults" button. Uses {@link #initNewQuery()}
-	 * and the it calls {@link #searchInternal(boolean)}. 
+	 * and the it calls {@link #searchInternal(boolean)}.
 	 * @return
 	 */
 	public String startAgain()
 	{
-		
+
 		ListingBean listingBean = (ListingBean) JsfUtils.getSessionBean("ListingBean");
 		MapBean mapBean  = (MapBean) JsfUtils.getSessionBean("MapBean");
 		TimelineBean timelineBean = (TimelineBean) JsfUtils.getSessionBean("TimelineBean");
@@ -173,19 +174,19 @@ public class SearchBean
 		timelineBean.resetToDefault();
 		tableBean.resetToDefault();
 		graphsBean.resetToDefault();
-		
+
 		showVoygeDetail = false;
 		mainSectionId = TAB_ID_LISTING;
-		
+
 		initNewQuery();
 		searchInternal(false);
-		
+
 		return null;
-		
+
 	}
-	
+
 	/**
-	 * Bound to UI to the "Search" button. 
+	 * Bound to UI to the "Search" button.
 	 * @return
 	 */
 	public String search()
@@ -194,40 +195,40 @@ public class SearchBean
 		searchInternal(true);
 		return null;
 	}
-	
+
 	/**
 	 * This invokes the search. It constructs the database query first. When there
 	 * are any errors it stops. Then it stores the constructed query in
 	 * {@link #searchParameters}. Finally, it compares {@link #workingQuery}
 	 * with the latest query in the history, and if they differ it adds
 	 * {@link #workingQuery} to the history.
-	 * 
+	 *
 	 * @param storeToHistory
 	 */
 	private void searchInternal(boolean storeToHistory)
 	{
-		
+
 		try
 		{
-		
+
 			TastDbConditions dbConds = new TastDbConditions();
 			boolean errors = workingQuery.addToDbConditions(false, dbConds);
 			if (errors) return;
-			
+
 			//dbConds.addCondition(Voyage.getAttribute("revision"), new Integer(Voyage.getCurrentRevision()), Conditions.OP_EQUALS);
 			dbConds.addCondition(Voyage.getAttribute("revision"), new Integer(selectedRevision), TastDbConditions.OP_EQUALS);
-			
+
 			searchParameters = new SearchParameters();
 			searchParameters.setConditions(dbConds);
 			searchParameters.setNumberOfResults(getNumberOfResults());
-	
+
 			if (storeToHistory && !workingQuery.equals(history.getLatestQuery()))
 			{
 				HistoryItem historyItem = new HistoryItem();
 				historyItem.setQuery((Query) workingQuery.clone());
 				history.addItem(historyItem);
 			}
-		
+
 		}
 		catch (CloneNotSupportedException cns)
 		{
@@ -235,50 +236,50 @@ public class SearchBean
 		}
 
 	}
-	
+
 	/**
 	 * Bound to UI to the query builder compoment. It is invoked whenever the
 	 * users changes anything in the HTML form representing the query. The
 	 * request is then sent to server on background using AJAX.
-	 * 
+	 *
 	 * @param event
 	 */
 	public void updateTotal(QueryUpdateTotalEvent event)
 	{
-		HttpServletRequest request = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest(); 
+		HttpServletRequest request = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
 		if (AAUtils.isAjaxRequest(request))
 		{
 			AAUtils.addZonesToRefresh(request, "total");
 		}
 	}
-	
+
 	private void updateNumberOfResults()
 	{
-		
+
 		// It seems that PostgreSQL is not very good in running COUNT(*) queries.
 		// To check the performance avoiding COUNT(*) queries, replace the content
 		// of this function with the following.
 		//
 		// numberOfResults = 100;
 		// numberOfResultsValid = true;
-		
+
 		// long start = System.currentTimeMillis();
-		
+
 		TastDbConditions dbConds = new TastDbConditions();
 		dbConds.addCondition(Voyage.getAttribute("revision"), new Integer(this.selectedRevision), TastDbConditions.OP_EQUALS);
 		workingQuery.addToDbConditions(false, dbConds);
-		
+
 		boolean useSQL = AppConfig.getConfiguration().getBoolean(AppConfig.DATABASE_USE_SQL);
-		
+
 		Session session = HibernateConn.getSession();
-		Transaction transaction = session.beginTransaction();		
-		
+		Transaction transaction = session.beginTransaction();
+
 		TastDbQuery query = new TastDbQuery("Voyage", dbConds);
-		query.addPopulatedAttribute(new FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("iid")}));		
+		query.addPopulatedAttribute(new FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("iid")}));
 		Number ret = (Number) query.getQuery(session, useSQL).list().get(0);
 		numberOfResults = ret.intValue();
 		numberOfResultsValid = true;
-		
+
 		transaction.commit();
 		session.close();
 
@@ -286,13 +287,13 @@ public class SearchBean
 		// System.out.println("count = " + (end - start));
 
 	}
-	
+
 	public String getNumberOfResultsText()
 	{
 		MessageFormat fmt = new MessageFormat(TastResource.getText("slaves_search_expected"));
 		return fmt.format(new Object[] {new Integer(getNumberOfResults())});
 	}
-	
+
 	public int getNumberOfResults()
 	{
 		if (!numberOfResultsValid)
@@ -310,18 +311,18 @@ public class SearchBean
 	/**
 	 * Bound to UI. Deletes a chosen history item. Called by the history list
 	 * component.
-	 * 
+	 *
 	 * @param event
 	 */
 	public void historyItemDelete(HistoryItemDeleteEvent event)
 	{
 		history.deleteItem(event.getHistoryId());
 	}
-	
+
 	/**
 	 * Bound to UI. Replaces {@link #workingQuery} by a chosen item from the
 	 * history list, and executes search. Called by the history list component.
-	 * 
+	 *
 	 * @param event
 	 */
 	public void historyItemRestore(HistoryItemRestoreEvent event)
@@ -337,18 +338,18 @@ public class SearchBean
 			throw new RuntimeException(cns);
 		}
 	}
-	
+
 	public void createPermlink()
 	{
-		
+
 		lastPermLink =
-			AppConfig.getConfiguration().getString(AppConfig.SITE_URL) + 
+			AppConfig.getConfiguration().getString(AppConfig.SITE_URL) +
 			"/database/search.faces?" + workingQuery.createUrl();
-		
+
 		this.permlinkPopup.display();
 
 	}
-	
+
 	/**
 	 * Check the current URL if there is permlink=XXX. If there is, the
 	 * corresponding query is retrieved from the database, {@link #workingQuery}
@@ -356,31 +357,31 @@ public class SearchBean
 	 */
 	public boolean restoreQueryFromUrl(Map params)
 	{
-		
+
 		Query newQuery = Query.restoreFromUrl(params);
 		if (newQuery == null || newQuery.isEmpty())
 			return false;
-		
+
 		workingQuery = newQuery;
 		numberOfResultsValid = false;
 		searchInternal(true);
 		return true;
 
 	}
-	
+
 	/**
 	 * Bound to UI. Provides a list of attributes for the menu components in the
 	 * left column on the page.
-	 * 
+	 *
 	 * @param category
 	 * @return
 	 */
 	private MenuItemSection[] getMenuAttributes(UserCategory category)
 	{
-		
+
 		Group[] groups = Group.getGroups();
 		QueryBuilderQuery builderQuery = workingQuery.getBuilderQuery();
-		
+
 		MenuItemSection[] mainItems = new MenuItemSection[groups.length];
 		for (int i = 0; i < groups.length; i++)
 		{
@@ -390,22 +391,22 @@ public class SearchBean
 			{
 				MenuItemSection mainItem = new MenuItemSection();
 				MenuItem[] subItems = new MenuItem[attributes.length];
-				
+
 				String mainItemText = "<b>" + group.getUserLabel() + "</b>";
 				if (attributes.length > 1)
 				{
-					mainItemText += " (" + attributes.length + " variables)";					
+					mainItemText += " (" + attributes.length + " variables)";
 				}
 				else
 				{
-					mainItemText += " (1 variable)";					
+					mainItemText += " (1 variable)";
 				}
-				
+
 				mainItems[i] = mainItem;
 				mainItem.setId(group.getId().toString());
 				mainItem.setText(mainItemText);
 				mainItem.setSubmenu(subItems);
-				
+
 				int k = 0;
 				for (int j = 0; j < attributes.length; j++)
 				{
@@ -422,13 +423,13 @@ public class SearchBean
 						subItem.setText(attr.getUserLabel());
 					}
 				}
-				
+
 			}
 		}
-		
+
 		return mainItems;
 	}
-	
+
 	public MenuItemSection[] getMenuAttributesBeginners()
 	{
 		return getMenuAttributes(UserCategory.Beginners);
@@ -522,17 +523,17 @@ public class SearchBean
 			numberOfResultsValid = false;
 		}
 	}
-	
+
 	public String getSelectedRevision()
 	{
 		return selectedRevision;
 	}
-	
+
 	public void setSelectedRevision(String selectedRevision)
 	{
 		this.selectedRevision = selectedRevision;
 	}
-	
+
 	public SelectItem[] getRevisions() {
 		if (this.revisions == null) {
 			TastDbQuery query = new TastDbQuery("Revision");
@@ -572,10 +573,10 @@ public class SearchBean
 	{
 		return lastPermLink;
 	}
-	
+
 	public String getTimeFrameExtentHint()
 	{
-		return			
+		return
 			"The full extent of time from the first to the last voyage is " +
 			totalMinYear + " &ndash; " + totalMaxYear;
 	}
