@@ -102,16 +102,17 @@ public class SearchBean
 
 	/**
 	 * Finds the min a max year among all voyages in the database. The "yearam"
-	 * field is used.
+	 * field is used. 
 	 */
 	private void setMaxTimeFrameExtent()
 	{
-
 		if (!totalMinMaxYearDetermined)
 		{
-			TastDbConditions cond = new TastDbConditions();
-			cond.addCondition(Voyage.getAttribute("yearam"), 0, TastDbConditions.OP_GREATER);
-			TastDbQuery query = new TastDbQuery("Voyage", cond);
+			TastDbConditions conds = new TastDbConditions();
+			conds.addCondition(Voyage.getAttribute("yearam"), new Integer(0), TastDbConditions.OP_GREATER);
+			conds.addCondition(Voyage.getAttribute("revision"), new Integer(this.selectedRevision), TastDbConditions.OP_EQUALS);
+			conds.addCondition(Voyage.getAttribute("suggestion"), new Boolean(false), TastDbConditions.OP_EQUALS);
+			TastDbQuery query = new TastDbQuery("Voyage", conds);
 
 			query.addPopulatedAttribute(
 					new FunctionAttribute("min",
