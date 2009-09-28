@@ -5,7 +5,7 @@
 	<property name="libdir" location="${webdir}/WEB-INF/lib" />
 	<property name="build" location="build" />
 	<!-- servletlib property should be configured -->
-	<property name="servletlib" location="xxx" /> 	
+	<property name="servletlib" location="C:\Program Files\Apache Software Foundation\Tomcat 6.0\lib"/> 	
 	<property name="src" location="src" />
 		
 	<fail message="Usage ant -f build.xml -Denv=env (env=dev/qa/prod)" unless="env"/>
