@@ -5,11 +5,13 @@ public class HelpLink
 	
 	private String label;
 	private String href;
+	private boolean openInNewWindow;
 	
-	public HelpLink(String label, String href)
+	public HelpLink(String label, String href, boolean openInNewWindow)
 	{
 		this.label = label;
 		this.href = href;
+		this.openInNewWindow = openInNewWindow;
 	}
 
 	public String getLabel()
@@ -30,6 +32,16 @@ public class HelpLink
 	public void setHref(String href)
 	{
 		this.href = href;
+	}
+
+	public boolean isOpenInNewWindow()
+	{
+		return openInNewWindow;
+	}
+
+	public void setOpenInNewWindow(boolean openInNewWindow)
+	{
+		this.openInNewWindow = openInNewWindow;
 	}
 
 }

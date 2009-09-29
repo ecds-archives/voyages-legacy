@@ -4,11 +4,7 @@ body {
 	background-repeat: repeat-x; }
 	
 a {
-	color: #5A636B;
-	color: #07A3BE;
-	color: #809EB0;
-	color: #FF6600;
-	color: #4DAFC2;
-	color: #EEDD88; 
-	color: #DDBB22;
 	color: #77AADD; }
+	
+div.licence {
+	border-color: #98A1A9; }

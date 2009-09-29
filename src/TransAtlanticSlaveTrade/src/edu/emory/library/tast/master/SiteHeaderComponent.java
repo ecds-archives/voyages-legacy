@@ -14,7 +14,7 @@ import edu.emory.library.tast.util.JsfUtils;
  * I've always tried to keep components simple in the sense that
  * a component should always have a single purpose. However,
  * for the site main header it seems that the most efficient
- * solution is to pack everything in one huge component. Then it's
+ * solution is to pack everything to one big component. Then it's
  * easy to use it because it's represented by just a single tag.
  * I'll try to separate the logical pieces into reasonable chunks
  * at least.
@@ -39,12 +39,6 @@ public class SiteHeaderComponent extends UIComponentBase
 	private boolean activeSectionIdSet = false;
 	private String activeSectionId;
 	
-	private static HelpLink[] helpLinks = {
-		new HelpLink("Sitemap", "help/sitemap.faces"),
-		new HelpLink("FAQs", "help/faq.faces"),
-		new HelpLink("Demos", "help/demo-overview.faces"),
-		new HelpLink("Glossary", "help/glossary.faces") };
-
 	public String getFamily()
 	{
 		return null;
@@ -374,15 +368,22 @@ public class SiteHeaderComponent extends UIComponentBase
 		writer.writeAttribute("class", "secondary-bar-help-links", null);
 		writer.startElement("tr", this);
 		
+		HelpLink[] helpLinks = HelpLinks.getHelpLinks();
+		
 		for (int i = 0; i < helpLinks.length; i++)
 		{
 			
+			HelpLink helplink = helpLinks[i];
+			String href = helplink.isOpenInNewWindow() ?
+					"javascript:openPopup('" + baseUrl + "/" + helplink.getHref() + "')" :
+						baseUrl + "/" + helplink.getHref();
+
 			writer.startElement("td", this);
 			writer.writeAttribute("class", i == 0 ? "secondary-bar-help-link-first" : "secondary-bar-help-link", null);
 			
 			writer.startElement("a", this);
-			writer.writeAttribute("href", "javascript:openPopup('" + baseUrl + "/" + helpLinks[i].getHref() + "')", null);
-			writer.write(helpLinks[i].getLabel());
+			writer.writeAttribute("href", href, null);
+			writer.write(helplink.getLabel());
 			writer.endElement("a");
 			
 			writer.endElement("td");

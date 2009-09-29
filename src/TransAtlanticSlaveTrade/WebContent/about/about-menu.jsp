@@ -17,6 +17,7 @@
 			<s:secondaryMenuItem label="Project Team" menuId="team" href="team.faces" />
 			<s:secondaryMenuItem label="Contributors of data" menuId="data" href="data.faces" />
 			<s:secondaryMenuItem label="Acknowledgements" menuId="acknowledgements" href="acknowledgements.faces" />
+			<s:secondaryMenuItem label="African Origins Project" menuId="origins" href="origins.faces" />
 			<s:secondaryMenuItem label="Contact Us" menuId="contact" href="contact.faces" />
 			<s:secondaryMenuItem label="Legal" menuId="legal" href="legal.faces" />
 		</s:secondaryMenu>		

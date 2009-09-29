@@ -9,7 +9,7 @@
 
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-	<title>African-Origins project</title>
+	<title>African Origins project</title>
 
 	<link href="../styles/main.css" rel="stylesheet" type="text/css">
 	<link href="../styles/main-menu.css" rel="stylesheet" type="text/css">
@@ -29,7 +29,7 @@
 	<s:siteHeader activeSectionId="about">
 		<h:outputLink value="../index.faces"><h:outputText value="Home"/></h:outputLink>
 		<h:outputLink value="./index.faces"><h:outputText value="About the Project" /></h:outputLink>
-		<h:outputText value="African-Origins Project" />
+		<h:outputText value="African Origins Project" />
 	</s:siteHeader>
 	
 	<div id="content">
@@ -42,7 +42,7 @@
 			<td id="about-right-column">
 				<s:simpleBox>
 			
-					<h1>African-Origins project</h1>
+					<h1>African Origins Project</h1>
 
 					<p>In January 2009 the directors of the project to create <em>Voyages:
 					The Trans-Atlantic Slave Trade Database</em> began the African Origins
@@ -60,7 +60,7 @@
 					identify the likely ethno-linguistic origin of an individual’s
 					name.</p>
 
-					<p>IThe African Origins Project arose directly from the work of
+					<p>The African Origins Project arose directly from the work of
 					G. Ugo Nwokeji and David Eltis, who in 2002 used audio recordings
 					of names found in Courts of Mixed Commission records for Havana,
 					Cuba, and Freetown, Sierra Leone, to identify likely
@@ -73,7 +73,7 @@
 					enabled a more accurate assessment of the name’s possible ethnic
 					origins than provided by its written counterpart alone.</p>
 
-					<p>IEltis and Nwokeji played these recordings to informants in
+					<p>Eltis and Nwokeji played these recordings to informants in
 					Nigeria, Sierra Leone, and Angola and to members of the African
 					diaspora in parts of North America, who were able to identify
 					through these pronunciations the likely ethnic group from which the
@@ -84,13 +84,14 @@
 					to assist with this project.</p>
 
 					<p>In addition to the African Names Database, the <em>Voyages</em>
-					website contains digitized images of the first pages of the Sierra
-					Leone and Cuba Courts of Mixed Commission registers, from which the
+					website contains digitized images of the first pages of the
+					<a href="http://www.slavevoyages.org/tast/resources/images.faces">Sierra
+					Leone and Cuba Courts of Mixed Commission registers</a>, from which the
 					information on these Africans was drawn. More information on
 					liberated Africans and registers of the Courts of Mixed Commission
 					may also be found in the Glossary. For more information about the
 					African Origins Project and opportunities to participate, please
-					contact the African Origins Project team.M</p>
+					contact the <a href="mailto:&#x61;&#x66;&#x72;&#x69;&#x63;&#x61;&#x6E;&#x2D;&#x6F;&#x72;&#x69;&#x67;&#x69;&#x6E;&#x73;&#x40;&#x65;&#x6D;&#x6F;&#x72;&#x79;&#x2E;&#x65;&#x64;&#x75;">African Origins Project team</a>.</p>
 
 				</s:simpleBox>
 			</td>

@@ -53,14 +53,18 @@
 		</table>
 	</div>
 	
-	<s:glossaryList
-		id="glossary"
-		terms="#{GlossaryBean.terms}" />
+	<div class="glossary-terms-cont">
+	
+		<s:glossaryList
+			id="glossary"
+			terms="#{GlossaryBean.terms}" />
+			
+		<%@ include file="../footer.jsp" %>
+	
+	</div>
 
 </h:form>
 </f:view>
-
-<%@ include file="../footer.jsp" %>
 
 </body>
 </html>

@@ -20,27 +20,15 @@ h2 {
 	font-size: 11pt;
 	font-weight: bold; }	
 
+
 /* footer */
 
-div.footer {
-	border-top: 1px solid #CCCCCC;
+div.licence {
+	/* width: 900px; */
+	border-top-width: 1px;
+	border-top-style: dotted;
 	padding-top: 5px;
 	margin-top: 20px;
 	margin-bottom: 10px;
-	margin-left: 20px;
+	margin-left: 10px;
 	margin-right: 20px; }
-	
-div.footer td {
-	padding-right: 20px; } 
-
-a.footer-link {
-	color: #888888;
-	text-decoration: none; }
-	
-a.footer-link:hover {
-	color: #333333; }
-
-div.footer-section {
-	/* border-bottom: 1px dotted #CCCCCC; 
-	padding-bottom: 5px; */
-	margin-bottom: 5px; } 

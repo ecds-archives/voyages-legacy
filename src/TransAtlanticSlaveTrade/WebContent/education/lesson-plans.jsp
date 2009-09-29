@@ -47,8 +47,11 @@
 					these lessons plans allow students to engage the history and legacy of the Atlantic slave trade in diverse 
 					and meaningful ways.  The lessons are all aligned with national standards in history (National Center for 
 					History in the Schools), social studies (National Council for the Social Studies), and geography (National 
-					Council for Geography Education) and range in both their grade levels and activities.  The lessons also 
+					Council for Geography Education) and range in both their grade levels and activities. The lessons also 
 					suggest readings for more information about the Slave Trade.</p>
+					
+					<p>These materials were created for purposes of curriculum and instruction and are not intended for commercial
+					republication. Please contact individual authors for additional permissions.</p>
 
 					<a name="slave-trade-abolition"></a>
 			

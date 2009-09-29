@@ -121,7 +121,7 @@ public class MainMenu
 							"about/acknowledgements.faces"),
 					new MainMenuBarPageItem(
 							"origins",
-							"African-Origins project",
+							"African Origins Project",
 							"about/origins.faces"),
 					new MainMenuBarPageItem(
 							"contact",

@@ -15,6 +15,7 @@
 				<s:panelTab title="#{res.help_box_menu_faq}" sectionId="faqs" href="faq.faces" />
 				<s:panelTab title="#{res.help_box_menu_demos}" sectionId="demos" href="demo-overview.faces" />
 				<s:panelTab title="#{res.help_box_menu_glossary}" sectionId="glossary" href="glossary.faces" />
+				<s:panelTab title="#{res.help_box_menu_legal}" sectionId="legal" href="legal.faces" />
 			</s:panelTabSet>
 		</t:div>
 	</t:htmlTag>

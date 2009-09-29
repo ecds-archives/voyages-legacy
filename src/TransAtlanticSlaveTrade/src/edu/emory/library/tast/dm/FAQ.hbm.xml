@@ -17,6 +17,7 @@
 			<generator class="native"/>
 		</id>
 		<property name="name" />
+		<property name="order" column="order_num" />
 		<set name="questions" inverse="true" order-by="question asc">
 			<key column="cat_id" />
 			<one-to-many class="edu.emory.library.tast.dm.FAQ" />

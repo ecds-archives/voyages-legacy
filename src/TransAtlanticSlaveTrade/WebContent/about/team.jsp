@@ -183,7 +183,7 @@
 								</li>								
 								<li>
 									<span class="person">Joan A. Smith</span> &ndash;
-									<span class="function">Chief Technology Strategist</span>
+									<span class="function">Emory Libraries Chief Technology Strategist</span>
 									<span class="place">(Emory Libraries)</span>
 								</li>
 								<li>

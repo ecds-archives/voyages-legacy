@@ -1,6 +1,9 @@
 body {
 	background-color: #E2F2F5; }
 
+a {
+	color: #008CA5; }
+
 table.top-bar {
 	border-collapse: collapse;
 	width: 100%; }

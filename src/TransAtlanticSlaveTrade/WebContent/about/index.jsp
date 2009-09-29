@@ -57,8 +57,8 @@
 				<td class="section-title"><a href="team.faces">Project Team</a></td>
 				<td class="section-title"><a href="data.faces">Contributors of data</a></td>
 				<td class="section-title"><a href="acknowledgements.faces">Acknowledge-<br>ments</a></td>
+				<td class="section-title"><a href="legal.faces">African Origins project</a></td>
 				<td class="section-title"><a href="contact.faces">Contact us</a></td>
-				<td class="section-title"><a href="legal.faces">Legal</a></td>
 			</tr>
 			</table>
 		</div>
@@ -84,12 +84,11 @@
 				<td class="section-desc">Major sponsors and institutional
 				partners of the Voyages website, as well as other organizations and
 				individuals who have assisted the work of the project team.</td>
+				
+				<td class="section-desc">TBD ...</td>
 
 				<td class="section-desc">Members of the Voyages editorial board
 				and the email address for contacting the website.</td>
-
-				<td class="section-desc">Copyright restrictions and permission
-				to reproduce or use materials found on the website.</td>
 
 			</tr>
 			</table>

@@ -43,15 +43,18 @@
 		</table>
 	</div>
 	
-	<s:faqList
-		id="faq"
-		faqList="#{FAQBean.FAQList}" />
+	<div class="faq-list-cont">
 	
+		<s:faqList
+			id="faq"
+			faqList="#{FAQBean.FAQList}" />
+			
+		<%@ include file="../footer.jsp" %>
+		
+	</div>
 	
 </h:form>
 </f:view>
-
-<%@ include file="../footer.jsp" %>
 
 </body>
 </html>

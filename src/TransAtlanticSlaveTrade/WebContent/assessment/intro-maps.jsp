@@ -88,8 +88,10 @@
 				<s:simpleBox>
 			
 					<h1>Introductory Maps</h1>
-					<p>Source: David Eltis and David Richardson, <font style="font-style:italic;">An Atlas of the 
-							Transatlantic Slave Trade</font> (New Haven, 2009), reproduced with the permission of Yale University Press.</p>
+					<p>Source: David Eltis and David Richardson,
+					<span style="font-style:italic;">An Atlas of the Transatlantic Slave Trade</span>
+					(New Haven, 2009), reproduced with the permission of Yale University Press.
+					For permission to reuse these images, contact Yale University Press.</p>
 					
 					<a name="map1"></a>
 					

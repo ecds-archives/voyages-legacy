@@ -90,27 +90,41 @@ div.welcome-map-region-text {
 div.welcome-map-region-desc {
 	line-height: 140%; }
 
-	
-/* special treatment for footer */
+/* footer */
 
 div.footer {
 	border-top: 1px solid #D2E2E1;
+	padding-top: 5px;
 	margin-top: 30px;
-	margin-left: 20px; }
+	margin-bottom: 10px;
+	margin-left: 20px;
+	margin-right: 20px; }
 	
+div.footer td {
+	padding-right: 20px; } 
+
 a.footer-link {
-	color: #57807B; }
+	color: #57807B;
+	text-decoration: none; }
+	
+a.footer-link:hover {
+	color: #333333; }
+
+div.footer-section {
+	/* border-bottom: 1px dotted #CCCCCC; 
+	padding-bottom: 5px; */
+	margin-bottom: 5px; } 
 
 
 /* licence */
 
-div.licence {
+div.licence-index {
 	border-top: 1px dotted #D2E2E1;
 	margin: 0px 20px;
 	padding-top: 10px;
 	padding-bottom: 10px; }
 
-div.licence a {
+div.licence-index a {
 	text-decoration: none;
 	color: #57807B; }
 	

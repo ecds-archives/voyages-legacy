@@ -1,0 +1,1 @@
+DROP TABLE IF EXISTS images_voyages, regions_images, ports_images, people_images, images, image_categories;

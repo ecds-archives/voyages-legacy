@@ -289,7 +289,7 @@
 				<td><a href="http://www.emory.edu" class="footer-link"><img src="./images/emory-logo-index.png" width="82" height="32" border="0" alt="Emory" /></a></td>
 				<td style="padding-right: 5px;"><a href="http://www.neh.gov"><img src="./images/neh-logo.png" width="32" height="32" border="0" alt="NEH" /></a></td>
 				<td><a href="http://www.neh.gov" class="footer-link">National Endowment<br>for the Humanities</a></td>
-				<td style="padding-right: 5px;"><a href="http://www.fas.harvard.edu/~du_bois"><img src="./images/DBI-logo.jpg" width="32" height="32" border="0" alt="DBI" /></a></td>
+				<td style="padding-right: 5px;"><a href="http://www.fas.harvard.edu/~du_bois"><img src="./images/DBI-logo.png" width="32" height="32" border="0" alt="DBI" /></a></td>
 				<td><a href="http://www.fas.harvard.edu/~du_bois" class="footer-link">W.E.B. Du Bois Institute<br>(Harvard University)</a></td>
 				<td><a href="http://web.library.emory.edu" class="footer-link">Emory University<br>Libraries (USA)</a></td>
 				<td><a href="http://www.hull.ac.uk" class="footer-link">The University<br>of Hull (UK)</a></td>
@@ -299,29 +299,31 @@
 			</table>
 		</div>
 	
-		<div class="licence">
+		<div class="licence-index">
 			<table border="0" cellspacing="0" cellpadding="0">
 			<tr>
-				<td style="padding-right: 10px;"><a rel="license" href="http://creativecommons.org/licenses/by-nc/3.0/us/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc/3.0/us/88x31.png" /></a></td>
-				<td>
-					<span xmlns:dc="http://purl.org/dc/elements/1.1/" property="dc:title">Voyages: The Trans-Atlantic Slave Trade Database</span>
-					by <a xmlns:cc="http://creativecommons.org/ns#" href="http://www.slavevoyages.org" property="cc:attributionName" rel="cc:attributionURL">Emory University</a>
-					is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/3.0/us/">Creative Commons Attribution-Noncommercial 3.0 United States License</a>.<br>
-					Permissions beyond the scope of this license may be available at <a xmlns:cc="http://creativecommons.org/ns#" href="mailto:&#118;&#111;&#121;&#97;&#103;&#101;s&#64;&#101;mo&#114;y&#46;&#101;&#100;&#117;" rel="cc:morePermissions">&#118;&#111;&#121;&#97;&#103;&#101;s&#64;&#101;mo&#114;y&#46;&#101;&#100;&#117;</a>.
+				<td style="padding-right: 10px;">
+					<a href="http://www.gnu.org/copyleft/gpl.html"><img src="images/gplv3-88x31.png" border="0" alt="GNU General Public License, version 3" width="88" height="31"></a>
+				</td>
+				<td style="padding-right: 10px;">
+					<a rel="license" href="http://creativecommons.org/licenses/by-nc/3.0/us/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc/3.0/us/88x31.png"></a>
+				</td>
+				<td style="width: 700px;">
+					Copyright 2009, 2008 Emory University. Software licensed under
+					<a href="http://www.gnu.org/licenses/gpl.html">GNU General Public License 3.0</a>
+					or later version. Some content licensed under
+					<a href="http://creativecommons.org/licenses/by-nc/3.0/us/">Creative Commons
+					Attribution-Non-Commercial 3.0</a>.
 				</td>
 			</tr>
 			</table>
 		</div>
-		
-		<div class="copyright">
-			2008 &copy; Emory University
-		</div>
 
 	</div>
 
-</f:view>  
+</f:view>
 
-<%@ include file="footer.jsp" %>
+<%@ include file="google-analytics.jsp" %>  
 
 </body>
 </html>

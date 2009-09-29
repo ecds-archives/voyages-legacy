@@ -18,7 +18,7 @@ input.faq-search-box {
 div.faq-list a {
 	color: #008CA5 }
 
-div.faq-list {
+div.faq-list-cont {
 	position: fixed;
 	top: 110px;
 	left: 0px;

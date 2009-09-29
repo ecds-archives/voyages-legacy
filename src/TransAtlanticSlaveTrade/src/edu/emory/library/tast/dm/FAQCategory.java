@@ -8,6 +8,7 @@ public class FAQCategory
 	private long id;
 	private String name;
 	private Set questions;
+	private int order;
 
 	public long getId()
 	{
@@ -29,6 +30,16 @@ public class FAQCategory
 		this.name = name;
 	}
 	
+	public int getOrder()
+	{
+		return order;
+	}
+
+	public void setOrder(int order)
+	{
+		this.order = order;
+	}
+
 	public Set getQuestions()
 	{
 		return questions;
