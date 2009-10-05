@@ -44,9 +44,9 @@
 			
 					<h1>Contributors of data</h1>					
 				
-					<p>The following have added data to the Voyages Database since the publication of 
-					the 1999 CD-ROM, <font style="font-style: italic;">The Trans-Atlantic Slave Trade: A Database on CD-ROM:</font> </p>
-
+					<p>The following have added data to the Voyages Database since the
+					publication of the 1999 CD-ROM, <em>The Trans-Atlantic Slave Trade: A
+					Database on CD-ROM:</em></p>
 					
 					<ul>
 						<li>Rosanne Adderley</li>
@@ -58,15 +58,17 @@
 						<li>Richard Birkett</li>
 						<li>Ernst van den Boogart</li>
 						<li>Alex Borucki</li>
-						<li>Angela J Campbell</li>
+						<li>Angela J. Campbell</li>
 						<li>James Campbell</li>						
 						<li>Mariana Pinho Candido</li>
 						<li>José Capela</li>
 						<li>Comité de Liaison et d'Application des Sources Historiques (Saint-Barthélemy), <a href="http://www.c-l-a-s-h.info">http://www.c-l-a-s-h.info</a></li>
 						<li>John C. Coombs</li>
 						<li>Jose Curto</li>
+						<li>Maika Dennis</li>
 						<li>Daniel B. Domingues da Silva</li>
 						<li>David Eltis</li>
+						<li>Suzan Eltis</li>
 						<li>Roquinaldo Ferreira</li>
 						<li>Manolo Florentino</li>
 						<li>Charles Foy</li>
@@ -76,11 +78,14 @@
 						<li>Robert Harms</li>
 						<li>Candice Harrison</li>
 						<li>Henk den Heijer</li>
+						<li>Jane Hooper</li>
 						<li>Willem Klooster</li>
 						<li>Ruud Koopman</li>
+						<li>Nancy Kougeas</li>
 						<li>Robin Law</li>						
 						<li>Jean-Pierre Le Glaunec</li>						
 						<li>Pedro Machado</li>
+						<li>Leonardo Marques</li>
 						<li>Antonio de Almeida Mendes</li>
 						<li>Philip Misevich</li>
 						<li>Greg O’Malley</li>
@@ -91,6 +96,7 @@
 						<li>Johannes Postma</li>
 						<li>Fabricio Prado</li>
 						<li>James Pritchard</li>
+						<li>Nicholas Radburn</li>
 						<li>Vanessa Ramos</li>
 						<li>Alexandre Vieira Ribeiro</li>
 						<li>David Richardson</li>
@@ -101,8 +107,6 @@
 						<li>Rik van Welie</li>
 						<li>David Wheat</li>
 					</ul>
-
-						
 
 				</s:simpleBox>
 			</td>

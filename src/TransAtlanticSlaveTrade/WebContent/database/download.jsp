@@ -126,10 +126,10 @@ String dlUrl = AppConfig.getConfiguration().getString(AppConfig.DOWNLOADS_URL);
 					augment estimates of the full volume of the slave trade (in its entirety or for a national carrier 
 					or period of time), can download below an Excel-formatted copy of the spreadsheet and a PDF version
 					of the essay detailing the methodology used.</p>
-		
+					
 					<h3>Download:</h3>
 					<ul>
-						<li>2009 Estimates, Excel: <a href="<%=dlUrl%>/estimates-2009.xls">estimates-2009.xls</a></li>
+						<li>2009 Estimates, Excel: <% /* <a href="replaceWithdlUrlVar/estimates-2009.xls">estimates-2009.xls</a> */ %> <span style="font-style: italic">will be available soon</span></li>
 						<li>2009 Methodology essay, PDF: <a href="<%=dlUrl%>/estimates-method.pdf">estimates-method.pdf</a></li>
 					</ul>
 		

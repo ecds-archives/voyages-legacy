@@ -57,7 +57,7 @@
 				<td class="section-title"><a href="team.faces">Project Team</a></td>
 				<td class="section-title"><a href="data.faces">Contributors of data</a></td>
 				<td class="section-title"><a href="acknowledgements.faces">Acknowledge-<br>ments</a></td>
-				<td class="section-title"><a href="legal.faces">African Origins project</a></td>
+				<td class="section-title"><a href="origins.faces">African Origins Project</a></td>
 				<td class="section-title"><a href="contact.faces">Contact us</a></td>
 			</tr>
 			</table>
@@ -84,8 +84,11 @@
 				<td class="section-desc">Major sponsors and institutional
 				partners of the Voyages website, as well as other organizations and
 				individuals who have assisted the work of the project team.</td>
-				
-				<td class="section-desc">TBD ...</td>
+
+				<td class="section-desc">A scholar-public collaborative project
+				using audio recordings of names in African Names Database to trace
+				the geographic origins of Africans transported in the transatlantic
+				slave trade.</td>
 
 				<td class="section-desc">Members of the Voyages editorial board
 				and the email address for contacting the website.</td>

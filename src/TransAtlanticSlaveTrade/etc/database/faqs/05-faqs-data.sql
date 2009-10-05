@@ -811,15 +811,12 @@ essays and texts found on the website?', '<p>That depends on the manual of style
 you are following. Most citations of materials on a website, however, involve 
 name of author [when given], title of text [when given], name of the website, 
 URL, and date accessed. For example, according to <i>The Chicago Manual of 
-Style</i> (“Chicago-Style Citation Quick Guide,” The Chicago Manual of Style 
-Online, <a href="http://www.chicagomanualofstyle.org/tools_citationguide.html">http://www.chicagomanualofstyle.org/tools_citationguide.html</a>
-(accessed April 27, 2008), 
-the introductory essay by David Eltis in the essays subsection of Assessing the 
-Slave Trade should be cited as follows:</p><p>David Eltis, “A Brief Overview of 
-the Trans-Atlantic Slave Trade,” Voyages: The Trans-Atlantic Slave Trade 
-Database, <a href="http://www.slavevoyages.org/tast/assessment/essays-intro-01.faces">http://www.slavevoyages.org/tast/assessment/essays-intro-01.faces</a>
-(accessed April 27, 2008). For more citation examples, see “Permissions to
-Reproduce” on the <a href="../about/legal.faces" taget="_blank">Legal page</a>
+Style</i>, the introductory essay by David Eltis in the essays subsection of
+Assessing the Slave Trade should be cited as follows:</p><p>David Eltis,
+“A Brief Overview of the Trans-Atlantic Slave Trade,” Voyages: The
+Trans-Atlantic Slave Trade Database, <a href="../assessment/essays-intro-01.faces" target="_blank">http://www.slavevoyages.org/tast/assessment/essays-intro-01.faces</a>
+(accessed April 27, 2008).</p><p>For more citation examples, see “Permissions to
+Reproduce” on the <a href="../help/legal.faces" taget="_blank">Legal page</a>
 of this website.</p>');
 
 INSERT INTO faqs (id, cat_id, question, answer) VALUES (73, 17, 'How do I cite a 

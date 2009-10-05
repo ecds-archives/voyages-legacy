@@ -126,11 +126,7 @@ public class MainMenu
 					new MainMenuBarPageItem(
 							"contact",
 							"Contact Us",
-							"about/contact.faces"),
-					new MainMenuBarPageItem(
-							"legal",
-							"Legal",
-							"about/legal.faces")}),
+							"about/contact.faces")}),
 	
 	};
 

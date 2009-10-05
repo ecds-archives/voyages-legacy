@@ -47,9 +47,12 @@
 					<a name="hitchcock"></a>
 					
 					<div class="link-title">
-						The Atlantic Slave Trade and Slave Life in the Americas: A Visual Record
-						<br>
-						<font style="font-size: 8pt;">The Virginia Foundation for the Humanities, the Digital Media Lab at the University of Virginia Library</font>
+						<div class="link-main-title">
+							The Atlantic Slave Trade and Slave Life in the Americas: A Visual Record
+						</div>
+						<div class="link-sub-title">
+							The Virginia Foundation for the Humanities, the Digital Media Lab at the University of Virginia Library
+						</div>
 					</div>
 					<table border="0" cellspacing="0" cellpadding="0" class="link-info">
 					<tr>
@@ -65,9 +68,12 @@
 					<a name="inmotionaame"></a>
 			
 					<div class="link-title">
-						In Motion: African-American Migration Experience
-						<br>
-						<font style="font-size: 8pt;">Schomburg Center, New York Public Library</font>
+						<div class="link-main-title">
+							In Motion: African-American Migration Experience
+						</div>
+						<div class="link-sub-title">
+							Schomburg Center, New York Public Library
+						</div>
 					</div>
 					<table border="0" cellspacing="0" cellpadding="0" class="link-info">
 					<tr>
@@ -83,9 +89,12 @@
 					<a name="collegeboard"></a>
 			
 					<div class="link-title">
-						YES 
-						<br>
-						<font style="font-size: 8pt;">College Board</font>
+						<div class="link-main-title">
+							YES: The Young Epidemiology Scholars Program
+						</div>
+						<div class="link-sub-title">
+							College Board
+						</div>
 					</div>
 					<table border="0" cellspacing="0" cellpadding="0" class="link-info">
 					<tr>
@@ -101,9 +110,12 @@
 					<a name="thirteen"></a>
 			
 					<div class="link-title">
-						Thirteen 
-						<br>
-						<font style="font-size: 8pt;">National Teacher Training Institute</font>
+						<div class="link-main-title">
+							Thirteen: National Teachers Training Institute
+						</div>
+						<div class="link-sub-title">
+							National Teacher Training Institute
+						</div>
 					</div>
 					<table border="0" cellspacing="0" cellpadding="0" class="link-info">
 					<tr>
@@ -119,7 +131,9 @@
 					<a name="nchs"></a>
 			
 					<div class="link-title">
-						National Center for History in the Schools
+						<div class="link-main-title">
+							National Center for History in the Schools
+						</div>
 					</div>
 					<table border="0" cellspacing="0" cellpadding="0" class="link-info">
 					<tr>
@@ -138,7 +152,9 @@
 					<a name="slaveryinamerica"></a>
 			
 					<div class="link-title">
-						Slavery in America
+						<div class="link-main-title">
+							Slavery in America
+						</div>
 					</div>
 					<table border="0" cellspacing="0" cellpadding="0" class="link-info">
 					<tr>
@@ -161,9 +177,12 @@
 					<a name="antislavery"></a>
 			
 					<div class="link-title">
-						Breaking the Silence 
-						<br>
-						<font style="font-size: 8pt;"> Anti-Slavery</font>
+						<div class="link-main-title">
+							Breaking the Silence
+						</div>
+						<div class="link-sub-title">
+							Anti-Slavery International and UNESCO's Associated Schools Project Network
+						</div>
 					</div>
 					<table border="0" cellspacing="0" cellpadding="0" class="link-info">
 					<tr>
@@ -175,7 +194,7 @@
 					<tr>
 						<td class="link-info-label">WWW address</td>
 						<td class="link-info">
-							<a href="http://www.antislavery.org/breakingthesilence/index.shtml">http://www.antislavery.org/breakingthesilence/index.shtml</a>
+							<a href="http://old.antislavery.org/breakingthesilence">http://old.antislavery.org/breakingthesilence</a>
 						</td>
 					</tr>
 					</table>
@@ -183,13 +202,15 @@
 					<a name="understandingslavery"></a>
 			
 					<div class="link-title">
-						Understanding Slavery
+						<div class="link-main-title">
+							Understanding Slavery
+						</div>
 					</div>
 					<table border="0" cellspacing="0" cellpadding="0" class="link-info">
 					<tr>
 						<td class="link-info-label">Content</td>
 						<td class="link-info">
-							Lesson and activities, visual materials, background info
+							Lesson and activities, visual materials, and background information
 						</td>
 					</tr>
 					<tr>
@@ -203,9 +224,12 @@
 					<a name="bbc"></a>
 			
 					<div class="link-title">
-						Abolition of the Slave Trade 
-						<br>
-						<font style="font-size: 8pt;">BBC </font>
+						<div class="link-main-title">
+							Abolition of the Slave Trade 
+						</div>
+						<div class="link-sub-title">
+							BBC
+						</div>
 					</div>
 					<table border="0" cellspacing="0" cellpadding="0" class="link-info">
 					<tr>
@@ -225,7 +249,9 @@
 					<a name="comitedeliaison"></a>
 			
 					<div class="link-title">
-						COMITÉ DE LIAISON ET D'APPLICATION DES SOURCES HISTORIQUES  						
+						<div class="link-main-title">
+							Comité de Liaison et d'Application des Sources Historiques  						
+						</div>
 					</div>
 					<table border="0" cellspacing="0" cellpadding="0" class="link-info">
 					<tr>

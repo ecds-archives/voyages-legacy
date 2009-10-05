@@ -113,7 +113,7 @@ captains often loaded cargoes of agricultural goods for sale in Europe or the
 United States such as sugar, tobacco and coffee.');
 
 INSERT INTO glossary (id, term, description) VALUES (18, 'Clearance', 'Primary 
-port from where slaving voyages began. Vessels were cleared for departure once 
+port where slaving voyages began. Vessels were cleared for departure once 
 they had registered with the custom house and paid duties and taxes on their 
 cargoes.');
 
@@ -809,10 +809,12 @@ river feeds the highly productive pampas agricultural region, which became
 important in the eighteenth century.');
 
 INSERT INTO glossary (id, term, description) VALUES (125, 'Courts of Mixed
-Commission Register', 'After abolition, liberated Africans freed by the Royal
-Navy were registered before their return to Africa. The registers contain a
-wealth of information such as a African''s name, height, origin and sex. Voyages
-displays 171 slave registers in the Artifacts section.');
+Commission Registers', 'After abolition, liberated Africans freed by the Royal
+Navy were registered before their return to Africa. The registers contain a wealth 
+of information such as an African''s name, height, origin and sex. Digitized 
+initial pages of some of these registers can be seen in the Resources section 
+of the Voyages website, by going to the "Images" subsection then clicking on 
+"Manuscripts."');
 
 INSERT INTO glossary (id, term, description) VALUES (126, 'Sugar', 'During the 
 era of the trans-Atlantic slave trade, cane sugar was the principle cash crop 

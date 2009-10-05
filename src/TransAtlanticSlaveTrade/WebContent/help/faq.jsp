@@ -49,12 +49,12 @@
 			id="faq"
 			faqList="#{FAQBean.FAQList}" />
 			
-		<%@ include file="../footer.jsp" %>
-		
 	</div>
 	
 </h:form>
 </f:view>
+
+<%@ include file="../google-analytics.jsp" %>
 
 </body>
 </html>

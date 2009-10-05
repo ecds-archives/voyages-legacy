@@ -55,7 +55,7 @@
 	</h:form>
 </f:view>
 
-<%@ include file="../footer.jsp" %>
+<%@ include file="../google-analytics.jsp" %>
 
 </body>
 </html>
