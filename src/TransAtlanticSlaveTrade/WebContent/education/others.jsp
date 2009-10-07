@@ -194,7 +194,7 @@
 					<tr>
 						<td class="link-info-label">WWW address</td>
 						<td class="link-info">
-							<a href="http://old.antislavery.org/breakingthesilence">http://old.antislavery.org/breakingthesilence</a>
+							<a href="http://old.antislavery.org/breakingthesilence/">http://old.antislavery.org/breakingthesilence/</a>
 						</td>
 					</tr>
 					</table>
