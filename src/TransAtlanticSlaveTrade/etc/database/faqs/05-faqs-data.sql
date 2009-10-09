@@ -43,15 +43,15 @@ republish any information or materials I find on this website?', '<p>The
 <em>Voyages</em> website supports education and research by making its information
 available for free and fair use by the public. An Attribution-Non-Commerical Creative
 Commons license governs much of the content on the site, including historical and
-imputed data found in the three main databases on the site &ndash; the <em>Voyages</em>
+imputed data found in the three main databases on the site &ndash; the Voyages
 Database, the Estimates Database, and the African Names Database. This license allows
 for the non-commercial republication of certain content on the site and the creation
 of derivate works, provided the <em>Voyages</em> website is appropriately credited
-as the original source. Some materials on the Voyages website, however, appear by
-permission of the copyright owners and require their approval before being republished.
-For a guide to the various content on the site, permissions governing their use, and
-examples of how to cite the original source, see the "Permissions to Reproduce"
-section of the "Legal" page. </p>');
+as the original source. Some materials on the <em>Voyages</em> website, however, appear
+by permission of the copyright owners and require their approval before being
+republished. For a guide to the various content on the site, permissions governing
+their use, and examples of how to cite the original source, see the "Permissions to
+Reproduce" section of the "Legal" page. </p>');
 
 INSERT INTO faqs (id, cat_id, question, answer) VALUES (5, 2, 'What is the 
 difference between a data variable and an imputed variable?', '<p>A <b>data</b> 

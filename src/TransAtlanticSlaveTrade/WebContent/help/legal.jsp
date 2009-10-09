@@ -171,7 +171,7 @@
 					Estimates Database.
 					2009.
 					<i>Voyages: The Trans-Atlantic Slave Trade Database.</i>
-					<a href="http://slavevoyages.org/tast/assessment/estimates.faces?yearFrom=1501&amp;yearTo=1866&amp;flag=2" target="_blank">http://slavevoyages.org/tast/assessment/estimates.faces?yearFrom=1501&amp;yearTo=1866&amp;flag=2</a>
+					<a href="http://slavevoyages.org/tast/assessment/estimates.faces?yearFrom=1501&amp;yearTo=1866&amp;flag=2" target="_blank">http://www.slavevoyages.org/tast/assessment/estimates.faces?yearFrom=1501&amp;yearTo=1866&amp;flag=2</a>
 					(accessed January 1, 2010).
 				</div>								
 			</td>
@@ -263,7 +263,7 @@
 					2009.
 					Estimates of the size and direction of the trans-Atlantic slave trade.
 					<i>Voyages: The Trans-Atlantic Slave Trade Database.</i>
-					<a href="http://www.slavevoyages.org/downloads/EstimatesMethod.pdf" target="_blank">http://www.slavevoyages.org/downloads/EstimatesMethod.pdf</a>
+					<a href="http://www.slavevoyages.org/downloads/estimates-method.pdf" target="_blank">hhttp://www.slavevoyages.org/downloads/estimates-method.pdf</a>
 					(accessed January 1, 2010).
 				</div>
 			</td>
