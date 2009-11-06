@@ -203,7 +203,7 @@ public class SubmissionUsersBean {
 				
 				new GridColumn("Brief description"),
 				
-				new GridColumn("User active"),
+				new GridColumn("Contributor"),
 				
 				new GridColumn("Reviewer"),
 				

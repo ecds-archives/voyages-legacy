@@ -580,8 +580,8 @@ public class VoyageCalcTest2 extends TestCase {
 			voyageCalc.calculateSlavesEmbarkDisembark();
 			
 			saveVoyage(voyage);
-			assertNull(voyage.getSlaximp());
-			assertNull(voyage.getSlamimp());
+			assertEquals(voyage.getSlaximp(),new Integer(100));
+			assertEquals(voyage.getSlamimp(),new Integer(75));
 						
 			
 			voyage = null;

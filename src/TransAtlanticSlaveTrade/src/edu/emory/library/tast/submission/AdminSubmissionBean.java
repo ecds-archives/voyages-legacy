@@ -67,13 +67,13 @@ public class AdminSubmissionBean {
 
 	private static final String REQUEST_NEW_PREFIX = "new_";
 
-	public static final String REQUEST_ALL = "all request types";
+	public static final String REQUEST_ALL = "All request types";
 
-	public static final String REQUEST_NEW = "new voyage requests";
+	public static final String REQUEST_NEW = "New";
 
-	public static final String REQUEST_EDIT = "edit voyage requests";
+	public static final String REQUEST_EDIT = "Edit";
 
-	public static final String REQUEST_MERGE = "merge voyages requests";
+	public static final String REQUEST_MERGE = "Merge";
 
 	public static final int TYPE_NEW = 1;
 
@@ -332,12 +332,12 @@ public class AdminSubmissionBean {
 				if (!valid(submission)) {
 					continue;
 				}
-				String lastCol = submission.isSolved() ? "Solved" : "Not solved";
+				String lastCol = submission.isSolved() ? "Solved" : "Under review";
 				if (submission.isSolved()) {
 					if (submission.isAccepted()) {
-						lastCol += "/Accepted";
+						lastCol = "Accepted";
 					} else {
-						lastCol += "/Rejected";
+						lastCol = "Rejected";
 					}
 				}
 				
@@ -346,7 +346,7 @@ public class AdminSubmissionBean {
 				String adminVId_str = (adminVId==null ? "New voyage - ID not yet assigned" : adminVId.toString());
 				
 				if (!this.authenticateduser.isEditor()) {
-					l.add(new GridRow(REQUEST_NEW_PREFIX + submission.getId(), new String[] { "New voyage request",
+					l.add(new GridRow(REQUEST_NEW_PREFIX + submission.getId(), new String[] { "New voyage",
 						submission.getUser().getUserName(), formatter.format(submission.getTime()), adminVId_str,
 						this.getEditors(submission), this.reviewedByEditor(submission, null) ? "Yes" + this.infoString(submission) : "No",
 						submission.getEditorVoyage() != null ? "Yes" : "No", lastCol }));
@@ -367,16 +367,16 @@ public class AdminSubmissionBean {
 				if (!valid(submission)) {
 					continue;
 				}
-				String lastCol = submission.isSolved() ? "Solved" : "Not solved";
+				String lastCol = submission.isSolved() ? "Solved" : "Under review";
 				if (submission.isSolved()) {
 					if (submission.isAccepted()) {
-						lastCol += "/Accepted";
+						lastCol = "Accepted";
 					} else {
-						lastCol += "/Rejected";
+						lastCol = "Rejected";
 					}
 				}
 				if (!this.authenticateduser.isEditor()) {
-					l.add(new GridRow(REQUEST_EDIT_PREFIX + submission.getId(), new String[] { "Voyage edit request",
+					l.add(new GridRow(REQUEST_EDIT_PREFIX + submission.getId(), new String[] { "Edit voyage",
 						submission.getUser().getUserName(), formatter.format(submission.getTime()),
 						submission.getOldVoyage().getVoyage().getVoyageid().toString(),
 						this.getEditors(submission), this.reviewedByEditor(submission, null) ? "Yes" + this.infoString(submission) : "No",
@@ -410,16 +410,16 @@ public class AdminSubmissionBean {
 					involvedStr += element.getVoyage().getVoyageid();
 					first = false;
 				}
-				String lastCol = submission.isSolved() ? "Solved" : "Not solved";
+				String lastCol = submission.isSolved() ? "Solved" : "Under review";
 				if (submission.isSolved()) {
 					if (submission.isAccepted()) {
-						lastCol += "/Accepted";
+						lastCol = "Accepted";
 					} else {
-						lastCol += "/Rejected";
+						lastCol = "Rejected";
 					}
 				}
 				if (!this.authenticateduser.isEditor()) {
-					l.add(new GridRow(REQUEST_MERGE_PREFIX + submission.getId(), new String[] { "Voyages merge request",
+					l.add(new GridRow(REQUEST_MERGE_PREFIX + submission.getId(), new String[] { "Merge voyages",
 						submission.getUser().getUserName(), formatter.format(submission.getTime()), involvedStr,
 						this.getEditors(submission), this.reviewedByEditor(submission, null) ? "Yes" + this.infoString(submission) : "No",
 						submission.getEditorVoyage() != null ? "Yes" : "No", lastCol }));
@@ -451,7 +451,7 @@ public class AdminSubmissionBean {
 		
 		StringBuffer buffer = new StringBuffer();
 		buffer.append(" (");
-		buffer.append("Review finished by ").append(done).append(" out of ").append(all).append(" reviewers") ;
+		buffer.append(done).append(" out of ").append(all);
 		buffer.append(")");
 		return buffer.toString();
 	}
@@ -489,7 +489,7 @@ public class AdminSubmissionBean {
 			}
 			return tmp;
 		}
-		return "";
+		return "not yet assigned";
 	}
 
 	private boolean valid(Submission submission) {
@@ -604,9 +604,9 @@ public class AdminSubmissionBean {
 					new GridColumn("Type"), 
 					new GridColumn("User"), 
 					new GridColumn("Date"),
-					new GridColumn("Involved voyages ID"),
-					new GridColumn("Assigned editors"),
-					new GridColumn("Reviewed by editors"),
+					new GridColumn("Voyages ID"),
+					new GridColumn("Assigned reviewers"),
+					new GridColumn("Review completed"),
 					new GridColumn("Reviewed"), 
 					new GridColumn("Status"),
 				};

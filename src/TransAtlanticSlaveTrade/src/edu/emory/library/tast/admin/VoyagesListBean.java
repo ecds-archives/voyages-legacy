@@ -16,10 +16,13 @@ import edu.emory.library.tast.db.TastDbConditions;
 import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.dm.Nation;
 import edu.emory.library.tast.dm.Revision;
+import edu.emory.library.tast.dm.Submission;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
+import edu.emory.library.tast.submission.AdminSubmissionBean;
+import edu.emory.library.tast.submission.SubmissionBean;
 import edu.emory.library.tast.util.StringUtils;
 
 public class VoyagesListBean
@@ -49,6 +52,7 @@ public class VoyagesListBean
 	
 	public VoyagesListBean()
 	{
+
 		restoreDefaultOptions();
 	}
 	
@@ -154,8 +158,8 @@ public class VoyagesListBean
 			
 			Voyage voyage = (Voyage) iter.next();
 			
-			String rowId = voyage.getIid().toString();
-			
+			String rowId = voyage.getIid().toString();		
+
 			String nation = voyage.getNatinimp() == null ? null :
 				voyage.getNatinimp().getName();
 			
@@ -200,14 +204,15 @@ public class VoyagesListBean
 	public GridColumn[] getColumns()
 	{
 		return new GridColumn[] {
-			new GridColumn("Voyage ID"),	
+			new GridColumn("Voyage ID"),
+//			new GridColumn("Type"),
 			new GridColumn("Ship"),	
 			new GridColumn("Year"),	
 			new GridColumn("Nation"),	
 			new GridColumn("Exported"),	
 			new GridColumn("Imported"),	
 			new GridColumn("Major place of purchase"),	
-			new GridColumn("Major place of sell")	
+			new GridColumn("Major place of landing")	
 		};
 	}
 	

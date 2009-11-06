@@ -151,44 +151,44 @@ public class VoyagesCalculation {
 		else if ((lt(tontype, 3) || eq(tontype, 4) || eq(tontype, 5)))
 		{	
 			if (gt(yearam, 1773)) {tonmod=(tonnage==null ? null : tonnage.floatValue());}
-			if (lt(yearam, 1774) && lt(tonnage, 151)) {tonmod=2.3f + (1.8f * tonnage);}
-			if (lt(yearam, 1774) && gt(tonnage, 150) && lt(tonnage, 251)) {tonmod=65.3f + (1.2f * tonnage);}
 			if (lt(yearam, 1774) && gt(tonnage, 250)) {tonmod=13.1f + (1.1f * tonnage);}
+			if (lt(yearam, 1774) && gt(tonnage, 150) && lt(tonnage, 251)) {tonmod=65.3f + (1.2f * tonnage);}
+			if (lt(yearam, 1774) && lt(tonnage, 151)) {tonmod=2.3f + (1.8f * tonnage);}
 		}
 		
-		if (eq(tontype, 4) && gt(yearam, 1783) && lt(yearam, 1794)) {tonmod=9999f;}
+		if (eq(tontype, 4) && gt(yearam, 1783) && lt(yearam, 1794)) {tonmod=null;}
 		
 		if(eq(tontype, 3) || eq(tontype, 6) || eq(tontype, 9) || eq(tontype, 16))
 		{
 			tonmod = (tonnage==null ? null : 71f + (0.86f * tonnage));
-			if (lt(yearam, 1774) && lt(tonmod, 151)) {tonmod=(tonnage==null ? null: 2.3f + (1.8f * tonnage));}
-			if (lt(yearam, 1774) && gt(tonmod, 150) && lt(tonmod, 251)) {tonmod=(tonnage==null ? null : 65.3f + (1.2f * tonnage));}
 			if (lt(yearam, 1774) && gt(tonmod, 250)) {tonmod=(tonnage==null ? null : 13.1f + (1.1f * tonnage));}
+			if (lt(yearam, 1774) && gt(tonmod, 150) && lt(tonmod, 251)) {tonmod=(tonnage==null ? null : 65.3f + (1.2f * tonnage));}
+			if (lt(yearam, 1774) && lt(tonmod, 151)) {tonmod=(tonnage==null ? null: 2.3f + (1.8f * tonnage));}
 		}
 		
 		else if(eq(tontype, 7))
 		{
 			tonmod=(tonnage==null ? null : tonnage * 2f);
-			if (gt(yearam, 1773) && lt(tonmod, 151)) {tonmod=2.3f + (1.8f * tonmod);}
-			if (gt(yearam, 1773) && gt(tonmod, 150) && lt(tonmod, 251)) {tonmod=65.3f + (1.2f * tonmod);}
 			if (gt(yearam, 1773) && gt(tonmod, 250)) {tonmod=13.1f + (1.1f * tonmod);}
+			if (gt(yearam, 1773) && gt(tonmod, 150) && lt(tonmod, 251)) {tonmod=65.3f + (1.2f * tonmod);}
+			if (gt(yearam, 1773) && lt(tonmod, 151)) {tonmod=2.3f + (1.8f * tonmod);}
 		}
 		
 		else if(eq(tontype, 21))
 		{
 			tonmod=(tonnage==null ? null:  -6.093f + (0.76155f * tonnage));
-			if (gt(yearam, 1773) && lt(tonmod, 151)) {tonmod=2.3f + (1.8f * tonmod);}
-			if (gt(yearam, 1773) && gt(tonmod, 150) && lt(tonmod, 251)) {tonmod=65.3f + (1.2f * tonmod);}
 			if (gt(yearam, 1773) && gt(tonmod, 250)) {tonmod=13.1f + (1.1f * tonmod);}
+			if (gt(yearam, 1773) && gt(tonmod, 150) && lt(tonmod, 251)) {tonmod=65.3f + (1.2f * tonmod);}
+			if (gt(yearam, 1773) && lt(tonmod, 151)) {tonmod=2.3f + (1.8f * tonmod);}
 		}
 				
 		if (tontype==null && (gt(yearam, 1714) && lt(yearam, 1786)) && gt(tonnage, 0) && eq(natinimp, 7)) {tontype=22;}
 		
 		if(eq(tontype, 22))
 		{
-			if (lt(tonnage, 151)) {tonmod=2.3f + (1.8f * tonnage);}
-			if (gt(tonnage, 150) && lt(tonnage, 251)) {tonmod=65.3f + (1.2f * tonnage);}
 			if (gt(tonnage, 250)) {tonmod=13.1f + (1.1f * tonnage);}
+			if (gt(tonnage, 150) && lt(tonnage, 251)) {tonmod=65.3f + (1.2f * tonnage);}
+			if (lt(tonnage, 151)) {tonmod=2.3f + (1.8f * tonnage);}
 		}
 		
 		else if (eq(tontype, 15) || eq(tontype, 14) || eq(tontype, 17)) {tonmod =(tonnage==null ? null : 52.86f + (1.22f * tonnage));}
@@ -287,7 +287,7 @@ public class VoyagesCalculation {
 			else if (gt(ncar13, 0) && eq(ncar15, 0) && eq(ncar17, 0) && eq(regem2, regem3)) {mjbyptimp = Port.loadById(session, regem2+99);}
 			else if (eq(ncar13, 0) && gt(ncar15, 0) && eq(ncar17, 0) && eq(regem1, regem3)) {mjbyptimp = Port.loadById(session, regem1+99);}
 			else if (eq(ncar13, 0) && eq(ncar15, 0) && gt(ncar17, 0) && eq(regem1, regem2)) {mjbyptimp = Port.loadById(session, regem1+99);}
-			else if (gt(ncar13, 0) && eq(ncar15, 0) && eq(ncar17, 0) && plac3tra_int==null) {mjbyptimp = plac2tra;}
+			else if (gt(ncar13, 0) && eq(ncar15, 0) && eq(ncar17, 0) && gt(plac2tra_int, 0) && plac3tra_int==null) {mjbyptimp = plac2tra;}
 			else if (eq(ncar13, 0) && gt(ncar15, 0) && eq(ncar17, 0) && plac3tra_int==null) {mjbyptimp = plac1tra;}
 			else if (gt(ncar13, 0) && gt(ncar15, 0) && eq(ncar17, 0)) {mjbyptimp = plac3tra;}
 			else if (gt(ncar13, 0) && eq(ncar15, 0) && gt(ncar17, 0)) {mjbyptimp = plac2tra;}
@@ -2001,34 +2001,6 @@ public class VoyagesCalculation {
 			if (gt(sladvoy ,0) && tslavesd==null && tslavesp==null && ncartot==null && gt(slaarriv ,1)) {slaximp = add(new Double[]{slaarriv + sladvoy.doubleValue()});}
 			if (gt(sladvoy ,0) && tslavesd==null && tslavesp==null && ncartot==null && slaarriv==null && slastot==null) {slaximp = add(new Double[]{slamimp, sladvoy.doubleValue()});}
 
-
-
-		if( eq(fate2, 2))
-		{
-		    if(gte(slaximp, 0)) {slaximp=null;}
-		    if(gte(slamimp, 0)) {slamimp=null;}
-		    if(gte(mjbyptimp, 0)) {mjbyptimp = null;}
-		    if(gte(majbyimp, 0)) {majbyimp = null;}
-		    if(gte(majbyimp1, 0)) {majbyimp1 = null;}
-		    if(gte(mjslptimp, 0)) {mjslptimp = null;}
-		    if(gte(mjselimp, 0)) {mjselimp = null;}
-		    if(gte(mjselimp1, 0)) {mjselimp1 = null;}
-		}
-		if (eq(fate2, 4)) 
-		{
-			if( gte(slamimp, 0)) {slamimp=0d;}
-			if(gte(mjslptimp, 0)) {mjslptimp =null;}
-			if(gte(mjselimp, 0)) {mjselimp =null;}
-			if(gte(mjselimp1, 0)) {mjselimp1 =null;}
-			if(gte(sladvoy, 1)) {slaximp = sladvoy.doubleValue();}
-		}
-		if (eq(fate2, 7))
-		{
-			if(gte(slamimp, 0)) {slamimp=null;}
-			if(gte(mjslptimp, 0)) {mjslptimp =null;}
-			if(gte(mjselimp, 0)) {mjselimp =null;}
-			if(gte(mjselimp1, 0)) {mjselimp1 =null;}
-		}
 
 		slaximp = round(slaximp,0);
 		slamimp = round(slamimp,0);
