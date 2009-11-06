@@ -568,11 +568,11 @@ public class GridEditorComponent extends UIComponentBase
 		String addButtonId = getNoteAddButtonId(context, columnName, rowName);
 		String editButtonId = getNoteEditButtonId(context, columnName, rowName);
 		
-		String cssStyleEditMode = value.isNoteExpanded() ? "" : "display: none";
-		String cssStyleReadMode = value.isNoteExpanded() ? "display: none" : "";
+		String cssStyleEditMode = (value!=null && value.isNoteExpanded() ? "" : "display: none");
+		String cssStyleReadMode = (value!=null && value.isNoteExpanded() ? "display: none" : "");
 		
-		String cssStyleAddButton = value.hasEditableNote() ? "display: none" : "";
-		String cssStyleEditButton = value.hasEditableNote() ? "" : "display: none";
+		String cssStyleAddButton = (value!=null && value.hasEditableNote() ? "display: none" : "");
+		String cssStyleEditButton = (value!=null && value.hasEditableNote() ? "" : "display: none");
 
 		String onClickEdit = "GridEditorGlobals.editNote(" +
 			"'" + mainId + "', " +
@@ -586,7 +586,7 @@ public class GridEditorComponent extends UIComponentBase
 
 		JsfUtils.encodeHiddenInput(this, writer,
 				noteStatusFieldName,
-				value.isNoteExpanded() ? NOTE_EXPANDED : NOTE_COLLAPSED);
+				(value!=null && value.isNoteExpanded() ? NOTE_EXPANDED : NOTE_COLLAPSED));
 		
 		writer.startElement("div", this);
 		writer.writeAttribute("class", "grid-editor-note", null);
@@ -599,7 +599,7 @@ public class GridEditorComponent extends UIComponentBase
 		writer.startElement("textarea", this);
 		writer.writeAttribute("name", noteFieldName, null);
 		writer.writeAttribute("class", "grid-editor-note-box", null);
-		writer.write(StringUtils.unNull(value.getNote()));
+		writer.write(StringUtils.unNull((value!=null ? value.getNote(): "") ));
 		writer.endElement("textarea");
 
 		writer.startElement("div", this);
@@ -622,7 +622,7 @@ public class GridEditorComponent extends UIComponentBase
 		writer.startElement("span", this);
 		writer.writeAttribute("class", "grid-editor-note-text", null);
 		writer.writeAttribute("id", displayTextId, null);
-		writer.write(StringUtils.unNull(value.getNote()));
+		writer.write(StringUtils.unNull((value!=null ?  value.getNote() : "") ));
 		writer.endElement("span");
 
 		writer.write(" ");
@@ -650,13 +650,17 @@ public class GridEditorComponent extends UIComponentBase
 	private void encodeNoteInReadOnlyMode(FacesContext context, ResponseWriter writer, Column column, String rowName, Value value) throws IOException
 	{
 
-		JsfUtils.encodeHiddenInput(this, writer,
-				getEditableNoteFieldName(context, column.getName(), rowName),
-				value.getNote());
+		try {
+			JsfUtils.encodeHiddenInput(this, writer,
+					getEditableNoteFieldName(context, column.getName(), rowName),
+					value.getNote());
+		} catch (Exception e) {
+			// keep going
+		}
 
 		writer.startElement("div", this);
 		writer.writeAttribute("class", "grid-editor-note-read-only", null);
-		if (value.getNote() != null) writer.write(value.getNote());
+		if (value != null && value.getNote() != null) writer.write(value.getNote());
 		writer.endElement("div");
 
 	}
@@ -664,7 +668,14 @@ public class GridEditorComponent extends UIComponentBase
 	private void encodePastNotes(FacesContext context, ResponseWriter writer, String mainId, Column column, String rowName, Value value) throws IOException
 	{
 		
-		String[] notes = value.getPastNotes();
+		String[] notes = null;
+		
+		try {
+			notes = value.getPastNotes();
+		} catch (Exception e) {
+			// keep going
+		}
+		
 		int count = notes != null ? notes.length : 0;
 
 		JsfUtils.encodeHiddenInput(this, writer,

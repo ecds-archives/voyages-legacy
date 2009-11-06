@@ -291,19 +291,19 @@ public class Voyage extends AbstractDescriptiveObject
 		attributes.add(new NumericAttribute("girl7", "Voyage", NumericAttribute.TYPE_INTEGER, "girl7"));
 		
 		attributes.add(new NumericAttribute("adlt1imp", "Voyage", NumericAttribute.TYPE_INTEGER, "adlt1imp"));
-		attributes.add(new NumericAttribute("chil1imp", "Voyage", NumericAttribute.TYPE_DOUBLE, "chil1imp"));
+		attributes.add(new NumericAttribute("chil1imp", "Voyage", NumericAttribute.TYPE_INTEGER, "chil1imp"));
 		attributes.add(new NumericAttribute("feml1imp", "Voyage", NumericAttribute.TYPE_DOUBLE, "feml1imp"));
-		attributes.add(new NumericAttribute("male1imp", "Voyage", NumericAttribute.TYPE_DOUBLE, "male1imp"));		
+		attributes.add(new NumericAttribute("male1imp", "Voyage", NumericAttribute.TYPE_INTEGER, "male1imp"));		
 		attributes.add(new NumericAttribute("adlt2imp", "Voyage", NumericAttribute.TYPE_INTEGER, "adlt2imp"));
 		attributes.add(new NumericAttribute("chil2imp", "Voyage", NumericAttribute.TYPE_INTEGER, "chil2imp"));
 		attributes.add(new NumericAttribute("feml2imp", "Voyage", NumericAttribute.TYPE_INTEGER, "feml2imp"));
 		attributes.add(new NumericAttribute("male2imp", "Voyage", NumericAttribute.TYPE_INTEGER, "male2imp"));
-		attributes.add(new NumericAttribute("adlt3imp", "Voyage", NumericAttribute.TYPE_DOUBLE, "adlt3imp"));
-		attributes.add(new NumericAttribute("chil3imp", "Voyage", NumericAttribute.TYPE_DOUBLE, "chil3imp"));
-		attributes.add(new NumericAttribute("feml3imp", "Voyage", NumericAttribute.TYPE_DOUBLE, "feml3imp"));
-		attributes.add(new NumericAttribute("male3imp", "Voyage", NumericAttribute.TYPE_DOUBLE, "male3imp"));
+		attributes.add(new NumericAttribute("adlt3imp", "Voyage", NumericAttribute.TYPE_INTEGER, "adlt3imp"));
+		attributes.add(new NumericAttribute("chil3imp", "Voyage", NumericAttribute.TYPE_INTEGER, "chil3imp"));
+		attributes.add(new NumericAttribute("feml3imp", "Voyage", NumericAttribute.TYPE_INTEGER, "feml3imp"));
+		attributes.add(new NumericAttribute("male3imp", "Voyage", NumericAttribute.TYPE_INTEGER, "male3imp"));
 		
-		attributes.add(new NumericAttribute("slavmax1", "Voyage", NumericAttribute.TYPE_INTEGER, "slavmax1"));
+		attributes.add(new NumericAttribute("slavmax1", "Voyage", NumericAttribute.TYPE_DOUBLE, "slavmax1"));
 		attributes.add(new NumericAttribute("slavema1", "Voyage", NumericAttribute.TYPE_DOUBLE, "slavema1"));
 		attributes.add(new NumericAttribute("slavemx1", "Voyage", NumericAttribute.TYPE_DOUBLE, "slavemx1"));
 
@@ -431,8 +431,7 @@ public class Voyage extends AbstractDescriptiveObject
 		attributes.add(new RegionAttribute("embreg2", "Voyage", "embreg2"));
 		attributes.add(new PortAttribute("majbuypt", "Voyage", "majbuypt"));
 		attributes.add(new RegionAttribute("majbuyreg", "Voyage", "majbuyreg"));
-		attributes.add(new NumericAttribute("tslmtimp", "Voyage", NumericAttribute.TYPE_INTEGER, "tslmtimp"));	
-		
+		attributes.add(new NumericAttribute("tslmtimp", "Voyage", NumericAttribute.TYPE_INTEGER, "tslmtimp"));
 		
 		for (Iterator iterator = attributes.iterator(); iterator.hasNext();)
 		{
@@ -2456,23 +2455,24 @@ public class Voyage extends AbstractDescriptiveObject
 	
 	public Integer getTslmtimp() {
 		return (Integer) this.values.get("tslmtimp");
-	}	
+	}
 	
+		
 	//Some of the new getters and setters
 	public Integer getAdlt1imp() {
 		return (Integer) this.values.get("adlt1imp");
 	}
 	
-	public Double getChil1imp() {
-		return (Double) this.values.get("chil1imp");
+	public Integer getChil1imp() {
+		return (Integer) this.values.get("chil1imp");
 	}
 	
-	public Double getMale1imp() {
-		return (Double) this.values.get("male1imp");
+	public Integer getMale1imp() {
+		return (Integer) this.values.get("male1imp");
 	}
 	
-	public Double getFeml1imp() {
-		return (Double) this.values.get("feml1imp");
+	public Integer getFeml1imp() {
+		return (Integer) this.values.get("feml1imp");
 	}
 	
 	public Integer getAdlt2imp() {
@@ -2499,8 +2499,8 @@ public class Voyage extends AbstractDescriptiveObject
 		return (Double) this.values.get("slavemx1");
 	}
 	
-	public Integer getSlavmax1() {
-		return (Integer) this.values.get("slavmax1");
+	public Double getSlavmax1() {
+		return (Double) this.values.get("slavmax1");
 	}
 	
 	public Double getChilrat1() {
@@ -2527,20 +2527,20 @@ public class Voyage extends AbstractDescriptiveObject
 		return (Double) this.values.get("girlrat1");
 	}
 	
-	public Double getAdlt3imp() {
-		return (Double) this.values.get("adlt3imp");
+	public Integer getAdlt3imp() {
+		return (Integer) this.values.get("adlt3imp");
 	}
 	
-	public Double getMale3imp() {
-		return (Double) this.values.get("male3imp");
+	public Integer getMale3imp() {
+		return (Integer) this.values.get("male3imp");
 	}
 	
-	public Double getChil3imp() {
-		return (Double) this.values.get("chil3imp");
+	public Integer getChil3imp() {
+		return (Integer) this.values.get("chil3imp");
 	}
 	
-	public Double getFeml3imp() {
-		return (Double) this.values.get("feml3imp");
+	public Integer getFeml3imp() {
+		return (Integer) this.values.get("feml3imp");
 	}
 	
 	public Double getSlavema3() {
@@ -2627,15 +2627,15 @@ public class Voyage extends AbstractDescriptiveObject
 		this.values.put("adlt1imp", obj);
 	}
 	
-	public void setChil1imp(Double obj){
+	public void setChil1imp(Integer obj){
 		this.values.put("chil1imp", obj);
 	}
 	
-	public void setMale1imp(Double obj){
+	public void setMale1imp(Integer obj){
 		this.values.put("male1imp", obj);
 	}
 	
-	public void setFeml1imp(Double obj){
+	public void setFeml1imp(Integer obj){
 		this.values.put("feml1imp", obj);
 	}
 	
@@ -2663,7 +2663,7 @@ public class Voyage extends AbstractDescriptiveObject
 		this.values.put("slavemx1", obj);
 	}
 	
-	public void setSlavmax1(Integer obj){
+	public void setSlavmax1(Double obj){
 		this.values.put("slavmax1", obj);
 	}
 	
@@ -2691,19 +2691,19 @@ public class Voyage extends AbstractDescriptiveObject
 		this.values.put("girlrat1", obj);
 	}
 	
-	public void setAdlt3imp(Double obj){
+	public void setAdlt3imp(Integer obj){
 		this.values.put("adlt3imp", obj);
 	}
 	
-	public void setMale3imp(Double obj){
+	public void setMale3imp(Integer obj){
 		this.values.put("male3imp", obj);
 	}
 	
-	public void setChil3imp(Double obj){
+	public void setChil3imp(Integer obj){
 		this.values.put("chil3imp", obj);
 	}
 	
-	public void setFeml3imp(Double obj){
+	public void setFeml3imp(Integer obj){
 		this.values.put("feml3imp", obj);
 	}
 	

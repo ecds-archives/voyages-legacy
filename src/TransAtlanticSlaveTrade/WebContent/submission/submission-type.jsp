@@ -14,18 +14,8 @@
 <body style="margin: 15px;">
 <f:view>
 <h:form id="main">
-	<%@ include file="../top-logo-bar.jsp" %>
-	
-	<table cellpadding="0" cellspacing="0">
-		<tr>
-			<td class="step-indicator-active-left">Type of contribution</td>
-			<td class="step-indicator-middle">Your voyage information</td>
-			<td class="step-indicator-middle">Your sources</td>
-			<td class="step-indicator-middle">Summary</td>
-			<td class="step-indicator-right">Finish</td>
-		</tr>
-	</table>
-
+	<%@ include file="../top-logo-bar.jsp" %>	
+	<%@ include file="submission-top-bar.jsp" %>
 	<br>
 
 	<h1>Choose type of submission</h1>

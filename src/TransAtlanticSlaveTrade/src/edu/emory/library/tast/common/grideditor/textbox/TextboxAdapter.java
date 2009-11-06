@@ -54,7 +54,7 @@ public class TextboxAdapter extends Adapter
 		JsfUtils.writeParamIfNotDefault(writer, "maxlength", textboxFieldType.getMaxLength(), Integer.MAX_VALUE);
 		JsfUtils.writeParamIfNotNull(writer, "class", textboxFieldType.getCssClass());
 		JsfUtils.writeParamIfNotNull(writer, "style", textboxFieldType.getCssStyle());
-		writer.writeAttribute("value", textboxValue.getText(), null);
+		writer.writeAttribute("value", (textboxValue != null ? textboxValue.getText(): null), null);
 		if (invokeCompare)
 		{
 			String compareJS = "GridEditorGlobals.compare('" + clientGridId + "', '" + row.getName() + "', '" + column.getName() + "')";

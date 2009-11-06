@@ -18,16 +18,7 @@
 <f:view>
 <h:form id="main">
 	<%@ include file="../top-logo-bar.jsp" %>
-	<table cellpadding="0" cellspacing="0">
-		<tr>
-			<td class="step-indicator-left">Type of contribution</td>
-			<td class="step-indicator-active-middle">Your voyage information</td>
-			<td class="step-indicator-middle">Your sources</td>
-			<td class="step-indicator-middle">Summary</td>
-			<td class="step-indicator-right">Finish</td>
-		</tr>
-	</table>
-
+	<%@ include file="submission-top-bar.jsp" %>
 	<br>
 
 	<h1>Edit voyage information</h1>
@@ -46,12 +37,12 @@
 	<br>
 		
 	<s:gridEditor 
-		id="grid-slave"
+		id="grid-slave"		
 		rows="#{SubmissionBean.rowsSlave}"
 		columns="#{SubmissionBean.columnsSlave}"
-		values="#{SubmissionBean.valuesSlave}"
+		values="#{SubmissionBean.valuesSlave}"	
 		rowGroups="#{SubmissionBean.rowGroupsSlave}"
-		fieldTypes="#{SubmissionBean.fieldTypesSlave}"
+		fieldTypes="#{SubmissionBean.fieldTypesSlave}"		
 		expandedGroups="#{SubmissionBean.expandedGridRowsSlave}" />
 
 	<div style="margin-top: 10px; margin-bottom: 10px;">

@@ -14,19 +14,10 @@
 <f:view>
 <h:form id="main">
 	<%@ include file="../top-logo-bar.jsp" %>
-	<table cellpadding="0" cellspacing="0">
-		<tr>
-			<td class="step-indicator-left">Type of contribution</td>
-			<td class="step-indicator-active-middle">Your voyage information</td>
-			<td class="step-indicator-middle">Your sources</td>
-			<td class="step-indicator-middle">Summary</td>
-			<td class="step-indicator-right">Finish</td>
-		</tr>
-	</table>
-
+	<%@ include file="submission-top-bar.jsp" %>
 	<br>
 
-	<h1>Select voyage for merging</h1>
+	<h1>Select voyages for merging</h1>
 	
 	<br>
 	

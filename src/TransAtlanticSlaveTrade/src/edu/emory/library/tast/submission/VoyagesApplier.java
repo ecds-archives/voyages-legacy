@@ -39,18 +39,53 @@ import edu.emory.library.tast.util.StringUtils;
 public class VoyagesApplier
 {
 
-	public static final String[] SLAVE_CHAR_COLS = { "men", "women", "boy",
-			"girl", "male", "female", "adult", "child", "infant" };
-	public static final String[] SLAVE_CHAR_COLS_LABELS = { "Men", "Women",
-			"Boys", "Girls", "Males", "Females", "Adults", "Children", "Infants" };
-	public static final String[] SLAVE_CHAR_ROWS = { "e1", "e2", "e3", "died",
-			"d1", "d2", "i1" };
-	public static final String[] SLAVE_CHAR_ROWS_LABELS = {
-			"Embarked slaves (first port)", "Embarked slaves (second port)",
-			"Embarked slaves (third port)", "Died on voyage",
+	//Admin Use
+	public static final String[] SLAVE_CHAR_COLS_A = {"men", "women", "boy", "girl", "male", "female", "adult", "child", "infant"};
+	public static final String[] SLAVE_CHAR_COLS_LABELS_A = {"Men", "Women", "Boys", "Girls", "Males", "Females", "Adults", "Children", "Infants"};
+	public static final String[] SLAVE_CHAR_ROWS_A = {"e1", "e2", "e3", "died", "d1", "d2", "i1", "i2", "i3", "i4"};
+	public static final String[] SLAVE_CHAR_ROWS_LABELS_A = {
+			"Embarked slaves (first port)",			
+			"Embarked slaves (second port)",
+			"Embarked slaves (third port)",
+			"Died on voyage", 
 			"Disembarked slaves (first port)",
 			"Disembarked slaves (second port)",
-			"Slaves on arrival or departure*"};
+			"Imputed number at ports of purchase*",
+			"Imputed number at ports of landing*",
+			"Imputed number at departure or arrival*",
+			"Imputed deaths on middle passage*"
+	};
+	
+	
+	//Slave Age Sex Summary  grid
+	public static final String[] SLAVE_CHAR_COLS_S = {"pur", "land", "doa"};
+	public static final String[] SLAVE_CHAR_COLS_LABELS_S = {"At ports of purchase", "At ports of landing", "At departure or on arrival"};
+	public static final String[] SLAVE_CHAR_ROWS_S = {"s1", "s2", "s3", "s4", "s5", "s6", "s7", "s8", "s9",};
+	public static final String[] SLAVE_CHAR_ROWS_LABELS_S = {
+		"Total identified by age*",
+		"Total identified by gender*",
+		"Total identified by age and gender*",
+		"Percentage of men*",
+		"Percentage of women*",
+		"Percentage of boys*",
+		"Percentage of girls*",
+		"Child ratio*",
+		"Male ratio*"
+	};
+	
+	
+	//Editor Use
+	public static final String[] SLAVE_CHAR_COLS_E = {"men", "women", "boy", "girl", "male", "female", "adult", "child", "infant"};
+	public static final String[] SLAVE_CHAR_COLS_LABELS_E = {"Men", "Women", "Boys", "Girls", "Males", "Females", "Adults", "Children", "Infants"};
+	public static final String[] SLAVE_CHAR_ROWS_E = {"e1", "e2", "e3", "died", "d1", "d2"};
+	public static final String[] SLAVE_CHAR_ROWS_LABELS_E = {
+			"Embarked slaves (first port)",			
+			"Embarked slaves (second port)",
+			"Embarked slaves (third port)",
+			"Died on voyage", 
+			"Disembarked slaves (first port)",
+			"Disembarked slaves (second port)"
+	};
 			
 
 	private static final String REMOVE_EDITOR_ACTION = "removeEditor";
@@ -80,10 +115,10 @@ public class VoyagesApplier
 	private static final String EDITOR_CHOICE_LABEL = "Suggestion of";
 
 	/**
-	 * Attributes that are available for administrator/editor.
+	 * Attributes that are available for administrator/reviewer.
 	 */
-	private static SubmissionAttribute[] attrs = SubmissionAttributes
-			.getConfiguration().getSubmissionAttributes();
+	private static SubmissionAttribute[] attrs = SubmissionAttributes.getConfiguration().getAttributes(); //Admin
+	private static SubmissionAttribute[] pAttrs = SubmissionAttributes.getConfiguration().getPublicAttributes(); //Reviewer
 
 	/**
 	 * Indicator is error occured (if wrong value was entered into any field).
@@ -96,6 +131,7 @@ public class VoyagesApplier
 	private Values vals = null;
 
 	private Values valuesSlave;
+	private Values valuesSlave2;
 
 	/**
 	 * Rows for DataGrid component.
@@ -164,6 +200,29 @@ public class VoyagesApplier
 
 	private void fillInValues()
 	{
+		//Choose Admin or Editor Setup for Slave grids
+		String[] SLAVE_CHAR_COLS = null;
+		String[] SLAVE_CHAR_COLS_LABELS = null;
+		String[] SLAVE_CHAR_ROWS = null;
+		String[] SLAVE_CHAR_ROWS_LABELS = null;
+		
+		if (this.adminBean.getAuthenticateduser().isAdmin() || this.adminBean.getAuthenticateduser().isChiefEditor())
+		{
+			SLAVE_CHAR_COLS = SLAVE_CHAR_COLS_A;
+			SLAVE_CHAR_COLS_LABELS = SLAVE_CHAR_COLS_LABELS_A;
+			SLAVE_CHAR_ROWS = SLAVE_CHAR_ROWS_A;
+			SLAVE_CHAR_ROWS_LABELS = SLAVE_CHAR_ROWS_LABELS_A;
+		}
+		else
+		{
+			SLAVE_CHAR_COLS = SLAVE_CHAR_COLS_E;
+			SLAVE_CHAR_COLS_LABELS = SLAVE_CHAR_COLS_LABELS_E;
+			SLAVE_CHAR_ROWS = SLAVE_CHAR_ROWS_E;
+			SLAVE_CHAR_ROWS_LABELS = SLAVE_CHAR_ROWS_LABELS_E;
+		}
+		
+		
+		
 		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		
@@ -402,6 +461,7 @@ public class VoyagesApplier
 		}
 		vals = new Values();
 		valuesSlave = new Values();
+		valuesSlave2 = new Values();
 		for (int n = 0; n < toVals.length; n++)
 		{
 			for (int i = 0; i < attrs.length; i++)
@@ -433,10 +493,12 @@ public class VoyagesApplier
 											+ SLAVE_CHAR_COLS[i]);
 					if (attribute == null)
 					{
-						throw new RuntimeException(
+						
+						continue;
+						/*throw new RuntimeException(
 								"SubmissionAttribute not found: "
 										+ SLAVE_CHAR_ROWS[j] + ","
-										+ SLAVE_CHAR_COLS[i]);
+										+ SLAVE_CHAR_COLS[i]);*/
 					}
 					Object[] toBeFormatted = new Object[attribute
 							.getAttribute().length];
@@ -453,11 +515,76 @@ public class VoyagesApplier
 							+ (n != toVals.length - 1 ? "-" + n : ""), value);
 				}
 			}
+			//Start Slave2 HERE
+			/*for (int i = 0; i < SLAVE_CHAR_COLS_S.length; i++)
+			{
+				for (int j = 0; j < SLAVE_CHAR_ROWS_S.length; j++)
+				{
+					SubmissionAttribute attribute = SubmissionAttributes
+							.getConfiguration().getAttribute(
+									SLAVE_CHAR_ROWS_S[j] + ","
+											+ SLAVE_CHAR_COLS_S[i]);
+					if (attribute == null)
+					{
+						
+						continue;
+						
+					}
+					Object[] toBeFormatted = new Object[attribute
+							.getAttribute().length];
+					for (int k = 0; k < toBeFormatted.length; k++)
+					{
+						toBeFormatted[k] = toVals[n].getAttrValue(attribute
+								.getAttribute()[k].getName());
+					}
+					Value value = attribute.getValue(session, toBeFormatted,
+							sourceInformationUtils);
+					value.setNote((String) attributeNotes[n].get(attribute
+							.getName()));
+					valuesSlave2.setValue(SLAVE_CHAR_COLS_S[i], SLAVE_CHAR_ROWS_S[j]
+							+ (n != toVals.length - 1 ? "-" + n : ""), value);
+				}
+			}*/
 		}
 
 		t.commit();
 		session.close();
 	}
+	
+/*	public void fillInValuesSlaves2()
+	{
+		Session session = HibernateConn.getSession();
+		Transaction t = session.beginTransaction();
+		SourceInformationLookup sourceInformationUtils = SourceInformationLookup.createSourceInformationUtils(session);
+		
+
+		for (int i = 0; i < SLAVE_CHAR_COLS_S.length; i++)
+		{
+			for (int j = 0; j < SLAVE_CHAR_ROWS_S.length; j++)
+			{
+				SubmissionAttribute attribute = SubmissionAttributes.getConfiguration().getAttribute(SLAVE_CHAR_ROWS_S[j] + ","	+ SLAVE_CHAR_COLS_S[i]);
+				
+				if (attribute == null)
+				{
+					continue;
+								
+				}
+				Object[] toBeFormatted = new Object[attribute.getAttribute().length];
+							for (int k = 0; k < toBeFormatted.length; k++)
+							{
+								toBeFormatted[k] = toVals[n].getAttrValue(attribute.getAttribute()[k].getName());
+							}
+							Value value = attribute.getValue(session, toBeFormatted, sourceInformationUtils);
+							value.setNote((String) attributeNotes[n].get(attribute.getName()));
+							valuesSlave.setValue(SLAVE_CHAR_COLS_S[i], SLAVE_CHAR_ROWS_S[j]+ (n != toVals.length - 1 ? "-" + n : ""), value);
+						}
+					}
+		t.commit();
+		session.close();
+		
+	}*/
+	
+	
 
 	/**
 	 * Sets values when user returns form with GridComponent.
@@ -502,6 +629,28 @@ public class VoyagesApplier
 
 	public Column[] getColumnsSlave()
 	{
+		//Choose Admin or Editor Setup for Slave grids
+		String[] SLAVE_CHAR_COLS = null;
+		String[] SLAVE_CHAR_COLS_LABELS = null;
+		String[] SLAVE_CHAR_ROWS = null;
+		String[] SLAVE_CHAR_ROWS_LABELS = null;
+		
+		if (this.adminBean.getAuthenticateduser().isAdmin() || this.adminBean.getAuthenticateduser().isChiefEditor())
+		{
+			SLAVE_CHAR_COLS = SLAVE_CHAR_COLS_A;
+			SLAVE_CHAR_COLS_LABELS = SLAVE_CHAR_COLS_LABELS_A;
+			SLAVE_CHAR_ROWS = SLAVE_CHAR_ROWS_A;
+			SLAVE_CHAR_ROWS_LABELS = SLAVE_CHAR_ROWS_LABELS_A;
+		}
+		else
+		{
+			SLAVE_CHAR_COLS = SLAVE_CHAR_COLS_E;
+			SLAVE_CHAR_COLS_LABELS = SLAVE_CHAR_COLS_LABELS_E;
+			SLAVE_CHAR_ROWS = SLAVE_CHAR_ROWS_E;
+			SLAVE_CHAR_ROWS_LABELS = SLAVE_CHAR_ROWS_LABELS_E;
+		}
+		
+		
 		Column[] cols = new Column[SLAVE_CHAR_COLS.length];
 		for (int i = 0; i < cols.length; i++)
 		{
@@ -509,6 +658,26 @@ public class VoyagesApplier
 		}
 		return cols;
 	}
+	
+	public Column[] getColumnsSlave2()
+	{
+		//Choose Admin or Editor Setup for Slave grids
+		String[] SLAVE_CHAR_COLS = SLAVE_CHAR_COLS_S;
+		String[] SLAVE_CHAR_COLS_LABELS = SLAVE_CHAR_COLS_LABELS_S;
+		String[] SLAVE_CHAR_ROWS = SLAVE_CHAR_ROWS_S;
+		String[] SLAVE_CHAR_ROWS_LABELS = SLAVE_CHAR_ROWS_LABELS_S;
+		
+		
+		
+		Column[] cols = new Column[SLAVE_CHAR_COLS.length];
+		for (int i = 0; i < cols.length; i++)
+		{
+			cols[i] = new Column(SLAVE_CHAR_COLS[i], SLAVE_CHAR_COLS_LABELS[i]);
+		}
+		return cols;
+	}
+	
+	
 
 	private Column[] getMergeColumns(SubmissionMerge submission, boolean editor)
 	{
@@ -677,11 +846,27 @@ public class VoyagesApplier
 	 */
 	public Row[] getRows()
 	{
-		Row[] rows = new Row[attrs.length];
+		SubmissionAttribute[] dispAttrs= null;
+		
+		if (this.adminBean.getAuthenticateduser().isAdmin() || this.adminBean.getAuthenticateduser().isChiefEditor()) //Get all attributes
+		{
+			dispAttrs = attrs;
+		}
+		else if (this.adminBean.getAuthenticateduser().isEditor()) //Get only public attributes
+		{
+			dispAttrs = pAttrs;
+		}
+		
+		Row[] rows = new Row[dispAttrs.length];
 		for (int i = 0; i < rows.length; i++)
 		{
-			rows[i] = new Row(attrs[i].getType(), attrs[i].getName(), attrs[i]
-					.getUserLabel(), null, attrs[i].getGroupName(), false);
+			rows[i] = new Row(dispAttrs[i].getType(), 
+					          dispAttrs[i].getName(), 
+					          dispAttrs[i].getUserLabel(), 
+					          dispAttrs[i].getComment(), 
+					          dispAttrs[i].getGroupName(), 
+					          false);
+			
 			rows[i].setNoteEnabled(true);
 		}
 		return rows;
@@ -689,6 +874,28 @@ public class VoyagesApplier
 
 	public Row[] getRowsSlave()
 	{
+		//Choose Admin or Editor Setup for Slave grids
+		String[] SLAVE_CHAR_COLS = null;
+		String[] SLAVE_CHAR_COLS_LABELS = null;
+		String[] SLAVE_CHAR_ROWS = null;
+		String[] SLAVE_CHAR_ROWS_LABELS = null;
+		
+		if (this.adminBean.getAuthenticateduser().isAdmin() || this.adminBean.getAuthenticateduser().isChiefEditor())
+		{
+			SLAVE_CHAR_COLS = SLAVE_CHAR_COLS_A;
+			SLAVE_CHAR_COLS_LABELS = SLAVE_CHAR_COLS_LABELS_A;
+			SLAVE_CHAR_ROWS = SLAVE_CHAR_ROWS_A;
+			SLAVE_CHAR_ROWS_LABELS = SLAVE_CHAR_ROWS_LABELS_A;
+		}
+		else
+		{
+			SLAVE_CHAR_COLS = SLAVE_CHAR_COLS_E;
+			SLAVE_CHAR_COLS_LABELS = SLAVE_CHAR_COLS_LABELS_E;
+			SLAVE_CHAR_ROWS = SLAVE_CHAR_ROWS_E;
+			SLAVE_CHAR_ROWS_LABELS = SLAVE_CHAR_ROWS_LABELS_E;
+		}
+		
+		
 		Row[] rows = null;
 		int groupsNumber;
 		Session session = HibernateConn.getSession();
@@ -760,6 +967,88 @@ public class VoyagesApplier
 		}
 		return rows;
 	}
+	
+	public Row[] getRowsSlave2()
+	{
+		//Summary configuration
+		String[] SLAVE_CHAR_COLS = SLAVE_CHAR_COLS_S;
+		String[] SLAVE_CHAR_COLS_LABELS = SLAVE_CHAR_COLS_LABELS_S;
+		String[] SLAVE_CHAR_ROWS = SLAVE_CHAR_ROWS_S;
+		String[] SLAVE_CHAR_ROWS_LABELS = SLAVE_CHAR_ROWS_LABELS_S;
+			
+		Row[] rows = null;
+		int groupsNumber;
+		Session session = HibernateConn.getSession();
+		Transaction t = session.beginTransaction();
+		try
+		{
+			Submission submission = Submission.loadById(session,
+					getSubmissionId());
+			if (submission instanceof SubmissionEdit
+					|| submission instanceof SubmissionMerge)
+			{
+				if (this.adminBean.getAuthenticateduser().isEditor())
+				{
+					groupsNumber = 2 + this.editRequests.length;
+				} else
+				{
+					groupsNumber = 2 + this.editRequests.length
+							+ submission.getSubmissionEditors().size();
+				}
+				rows = new Row[groupsNumber * SLAVE_CHAR_ROWS.length];
+				for (int i = 0; i < (groupsNumber - 1) * SLAVE_CHAR_ROWS.length; i++)
+				{
+					rows[i] = new Row(TextboxDoubleAdapter.TYPE,
+							SLAVE_CHAR_ROWS[i % SLAVE_CHAR_ROWS.length] + "-"
+									+ (i / SLAVE_CHAR_ROWS.length),
+							SLAVE_CHAR_ROWS_LABELS[i % SLAVE_CHAR_ROWS.length],
+							null, "characteristics-"
+									+ (i / SLAVE_CHAR_ROWS.length), true,
+							SLAVE_CHAR_ROWS[i % SLAVE_CHAR_ROWS.length], "Copy");
+					rows[i].setNoteEnabled(true);
+				}
+			} else
+			{
+				if (this.adminBean.getAuthenticateduser().isEditor())
+				{
+					groupsNumber = 2;
+				} else
+				{
+					groupsNumber = 2 + submission.getSubmissionEditors().size();
+				}
+				rows = new Row[groupsNumber * SLAVE_CHAR_ROWS.length];
+				for (int i = 0; i < (groupsNumber - 1) * SLAVE_CHAR_ROWS.length; i++)
+				{
+					rows[i] = new Row(
+							TextboxDoubleAdapter.TYPE,
+							SLAVE_CHAR_ROWS[i % SLAVE_CHAR_ROWS.length]
+									+ "-"
+									+ (int) (i / (double) SLAVE_CHAR_ROWS.length),
+							SLAVE_CHAR_ROWS_LABELS[i % SLAVE_CHAR_ROWS.length],
+							null, "characteristics-"
+									+ (i / SLAVE_CHAR_ROWS.length), true,
+							SLAVE_CHAR_ROWS[i % SLAVE_CHAR_ROWS.length], "Copy");
+					rows[i].setNoteEnabled(true);
+				}
+			}
+			for (int i = 0; i < SLAVE_CHAR_ROWS.length; i++)
+			{
+				rows[i + (groupsNumber - 1) * SLAVE_CHAR_ROWS.length] = new Row(
+						TextboxDoubleAdapter.TYPE, SLAVE_CHAR_ROWS[i],
+						SLAVE_CHAR_ROWS_LABELS[i], null, "characteristics",
+						true);
+				rows[i + (groupsNumber - 1) * SLAVE_CHAR_ROWS.length]
+						.setNoteEnabled(true);
+			}
+		} finally
+		{
+			t.commit();
+			session.close();
+		}
+		return rows;
+	}
+	
+	
 
 	/**
 	 * Gets groups for rows - GridComponent requirement.
@@ -785,15 +1074,15 @@ public class VoyagesApplier
 				{
 					return new RowGroup[] {
 							new RowGroup("characteristics-0",
-									"Slaves (characteristics) [Suggested voyage]"),
+									"Slaves (Age and Sex) [Suggested voyage]"),
 							new RowGroup("characteristics",
-									"Slaves (characteristics) [Final decision]") };
+									"Slaves (Age and Sex) [Final decision]") };
 				} else
 				{
 					RowGroup[] response = new RowGroup[2 + submission
 							.getSubmissionEditors().size()];
 					response[0] = new RowGroup("characteristics-0",
-							"Slaves (characteristics) [Suggested voyage]");
+							"Slaves (Age and Sex) [Suggested voyage]");
 					Iterator iter = submission.getSubmissionEditors()
 							.iterator();
 					for (int i = 1; i < response.length - 1; i++)
@@ -801,12 +1090,12 @@ public class VoyagesApplier
 						SubmissionEditor editor = (SubmissionEditor) iter
 								.next();
 						response[i] = new RowGroup("characteristics-" + i,
-								"Slaves (characteristics) [Suggestion of "
+								"Slaves (Age and Sex) [Suggestion of "
 										+ editor.getUser().getUserName() + "]");
 					}
 					response[response.length - 1] = new RowGroup(
 							"characteristics",
-							"Slaves (characteristics) [Final decision]");
+							"Slaves (Age and Sex) [Final decision]");
 					return response;
 				}
 			} else if (submission instanceof SubmissionEdit)
@@ -815,16 +1104,16 @@ public class VoyagesApplier
 				{
 					RowGroup[] response = new RowGroup[2 + this.editRequests.length];
 					response[0] = new RowGroup("characteristics-0",
-							"Slaves (characteristics) [Original voyage]");
+							"Slaves (Age and Sex) [Original voyage]");
 					for (int i = 1; i < response.length - 1; i++)
 					{
 						response[i] = new RowGroup("characteristics-" + i,
-								"Slaves (characteristics) [Suggested change #"
+								"Slaves (Age and Sex) [Suggested change #"
 										+ i + "]");
 					}
 					response[response.length - 1] = new RowGroup(
 							"characteristics",
-							"Slaves (characteristics) [Final decision]");
+							"Slaves (Age and Sex) [Final decision]");
 					return response;
 				} else
 				{
@@ -832,11 +1121,11 @@ public class VoyagesApplier
 							+ this.editRequests.length
 							+ submission.getSubmissionEditors().size()];
 					response[0] = new RowGroup("characteristics-0",
-							"Slaves (characteristics) [Original voyage]");
+							"Slaves (Age and Sex) [Original voyage]");
 					for (int i = 1; i < this.editRequests.length + 1; i++)
 					{
 						response[i] = new RowGroup("characteristics-" + i,
-								"Slaves (characteristics) [Suggested change #"
+								"Slaves (Age and Sex) [Suggested change #"
 										+ i + "]");
 					}
 					Iterator iter = submission.getSubmissionEditors()
@@ -848,12 +1137,12 @@ public class VoyagesApplier
 								.next();
 						response[i + 1] = new RowGroup("characteristics-"
 								+ (i + 1),
-								"Slaves (characteristics) [Suggestion of "
+								"Slaves (Age and Sex) [Suggestion of "
 										+ editor.getUser().getUserName() + "]");
 					}
 					response[response.length - 1] = new RowGroup(
 							"characteristics",
-							"Slaves (characteristics) [Final decision]");
+							"Slaves (Age and Sex) [Final decision]");
 					return response;
 				}
 			} else
@@ -866,15 +1155,15 @@ public class VoyagesApplier
 						EditedVoyage eV = EditedVoyage.loadById(session,
 								this.editRequests[i]);
 						response[i] = new RowGroup("characteristics-" + i,
-								"Slaves (characteristics) [Voyageid "
+								"Slaves (Age and Sex) [Voyageid "
 										+ eV.getVoyage().getVoyageid() + "]");
 					}
 					response[response.length - 2] = new RowGroup(
 							"characteristics-" + (response.length - 2),
-							"Slaves (characteristics) [Suggested voyage]");
+							"Slaves (Age and Sex) [Suggested voyage]");
 					response[response.length - 1] = new RowGroup(
 							"characteristics",
-							"Slaves (characteristics) [Final decision]");
+							"Slaves (Age and Sex) [Final decision]");
 					return response;
 				} else
 				{
@@ -886,12 +1175,12 @@ public class VoyagesApplier
 						EditedVoyage eV = EditedVoyage.loadById(session,
 								this.editRequests[i]);
 						response[i] = new RowGroup("characteristics-" + i,
-								"Slaves (characteristics) [Voyageid "
+								"Slaves (Age and Sex) [Voyageid "
 										+ eV.getVoyage().getVoyageid() + "]");
 					}
 					response[this.editRequests.length] = new RowGroup(
 							"characteristics-" + (this.editRequests.length),
-							"Slaves (characteristics) [Suggested voyage]");
+							"Slaves (Age and Sex) [Suggested voyage]");
 					Iterator iter = submission.getSubmissionEditors()
 							.iterator();
 					for (int i = this.editRequests.length + 1; i < this.editRequests.length
@@ -900,12 +1189,12 @@ public class VoyagesApplier
 						SubmissionEditor editor = (SubmissionEditor) iter
 								.next();
 						response[i] = new RowGroup("characteristics-" + (i),
-								"Slaves (characteristics) [Suggestion of "
+								"Slaves (Age and Sex) [Suggestion of "
 										+ editor.getUser().getUserName() + "]");
 					}
 					response[response.length - 1] = new RowGroup(
 							"characteristics",
-							"Slaves (characteristics) [Final decision]");
+							"Slaves (Age and Sex) [Final decision]");
 					return response;
 				}
 			}
@@ -915,6 +1204,153 @@ public class VoyagesApplier
 			session.close();
 		}
 	}
+	
+	
+	public RowGroup[] getRowGroupsSlave2()
+	{
+		Session session = HibernateConn.getSession();
+		Transaction t = session.beginTransaction();
+		try
+		{
+			Submission submission = Submission.loadById(session,
+					getSubmissionId());
+			if (submission instanceof SubmissionNew)
+			{
+				if (this.adminBean.getAuthenticateduser().isEditor())
+				{
+					return new RowGroup[] {
+							new RowGroup("characteristics-0",
+									"Slaves (Age and Sex Summary) [Suggested voyage]"),
+							new RowGroup("characteristics",
+									"Slaves (Age and Sex Summary) [Final decision]") };
+				} else
+				{
+					RowGroup[] response = new RowGroup[2 + submission
+							.getSubmissionEditors().size()];
+					response[0] = new RowGroup("characteristics-0",
+							"Slaves (Age and Sex Summary) [Suggested voyage]");
+					Iterator iter = submission.getSubmissionEditors()
+							.iterator();
+					for (int i = 1; i < response.length - 1; i++)
+					{
+						SubmissionEditor editor = (SubmissionEditor) iter
+								.next();
+						response[i] = new RowGroup("characteristics-" + i,
+								"Slaves (Age and Sex Summary) [Suggestion of "
+										+ editor.getUser().getUserName() + "]");
+					}
+					response[response.length - 1] = new RowGroup(
+							"characteristics",
+							"Slaves (Age and Sex Summary) [Final decision]");
+					return response;
+				}
+			} else if (submission instanceof SubmissionEdit)
+			{
+				if (this.adminBean.getAuthenticateduser().isEditor())
+				{
+					RowGroup[] response = new RowGroup[2 + this.editRequests.length];
+					response[0] = new RowGroup("characteristics-0",
+							"Slaves (Age and Sex Summary) [Original voyage]");
+					for (int i = 1; i < response.length - 1; i++)
+					{
+						response[i] = new RowGroup("characteristics-" + i,
+								"Slaves (Age and Sex Summary) [Suggested change #"
+										+ i + "]");
+					}
+					response[response.length - 1] = new RowGroup(
+							"characteristics",
+							"Slaves (Age and Sex Summary) [Final decision]");
+					return response;
+				} else
+				{
+					RowGroup[] response = new RowGroup[2
+							+ this.editRequests.length
+							+ submission.getSubmissionEditors().size()];
+					response[0] = new RowGroup("characteristics-0",
+							"Slaves (Age and Sex Summary) [Original voyage]");
+					for (int i = 1; i < this.editRequests.length + 1; i++)
+					{
+						response[i] = new RowGroup("characteristics-" + i,
+								"Slaves (Age and Sex Summary) [Suggested change #"
+										+ i + "]");
+					}
+					Iterator iter = submission.getSubmissionEditors()
+							.iterator();
+					for (int i = this.editRequests.length; i < this.editRequests.length
+							+ submission.getSubmissionEditors().size(); i++)
+					{
+						SubmissionEditor editor = (SubmissionEditor) iter
+								.next();
+						response[i + 1] = new RowGroup("characteristics-"
+								+ (i + 1),
+								"Slaves (Age and Sex Summary) [Suggestion of "
+										+ editor.getUser().getUserName() + "]");
+					}
+					response[response.length - 1] = new RowGroup(
+							"characteristics",
+							"Slaves (Age and Sex Summary) [Final decision]");
+					return response;
+				}
+			} else
+			{
+				if (this.adminBean.getAuthenticateduser().isEditor())
+				{
+					RowGroup[] response = new RowGroup[2 + this.editRequests.length];
+					for (int i = 0; i < this.editRequests.length; i++)
+					{
+						EditedVoyage eV = EditedVoyage.loadById(session,
+								this.editRequests[i]);
+						response[i] = new RowGroup("characteristics-" + i,
+								"Slaves (Age and Sex Summary) [Voyageid "
+										+ eV.getVoyage().getVoyageid() + "]");
+					}
+					response[response.length - 2] = new RowGroup(
+							"characteristics-" + (response.length - 2),
+							"Slaves (Age and Sex Summary) [Suggested voyage]");
+					response[response.length - 1] = new RowGroup(
+							"characteristics",
+							"Slaves (Age and Sex Summary) [Final decision]");
+					return response;
+				} else
+				{
+					RowGroup[] response = new RowGroup[2
+							+ this.editRequests.length
+							+ submission.getSubmissionEditors().size()];
+					for (int i = 0; i < this.editRequests.length; i++)
+					{
+						EditedVoyage eV = EditedVoyage.loadById(session,
+								this.editRequests[i]);
+						response[i] = new RowGroup("characteristics-" + i,
+								"Slaves (Age and Sex Summary) [Voyageid "
+										+ eV.getVoyage().getVoyageid() + "]");
+					}
+					response[this.editRequests.length] = new RowGroup(
+							"characteristics-" + (this.editRequests.length),
+							"Slaves (Age and Sex Summary) [Suggested voyage]");
+					Iterator iter = submission.getSubmissionEditors()
+							.iterator();
+					for (int i = this.editRequests.length + 1; i < this.editRequests.length
+							+ submission.getSubmissionEditors().size() + 1; i++)
+					{
+						SubmissionEditor editor = (SubmissionEditor) iter
+								.next();
+						response[i] = new RowGroup("characteristics-" + (i),
+								"Slaves (Age and Sex Summary) [Suggestion of "
+										+ editor.getUser().getUserName() + "]");
+					}
+					response[response.length - 1] = new RowGroup(
+							"characteristics",
+							"Slaves (Age and Sex Summary) [Final decision]");
+					return response;
+				}
+			}
+		} finally
+		{
+			t.commit();
+			session.close();
+		}
+	}
+	
 
 	/**
 	 * Invoked when user clicks on any row of list showing requests. Prepares
@@ -1149,6 +1585,8 @@ public class VoyagesApplier
 
 		// TODO implement
 		this.valuesSlave = null;
+		
+		this.valuesSlave2 = null;
 
 		t.commit();
 		session.close();
@@ -1173,6 +1611,12 @@ public class VoyagesApplier
 			return null;
 		}
 
+		//#####TEST#####
+		System.out.println("SUBMISSION ID:" + lSubmisssion.getId());
+		System.out.println("VOYAGEID:" + newValues.get("voyageid"));
+		//##############
+		
+		
 		t.commit();
 		session.close();
 		this.vals = null;
@@ -1182,6 +1626,27 @@ public class VoyagesApplier
 	private Voyage updateMergedVoyage(Session session, Submission submission,
 			Map newValues)
 	{
+		//Choose Admin or Editor Setup for Slave grids
+		String[] SLAVE_CHAR_COLS = null;
+		String[] SLAVE_CHAR_COLS_LABELS = null;
+		String[] SLAVE_CHAR_ROWS = null;
+		String[] SLAVE_CHAR_ROWS_LABELS = null;
+		
+		if (this.adminBean.getAuthenticateduser().isAdmin() || this.adminBean.getAuthenticateduser().isChiefEditor())
+		{
+			SLAVE_CHAR_COLS = SLAVE_CHAR_COLS_A;
+			SLAVE_CHAR_COLS_LABELS = SLAVE_CHAR_COLS_LABELS_A;
+			SLAVE_CHAR_ROWS = SLAVE_CHAR_ROWS_A;
+			SLAVE_CHAR_ROWS_LABELS = SLAVE_CHAR_ROWS_LABELS_A;
+		}
+		else
+		{
+			SLAVE_CHAR_COLS = SLAVE_CHAR_COLS_E;
+			SLAVE_CHAR_COLS_LABELS = SLAVE_CHAR_COLS_LABELS_E;
+			SLAVE_CHAR_ROWS = SLAVE_CHAR_ROWS_E;
+			SLAVE_CHAR_ROWS_LABELS = SLAVE_CHAR_ROWS_LABELS_E;
+		}
+		
 
 		this.wasError = false;
 		Voyage vNew = null;
@@ -1227,7 +1692,12 @@ public class VoyagesApplier
 		Map notes = new HashMap();
 		for (int i = 0; i < attrs.length; i++)
 		{
+			if(attrs[i] == null) {continue;}
+			
 			Value val = (Value) newValues.get(attrs[i].getName());
+			
+			if(val== null) {continue;}
+			
 			if (!val.isCorrectValue())
 			{
 				val.setErrorMessage("Value incorrect");
@@ -1264,10 +1734,11 @@ public class VoyagesApplier
 								SLAVE_CHAR_ROWS[j] + "," + SLAVE_CHAR_COLS[i]);
 				if (attribute == null)
 				{
-					throw new RuntimeException(
+					continue;
+					/*throw new RuntimeException(
 							"SubmissionAttribute not found: "
 									+ SLAVE_CHAR_ROWS[j] + ","
-									+ SLAVE_CHAR_COLS[i]);
+									+ SLAVE_CHAR_COLS[i]);*/
 				}
 				Value value = valuesSlave.getValue(SLAVE_CHAR_COLS[i],
 						SLAVE_CHAR_ROWS[j]);
@@ -1414,5 +1885,22 @@ public class VoyagesApplier
 		}
 		return this.valuesSlave;
 	}
+	
+	
+	public void setValuesSlave2(Values values)
+	{
+		this.valuesSlave2 = values;
+	}
+
+	public Values getValuesSlave2()
+	{
+		if (this.valuesSlave2 == null || requiredReload)
+		{
+			requiredReload = false;
+			fillInValues();
+		}
+		return this.valuesSlave2;
+	}
+	
 
 }

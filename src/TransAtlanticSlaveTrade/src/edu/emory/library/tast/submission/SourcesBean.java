@@ -68,6 +68,10 @@ public class SourcesBean {
 		return this.newSourceType;
 	}
 	
+	public void setNewSourceType(int type) {
+		this.newSourceType = type;
+	}
+	
 	public String primarySource() {
 		this.newSourceType = NEW_SOURCE_PRIMARY;
 		return null;
@@ -89,7 +93,7 @@ public class SourcesBean {
 	}
 	
 	public String addSource() {
-		System.out.println("Add source..:" + this.newSourceType);
+		//System.out.println("Add source..:" + this.newSourceType);
 		switch (this.newSourceType) {
 		case NEW_SOURCE_ARTICLE:
 			this.addNewArticle(this.editMode);
@@ -331,8 +335,8 @@ public class SourcesBean {
 
 	public GridColumn[] getColumns() {
 		return new GridColumn[] {
-				new GridColumn("Source type"),
-				new GridColumn("Source details")
+				new GridColumn("Type"),
+				new GridColumn("Details")
 		};
 	}
 	
@@ -353,7 +357,7 @@ public class SourcesBean {
 			if (source instanceof SubmissionSourceBook) {
 				SubmissionSourceBook book = (SubmissionSourceBook)source;
 				String desc = "Title: " + this.shortenIfNecessary(book.getTitle()) + 
-				"; Authors: " + this.shortenIfNecessary(book.getAuthors());
+				"; Author: " + this.shortenIfNecessary(book.getAuthors());
 				rows[i++] = new GridRow(book.getId().toString(), new String[] {
 					"Book",
 					desc
@@ -361,7 +365,7 @@ public class SourcesBean {
 			} else if (source instanceof SubmissionSourcePaper) {
 				SubmissionSourcePaper paper = (SubmissionSourcePaper)source;
 				String desc = "Title: " + this.shortenIfNecessary(paper.getTitle()) + 
-					"; Authors: " + this.shortenIfNecessary(paper.getAuthors());
+					"; Author: " + this.shortenIfNecessary(paper.getAuthors());
 				rows[i++] = new GridRow(paper.getId().toString(), new String[] {
 					"Article",
 					desc

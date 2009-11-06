@@ -18,7 +18,6 @@ import edu.emory.library.tast.common.grideditor.Row;
 import edu.emory.library.tast.common.grideditor.RowGroup;
 import edu.emory.library.tast.common.grideditor.Value;
 import edu.emory.library.tast.common.grideditor.Values;
-import edu.emory.library.tast.common.grideditor.textbox.TextboxDoubleAdapter;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxIntegerAdapter;
 import edu.emory.library.tast.database.SourceInformationLookup;
 import edu.emory.library.tast.db.HibernateConn;
@@ -38,9 +37,11 @@ import edu.emory.library.tast.util.JsfUtils;
 public class SubmissionBean
 {
 
-	public static final String ORIGINAL_VOYAGE_LABEL = TastResource.getText("submissions_oryginal_voyage");
-	public static final String CHANGED_VOYAGE_LABEL = TastResource.getText("submissions_changed_voyage");
-
+	public static final String ORIGINAL_VOYAGE_LABEL = TastResource.getText("submissions_original_voyage");
+	//public static final String CHANGED_VOYAGE_LABEL = TastResource.getText("submissions_changed_voyage");
+	public static final String CONTRIBUTOR_LABEL = TastResource.getText("contributor_voyage");
+	//public static final String NEW_VOYAGE_LABEL = TastResource.getText("submissions_new_voyage");
+	
 	public static final String ORIGINAL_VOYAGE = "old";
 	public static final String MERGED_VOYAGE_PREFIX = "merged:";
 	public static final String CHANGED_VOYAGE = "new";
@@ -271,7 +272,7 @@ public class SubmissionBean
 	{
 		gridValues = new Values();
 		slaveValues = new Values();
-		initColumnForNewVoyaye(CHANGED_VOYAGE);
+		initColumnForNewVoyage(CHANGED_VOYAGE);
 	}
 
 	private boolean loadVoyageForEdit()
@@ -287,7 +288,7 @@ public class SubmissionBean
 			SourceInformationLookup.createSourceInformationUtils(session);
 		
 		loadVoyageToColumn(session, selectedVoyageForEdit.getVoyageId(), gridValues, ORIGINAL_VOYAGE, sourceInformationUtils);
-		initColumnForNewVoyaye(CHANGED_VOYAGE);
+		initColumnForNewVoyage(CHANGED_VOYAGE);
 		
 		Voyage old = Voyage.loadCurrentRevision(session, selectedVoyageForEdit.getVoyageId());
 		for (int i = 0; i < SLAVE_CHAR_COLS.length; i++) {
@@ -334,7 +335,7 @@ public class SubmissionBean
 			i++;
 		}
 
-		initColumnForNewVoyaye(CHANGED_VOYAGE);
+		initColumnForNewVoyage(CHANGED_VOYAGE);
 
 		for (Iterator iter = selectedVoyagesForMerge.iterator(); iter.hasNext();) {
 			SelectedVoyageInfo element = (SelectedVoyageInfo) iter.next();
@@ -369,7 +370,7 @@ public class SubmissionBean
 	// universal methods for loading data into a grid
 	/////////////////////////////////////////////////////////////////////////////////
 	
-	private void initColumnForNewVoyaye(String columnName)
+	private void initColumnForNewVoyage(String columnName)
 	{
 		if (!prefillSuccess(columnName)) {
 			for (int i = 0; i < attrs.length; i++) {
@@ -591,7 +592,7 @@ public class SubmissionBean
 			return new Column[] {
 					new Column(
 							CHANGED_VOYAGE,
-							CHANGED_VOYAGE_LABEL,
+							CONTRIBUTOR_LABEL,
 							false)};
 
 		}
@@ -601,15 +602,15 @@ public class SubmissionBean
 			return new Column[] {
 
 					new Column(
-							ORIGINAL_VOYAGE,
-							ORIGINAL_VOYAGE_LABEL,
+							ORIGINAL_VOYAGE,							
+							"VoyageID " + String.valueOf(selectedVoyageForEdit.getVoyageId()),
 							true,
 							CHANGED_VOYAGE,
 							"Copy >"),
 					
 					new Column(
 							CHANGED_VOYAGE,
-							CHANGED_VOYAGE_LABEL,
+							CONTRIBUTOR_LABEL,
 							false,
 							true)};
 
@@ -631,7 +632,7 @@ public class SubmissionBean
 			
 			columns[selectedVoyagesForMerge.size()] = new Column(
 					CHANGED_VOYAGE,
-					CHANGED_VOYAGE_LABEL,
+					CONTRIBUTOR_LABEL,
 					false);
 			
 			return columns;
@@ -1187,6 +1188,14 @@ public class SubmissionBean
 	public void setVerifyBean(SubmissionVerifyBean verifyBean) {
 		this.verifyBean = verifyBean;
 		this.verifyBean.setSubmissionBean(this);
+	}
+	
+	public int getSubmissionType() {
+		return submissionType;
+	}
+	
+	public void setSubmissionType(int type) {
+		this.submissionType = type;
 	}
 		
 	

@@ -2184,19 +2184,19 @@ public class VoyagesCalculation {
 		  Integer chil2imp = null;
 		  Integer male2imp=null;
 		  Integer feml2imp=null;
-		  Integer slavema1 = null;
-		  Integer slavemx1 = null;
-		  Integer slavmax1 = null;
+		  Double slavema1 = null;
+		  Double slavemx1 = null;
+		  Double slavmax1 = null;
 		  Double chilrat1=null;
 		  Double malrat1=null;
 		  Double menrat1=null;
 		  Double womrat1=null;
 		  Double boyrat1=null;
 		  Double girlrat1=null;
-		  Double adlt3imp = null;
-		  Double chil3imp = null;
-		  Double male3imp = null;
-		  Double feml3imp = null;
+		  Integer adlt3imp = null;
+		  Integer chil3imp = null;
+		  Integer male3imp = null;
+		  Integer feml3imp = null;
 		  Double slavema3=null;
 		  Double slavemx3 = null;
 		  Double slavmax3=null;
@@ -2375,9 +2375,9 @@ public class VoyagesCalculation {
 
 			  
 
- 			 slavema1 = add(new Integer[]{adlt1imp,chil1imp});
-			 slavemx1 = add(new Integer[]{male1imp, feml1imp});
-			 slavmax1=add(new Integer[]{men1,women1,boy1,girl1,men4,women4,boy4,girl4,men5,women5,boy5,girl5});
+ 			 slavema1 = addD(new Integer[]{adlt1imp,chil1imp});
+			 slavemx1 = addD(new Integer[]{male1imp, feml1imp});
+			 slavmax1=addD(new Integer[]{men1,women1,boy1,girl1,men4,women4,boy4,girl4,men5,women5,boy5,girl5});
 			
 
 			 if(slavema1!=null && slavema1 >=0 && slavema1 <= 19) {slavema1=null;}
@@ -2397,31 +2397,31 @@ public class VoyagesCalculation {
 			  if(male1imp!=null && male1imp >=0) {male1imp=null;}
 			 }
 			 
-			 if(chil1imp!=null && slavema1!=null && slavema1!=0){chilrat1=chil1imp.doubleValue()/slavema1.doubleValue();} 
-			 if(male1imp!=null && slavemx1!=null && slavemx1!=0) {malrat1= male1imp.doubleValue()/slavemx1.doubleValue();}
+			 if(chil1imp!=null && slavema1!=null && slavema1!=0){chilrat1=chil1imp.doubleValue()/slavema1;} 
+			 if(male1imp!=null && slavemx1!=null && slavemx1!=0) {malrat1= male1imp.doubleValue()/slavemx1;}
 			 
 			 if (slavmax1!=null && slavmax1 >= 20 && slavmax1!=0) 
 			 {
 				 Integer temp=add(new Integer[]{men1, men4,men5});
-				 if(temp !=null) menrat1=temp.doubleValue()/slavmax1.doubleValue();
+				 if(temp !=null) menrat1=temp.doubleValue()/slavmax1;
 			 }
 			 
 			 if (slavmax1!=null && slavmax1 >= 20 && slavmax1 !=0) 
 			 {
 				 Integer temp = add(new Integer[]{women1, women4,women5});
-				 if(temp !=null) {womrat1=temp.doubleValue()/slavmax1.doubleValue();} 
+				 if(temp !=null) {womrat1=temp.doubleValue()/slavmax1;} 
 			 }
 			 
 			 if (slavmax1!=null && slavmax1 >= 20 && slavmax1!=0) 
 			 {
 				 Integer temp = add(new Integer[]{boy1, boy4, boy5});
-				 if (temp!=null) {boyrat1=temp.doubleValue()/slavmax1.doubleValue();}
+				 if (temp!=null) {boyrat1=temp.doubleValue()/slavmax1;}
 			 }
 			 
 			 if (slavmax1!=null && slavmax1 >= 20 && slavmax1!=0) 
 			 {
 				 Integer temp = add(new Integer[]{girl1, girl4,girl5});
-			 	 if(temp!=null) {girlrat1=temp.doubleValue()/slavmax1.doubleValue();}
+			 	 if(temp!=null) {girlrat1=temp.doubleValue()/slavmax1;}
 			 }
 		
 		 //Set more Defaults
@@ -2458,8 +2458,8 @@ public class VoyagesCalculation {
 		   adult6=defVal(adult6, 0);
 		 }
 		 
-		 adlt3imp = addD(new Integer[]{men3,women3,adult3,men6,women6,adult6});
-		 chil3imp = addD(new Integer[]{boy3,girl3,child3,infant3,boy6,girl6,child6});
+		 adlt3imp = add(new Integer[]{men3,women3,adult3,men6,women6,adult6});
+		 chil3imp = add(new Integer[]{boy3,girl3,child3,infant3,boy6,girl6,child6});
 		 
 		 if(
 				 (male3 != null && male3 >= 1) || 
@@ -2475,30 +2475,30 @@ public class VoyagesCalculation {
 		 }
 
 			
-			 male3imp = addD(new Integer[]{male3,male6});
-			 feml3imp = addD(new Integer[]{female3,female6});
+			 male3imp = add(new Integer[]{male3,male6});
+			 feml3imp = add(new Integer[]{female3,female6});
 			 
-		     if (male3imp==null) {male3imp = addD(new Integer[]{men3,boy3,men6,boy6});}
-		     if (feml3imp==null) {feml3imp = addD(new Integer[]{women3,girl3,women6,girl6});}
+		     if (male3imp==null) {male3imp = add(new Integer[]{men3,boy3,men6,boy6});}
+		     if (feml3imp==null) {feml3imp = add(new Integer[]{women3,girl3,women6,girl6});}
 
 
-		     adlt3imp=(eq(adlt3imp, 0d) ? null : adlt3imp);
-		     chil3imp=(eq(chil3imp, 0d) ? null : chil3imp);
-		     male3imp=(eq(male3imp, 0d) ? null : male3imp);
-		     feml3imp=(eq(feml3imp, 0d) ? null : feml3imp);
+		     adlt3imp=(eq(adlt3imp, 0) ? null : adlt3imp);
+		     chil3imp=(eq(chil3imp, 0) ? null : chil3imp);
+		     male3imp=(eq(male3imp, 0) ? null : male3imp);
+		     feml3imp=(eq(feml3imp, 0) ? null : feml3imp);
 
-		     if(gte(slaarriv, 1) && adlt3imp==null && eq(chil3imp, slaarriv.doubleValue())) {adlt3imp = 0d;}
-		     if(gte(slaarriv, 1) && chil3imp==null && eq(adlt3imp, slaarriv.doubleValue())) {chil3imp = 0d;}
-		     if(gte(slaarriv, 1) && male3imp==null && eq(feml3imp, slaarriv.doubleValue())) {male3imp = 0d;}
-		     if(gte(slaarriv, 1) && feml3imp==null && eq(male3imp, slaarriv.doubleValue())) {feml3imp = 0d;}
+		     if(gte(slaarriv, 1) && adlt3imp==null && eq(chil3imp, slaarriv)) {adlt3imp = 0;}
+		     if(gte(slaarriv, 1) && chil3imp==null && eq(adlt3imp, slaarriv)) {chil3imp = 0;}
+		     if(gte(slaarriv, 1) && male3imp==null && eq(feml3imp, slaarriv)) {male3imp = 0;}
+		     if(gte(slaarriv, 1) && feml3imp==null && eq(male3imp, slaarriv)) {feml3imp = 0;}
 
 
 
 			 
 			 
 
-			 slavema3 = add(new Double[]{adlt3imp,chil3imp});
-			 slavemx3 = add(new Double[]{male3imp,feml3imp});
+			 slavema3 = addD(new Integer[]{adlt3imp,chil3imp});
+			 slavemx3 = addD(new Integer[]{male3imp,feml3imp});
 			 slavmax3=addD(new Integer[]{men3,women3,boy3,girl3,men6,women6,boy6,girl6});
 			 
 
@@ -2564,9 +2564,9 @@ public class VoyagesCalculation {
 			 if(malrat3!=null && malrat3 >= 0) {malrat7=malrat3;}
 			 if(chilrat3!=null && chilrat3 >= 0) {chilrat7=chilrat3;}
 
-			 if (slavema3==null && slavema1!=null && slavema1 >=20) {slavema7=slavema1.doubleValue();}
-			 if (slavemx3==null && slavemx1!=null && slavemx1 >=20) {slavemx7=slavemx1.doubleValue();}
-			 if (slavmax3==null && slavmax1!=null && slavmax1 >=20) {slavmax7=slavmax1.doubleValue();}
+			 if (slavema3==null && slavema1!=null && slavema1 >=20) {slavema7=slavema1;}
+			 if (slavemx3==null && slavemx1!=null && slavemx1 >=20) {slavemx7=slavemx1;}
+			 if (slavmax3==null && slavmax1!=null && slavmax1 >=20) {slavmax7=slavmax1;}
 			 if (slavmax3==null && slavmax1!=null && slavmax1 >= 20) {men7=add(new Integer[]{men1+men4,men5});}
 			 if (slavmax3==null && slavmax1!=null && slavmax1 >= 20) {women7=add(new Integer[]{women1,women4,women5});}
 			 if (slavmax3==null && slavmax1!=null && slavmax1 >= 20) {boy7=add(new Integer[]{boy1,boy4,boy5});}
@@ -2629,15 +2629,15 @@ public class VoyagesCalculation {
 		 
 		 //Save back to voyage object
 		 voyage.setAdlt1imp(adlt1imp); 
-		 voyage.setChil1imp((chil1imp==null ? null : round(chil1imp.doubleValue(), 6)));
-		 voyage.setMale1imp((male1imp==null ? null : round(male1imp.doubleValue(), 6)));
-		 voyage.setFeml1imp((feml1imp==null ? null : round(feml1imp.doubleValue(), 6)));
+		 voyage.setChil1imp((chil1imp==null ? null : chil1imp));
+		 voyage.setMale1imp((male1imp==null ? null : male1imp));
+		 voyage.setFeml1imp((feml1imp==null ? null : feml1imp));
 		 voyage.setAdlt2imp(adlt2imp);
 		 voyage.setChil2imp(chil2imp);
 		 voyage.setMale2imp(male2imp);
 		 voyage.setFeml2imp(feml2imp);
-		 voyage.setSlavema1((slavema1==null ? null : round(slavema1.doubleValue(), 6)));
-		 voyage.setSlavemx1((slavemx1==null ? null : round(slavemx1.doubleValue(), 6)));
+		 voyage.setSlavema1((slavema1==null ? null : round(slavema1, 6)));
+		 voyage.setSlavemx1((slavemx1==null ? null : round(slavemx1, 6)));
 		 voyage.setSlavmax1(slavmax1);
 		 voyage.setChilrat1(round(chilrat1,6));
 		 voyage.setMalrat1(round(malrat1,6));  
@@ -2645,10 +2645,10 @@ public class VoyagesCalculation {
 		 voyage.setWomrat1(round(womrat1,6));
 		 voyage.setBoyrat1(round(boyrat1,6));
 		 voyage.setGirlrat1(round(girlrat1,6));
-		 voyage.setAdlt3imp(round(adlt3imp, 6));
-		 voyage.setChil3imp(round(chil3imp, 6));
-		 voyage.setMale3imp(round(male3imp, 6));
-		 voyage.setFeml3imp(round(feml3imp, 6));
+		 voyage.setAdlt3imp(adlt3imp);
+		 voyage.setChil3imp(chil3imp);
+		 voyage.setMale3imp(male3imp);
+		 voyage.setFeml3imp(feml3imp);
 		 voyage.setSlavema3(round(slavema3, 6));
 		 voyage.setSlavemx3(round(slavemx3, 6));
 		 voyage.setSlavmax3((slavmax3==null ? null : slavmax3.intValue()));

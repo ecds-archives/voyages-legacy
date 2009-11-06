@@ -11,9 +11,11 @@ import java.util.Set;
 
 import javax.faces.model.SelectItem;
 
+import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 
 import edu.emory.library.tast.AppConfig;
 import edu.emory.library.tast.admin.VoyageBean;
@@ -338,14 +340,19 @@ public class AdminSubmissionBean {
 						lastCol += "/Rejected";
 					}
 				}
+				
+				//Use for display in request list
+				Integer adminVId = getIdForList(submission.getId());
+				String adminVId_str = (adminVId==null ? "New voyage - ID not yet assigned" : adminVId.toString());
+				
 				if (!this.authenticateduser.isEditor()) {
 					l.add(new GridRow(REQUEST_NEW_PREFIX + submission.getId(), new String[] { "New voyage request",
-						submission.getUser().getUserName(), formatter.format(submission.getTime()), "New voyage - ID not yet assigned",
+						submission.getUser().getUserName(), formatter.format(submission.getTime()), adminVId_str,
 						this.getEditors(submission), this.reviewedByEditor(submission, null) ? "Yes" + this.infoString(submission) : "No",
 						submission.getEditorVoyage() != null ? "Yes" : "No", lastCol }));
 				} else {
 					l.add(new GridRow(REQUEST_NEW_PREFIX + submission.getId(), new String[] { "New voyage request",
-						submission.getUser().getUserName(), formatter.format(submission.getTime()), "New voyage - ID not yet assigned",
+						submission.getUser().getUserName(), formatter.format(submission.getTime()), adminVId_str,
 						this.reviewedByEditor(submission, this.authenticateduser) ? "Yes" : "No", 
 						this.getSubmissionEditor(submission, this.authenticateduser).isFinished() ? "Finished" : "Not finished", lastCol }));
 				}
@@ -900,8 +907,16 @@ public class AdminSubmissionBean {
 		return applier.getRowsSlave();
 	}
 	
+	public Row[] getRowsSlave2() {
+		return applier.getRowsSlave2();
+	}
+	
 	public Column[] getColumnsSlave() {
 		return applier.getColumnsSlave();
+	}
+	
+	public Column[] getColumnsSlave2() {
+		return applier.getColumnsSlave2();
 	}
 	
 	public void setValuesSlave(Values values) {
@@ -912,8 +927,22 @@ public class AdminSubmissionBean {
 		return this.applier.getValuesSlave();
 	}
 	
+	
+	public void setValuesSlave2(Values values) {
+		this.applier.setValuesSlave2(values);
+	}
+	
+	public Values getValuesSlave2() {
+		return this.applier.getValuesSlave2();
+	}
+	
+	
 	public RowGroup[] getRowGroupsSlave() {
 		return applier.getRowGroupsSlave();
+	}
+	
+	public RowGroup[] getRowGroupsSlave2() {
+		return applier.getRowGroupsSlave2();
 	}
 	
 	public String logoutOnly() {
@@ -954,4 +983,44 @@ public class AdminSubmissionBean {
 		
 		return q;	
 	}
+	
+	
+	
+	//look up voyageid assigned by Admin based on submisisonId
+	public Integer getIdForList(Long subId)
+	{
+		//There should be a better way of doing this!!!
+		Session sess = HibernateConn.getSession(); 
+		Transaction	transaction = sess.beginTransaction();
+	
+		//Link to new table
+		String Q = " FROM SubmissionNew WHERE submission_id= " + subId;
+		Query query = sess.createQuery(Q);
+		List voyIdList = query.list();
+		
+		if (voyIdList==null || voyIdList.size()==0) {return null;}
+		
+		SubmissionNew sn = (SubmissionNew) voyIdList.get(0);
+		
+		if(sn==null || sn.getEditorVoyage()==null) {return null;}
+		
+		Long id = sn.getEditorVoyage().getId();
+		
+		if(id==null) {return null;}
+		
+		//Get Edited voyage -> voyage -> voyageid
+		EditedVoyage ev = EditedVoyage.loadById(sess, id);
+		Voyage v = ev.getVoyage();
+		
+		if(v==null) {return null;}
+		
+		Integer ret = v.getVoyageid();
+		
+		        
+		transaction.commit();
+		sess.close();
+		
+		return ret;
+	}
+	
 }

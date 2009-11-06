@@ -17,20 +17,12 @@
 <f:view>
 <h:form id="main">
 	<%@ include file="../top-logo-bar.jsp" %>
-	<table cellpadding="0" cellspacing="0">
-		<tr>
-			<td class="step-indicator-left">Type of contribution</td>
-			<td class="step-indicator-middle">Your voyage information</td>
-			<td class="step-indicator-active-middle">Your sources</td>
-			<td class="step-indicator-middle">Verify contribution</td>
-			<td class="step-indicator-right">Finish</td>
-		</tr>
-	</table>
+	<%@ include file="submission-top-bar.jsp" %>
 	
 	<br>
 	
-	<h1>Specify sources for your submission</h1>
-	
+	<h1><h:outputText value="Specify sources for your submission" rendered="#{SubmissionBean.submissionType==1}"/></h1>
+	<h1><h:outputText value="Specify additional sources" rendered="#{SubmissionBean.submissionType!=1}"/></h1>	
 	<br>
 	
 	<table>
@@ -53,7 +45,7 @@
 	</t:htmlTag>
 	<t:htmlTag value="tr">
 		<t:htmlTag value="td">
-			<h:commandButton style="width: 180px;" value="Add other type of source" action="#{SourcesBean.otherSource}"/>
+			<h:commandButton style="width: 180px;" value="Other type of source" action="#{SourcesBean.otherSource}"/>
 		</t:htmlTag>
 	</t:htmlTag>
 	</h:panelGroup>
@@ -177,7 +169,7 @@
 						<t:htmlTag value="td"><h:inputText style="width: 30px;" value="#{SourcesBean.newOther.pageOrFolio}"/></t:htmlTag>
 					</t:htmlTag>
 					<t:htmlTag value="tr">
-						<t:htmlTag value="td"><h:outputText value="Information about source"/></t:htmlTag>
+						<t:htmlTag value="td" style="width: 350px;"><h:outputText value="Information about source (for example, URL for an electronic resource)"/></t:htmlTag>						
 						<t:htmlTag value="td"><h:inputTextarea style="width: 350px;" value="#{SourcesBean.newOther.note}" /></t:htmlTag>
 					</t:htmlTag>
 					<t:htmlTag value="tr">
@@ -234,7 +226,7 @@
 	<t:htmlTag value="div" rendered="#{SourcesBean.newSourceType==-1}">
 		<f:verbatim>
 		
-				<h2>Contributed sources</h2>
+		<!-- 		<h2>Contributed sources</h2> -->
 				</f:verbatim>
 				<s:grid id="voyges" 
 					columns="#{SourcesBean.columns}"

@@ -10,6 +10,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import edu.emory.library.tast.dm.attributes.Attribute;
+
 public class SubmissionAttributes {
 
 	private static SubmissionAttributes instance = null;
