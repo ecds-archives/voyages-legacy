@@ -143,11 +143,11 @@ public class TimelineBean {
 				TastResource.getText("components_timeline_stat_averageguns"),
 				"{0,number,#,###,###.0}"));
 		
-		this.availableStats.add(new TimelineVariable(
-				new FunctionAttribute("AVG", new Attribute[] {new FunctionAttribute("coalesce_to_0_100", new Attribute[] {Voyage.getAttribute("resistance")})}),
-				TastResource.getText("components_timeline_stat_rateresistance"),
-				"{0,number,#,###,##0.0}%",
-				true));
+		//this.availableStats.add(new TimelineVariable(
+			//	new FunctionAttribute("AVG", new Attribute[] {new FunctionAttribute("coalesce_to_0_100", new Attribute[] {Voyage.getAttribute("resistance")})}),
+				//TastResource.getText("components_timeline_stat_rateresistance"),
+				//"{0,number,#,###,##0.0}%",
+				//true));
 
 		this.availableStats.add(new TimelineVariable(
 				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("voy1imp")}),
@@ -269,7 +269,7 @@ public class TimelineBean {
 				true));
 		
 		this.availableStats.add(new TimelineVariable(
-				new FunctionAttribute("SUM", new Attribute[] {Voyage.getAttribute("resistance")}),
+				new FunctionAttribute("COUNT", new Attribute[] {Voyage.getAttribute("resistance")}),
 				TastResource.getText("components_timeline_stat_resistance"),
 				"{0,number,#,###,##0.0}",
 				true));
