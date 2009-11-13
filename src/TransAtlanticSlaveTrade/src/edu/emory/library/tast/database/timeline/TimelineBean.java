@@ -21,9 +21,11 @@ import edu.emory.library.tast.database.query.SearchBean;
 import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.db.TastDbConditions;
 import edu.emory.library.tast.db.TastDbQuery;
+import edu.emory.library.tast.dm.Resistance;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
+import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
 
 /**
  * Bean for time line.
@@ -143,11 +145,11 @@ public class TimelineBean {
 				TastResource.getText("components_timeline_stat_averageguns"),
 				"{0,number,#,###,###.0}"));
 		
-		//this.availableStats.add(new TimelineVariable(
-			//	new FunctionAttribute("AVG", new Attribute[] {new FunctionAttribute("coalesce_to_0_100", new Attribute[] {Voyage.getAttribute("resistance")})}),
-				//TastResource.getText("components_timeline_stat_rateresistance"),
-				//"{0,number,#,###,##0.0}%",
-				//true));
+		this.availableStats.add(new TimelineVariable(
+				new FunctionAttribute("AVG", new Attribute[] {new FunctionAttribute("coalesce_to_0_100", new SequenceAttribute(new Attribute[] {Voyage.getAttribute("resistance"), Resistance.getAttribute("id")}))}),
+				TastResource.getText("components_timeline_stat_rateresistance"),
+				"{0,number,#,###,##0.0}%",
+				true));
 
 		this.availableStats.add(new TimelineVariable(
 				new FunctionAttribute("AVG", new Attribute[] {Voyage.getAttribute("voy1imp")}),
@@ -268,11 +270,11 @@ public class TimelineBean {
 				"{0,number,#,###,##0.0}%",
 				true));
 		
-		this.availableStats.add(new TimelineVariable(
-				new FunctionAttribute("COUNT", new Attribute[] {Voyage.getAttribute("resistance")}),
+		/*this.availableStats.add(new TimelineVariable(
+				new FunctionAttribute("SUM", new Attribute[] {Voyage.getAttribute("resistance")}),
 				TastResource.getText("components_timeline_stat_resistance"),
 				"{0,number,#,###,##0.0}",
-				true));
+				true));*/
 		
 		resetToDefault();
 

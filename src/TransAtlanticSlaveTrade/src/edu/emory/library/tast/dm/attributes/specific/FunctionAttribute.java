@@ -82,7 +82,7 @@ public class FunctionAttribute extends Attribute {
 		for (int i = 0; i < this.attributes.length; i++)
 		{
 			if (i > 0) buffer.append(", ");
-			buffer.append(attributes[i].getSQLReference(masterTable, tablesIndexes, null, sqlFrom));
+			buffer.append(attributes[i].getSQLReference(masterTable, tablesIndexes, existingJoins, sqlFrom));
 		}
 		buffer.append(")");
 		return buffer.toString();	
