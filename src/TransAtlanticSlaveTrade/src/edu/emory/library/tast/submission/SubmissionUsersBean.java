@@ -145,6 +145,9 @@ public class SubmissionUsersBean {
 			this.errorMessage = "";
 			if (user.isAdmin() || user.isEditor() || user.isChiefEditor()) {
 				this.adminSubmissionBean.setAuthenticateduser(user);
+				if (this.adminSubmissionBean.getAuthenticateduser().isEditor()){
+					this.adminSubmissionBean.setSelectedTab("requests");
+				}
 				return "admin-logged-in";
 			} else {
 				this.submissionBean.setAuthenticatedUser(user);

@@ -28,7 +28,7 @@
 	
 	<t:htmlTag rendered="#{!AdminSubmissionBean.isAdmin}" value="div">
 		<s:tabBar id="bar" selectedTabId="#{AdminSubmissionBean.selectedTab}" onTabChanged="#{AdminSubmissionBean.onTabChanged}">
-			<s:tab text="Voyages list" tabId="voyages" />
+
 			<s:tab text="Requests list" tabId="requests" />			
 		</s:tabBar>
 	</t:htmlTag>

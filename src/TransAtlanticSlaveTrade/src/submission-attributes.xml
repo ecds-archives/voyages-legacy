@@ -425,7 +425,7 @@
 			<attribute name="datarr39"/>
 		</attributes>
 	</submission-attributes>	
-    <submission-attributes name="datedepam" group="Voyage dates" editable="Y" type="date" userLabel="Date that ship left on return voyage">
+    <submission-attributes name="datedepam" group="Voyage dates &lt;div class=&quot;row-description&quot; &gt;Enter partial information (year only or month and year only) when full date unknown.&lt;/div&gt;" editable="Y" type="date" userLabel="Date that ship left on return voyage">
 		<attributes>
 			<attribute name="ddepamc"/>
 			<attribute name="ddepamb"/>
