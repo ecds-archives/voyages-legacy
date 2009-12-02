@@ -110,7 +110,7 @@ String dlUrl = AppConfig.getConfiguration().getString(AppConfig.DOWNLOADS_URL);
 					<h3>Downloads:</h3>
 					<ul>
 						<li>2008, SPSS: <a href="<%=dlUrl%>/tastdb-2008.sav">tastdb-2008.sav</a></li>
-						<li>2008, comma-delimited: <a href="<%=dlUrl%>/tastdb-2008.csv">tastdb-2008.cvs</a></li>
+						<li>2008, comma-delimited: <a href="<%=dlUrl%>/tastdb-2008.csv">tastdb-2008.csv</a></li>
 						<li>2008, dBase: <a href="<%=dlUrl%>/tastdb-2008.dbf">tastdb-2008.dbf</a></li>
 					</ul>
 						
