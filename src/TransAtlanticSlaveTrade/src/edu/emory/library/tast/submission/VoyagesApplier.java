@@ -20,7 +20,9 @@ import edu.emory.library.tast.common.grideditor.Value;
 import edu.emory.library.tast.common.grideditor.Values;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxDoubleAdapter;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxIntegerAdapter;
+import edu.emory.library.tast.common.grideditor.textbox.TextboxIntegerValue;
 import edu.emory.library.tast.database.SourceInformationLookup;
+import edu.emory.library.tast.database.query.Query;
 import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.db.TastDbConditions;
 import edu.emory.library.tast.db.TastDbQuery;
@@ -1487,7 +1489,7 @@ public class VoyagesApplier
 
 		if (mergedVoyage == null)
 		{
-			t.commit();
+			t.rollback();
 			session.close();
 			return null;
 		}
@@ -1588,6 +1590,10 @@ public class VoyagesApplier
 		
 		this.valuesSlave2 = null;
 
+		//Update related voyages when admn applies changes
+		TextboxIntegerValue voyId = (TextboxIntegerValue) newValues.get("voyageid");
+		updateVoyageId(session, lSubmission.getId(), voyId.getInteger());
+		
 		t.commit();
 		session.close();
 		return "back";
@@ -1603,18 +1609,35 @@ public class VoyagesApplier
 		Submission lSubmisssion = Submission.loadById(session,
 				this.submissionId);
 		Map newValues = vals.getColumnValues(DECIDED_VOYAGE);
+		
+		
+		//Editor updates the voyageid with the id assigned by admin user
+		if (this.adminBean.getAuthenticateduser().isEditor() )
+		{
+			try {
+				Voyage v = getAdminVoyage(session, this.submissionId);
+				Integer voyid = v.getVoyageid();
+				newValues.put("voyageid", new TextboxIntegerValue(voyid));
+			} catch (Exception e) {}
+						
+		}
+			
+
 
 		if (updateMergedVoyage(session, lSubmisssion, newValues) == null)
 		{
-			t.commit();
+			t.rollback();
 			session.close();
 			return null;
 		}
 
-		//#####TEST#####
-		System.out.println("SUBMISSION ID:" + lSubmisssion.getId());
-		System.out.println("VOYAGEID:" + newValues.get("voyageid"));
-		//##############
+		if (this.adminBean.getAuthenticateduser().isAdmin() || this.adminBean.getAuthenticateduser().isChiefEditor())
+		{
+			TextboxIntegerValue voyageid= (TextboxIntegerValue)newValues.get("voyageid");
+			Integer voyId = voyageid.getInteger();
+			//Admin updates the other related versions of the submission (contrib, editor) with the selected voyageid
+			updateVoyageId(session, this.submissionId, voyId);
+		}
 		
 		
 		t.commit();
@@ -1708,23 +1731,66 @@ public class VoyagesApplier
 			if(vals!=null){
 			for (int j = 0; j < vals.length; j++)
 			{
-				vNew
-						.setAttrValue(attrs[i].getAttribute()[j].getName(),
-								vals[j]);
+				vNew.setAttrValue(attrs[i].getAttribute()[j].getName(), vals[j]);
 			}
 			}
 			if (!StringUtils.isNullOrEmpty(val.getNote()))
 			{
 				notes.put(attrs[i].getName(), val.getNote());
 			}
-			if (attrs[i].getName().equals("voyageid")
-					&& vNew.getVoyageid() == null)
+			
+			//Validate voyageid
+			if (this.adminBean.getAuthenticateduser().isAdmin() && attrs[i].getName().equals("voyageid"))
 			{
-				wasError = true;
-				val
-						.setErrorMessage("This field is required and has to be a number");
+				TextboxIntegerValue voyId = (TextboxIntegerValue) newValues.get("voyageid");
+				
+				if (submission instanceof SubmissionNew)
+				{
+					//Check for published voyages
+					Voyage v1 = Voyage.loadByVoyageId(session, voyId.getIntValue());
+										
+					if(v1!=null)
+					{
+						wasError = true;
+						val.setErrorMessage("This value has already been used by another voyage");
+					}
+					
+					//Check for other new voyages that have not been published
+					String Q = " FROM Voyage WHERE voyageid = " + voyId.getIntValue() +  " AND revision != 1";
+					org.hibernate.Query query = session.createQuery(Q);
+					List voyIdList = query.list();
+					
+					for(int v=0; v < voyIdList.size(); v++)
+					{
+						Voyage voy = (Voyage) voyIdList.get(v);
+						
+						Q = " FROM EditedVoyage where voyage_iid = " + voy.getIid();
+						org.hibernate.Query query2 = session.createQuery(Q);
+						List editList = query2.list();
+						EditedVoyage ev = (EditedVoyage) editList.get(0);
+						Long id = ev.getId();
+						
+						Q = " FROM SubmissionNew where new_edited_voyage_id = " + id + " OR editor_edited_voyage_id = " + id ;
+						org.hibernate.Query query3 = session.createQuery(Q);
+						List newList = query3.list();
+						SubmissionNew sn = (SubmissionNew) newList.get(0);
+						Long subId = sn.getId();
+						
+						if(!this.submissionId.equals(subId))
+						{
+							wasError = true;
+							val.setErrorMessage("This value has already been used by another voyage");
+						}
+						
+					}
+					
+					
+					
+				}
+									
 			}
 		}
+		
 		for (int i = 0; i < SLAVE_CHAR_COLS.length; i++)
 		{
 			for (int j = 0; j < SLAVE_CHAR_ROWS.length; j++)
@@ -1900,6 +1966,80 @@ public class VoyagesApplier
 			fillInValues();
 		}
 		return this.valuesSlave2;
+	}
+	
+	
+	public void updateVoyageId(Session sess, Long sub, Integer voyid)
+	{
+		Voyage v = null;
+		
+		try {
+			v = Voyage.loadById(sess, ((SubmissionNew) Submission.loadById(sess, sub)).getNewVoyage().getVoyage().getIid());
+		} catch (Exception e) {}
+		
+		if (v == null) {
+			try {
+				v = Voyage.loadById(sess, ((SubmissionEdit) Submission.loadById(sess, sub)).getEditorVoyage().getVoyage().getIid());
+			} catch (Exception e) {}
+		}
+		
+		if (v == null) {
+			try {
+				v = Voyage.loadById(sess, ((SubmissionMerge) Submission.loadById(sess, sub)).getProposedVoyage().getVoyage().getIid());
+			} catch (Exception e) {}
+		}
+		
+		//Set voyageid for contrib user
+		v.setVoyageid(voyid);
+		
+		
+		Set se = Submission.loadById(sess, sub).getSubmissionEditors();
+		Object[] eds = se.toArray();
+		
+		for(int i = 0; i < eds.length; i++)
+		{
+			SubmissionEditor e = (SubmissionEditor) eds[i];
+		
+		
+			if(e==null || e.getEditedVoyage()==null || e.getEditedVoyage().getVoyage() == null) {return;}
+		
+			Long id = e.getEditedVoyage().getVoyage().getIid();
+			
+			v = Voyage.loadById(sess, id);
+		
+			if(v==null) {return;}
+		
+		    //Set voyageid for editors
+			v.setVoyageid(voyid);
+		}
+	
+	
+	
+	}
+	
+	
+	public Voyage getAdminVoyage(Session sess, Long sub)
+	{
+		Voyage v = null;
+		
+		try {
+			v = Voyage.loadById(sess, ((SubmissionNew) Submission.loadById(sess, sub)).getEditorVoyage().getVoyage().getIid());
+		} catch (Exception e) {}
+		
+		if (v == null) {
+			try {
+				v = Voyage.loadById(sess, ((SubmissionEdit) Submission.loadById(sess, sub)).getEditorVoyage().getVoyage().getIid());
+			} catch (Exception e) {}
+		}
+		
+		if (v == null) {
+			try {
+				v = Voyage.loadById(sess, ((SubmissionMerge) Submission.loadById(sess, sub)).getEditorVoyage().getVoyage().getIid());
+			} catch (Exception e) {}
+		}
+		
+		return v;
+		
 	}
 	
 

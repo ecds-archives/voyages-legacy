@@ -342,7 +342,7 @@ public class AdminSubmissionBean {
 				}
 				
 				//Use for display in request list
-				Integer adminVId = getIdForList(submission.getId());
+				Integer adminVId = getIdForList(session,  submission.getId());
 				String adminVId_str = (adminVId==null ? "New voyage - ID not yet assigned" : adminVId.toString());
 				Voyage voyage = new Voyage();
 				voyage = Voyage.loadById(session, ((SubmissionNew) submission)
@@ -998,40 +998,17 @@ public class AdminSubmissionBean {
 	
 	
 	//look up voyageid assigned by Admin based on submisisonId
-	public Integer getIdForList(Long subId)
+	public Integer getIdForList(Session sess, Long subId)
 	{
-		//There should be a better way of doing this!!!
-		Session sess = HibernateConn.getSession(); 
-		Transaction	transaction = sess.beginTransaction();
-	
-		//Link to new table
-		String Q = " FROM SubmissionNew WHERE submission_id= " + subId;
-		Query query = sess.createQuery(Q);
-		List voyIdList = query.list();
+		//get voyageId for new submission and return result
 		
-		if (voyIdList==null || voyIdList.size()==0) {return null;}
+		Voyage v = null;
 		
-		SubmissionNew sn = (SubmissionNew) voyIdList.get(0);
-		
-		if(sn==null || sn.getEditorVoyage()==null) {return null;}
-		
-		Long id = sn.getEditorVoyage().getId();
-		
-		if(id==null) {return null;}
-		
-		//Get Edited voyage -> voyage -> voyageid
-		EditedVoyage ev = EditedVoyage.loadById(sess, id);
-		Voyage v = ev.getVoyage();
-		
-		if(v==null) {return null;}
-		
-		Integer ret = v.getVoyageid();
-		
-		        
-		transaction.commit();
-		sess.close();
-		
-		return ret;
+		try {
+			v = Voyage.loadById(sess, ((SubmissionNew) Submission.loadById(sess, subId)).getEditorVoyage().getVoyage().getIid());
+		} catch (Exception e) {return null;}
+				
+		return v.getVoyageid();
 	}
 	
 }
