@@ -1,17 +1,22 @@
 import psycopg2
 import psycopg2.extras 
 import time
+import sys
 
 
 
 
 ####################CONFIG####################
+if len(sys.argv) !=  6:
+	print "USAGE: python update.py host dbname user pass chunk-size"
+	exit();
+
 conf={}
-conf["host"]="" 
-conf["dbname"]="" 
-conf["user"] ="" 
-conf["pass"] ="" 
-conf["chunk"]=
+conf["host"]=sys.argv[1] 
+conf["dbname"]=sys.argv[2] 
+conf["user"] =sys.argv[3] 
+conf["pass"] =sys.argv[4] 
+conf["chunk"]=int(sys.argv[5])
 ##############################################
 
 
@@ -24,8 +29,10 @@ def makeSet(cols, row):
 		type=c['type']
 		col=c['col']
 		val=row[col]
+		val=str(val)
+		val=val.replace("'", "''")
 
-		if val==None:
+		if val=="None":
 			ret+=col + " = null ,"
 		else:
 			ret+=col + " = " + "'"  + str(val) + "',"
@@ -36,16 +43,19 @@ def makeSet(cols, row):
 #list of columns
 columns=[]
 
+
+print "****************CONFIG***************"
+print "Host: %(host)s\nDBName: %(dbname)s\nUser: %(user)s\nPass:*****\nChunk Size: %(chunk)d" % conf
+print "*************************************"
+time.sleep(20)
+
+
 try:
        conn = psycopg2.connect("dbname=%(dbname)s user=%(user)s host=%(host)s password=%(pass)s" % conf)
 except:
        print "I am unable to connect to the database"
 
 print "Connected!"
-print "****************CONFIG***************"
-print "Host: %(host)s\nDBName: %(dbname)s\nUser: %(user)s\nPass:*****\nChunk Size: %(chunk)d" % conf
-print "*************************************"
-time.sleep(20)
 
 cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor) # main cursor
 cur2 = conn.cursor(cursor_factory=psycopg2.extras.DictCursor) # cursor for sub queries
@@ -75,6 +85,9 @@ while (len(rows) >0):
 		cur2.execute(Q)
 		print "Updated voyageid: "  + str(voyid)
 
+	
+	conn.commit()
+	print "COMMIT"
 	rows = cur.fetchmany(conf["chunk"]) #get more records until none are remaining
  
 #clean up connections
@@ -82,6 +95,3 @@ cur2.close()
 cur.close ()
 conn.commit()
 conn.close ()
-
-
-
