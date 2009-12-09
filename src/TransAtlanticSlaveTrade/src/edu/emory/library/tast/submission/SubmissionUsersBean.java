@@ -374,7 +374,7 @@ public class SubmissionUsersBean {
 			return null;
 		}
 		
-		if(user.getId() == 1){ //DON'T DELETE THE ADMIN USER!!
+		if(user.isAdmin() || user.isChiefEditor()){ //DON'T DELETE THE ADMIN USER!!
 			this.checkedUserErrorMessage = "admin user cannot be deleted.";
 			return null;
 		}
