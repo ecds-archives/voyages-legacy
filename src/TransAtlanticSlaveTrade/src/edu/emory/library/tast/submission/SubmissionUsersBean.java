@@ -367,11 +367,20 @@ public class SubmissionUsersBean {
 	public String deleteUser() {
 		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
-		User user = User.loadById(session, this.checkedUserId);
-		if (user.getSubmissions().size() != 0) {
+		User user = User.loadById(session, this.checkedUserId); //get the user
+		
+		if (user.getSubmissions().size() != 0) { //Do not delete if user has submissions
 			this.checkedUserErrorMessage = "Cannot delete user who has submitted some requests.";
 			return null;
 		}
+		
+		if(user.getId() == 1){ //DON'T DELETE THE ADMIN USER!!
+			this.checkedUserErrorMessage = "admin user cannot be deleted.";
+			return null;
+		}
+		
+		
+		//Do the delete
 		session.delete(user);
 		t.commit();
 		session.close();

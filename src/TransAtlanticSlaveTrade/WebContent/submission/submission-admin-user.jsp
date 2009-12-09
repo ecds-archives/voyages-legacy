@@ -78,7 +78,7 @@
 			</tr>
 			<tr>
 				<td></td>
-				<td><h:outputText rendered="#{SubmissionUsersBean.checkedUserErrorMessage != null}" value="#{SubmissionUsersBean.checkedUserErrorMessage}"/></td>
+				<td style="color:red"><h:outputText rendered="#{SubmissionUsersBean.checkedUserErrorMessage != null}" value="#{SubmissionUsersBean.checkedUserErrorMessage}"/></td>
 			</tr>
 			<tr>
 				<td></td>
