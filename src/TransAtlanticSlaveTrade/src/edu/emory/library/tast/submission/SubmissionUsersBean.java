@@ -2,6 +2,7 @@ package edu.emory.library.tast.submission;
 
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import javax.faces.model.SelectItem;
@@ -369,8 +370,8 @@ public class SubmissionUsersBean {
 		Transaction t = session.beginTransaction();
 		User user = User.loadById(session, this.checkedUserId); //get the user
 		
-		if (user.getSubmissions().size() != 0) { //Do not delete if user has submissions
-			this.checkedUserErrorMessage = "Cannot delete user who has submitted some requests.";
+		if (countSubmissions(session, user.getId()) != 0) { //Do not delete if user has submissions
+			this.checkedUserErrorMessage = "Cannot delete user because they have submitted voyage(s).";
 			return null;
 		}
 		
@@ -724,5 +725,16 @@ public class SubmissionUsersBean {
 	public void setCheckedChiefEditor(Boolean checkedChiefEditor) {
 		this.checkedChiefEditor = checkedChiefEditor;
 	}
-	
+
+	public int countSubmissions(Session sess, Long userid){
+		String Q = "select count(S.id) as C from Submission S where   S.user= " + userid;
+		
+		org.hibernate.Query query = sess.createQuery(Q);
+		List subList = query.list();
+		
+		Long count =  (Long) subList.get(0);
+	    
+	    
+	    return count.intValue();
+	}
 }
