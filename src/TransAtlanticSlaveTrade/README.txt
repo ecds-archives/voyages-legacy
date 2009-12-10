@@ -1,9 +1,9 @@
 This file contains the basic instructions for deploying the tast project.
 
 For excruciating detail see the following links:
-https://techknowhow.library.emory.edu/content/first-time-deployment-instructions
+https://techknowhow.library.emory.edu/slave-voyages-database/first-time-deployment-instructions
 OR
-https://techknowhow.library.emory.edu/content/instructions-build-and-deploy-voyages-project
+https://techknowhow.library.emory.edu/slave-voyages-database/instructions-build-and-deploy-voyages-project
 
 Sensitive information is keep there:
 https://spiderman.library.emory.edu/syswiki/index.php?title=Slave_Voyages_Info
