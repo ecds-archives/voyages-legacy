@@ -83,23 +83,6 @@
 		<br>
 		<br>
 
-		<h:commandButton value="Add reviewer"
-			rendered="#{AdminSubmissionBean.isChiefEditor && !AdminSubmissionBean.addingEditor}"
-			action="#{AdminSubmissionBean.addEditor}" />
-		<t:htmlTag value="div" rendered="#{AdminSubmissionBean.addingEditor}"
-			style="border: 2px solid #CCCCCC; width: 400px; padding: 5px;">
-			<h:selectOneMenu value="#{AdminSubmissionBean.newEditorUser}">
-				<f:selectItems value="#{SubmissionUsersBean.editorUsers}" />
-			</h:selectOneMenu>
-			<h:commandButton value="Add reviewer"
-				action="#{AdminSubmissionBean.applyAddEditor}" />
-			<h:commandButton value="Cancel"
-				action="#{AdminSubmissionBean.cancelAddEditor}" />
-		</t:htmlTag>
-
-		<br>
-		<br>
-
 		<t:htmlTag value="div"
 			rendered="#{!AdminSubmissionBean.isChiefEditor}">
 			<h2>3. Request status</h2>
@@ -112,6 +95,24 @@
 					</td>
 				</tr>
 			</table>
+		</t:htmlTag>
+
+		<br>
+		<br>
+		
+
+		<h:commandButton value="Add reviewer"
+			rendered="#{AdminSubmissionBean.isChiefEditor && !AdminSubmissionBean.addingEditor}"
+			action="#{AdminSubmissionBean.addEditor}" />
+		<t:htmlTag value="div" rendered="#{AdminSubmissionBean.addingEditor}"
+			style="border: 2px solid #CCCCCC; width: 400px; padding: 5px;">
+			<h:selectOneMenu value="#{AdminSubmissionBean.newEditorUser}">
+				<f:selectItems value="#{SubmissionUsersBean.editorUsers}" />
+			</h:selectOneMenu>
+			<h:commandButton value="Add reviewer"
+				action="#{AdminSubmissionBean.applyAddEditor}" />
+			<h:commandButton value="Cancel"
+				action="#{AdminSubmissionBean.cancelAddEditor}" />
 		</t:htmlTag>
 
 		<br>

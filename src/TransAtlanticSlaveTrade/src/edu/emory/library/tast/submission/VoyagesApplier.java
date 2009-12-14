@@ -10,6 +10,7 @@ import java.util.Set;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import edu.emory.library.tast.admin.VoyageBean;
 import edu.emory.library.tast.common.GridOpenRowEvent;
 import edu.emory.library.tast.common.grideditor.Column;
 import edu.emory.library.tast.common.grideditor.ColumnAction;
@@ -98,13 +99,13 @@ public class VoyagesApplier
 
 	public static final String CHANGED_VOYAGE_LABEL = "Suggested change";
 
-	public static final String NEW_VOYAGE_LABEL = "Suggested voyage";
+	public static final String NEW_VOYAGE_LABEL = "Contributor";
 
 	public static final String CORRECTED_VOYAGE_LABEL = "Approved voyage";
 
 	public static final String MERGE_VOYAGE_LABEL = "Voyage indicated to merge";
 
-	public static final String DECIDED_VOYAGE_LABEL = "Final decision";
+	public static final String DECIDED_VOYAGE_LABEL = "Reviewer";
 
 	public static final String DECIDED_VOYAGE = "decided";
 
@@ -740,6 +741,9 @@ public class VoyagesApplier
 
 	private Column[] getEditColumns(SubmissionEdit submission, boolean editor)
 	{
+		Session session = HibernateConn.getSession();
+		Transaction t = session.beginTransaction();
+
 		Column[] cols;
 		if (editor)
 		{
@@ -749,8 +753,15 @@ public class VoyagesApplier
 			cols = new Column[2 + this.editRequests.length
 					+ submission.getSubmissionEditors().size()];
 		}
-		cols[0] = new Column(ORYGINAL_VOYAGE, ORYGINAL_VOYAGE_LABEL, true,
-				DECIDED_VOYAGE, COPY_LABEL, false);
+//		EditedVoyage test =((SubmissionEdit) submission).getOldVoyage();
+//		Voyage test1 =test.getVoyage();
+//		long id = test1.getIid();
+
+		EditedVoyage eV = EditedVoyage.loadById(session, this.editRequests[0]);
+
+		cols[0] = new Column(ORYGINAL_VOYAGE, "VoyageID "
+				+ eV.getVoyage().getVoyageid(), true, DECIDED_VOYAGE,
+				COPY_LABEL, false);
 		int i;
 		for (i = 1; i <= this.editRequests.length; i++)
 		{
@@ -779,6 +790,8 @@ public class VoyagesApplier
 		}
 		cols[i++] = new Column(DECIDED_VOYAGE, DECIDED_VOYAGE_LABEL, false,
 				true);
+		t.commit();
+		session.close();
 		return cols;
 	}
 

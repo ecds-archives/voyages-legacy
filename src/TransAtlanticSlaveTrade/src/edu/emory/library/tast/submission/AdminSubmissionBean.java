@@ -351,7 +351,7 @@ public class AdminSubmissionBean {
 					l.add(new GridRow(REQUEST_NEW_PREFIX + submission.getId(), new String[] { "New voyage",
 						submission.getUser().getUserName(), formatter.format(submission.getTime()), adminVId_str,
 						this.getEditors(submission), this.reviewedByEditor(submission, null) ? "Yes" + this.infoString(submission) : "No",
-						submission.getEditorVoyage() != null ? "Yes" : "No", lastCol }));
+						 lastCol }));
 				} else {
 					l.add(new GridRow(REQUEST_NEW_PREFIX + submission.getId(), new String[] { "New request",
 						formatter.format(submission.getTime()), adminVId_str, voyage.getShipname(), voyage.getYearam()!=null ? voyage.getYearam().toString():"Not assigned yet",
@@ -383,7 +383,7 @@ public class AdminSubmissionBean {
 						submission.getUser().getUserName(), formatter.format(submission.getTime()),
 						submission.getOldVoyage().getVoyage().getVoyageid().toString(),
 						this.getEditors(submission), this.reviewedByEditor(submission, null) ? "Yes" + this.infoString(submission) : "No",
-						submission.getEditorVoyage() != null ? "Yes" : "No", lastCol }));
+						 lastCol }));
 				} else {
 					l.add(new GridRow(REQUEST_EDIT_PREFIX + submission.getId(), new String[] { "Edit request",
 						formatter.format(submission.getTime()), submission.getOldVoyage().getVoyage().getVoyageid().toString(),
@@ -434,7 +434,7 @@ public class AdminSubmissionBean {
 					l.add(new GridRow(REQUEST_MERGE_PREFIX + submission.getId(), new String[] { "Merge voyages",
 						submission.getUser().getUserName(), formatter.format(submission.getTime()), involvedStr,
 						this.getEditors(submission), this.reviewedByEditor(submission, null) ? "Yes" + this.infoString(submission) : "No",
-						submission.getEditorVoyage() != null ? "Yes" : "No", lastCol }));
+						 lastCol }));
 				} else {
 					
 					l.add(new GridRow(REQUEST_MERGE_PREFIX + submission.getId(), new String[] { "Merge request",
@@ -618,7 +618,7 @@ public class AdminSubmissionBean {
 					new GridColumn("Voyages ID"),
 					new GridColumn("Assigned reviewers"),
 					new GridColumn("Review completed"),
-					new GridColumn("Reviewed"), 
+//					new GridColumn("Reviewed"), 
 					new GridColumn("Status"),
 				};
 		}

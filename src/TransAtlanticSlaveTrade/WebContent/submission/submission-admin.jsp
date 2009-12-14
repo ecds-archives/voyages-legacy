@@ -68,41 +68,33 @@
 	
 	
 	</h:panelGroup>
-	
+	<br>
+	<br>
 	<h:panelGroup rendered="#{AdminSubmissionBean.requestsListSelected}">
-	
 		<f:verbatim>
-		<div value="div" style="margin-top: 10px; padding: 5px 10px 5px 10px; border: 1px solid #CCCCCC; background-color: #EEEEEE">
-			
+		<div value="div" style="margin-top: 10px;">
 			<table border="0" cellspacing="0" cellpadding="0">
 			<tr>
-
-				<td style="padding-right: 5px">Type of request</td>
 				<td style="padding-right: 10px">					
 					<f:verbatim>
 						<h:selectOneMenu value="#{AdminSubmissionBean.requestType}"><f:selectItems value="#{AdminSubmissionBean.requestTypes}"/></h:selectOneMenu>
 					</f:verbatim>
-				</td>
-				<td style="padding-right: 5px"></td>
-				
-				<td style="padding-right: 5px">Status of request</td>
+				</td>				
 				<td style="padding-right: 10px"><f:verbatim>
 						<h:selectOneMenu value="#{AdminSubmissionBean.requestStatus}">
-							<f:selectItem itemLabel="All requests" itemValue="1"/>
+							<f:selectItem itemLabel="Status: all" itemValue="1"/>
+							<f:selectItem itemLabel="Not yet assigned" itemValue="3"/>
 							<f:selectItem itemLabel="Under review" itemValue="2"/>
-							<f:selectItem itemLabel="Not reviewed, not solved" itemValue="3"/>
-							<f:selectItem itemLabel="Solved" itemValue="4"/>
+							<f:selectItem itemLabel="Review completed" itemValue="5"/>
+							<f:selectItem itemLabel="Final decision" itemValue="4"/>
 						</h:selectOneMenu></f:verbatim></td>
-				<td style="padding-right: 5px"><f:verbatim><h:commandButton value="Show" /></f:verbatim></td>
-				
+				<td style="padding-right: 5px"><f:verbatim><h:commandButton value="Show" /></f:verbatim></td>			
 			</tr>
 			</table>
 		</div>
 		<br>
 		</f:verbatim>
-		<div style="height: 500px; overflow: auto;">
-		
-		
+		<div style="height: 500px; overflow: auto;">	
 		<s:grid id="voyges" 
 			columns="#{AdminSubmissionBean.requestColumns}"
 			rows="#{AdminSubmissionBean.requestRows}" 
@@ -118,11 +110,10 @@
 	<h:panelGroup rendered="#{AdminSubmissionBean.usersListSelected}">
 	
 		<f:verbatim>
-		<div value="div" style="margin-top: 10px; padding: 5px 10px 5px 10px; border: 1px solid #CCCCCC; background-color: #EEEEEE">
+		<div value="div" style="margin-top: 10px; padding: 5px 10px 5px 10px;">
 			
 			<table border="0" cellspacing="0" cellpadding="0">
 			<tr>
-				<td style="padding-right: 10px">Show: </td>
 				<td style="padding-right: 5px"><f:verbatim><h:selectOneMenu value="#{SubmissionUsersBean.accountType}"><f:selectItems value="#{SubmissionUsersBean.accountTypes}"/></h:selectOneMenu></f:verbatim></td>
 				<td><f:verbatim><h:commandButton value="Refresh" action="#{SubmissionUsersBean.refresh}" /></f:verbatim></td>
 			</tr>
