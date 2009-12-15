@@ -741,9 +741,6 @@ public class VoyagesApplier
 
 	private Column[] getEditColumns(SubmissionEdit submission, boolean editor)
 	{
-		Session session = HibernateConn.getSession();
-		Transaction t = session.beginTransaction();
-
 		Column[] cols;
 		if (editor)
 		{
@@ -753,15 +750,14 @@ public class VoyagesApplier
 			cols = new Column[2 + this.editRequests.length
 					+ submission.getSubmissionEditors().size()];
 		}
-//		EditedVoyage test =((SubmissionEdit) submission).getOldVoyage();
-//		Voyage test1 =test.getVoyage();
-//		long id = test1.getIid();
-
-		EditedVoyage eV = EditedVoyage.loadById(session, this.editRequests[0]);
+		EditedVoyage eV =((SubmissionEdit) submission).getOldVoyage();
+		Voyage v =eV.getVoyage();
+		
 
 		cols[0] = new Column(ORYGINAL_VOYAGE, "VoyageID "
-				+ eV.getVoyage().getVoyageid(), true, DECIDED_VOYAGE,
+				+ v.getVoyageid(), true, DECIDED_VOYAGE,
 				COPY_LABEL, false);
+		
 		int i;
 		for (i = 1; i <= this.editRequests.length; i++)
 		{
@@ -790,8 +786,6 @@ public class VoyagesApplier
 		}
 		cols[i++] = new Column(DECIDED_VOYAGE, DECIDED_VOYAGE_LABEL, false,
 				true);
-		t.commit();
-		session.close();
 		return cols;
 	}
 
