@@ -313,12 +313,23 @@ public class AdminSubmissionBean {
 		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 
+		/*
+		 * Statuses
+		 * 1 - All
+		 * 2 - Under review
+		 * 3 - Not assigned
+		 * 4 - Final
+		 * 5 - Review complete
+		 */
 		TastDbConditions c = new TastDbConditions();
 		c.addCondition(Submission.getAttribute("submitted"), new Boolean(true), TastDbConditions.OP_EQUALS);		
 		if (this.requestStatus.equals("2")) {
 			c.addCondition(Submission.getAttribute("editorVoyage"), null, TastDbConditions.OP_IS_NOT);
 			c.addCondition(Submission.getAttribute("solved"), new Boolean(false), TastDbConditions.OP_EQUALS);
-		} else if (this.requestStatus.equals("3")) {
+		} if (this.requestStatus.equals("5")) {
+			c.addCondition(Submission.getAttribute("editorVoyage"), null, TastDbConditions.OP_IS_NOT);
+			c.addCondition(Submission.getAttribute("solved"), new Boolean(false), TastDbConditions.OP_EQUALS);
+		}else if (this.requestStatus.equals("3")) {
 			c.addCondition(Submission.getAttribute("editorVoyage"), null, TastDbConditions.OP_IS);
 			c.addCondition(Submission.getAttribute("solved"), new Boolean(false), TastDbConditions.OP_EQUALS);
 		} else if (this.requestStatus.equals("4")) {
@@ -347,15 +358,35 @@ public class AdminSubmissionBean {
 				Voyage voyage = new Voyage();
 				voyage = Voyage.loadById(session, ((SubmissionNew) submission)
 						.getNewVoyage().getVoyage().getIid());
-				if (!this.authenticateduser.isEditor()) {
-					l.add(new GridRow(REQUEST_NEW_PREFIX + submission.getId(), new String[] { "New voyage",
-						submission.getUser().getUserName(), formatter.format(submission.getTime()), adminVId_str,
-						this.getEditors(submission), this.reviewedByEditor(submission, null) ? "Yes" + this.infoString(submission) : "No",
-						 lastCol }));
-				} else {
-					l.add(new GridRow(REQUEST_NEW_PREFIX + submission.getId(), new String[] { "New request",
-						formatter.format(submission.getTime()), adminVId_str, voyage.getShipname(), voyage.getYearam()!=null ? voyage.getYearam().toString():"Not assigned yet",
-						this.reviewedByEditor(submission, this.authenticateduser) ? "Yes" : "No"}));
+		
+				//display the rows according  to the two inputs
+				if (this.requestStatus.equals("1") || this.requestStatus.equals("3") || this.requestStatus.equals("4") || (this.requestStatus.equals("2") && !editorsFinished(submission)) || (this.requestStatus.equals("5") && editorsFinished(submission))) {
+					if (!this.authenticateduser.isEditor()) {
+						l.add(new GridRow(REQUEST_NEW_PREFIX
+								+ submission.getId(), new String[] {
+								"New voyage",
+								submission.getUser().getUserName(),
+								formatter.format(submission.getTime()),
+								adminVId_str,
+								this.getEditors(submission),
+								this.reviewedByEditor(submission, null) ? "Yes"
+										+ this.infoString(submission) : "No",
+								lastCol }));
+					} else {
+						l.add(new GridRow(REQUEST_NEW_PREFIX
+								+ submission.getId(),
+								new String[] {
+										"New request",
+										formatter.format(submission.getTime()),
+										adminVId_str,
+										voyage.getShipname(),
+										voyage.getYearam() != null ? voyage
+												.getYearam().toString()
+												: "Not assigned yet",
+										this.reviewedByEditor(submission,
+												this.authenticateduser) ? "Yes"
+												: "No" }));
+					}
 				}
 			}
 		}
@@ -378,16 +409,37 @@ public class AdminSubmissionBean {
 				}
 				Voyage voyage = Voyage.loadById(session, ((SubmissionEdit) submission)
 						.getOldVoyage().getVoyage().getIid());
-				if (!this.authenticateduser.isEditor()) {
-					l.add(new GridRow(REQUEST_EDIT_PREFIX + submission.getId(), new String[] { "Edit voyage",
-						submission.getUser().getUserName(), formatter.format(submission.getTime()),
-						submission.getOldVoyage().getVoyage().getVoyageid().toString(),
-						this.getEditors(submission), this.reviewedByEditor(submission, null) ? "Yes" + this.infoString(submission) : "No",
-						 lastCol }));
-				} else {
-					l.add(new GridRow(REQUEST_EDIT_PREFIX + submission.getId(), new String[] { "Edit request",
-						formatter.format(submission.getTime()), submission.getOldVoyage().getVoyage().getVoyageid().toString(),
-						voyage.getShipname(), voyage.getYearam()!=null ? voyage.getYearam().toString():"Not assigned yet", this.reviewedByEditor(submission, this.authenticateduser) ? "Yes" : "No"}));
+				
+				//display the rows according  to the two inputs
+				if (this.requestStatus.equals("1") || this.requestStatus.equals("3")|| this.requestStatus.equals("4") || (this.requestStatus.equals("2") && !editorsFinished(submission)) || (this.requestStatus.equals("5") && editorsFinished(submission))) {
+					if (!this.authenticateduser.isEditor()) {
+						l.add(new GridRow(REQUEST_EDIT_PREFIX
+								+ submission.getId(), new String[] {
+								"Edit voyage",
+								submission.getUser().getUserName(),
+								formatter.format(submission.getTime()),
+								submission.getOldVoyage().getVoyage()
+										.getVoyageid().toString(),
+								this.getEditors(submission),
+								this.reviewedByEditor(submission, null) ? "Yes"
+										+ this.infoString(submission) : "No",
+								lastCol }));
+					} else {
+						l.add(new GridRow(REQUEST_EDIT_PREFIX
+								+ submission.getId(),
+								new String[] {
+										"Edit request",
+										formatter.format(submission.getTime()),
+										submission.getOldVoyage().getVoyage()
+												.getVoyageid().toString(),
+										voyage.getShipname(),
+										voyage.getYearam() != null ? voyage
+												.getYearam().toString()
+												: "Not assigned yet",
+										this.reviewedByEditor(submission,
+												this.authenticateduser) ? "Yes"
+												: "No" }));
+					}
 				}
 			}
 		}
@@ -430,16 +482,40 @@ public class AdminSubmissionBean {
 					shipName="None suggested name";
 				else
 					shipName=suggestVoyage.getShipname();
-				if (!this.authenticateduser.isEditor()) {
-					l.add(new GridRow(REQUEST_MERGE_PREFIX + submission.getId(), new String[] { "Merge voyages",
-						submission.getUser().getUserName(), formatter.format(submission.getTime()), involvedStr,
-						this.getEditors(submission), this.reviewedByEditor(submission, null) ? "Yes" + this.infoString(submission) : "No",
-						 lastCol }));
-				} else {
-					
-					l.add(new GridRow(REQUEST_MERGE_PREFIX + submission.getId(), new String[] { "Merge request",
-						formatter.format(submission.getTime()), involvedStr, shipName, suggestVoyage.getYearam()!=null?suggestVoyage.getYearam().toString():"Not assigned yet", 
-						this.reviewedByEditor(submission, this.authenticateduser) ? "Yes" : "No"}));
+				
+				//display the rows according  to the two inputs
+				if (this.requestStatus.equals("1") || this.requestStatus.equals("3") || this.requestStatus.equals("4") || (this.requestStatus.equals("2") && !editorsFinished(submission)) || (this.requestStatus.equals("5") && editorsFinished(submission))) {
+					if (!this.authenticateduser.isEditor()) {
+						l.add(new GridRow(REQUEST_MERGE_PREFIX
+								+ submission.getId(), new String[] {
+								"Merge voyages",
+								submission.getUser().getUserName(),
+								formatter.format(submission.getTime()),
+								involvedStr,
+								this.getEditors(submission),
+								this.reviewedByEditor(submission, null) ? "Yes"
+										+ this.infoString(submission) : "No",
+								lastCol }));
+					} else {
+
+						l
+								.add(new GridRow(
+										REQUEST_MERGE_PREFIX
+												+ submission.getId(),
+										new String[] {
+												"Merge request",
+												formatter.format(submission
+														.getTime()),
+												involvedStr,
+												shipName,
+												suggestVoyage.getYearam() != null ? suggestVoyage
+														.getYearam().toString()
+														: "Not assigned yet",
+												this.reviewedByEditor(
+														submission,
+														this.authenticateduser) ? "Yes"
+														: "No" }));
+					}
 				}
 			}
 		}
@@ -1009,6 +1085,31 @@ public class AdminSubmissionBean {
 		} catch (Exception e) {return null;}
 				
 		return v.getVoyageid();
+	}
+	
+	//Checks to see if all editors are done
+	public boolean editorsFinished(Submission sub){
+	boolean ret = true;
+	
+	Set editors = sub.getSubmissionEditors();
+	
+	Iterator itt = editors.iterator();
+	
+	if(!itt.hasNext()) 
+	{
+		return false;
+	}
+	
+	while(itt.hasNext())
+	{
+		SubmissionEditor se = (SubmissionEditor) itt.next();
+		
+		if(!se.isFinished()) {ret=false;}		
+		
+	}
+	
+	return ret;
+	
 	}
 	
 }
