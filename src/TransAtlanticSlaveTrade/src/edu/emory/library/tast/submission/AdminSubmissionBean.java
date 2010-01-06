@@ -1112,4 +1112,18 @@ public class AdminSubmissionBean {
 	
 	}
 	
+	public void impute()
+	{
+		this.applier.save();
+		
+		System.out.println("I feel like I'm going to impute!");
+		
+		Session session = HibernateConn.getSession();
+		
+		Voyage v = this.applier.getAdminVoyage(session, this.getSubmissionId());
+		
+		this.applier.imputeVariables(session, v);
+		
+	}
+	
 }

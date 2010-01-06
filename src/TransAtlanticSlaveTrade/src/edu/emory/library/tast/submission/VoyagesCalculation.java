@@ -9,6 +9,7 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import edu.emory.library.tast.dm.Area;
 import edu.emory.library.tast.dm.Fate;
@@ -25,13 +26,12 @@ public class VoyagesCalculation {
 	
 	Voyage voyage;
 	Session session;
-	//Transaction trans;
+	Transaction trans;
 	
 	public VoyagesCalculation(Session sess, Voyage voy) {
 		voyage = voy;
 		session = sess;
-		/*session = HibernateConn.getSession();
-		trans = session.beginTransaction();*/
+		trans = session.beginTransaction();
 	}
 	
 	/*
@@ -58,28 +58,12 @@ public class VoyagesCalculation {
 		calculateSlavesEmbarkDisembark();
 		calculateMortality();
 		calculateValuesPeople();
-		/*calculateDateVariables();
-		calculateYearVariables();
-		calculateFate2();
-		calculateFate3();
-		calculateFate4();
-		calculateMortality();
-		calculateNatinimp();
-		calculateValuesYear();
-		calculateVoyLengths();
-		calculateValuesRegion1();
-		calculateMjbyptimp();
-		calculateMjslptimp();
-		calculatePtDepImp();
-		calculateValuesRegion1a();
-		calculateValuesRegion2();
-		calculateTonmod();
-		calculateValuesPeople();
-		calculateXmImpflag();
-		calculateSlavesEmbarkDisembark();*/
 		
-		//trans.commit();
+		
+		session.save(voyage);
+		trans.commit();
 		//session.close();
+		
 		return voyage;
 	}
 	

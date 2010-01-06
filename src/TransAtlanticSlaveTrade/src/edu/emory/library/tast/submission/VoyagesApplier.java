@@ -1837,9 +1837,9 @@ public class VoyagesApplier
 		
 		if (!wasError)
 		{
-			if (this.adminBean.getAuthenticateduser().isAdmin()) {
+			/*if (this.adminBean.getAuthenticateduser().isAdmin()) {
 				imputeVariables(session, vNew);
-			}
+			}*/
 			session.saveOrUpdate(vNew);
 			if (editedVoyage == null)
 			{
@@ -1913,7 +1913,7 @@ public class VoyagesApplier
 		}
 	}
 	
-	private void imputeVariables(Session sess, Voyage voyage) {
+	public void imputeVariables(Session sess, Voyage voyage) {
 		VoyagesCalculation voyagesCalc = new VoyagesCalculation(sess, voyage);
 		voyagesCalc.calculateImputedVariables();		
 	}
