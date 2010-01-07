@@ -105,7 +105,7 @@ public class VoyagesApplier
 
 	public static final String MERGE_VOYAGE_LABEL = "Voyage indicated to merge";
 
-	public static final String DECIDED_VOYAGE_LABEL = "Reviewer";
+	public static final String DECIDED_VOYAGE_LABEL = "Editor";
 
 	public static final String DECIDED_VOYAGE = "decided";
 
@@ -717,9 +717,7 @@ public class VoyagesApplier
 							.next();
 					cols[i] = new Column(
 							EDITOR_CHOICE + "_" + j,
-							EDITOR_CHOICE_LABEL
-									+ " "
-									+ submissionEditor.getUser().getUserName()
+							submissionEditor.getUser().getUserName()
 									+ "("
 									+ (submissionEditor.isFinished() ? "Finished"
 											: "Not finished") + ")", true,
@@ -728,9 +726,13 @@ public class VoyagesApplier
 							REMOVE_EDITOR_ACTION + "_"
 									+ submissionEditor.getId(), "Remove") });
 				}
+				cols[i++] = new Column(DECIDED_VOYAGE, DECIDED_VOYAGE_LABEL, false,
+						true);
+			}else{
+				cols[i++] = new Column(DECIDED_VOYAGE, this.adminBean
+						.getAuthenticateduser().getUserName(), false, true);
 			}
-			cols[i++] = new Column(DECIDED_VOYAGE, DECIDED_VOYAGE_LABEL, false,
-					true);
+
 		} finally
 		{
 			t.commit();
@@ -754,6 +756,7 @@ public class VoyagesApplier
 		Voyage v =eV.getVoyage();
 		
 
+		
 		cols[0] = new Column(ORYGINAL_VOYAGE, "VoyageID "
 				+ v.getVoyageid(), true, DECIDED_VOYAGE,
 				COPY_LABEL, false);
@@ -761,9 +764,10 @@ public class VoyagesApplier
 		int i;
 		for (i = 1; i <= this.editRequests.length; i++)
 		{
-			cols[i] = new Column(CHANGED_VOYAGE + "_" + i, CHANGED_VOYAGE_LABEL
+			cols[i] = new Column(CHANGED_VOYAGE + "_" + i, NEW_VOYAGE_LABEL
 					+ " #" + i, true, DECIDED_VOYAGE, COPY_LABEL, false);
 		}
+
 		if (!editor)
 		{
 			Iterator iter = submission.getSubmissionEditors().iterator();
@@ -771,21 +775,23 @@ public class VoyagesApplier
 			{
 				SubmissionEditor submissionEditor = (SubmissionEditor) iter
 						.next();
-				cols[i] = new Column(EDITOR_CHOICE + "_" + j,
-						EDITOR_CHOICE_LABEL
-								+ " "
-								+ submissionEditor.getUser().getUserName()
-								+ "("
-								+ (submissionEditor.isFinished() ? "Finished"
-										: "Not finished") + ")", true,
-						DECIDED_VOYAGE, COPY_LABEL, false);
+				cols[i] = new Column(EDITOR_CHOICE + "_" + j, submissionEditor
+						.getUser().getUserName()
+						+ "("
+						+ (submissionEditor.isFinished() ? "Finished"
+								: "Not finished") + ")", true, DECIDED_VOYAGE,
+						COPY_LABEL, false);
 				cols[i++].setActions(new ColumnAction[] { new ColumnAction(
 						REMOVE_EDITOR_ACTION + "_" + submissionEditor.getId(),
 						"Remove") });
 			}
+			cols[i++] = new Column(DECIDED_VOYAGE, DECIDED_VOYAGE_LABEL, false,
+					true);
+		}else{
+			cols[i++] = new Column(DECIDED_VOYAGE, this.adminBean
+					.getAuthenticateduser().getUserName(), false, true);
 		}
-		cols[i++] = new Column(DECIDED_VOYAGE, DECIDED_VOYAGE_LABEL, false,
-				true);
+
 		return cols;
 	}
 
@@ -801,17 +807,14 @@ public class VoyagesApplier
 		}
 		cols[0] = new Column(ORYGINAL_VOYAGE, NEW_VOYAGE_LABEL, true,
 				DECIDED_VOYAGE, COPY_LABEL, false);
-		if (!editor)
-		{
+		if (!editor) {
 			Iterator iter = submission.getSubmissionEditors().iterator();
-			for (int i = 0; i < submission.getSubmissionEditors().size(); i++)
-			{
+
+			for (int i = 0; i < submission.getSubmissionEditors().size(); i++) {
 				SubmissionEditor submissionEditor = (SubmissionEditor) iter
 						.next();
 				cols[i + 1] = new Column(EDITOR_CHOICE + "_" + i,
-						EDITOR_CHOICE_LABEL
-								+ " "
-								+ submissionEditor.getUser().getUserName()
+						submissionEditor.getUser().getUserName()
 								+ "("
 								+ (submissionEditor.isFinished() ? "Finished"
 										: "Not finished") + ")", true,
@@ -820,9 +823,16 @@ public class VoyagesApplier
 						REMOVE_EDITOR_ACTION + "_" + submissionEditor.getId(),
 						"Remove") });
 			}
+			
+			cols[cols.length - 1] = new Column(DECIDED_VOYAGE,
+					DECIDED_VOYAGE_LABEL, false, true);
+
+
+		}else{
+			cols[cols.length - 1] = new Column(DECIDED_VOYAGE, this.adminBean
+					.getAuthenticateduser().getUserName(), false, true);
 		}
-		cols[cols.length - 1] = new Column(DECIDED_VOYAGE,
-				DECIDED_VOYAGE_LABEL, false, true);
+
 		return cols;
 	}
 
