@@ -284,8 +284,7 @@ public class SubmissionBean
 		Session session = HibernateConn.getSession();
 		Transaction trans = session.beginTransaction();
 		
-		SourceInformationLookup sourceInformationUtils =
-			SourceInformationLookup.createSourceInformationUtils(session);
+		SourceInformationLookup sourceInformationUtils = null; //SourceInformationLookup.createSourceInformationUtils(session);
 		
 		loadVoyageToColumn(session, selectedVoyageForEdit.getVoyageId(), gridValues, ORIGINAL_VOYAGE, sourceInformationUtils);
 		initColumnForNewVoyage(CHANGED_VOYAGE);
@@ -324,8 +323,7 @@ public class SubmissionBean
 		Session session = HibernateConn.getSession();
 		Transaction trans = session.beginTransaction();
 		
-		SourceInformationLookup sourceInformationUtils =
-			SourceInformationLookup.createSourceInformationUtils(session);
+		SourceInformationLookup sourceInformationUtils = null; //sourceInformationLookup.createSourceInformationUtils(session);
 
 		int i = 0;
 		for (Iterator iter = selectedVoyagesForMerge.iterator(); iter.hasNext();)
@@ -400,8 +398,7 @@ public class SubmissionBean
 		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		
-		SourceInformationLookup sourceInformationUtils =
-			SourceInformationLookup.createSourceInformationUtils(session);
+		SourceInformationLookup sourceInformationUtils = null; //SourceInformationLookup.createSourceInformationUtils(session);
 		
 		try {
 			Submission submission = Submission.loadById(session, this.submission.getId());

@@ -118,8 +118,8 @@
 		<br>
 		<br>
 		<h:commandButton value="< Back" action="back" />
-		<h:commandButton value="Imput" action="#{AdminSubmissionBean.impute}"
-			rendered="#{AdminSubmissionBean.rejectAvailable}" />
+		<h:commandButton value="Impute" action="#{AdminSubmissionBean.impute}"
+			rendered="#{AdminSubmissionBean.imputeAvailable}" />
 		<h:commandButton value="Save" action="#{AdminSubmissionBean.save}"
 			rendered="#{AdminSubmissionBean.rejectAvailable}" />
 		<h:commandButton value="Logout Without Saving"

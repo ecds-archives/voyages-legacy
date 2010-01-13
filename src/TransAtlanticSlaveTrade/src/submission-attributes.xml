@@ -1090,7 +1090,7 @@
 					<attribute name="y"/>
 				</attributes>
 	</submission-attributes>-->
-	<submission-attributes name="sources" group="Source" editable="N" type="string" userLabel="Sources*">
+	<submission-attributes name="sources" group="Source" editable="Y" type="string" userLabel="Sources" comment="For NEW voyages enter source information on next page">
 		<attributes>
 			<attribute name="sourcea"/>
 			<attribute name="sourceb"/>

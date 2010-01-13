@@ -1126,4 +1126,17 @@ public class AdminSubmissionBean {
 		
 	}
 	
+	public boolean getImputeAvailable()
+	{
+		if(this.getRejectAvailable() && this.getAuthenticateduser().isAdmin())
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+		
+	}
+	
 }
