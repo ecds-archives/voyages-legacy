@@ -600,7 +600,7 @@ public class SubmissionBean
 
 					new Column(
 							ORIGINAL_VOYAGE,							
-							"VoyageID " + String.valueOf(selectedVoyageForEdit.getVoyageId()),
+							"Voyageid " + String.valueOf(selectedVoyageForEdit.getVoyageId()),
 							true,
 							CHANGED_VOYAGE,
 							"Copy >"),
@@ -621,7 +621,7 @@ public class SubmissionBean
 				SelectedVoyageInfo info = (SelectedVoyageInfo) selectedVoyagesForMerge.get(i);
 				columns[i] = new Column(
 						MERGED_VOYAGE_PREFIX + i,
-						"VoyageID " + String.valueOf(info.getVoyageId()),
+						"Voyageid " + String.valueOf(info.getVoyageId()),
 						true,
 						CHANGED_VOYAGE,
 						"Copy >");
@@ -1155,7 +1155,7 @@ public class SubmissionBean
 			RowGroup[] groups = new RowGroup[selectedVoyagesForMerge.size() + 1];
 			for (int i = 0; i < groups.length - 1; i++) {
 				SelectedVoyageInfo info = (SelectedVoyageInfo) selectedVoyagesForMerge.get(i);
-				groups[i] = new RowGroup("characteristics-" + info.getVoyageId(), "Slaves (characteristics) [VoyageID: " + info.getVoyageId() + "]");
+				groups[i] = new RowGroup("characteristics-" + info.getVoyageId(), "Slaves (characteristics) [Voyageid: " + info.getVoyageId() + "]");
 			}
 			groups[groups.length - 1] = new RowGroup("characteristics", "Slaves (characteristics) [New values]");
 			return groups;

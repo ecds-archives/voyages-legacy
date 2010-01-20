@@ -184,8 +184,8 @@ public class Voyage extends AbstractDescriptiveObject
 		attributes.add(new NumericAttribute("slas39", "Voyage", NumericAttribute.TYPE_INTEGER, "slas39"));
 		attributes.add(new NumericAttribute("slaximp", "Voyage", NumericAttribute.TYPE_INTEGER, "slaximp"));
 		attributes.add(new NumericAttribute("slamimp", "Voyage", NumericAttribute.TYPE_INTEGER, "slamimp"));
-		attributes.add(new NumericAttribute("menrat7", "Voyage", NumericAttribute.TYPE_FLOAT, "menrat7"));
-		attributes.add(new NumericAttribute("womrat7", "Voyage", NumericAttribute.TYPE_FLOAT, "womrat7"));
+		attributes.add(new NumericAttribute("menrat7", "Voyage", NumericAttribute.TYPE_DOUBLE, "menrat7"));
+		attributes.add(new NumericAttribute("womrat7", "Voyage", NumericAttribute.TYPE_DOUBLE, "womrat7"));
 		attributes.add(new NumericAttribute("boyrat7", "Voyage", NumericAttribute.TYPE_FLOAT, "boyrat7"));
 		attributes.add(new NumericAttribute("girlrat7", "Voyage", NumericAttribute.TYPE_FLOAT, "girlrat7"));
 		attributes.add(new NumericAttribute("malrat7", "Voyage", NumericAttribute.TYPE_FLOAT, "malrat7"));
@@ -932,27 +932,27 @@ public class Voyage extends AbstractDescriptiveObject
 		this.values.put("voy1imp", voy1imp);
 	}
 
-	public void setMalrat7(Float malrat7) {
+	public void setMalrat7(Double malrat7) {
 		this.values.put("malrat7", malrat7);
 	}
 
-	public void setChilrat7(Float chilrat7) {
+	public void setChilrat7(Double chilrat7) {
 		this.values.put("chilrat7", chilrat7);
 	}
 
-	public void setWomrat7(Float womrat7) {
+	public void setWomrat7(Double womrat7) {
 		this.values.put("womrat7", womrat7);
 	}
 
-	public void setMenrat7(Float menrat7) {
+	public void setMenrat7(Double menrat7) {
 		this.values.put("menrat7", menrat7);
 	}
 
-	public void setGirlrat7(Float girlrat7) {
+	public void setGirlrat7(Double girlrat7) {
 		this.values.put("girlrat7", girlrat7);
 	}
 
-	public void setBoyrat7(Float boyrat7) {
+	public void setBoyrat7(Double boyrat7) {
 		this.values.put("boyrat7", boyrat7);
 	}
 
@@ -1569,28 +1569,28 @@ public class Voyage extends AbstractDescriptiveObject
 		return (Integer) this.values.get("voy1imp");
 	}
 
-	public Float getMalrat7() {
-		return (Float) this.values.get("malrat7");
+	public Double getMalrat7() {
+		return (Double) this.values.get("malrat7");
 	}
 
-	public Float getChilrat7() {
-		return (Float) this.values.get("chilrat7");
+	public Double getChilrat7() {
+		return (Double) this.values.get("chilrat7");
 	}
 
-	public Float getWomrat7() {
-		return (Float) this.values.get("womrat7");
+	public Double getWomrat7() {
+		return (Double) this.values.get("womrat7");
 	}
 
-	public Float getMenrat7() {
-		return (Float) this.values.get("menrat7");
+	public Double getMenrat7() {
+		return (Double) this.values.get("menrat7");
 	}
 
-	public Float getGirlrat7() {
-		return (Float) this.values.get("girlrat7");
+	public Double getGirlrat7() {
+		return (Double) this.values.get("girlrat7");
 	}
 
-	public Float getBoyrat7() {
-		return (Float) this.values.get("boyrat7");
+	public Double getBoyrat7() {
+		return (Double) this.values.get("boyrat7");
 	}
 
 	public Float getJamcaspr() {
@@ -2551,8 +2551,8 @@ public class Voyage extends AbstractDescriptiveObject
 		return (Double) this.values.get("slavemx3");
 	}
 	
-	public Integer getSlavmax3() {
-		return (Integer) this.values.get("slavmax3");
+	public Double getSlavmax3() {
+		return (Double) this.values.get("slavmax3");
 	}
 	
 	public Integer getChild7() {
@@ -2587,8 +2587,8 @@ public class Voyage extends AbstractDescriptiveObject
 		return (Integer) this.values.get("men7");
 	}
 	
-	public Integer getSlavmax7() {
-		return (Integer) this.values.get("slavmax7");
+	public Double getSlavmax7() {
+		return (Double) this.values.get("slavmax7");
 	}
 	
 	public Double getMenrat3() {
@@ -2715,7 +2715,7 @@ public class Voyage extends AbstractDescriptiveObject
 		this.values.put("slavemx3", obj);
 	}
 	
-	public void setSlavmax3(Integer obj){
+	public void setSlavmax3(Double obj){
 		this.values.put("slavmax3", obj);
 	}
 	
@@ -2751,7 +2751,7 @@ public class Voyage extends AbstractDescriptiveObject
 		this.values.put("men7", obj);
 	}
 	
-	public void setSlavmax7(Integer obj){
+	public void setSlavmax7(Double obj){
 		this.values.put("slavmax7", obj);
 	}
 	

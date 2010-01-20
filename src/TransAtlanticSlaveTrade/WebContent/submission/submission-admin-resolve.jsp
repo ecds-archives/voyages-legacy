@@ -41,17 +41,14 @@
 			fieldTypes="#{AdminSubmissionBean.fieldTypesSlave}" />
 
 		<br>
-
-		<%--<t:htmlTag value="div" rendered="#{AdminSubmissionBean.isAdmin}">
-			<s:gridEditor id="grid-slave2"
-				rows="#{AdminSubmissionBean.rowsSlave2}"
-				columns="#{AdminSubmissionBean.columnsSlave2}"
-				values="#{AdminSubmissionBean.valuesSlave}"
-				rowGroups="#{AdminSubmissionBean.rowGroupsSlave2}"
-				fieldTypes="#{AdminSubmissionBean.fieldTypesSlave}" />
-		</t:htmlTag>--%>
 		
-		<br>
+		<t:htmlTag value="div" rendered="#{AdminSubmissionBean.isAdmin}">
+		<s:gridEditor id="grid-slave3" rows="#{AdminSubmissionBean.rowsSlave3}"
+			columns="#{AdminSubmissionBean.columnsSlave3}"
+			values="#{AdminSubmissionBean.valuesSlave3}"
+			rowGroups="#{AdminSubmissionBean.rowGroupsSlave3}"
+			fieldTypes="#{AdminSubmissionBean.fieldTypesSlave3}" />
+		</t:htmlTag>
 		<br>
 
 		<t:htmlTag value="div"

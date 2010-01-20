@@ -990,6 +990,10 @@ public class AdminSubmissionBean {
 		return SubmissionDictionaries.simpleFieldTypes;
 	}
 	
+	public Map getFieldTypesSlave3() {
+		return SubmissionDictionaries.simpleFieldTypes;
+	}
+	
 	public Row[] getRowsSlave() {
 		return applier.getRowsSlave();
 	}
@@ -998,12 +1002,20 @@ public class AdminSubmissionBean {
 		return applier.getRowsSlave2();
 	}
 	
+	public Row[] getRowsSlave3() {
+		return applier.getRowsSlave3();
+	}
+	
 	public Column[] getColumnsSlave() {
 		return applier.getColumnsSlave();
 	}
 	
 	public Column[] getColumnsSlave2() {
 		return applier.getColumnsSlave2();
+	}
+	
+	public Column[] getColumnsSlave3() {
+		return applier.getColumnsSlave3();
 	}
 	
 	public void setValuesSlave(Values values) {
@@ -1023,6 +1035,13 @@ public class AdminSubmissionBean {
 		return this.applier.getValuesSlave2();
 	}
 	
+	public void setValuesSlave3(Values values) {
+		this.applier.setValuesSlave3(values);
+	}
+	
+	public Values getValuesSlave3() {
+		return this.applier.getValuesSlave3();
+	}
 	
 	public RowGroup[] getRowGroupsSlave() {
 		return applier.getRowGroupsSlave();
@@ -1030,6 +1049,10 @@ public class AdminSubmissionBean {
 	
 	public RowGroup[] getRowGroupsSlave2() {
 		return applier.getRowGroupsSlave2();
+	}
+	
+	public RowGroup[] getRowGroupsSlave3() {
+		return applier.getRowGroupsSlave3();
 	}
 	
 	public String logoutOnly() {

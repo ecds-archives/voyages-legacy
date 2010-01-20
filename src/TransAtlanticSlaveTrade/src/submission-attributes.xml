@@ -1090,7 +1090,32 @@
 					<attribute name="y"/>
 				</attributes>
 	</submission-attributes>-->
-	<submission-attributes name="sources" group="Source" editable="Y" type="string" userLabel="Sources" comment="For NEW voyages enter source information on next page">
+
+	
+	<!--###############################################Slaves (mortality and price)############################################## -->
+	<submission-attributes name="tslmtimp" group="Slaves (mortality and price)" editable="N" type="integer" userLabel="Number of slaves embarked for mortality calculation*">
+		<attributes>
+			<attribute name="tslmtimp"/>
+		</attributes>
+	</submission-attributes>
+	<submission-attributes name="vymrtimp" group="Slaves (mortality and price)" editable="N" type="integer" userLabel="Total slave deaths during Middle Passage*">
+		<attributes>
+			<attribute name="vymrtimp"/>
+		</attributes>
+	</submission-attributes>
+	<submission-attributes name="vymrtrat" group="Slaves (mortality and price)" editable="N" type="float" userLabel="Mortality rate*">
+		<attributes>
+			<attribute name="vymrtrat"/>
+		</attributes>
+	</submission-attributes>
+	<submission-attributes name="jamcaspr" group="Slaves (mortality and price)" editable="N" type="float" userLabel="Standardized price of slaves*">
+		<attributes>
+			<attribute name="jamcaspr"/>
+		</attributes>
+	</submission-attributes>
+	
+	
+	<submission-attributes name="sources" group="Sources" editable="Y" type="string" userLabel="Sources" comment="Enter information on new sources on next page.">
 		<attributes>
 			<attribute name="sourcea"/>
 			<attribute name="sourceb"/>
@@ -1112,85 +1137,63 @@
 			<attribute name="sourcer"/>
 		</attributes>
 	</submission-attributes>
-	
-	<!--###############################################Slaves (Mortality and Price)############################################## -->
-	<submission-attributes name="tslmtimp" group="Slaves (Mortality and Price)" editable="N" type="integer" userLabel="Number of slaves embarked for mortality calculation*">
-		<attributes>
-			<attribute name="tslmtimp"/>
-		</attributes>
-	</submission-attributes>
-	<submission-attributes name="vymrtimp" group="Slaves (Mortality and Price)" editable="N" type="integer" userLabel="Total slave deaths during Middle Passage*">
-		<attributes>
-			<attribute name="vymrtimp"/>
-		</attributes>
-	</submission-attributes>
-	<submission-attributes name="vymrtrat" group="Slaves (Mortality and Price)" editable="N" type="float" userLabel="Mortality rate*">
-		<attributes>
-			<attribute name="vymrtrat"/>
-		</attributes>
-	</submission-attributes>
-	<submission-attributes name="jamcaspr" group="Slaves (Mortality and Price)" editable="N" type="float" userLabel="Standardized price of slaves*">
-		<attributes>
-			<attribute name="jamcaspr"/>
-		</attributes>
-	</submission-attributes>
-	<!--<submission-attributes name="malrat7" group="Slaves (Mortality and Price)" editable="N" type="float" userLabel="Ratio male at embarkation or disembarkation*">
+	<!--<submission-attributes name="malrat7" group="Slaves (mortality and price)" editable="N" type="float" userLabel="Ratio male at embarkation or disembarkation*">
 		<attributes>
 			<attribute name="malrat7"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="chilrat7" group="Slaves (Mortality and Price)" editable="N" type="float" userLabel="Ratio children at embarkation or disembarkation*">
+	<submission-attributes name="chilrat7" group="Slaves (mortality and price)" editable="N" type="float" userLabel="Ratio children at embarkation or disembarkation*">
 		<attributes>
 			<attribute name="chilrat7"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="womrat7" group="Slaves (Mortality and Price)" editable="N" type="float" userLabel="Ratio women at embarkation or disembarkation*">
+	<submission-attributes name="womrat7" group="Slaves (mortality and price)" editable="N" type="float" userLabel="Ratio women at embarkation or disembarkation*">
 		<attributes>
 			<attribute name="womrat7"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="menrat7" group="Slaves (Mortality and Price)" editable="N" type="float" userLabel="Ratio men at embarkation or disembarkation*">
+	<submission-attributes name="menrat7" group="Slaves (mortality and price)" editable="N" type="float" userLabel="Ratio men at embarkation or disembarkation*">
 		<attributes>
 			<attribute name="menrat7"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="girlrat7" group="Slaves (Mortality and Price)" editable="N" type="float" userLabel="Ratio girls at embarkation or disembarkation*">
+	<submission-attributes name="girlrat7" group="Slaves (mortality and price)" editable="N" type="float" userLabel="Ratio girls at embarkation or disembarkation*">
 		<attributes>
 			<attribute name="girlrat7"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="boyrat7" group="Slaves (Mortality and Price)" editable="N" type="float" userLabel="Ratio boys at embarkation or disembarkation*">
+	<submission-attributes name="boyrat7" group="Slaves (mortality and price)" editable="N" type="float" userLabel="Ratio boys at embarkation or disembarkation*">
 		<attributes>
 			<attribute name="boyrat7"/>
 		</attributes>
 	</submission-attributes>
 	
-	<submission-attributes name="malrat3" group="Slaves (Mortality and Price)" editable="N" type="double" userLabel="Ratio male at first port of landing*">
+	<submission-attributes name="malrat3" group="Slaves (mortality and price)" editable="N" type="double" userLabel="Ratio male at first port of landing*">
 		<attributes>
 			<attribute name="malrat3"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="chilrat3" group="Slaves (Mortality and Price)" editable="N" type="double" userLabel="Ratio children at first port of landing*">
+	<submission-attributes name="chilrat3" group="Slaves (mortality and price)" editable="N" type="double" userLabel="Ratio children at first port of landing*">
 		<attributes>
 			<attribute name="chilrat3"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="womrat3" group="Slaves (Mortality and Price)" editable="N" type="double" userLabel="Ratio women at first port of landing*">
+	<submission-attributes name="womrat3" group="Slaves (mortality and price)" editable="N" type="double" userLabel="Ratio women at first port of landing*">
 		<attributes>
 			<attribute name="womrat3"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="menrat3" group="Slaves (Mortality and Price)" editable="N" type="double" userLabel="Ratio men at first port of landing*">
+	<submission-attributes name="menrat3" group="Slaves (mortality and price)" editable="N" type="double" userLabel="Ratio men at first port of landing*">
 		<attributes>
 			<attribute name="menrat3"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="girlrat3" group="Slaves (Mortality and Price)" editable="N" type="double" userLabel="Ratio girls at first port of landing*">
+	<submission-attributes name="girlrat3" group="Slaves (mortality and price)" editable="N" type="double" userLabel="Ratio girls at first port of landing*">
 		<attributes>
 			<attribute name="girlrat3"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="boyrat3" group="Slaves (Mortality and Price)" editable="N" type="double" userLabel="Ratio boys at first port of landing*">
+	<submission-attributes name="boyrat3" group="Slaves (mortality and price)" editable="N" type="double" userLabel="Ratio boys at first port of landing*">
 		<attributes>
 			<attribute name="boyrat3"/>
 		</attributes>

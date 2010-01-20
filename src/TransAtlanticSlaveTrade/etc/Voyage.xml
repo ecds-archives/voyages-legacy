@@ -160,8 +160,8 @@
   	<attribute name="slamimp" type="Float" userLabel="" importType="numeric"/> 
   	<attribute name="voy2imp" type="Integer" userLabel="" importType="numeric"/> 
   	<attribute name="voy1imp" type="Integer" userLabel="" importType="numeric"/> 
-  	<attribute name="malrat7" type="Float" userLabel="" importType="numeric"/> 
-  	<attribute name="chilrat7" type="Float" userLabel="" importType="numeric"/> 
+  	<attribute name="malrat7" type="Double" userLabel="" importType="numeric"/> 
+  	<attribute name="chilrat7" type="Double" userLabel="" importType="numeric"/> 
   	<attribute name="sourcex" type="String" userLabel="" importType="string" length="254" />
   	<attribute name="p" type="Integer" userLabel="" importType="numeric"/> 
   	<attribute name="men8" type="Integer" userLabel="" importType="numeric"/> 
@@ -183,14 +183,14 @@
     <attribute name="evgreen" type="string" userLabel="" importType="string" length="3"/> 
     <attribute name="womrat1" type="Float" userLabel="" importType="numeric"/> 
     <attribute name="womrat3" type="Float" userLabel="" importType="numeric"/> 
-    <attribute name="womrat7" type="Float" userLabel="" importType="numeric"/> 
-    <attribute name="menrat7" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="womrat7" type="Double" userLabel="" importType="numeric"/> 
+    <attribute name="menrat7" type="Double" userLabel="" importType="numeric"/> 
     <attribute name="menrat3" type="Float" userLabel="" importType="numeric"/> 
     <attribute name="menrat1" type="Float" userLabel="" importType="numeric"/> 
     <attribute name="girlrat1" type="Float" userLabel="" importType="numeric"/> 
     <attribute name="girlrat3" type="Float" userLabel="" importType="numeric"/> 
     <attribute name="girlrat7" type="Float" userLabel="" importType="numeric"/> 
-    <attribute name="boyrat7" type="Float" userLabel="" importType="numeric"/> 
+    <attribute name="boyrat7" type="Double" userLabel="" importType="numeric"/> 
     <attribute name="boyrat3" type="Float" userLabel="" importType="numeric"/> 
     <attribute name="boyrat1" type="Float" userLabel="" importType="numeric"/> 
     <!-- <attribute name="behmimp2" type="Integer" userLabel="" importType="numeric"/> -->

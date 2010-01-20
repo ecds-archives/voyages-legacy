@@ -2607,7 +2607,7 @@ public class VoyagesCalculation {
 		 voyage.setFeml3imp(feml3imp);
 		 voyage.setSlavema3(round(slavema3, 6));
 		 voyage.setSlavemx3(round(slavemx3, 6));
-		 voyage.setSlavmax3((slavmax3==null ? null : slavmax3.intValue()));
+		 voyage.setSlavmax3((slavmax3==null ? null : slavmax3.doubleValue()));
 		 voyage.setChilrat3(round(chilrat3,6));
 	     voyage.setMalrat3(round(malrat3,6));
 	     voyage.setMenrat3(round(menrat3,6));
@@ -2616,7 +2616,7 @@ public class VoyagesCalculation {
 	     voyage.setGirlrat3(round(girlrat3,6));
 	     voyage.setSlavema7(round(slavema7, 6));
 	     voyage.setSlavemx7(round(slavemx7, 6));
-	     voyage.setSlavmax7((slavmax7==null ? null : slavmax7.intValue()));
+	     voyage.setSlavmax7((slavmax7==null ? null : slavmax7.doubleValue()));
 	     voyage.setMen7(men7);
 	     voyage.setWomen7(women7);
          voyage.setBoy7(boy7);
@@ -2625,12 +2625,12 @@ public class VoyagesCalculation {
 	     voyage.setChild7(child7);
 	     voyage.setMale7(male7);
 	     voyage.setFemale7(female7);
-		 voyage.setMenrat7((menrat7==null ? null : round(menrat7.floatValue(),6)));
-		 voyage.setWomrat7((womrat7==null ? null : round(womrat7.floatValue(),6)));
-		 voyage.setBoyrat7((boyrat7==null ? null : round(boyrat7.floatValue(),6)));
-		 voyage.setGirlrat7((girlrat7==null ? null : round(girlrat7.floatValue(),6)));
-		 voyage.setMalrat7((malrat7==null ? null : round(malrat7.floatValue(),6)));
-		 voyage.setChilrat7((chilrat7==null ? null : round(chilrat7.floatValue(),6)));
+		 voyage.setMenrat7((menrat7==null ? null : round(menrat7.doubleValue(),6)));
+		 voyage.setWomrat7((womrat7==null ? null : round(womrat7.doubleValue(),6)));
+		 voyage.setBoyrat7((boyrat7==null ? null : round(boyrat7.doubleValue(),6)));
+		 voyage.setGirlrat7((girlrat7==null ? null : round(girlrat7.doubleValue(),6)));
+		 voyage.setMalrat7((malrat7==null ? null : round(malrat7.doubleValue(),6)));
+		 voyage.setChilrat7((chilrat7==null ? null : round(chilrat7.doubleValue(),6)));
 	}
 	
 	public void calculateXmImpflag(){
