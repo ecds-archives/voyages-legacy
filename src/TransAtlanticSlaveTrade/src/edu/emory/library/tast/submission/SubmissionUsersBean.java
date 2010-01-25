@@ -207,7 +207,7 @@ public class SubmissionUsersBean {
 				
 				new GridColumn("Brief description"),
 				
-				new GridColumn("Contributor"),
+				new GridColumn("Enabled"),
 				
 				new GridColumn("Reviewer"),
 				

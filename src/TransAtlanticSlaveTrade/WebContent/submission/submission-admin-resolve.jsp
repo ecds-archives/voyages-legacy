@@ -122,7 +122,7 @@
 		<h:commandButton value="Logout Without Saving"
 			action="#{AdminSubmissionBean.logoutOnly}"
 			rendered="#{AdminSubmissionBean.rejectAvailable}" />
-		<h:commandButton value="Apply changes"
+		<h:commandButton value="Accept request"
 			action="#{AdminSubmissionBean.submit}"
 			rendered="#{AdminSubmissionBean.isAdmin}" />
 		<h:commandButton value="Reject request"

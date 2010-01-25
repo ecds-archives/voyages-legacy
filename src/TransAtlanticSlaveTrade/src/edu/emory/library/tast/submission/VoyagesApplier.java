@@ -833,9 +833,10 @@ public class VoyagesApplier
 		for (i = 1; i <= this.editRequests.length; i++)
 		{
 			cols[i] = new Column(CHANGED_VOYAGE + "_" + i, NEW_VOYAGE_LABEL
-					+ " #" + i, true, DECIDED_VOYAGE, COPY_LABEL, false);
+					, true, DECIDED_VOYAGE, COPY_LABEL, false);
 		}
 
+		
 		if (!editor)
 		{
 			Iterator iter = submission.getSubmissionEditors().iterator();
@@ -1292,8 +1293,7 @@ public class VoyagesApplier
 					for (int i = 1; i < response.length - 1; i++)
 					{
 						response[i] = new RowGroup("characteristics-" + i,
-								"Slaves (characteristics) [Contributor #"
-										+ i + "]");
+								"Slaves (characteristics) [Contributor]");
 					}
 					response[response.length - 1] = new RowGroup(
 							"characteristics",
@@ -1312,8 +1312,7 @@ public class VoyagesApplier
 					for (int i = 1; i < this.editRequests.length + 1; i++)
 					{
 						response[i] = new RowGroup("characteristics-" + i,
-								"Slaves (characteristics) [Contributor #"
-										+ i + "]");
+								"Slaves (characteristics) [Contributor]");
 					}
 					Iterator iter = submission.getSubmissionEditors()
 							.iterator();
@@ -1591,8 +1590,7 @@ public class VoyagesApplier
 					for (int i = 1; i < response.length - 1; i++)
 					{
 						response[i] = new RowGroup("characteristics-" + i,
-								"Slaves (age and sex) [Contributor #"
-										+ i + "]");
+								"Slaves (age and sex) [Contributor]");
 					}
 					response[response.length - 1] = new RowGroup(
 							"characteristics",
@@ -1611,8 +1609,7 @@ public class VoyagesApplier
 					for (int i = 1; i < this.editRequests.length + 1; i++)
 					{
 						response[i] = new RowGroup("characteristics-" + i,
-								"Slaves (age and sex) [Contributor #"
-										+ i + "]");
+								"Slaves (age and sex) [Contributor]");
 					}
 					Iterator iter = submission.getSubmissionEditors()
 							.iterator();

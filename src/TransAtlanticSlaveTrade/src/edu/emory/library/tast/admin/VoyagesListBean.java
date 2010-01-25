@@ -3,6 +3,7 @@ package edu.emory.library.tast.admin;
 import java.text.MessageFormat;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.faces.model.SelectItem;
 
@@ -14,9 +15,13 @@ import edu.emory.library.tast.common.GridRow;
 import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.db.TastDbConditions;
 import edu.emory.library.tast.db.TastDbQuery;
+import edu.emory.library.tast.dm.EditedVoyage;
 import edu.emory.library.tast.dm.Nation;
 import edu.emory.library.tast.dm.Revision;
 import edu.emory.library.tast.dm.Submission;
+import edu.emory.library.tast.dm.SubmissionEdit;
+import edu.emory.library.tast.dm.SubmissionMerge;
+import edu.emory.library.tast.dm.SubmissionNew;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
@@ -79,8 +84,8 @@ public class VoyagesListBean
 	private void loadDataIfNecessary()
 	{
 		// no need
-		if (dataValid && !filterChanged && !currentPageChanged)
-			return;
+//		if (dataValid && !filterChanged && !currentPageChanged)
+//			return;
 		
 		// reset page if some filter changed
 		if (filterChanged)
@@ -152,7 +157,16 @@ public class VoyagesListBean
 
 		// more voyages to UI
 		int i = 0;
+		
+		Session session = HibernateConn.getSession();
+		Transaction t = session.beginTransaction();
+
+//		Object[] rejectedNewsubs = getRejectedNewsubs(session, t);
+//		Object[] rejectedEditedsubs = getRejectedEditedsubs(session, t);
+//		Object[] rejectedMergesubs = getRejectedMergedsubs(session, t);
+
 		rows = new GridRow[voyages.size()];
+
 		for (Iterator iter = voyages.iterator(); iter.hasNext();)
 		{
 			
@@ -190,12 +204,165 @@ public class VoyagesListBean
 		queryCount.addPopulatedAttribute(new FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("iid")}));		
 		Object[] ret = queryCount.executeQuery();
 		lastRecordIndex = ((Number)ret[0]).intValue();
-
+		
+//		for (int j = 0; j < rejectedNewsubs.length; j++) {
+//			SubmissionNew submission = (SubmissionNew) rejectedNewsubs[j];
+//
+//			Voyage voyage = new Voyage();
+//
+//			voyage = Voyage.loadById(session, ((SubmissionNew) submission)
+//					.getNewVoyage().getVoyage().getIid());
+//			
+//			String rowId = voyage.getIid().toString();		
+//
+//			String nation = voyage.getNatinimp() == null ? null :
+//				voyage.getNatinimp().getName();
+//			
+//			String slaximp = voyage.getSlaximp() == null ? null :
+//				slaveNumFmt.format(new Object[] {voyage.getSlaximp()});
+//			
+//			String slamimp = voyage.getSlamimp() == null ? null :
+//				slaveNumFmt.format(new Object[] {voyage.getSlamimp()});
+//			
+//			String yearam = voyage.getYearam() == null ? null :
+//				String.valueOf(voyage.getYearam());
+//
+//			String mjPlacePurchase = voyage.getMjbyptimp() == null ? null :
+//				voyage.getMjbyptimp().getRegion().getName() + " / " + voyage.getMjbyptimp().getName();
+//
+//			String mjPlaceSell = voyage.getMjslptimp() == null ? null :
+//				voyage.getMjslptimp().getRegion().getName() + " / " + voyage.getMjslptimp().getName();
+//
+//			rows[i] = new GridRow(rowId, new String[] {
+//					"Rejected voyage, no assigned id",
+//					voyage.getShipname(), yearam, nation, slaximp, slamimp, 
+//					mjPlacePurchase, mjPlaceSell});
+//			i++;
+//		}
+//		
+//		for (int j = 0; j < rejectedEditedsubs.length; j++) {
+//			SubmissionEdit submission = (SubmissionEdit) rejectedEditedsubs[j];
+//
+//			Voyage voyage = new Voyage();
+//
+//			voyage = Voyage.loadById(session, ((SubmissionEdit) submission)
+//					.getOldVoyage().getVoyage().getIid());
+//			
+//			String rowId = voyage.getIid().toString();		
+//
+//			String nation = voyage.getNatinimp() == null ? null :
+//				voyage.getNatinimp().getName();
+//			
+//			String slaximp = voyage.getSlaximp() == null ? null :
+//				slaveNumFmt.format(new Object[] {voyage.getSlaximp()});
+//			
+//			String slamimp = voyage.getSlamimp() == null ? null :
+//				slaveNumFmt.format(new Object[] {voyage.getSlamimp()});
+//			
+//			String yearam = voyage.getYearam() == null ? null :
+//				String.valueOf(voyage.getYearam());
+//
+//			String mjPlacePurchase = voyage.getMjbyptimp() == null ? null :
+//				voyage.getMjbyptimp().getRegion().getName() + " / " + voyage.getMjbyptimp().getName();
+//
+//			String mjPlaceSell = voyage.getMjslptimp() == null ? null :
+//				voyage.getMjslptimp().getRegion().getName() + " / " + voyage.getMjslptimp().getName();
+//
+//			rows[i] = new GridRow(rowId, new String[] {
+//					String.valueOf(voyage.getVoyageid())+"(Rejected)",
+//					voyage.getShipname(), yearam, nation, slaximp, slamimp, 
+//					mjPlacePurchase, mjPlaceSell});
+//			i++;
+//		}
+//		
+//		for (int j = 0; j < rejectedMergesubs.length; j++) {
+//			SubmissionMerge submission = (SubmissionMerge)  rejectedMergesubs[j];
+//
+//			String involvedStr = "";
+//			Set involved = submission.getMergedVoyages();
+//			boolean first = true;
+//			for (Iterator iter = involved.iterator(); iter.hasNext();) {
+//				EditedVoyage element = (EditedVoyage) iter.next();
+//				if (!first) {
+//					involvedStr += ", ";
+//				}
+//				involvedStr += element.getVoyage().getVoyageid();
+//				first = false;
+//			}
+//			
+//			Long suggestedVoyageId = ((SubmissionMerge) submission)
+//					.getProposedVoyage().getId();
+//
+//			EditedVoyage eV = EditedVoyage.loadById(session, suggestedVoyageId);
+//			Voyage suggestVoyage = eV.getVoyage();
+//
+//			
+//			String rowId = suggestVoyage.getIid().toString();		
+//
+//			String nation = suggestVoyage.getNatinimp() == null ? null :
+//				suggestVoyage.getNatinimp().getName();
+//			
+//			String slaximp = suggestVoyage.getSlaximp() == null ? null :
+//				slaveNumFmt.format(new Object[] {suggestVoyage.getSlaximp()});
+//			
+//			String slamimp = suggestVoyage.getSlamimp() == null ? null :
+//				slaveNumFmt.format(new Object[] {suggestVoyage.getSlamimp()});
+//			
+//			String yearam = suggestVoyage.getYearam() == null ? null :
+//				String.valueOf(suggestVoyage.getYearam());
+//
+//			String mjPlacePurchase = suggestVoyage.getMjbyptimp() == null ? null :
+//				suggestVoyage.getMjbyptimp().getRegion().getName() + " / " + suggestVoyage.getMjbyptimp().getName();
+//
+//			String mjPlaceSell = suggestVoyage.getMjslptimp() == null ? null :
+//				suggestVoyage.getMjslptimp().getRegion().getName() + " / " + suggestVoyage.getMjslptimp().getName();
+//
+//			rows[i] = new GridRow(rowId, new String[] {
+//					involvedStr+"(Rejected)",
+//					suggestVoyage.getShipname(), yearam, nation, slaximp, slamimp, 
+//					mjPlacePurchase, mjPlaceSell});
+//			i++;
+//		}
 		// done with db
+		t.commit();
+		session.close();
 		tran.commit();
 		sess.close();
 		
+
+		
 	}
+//
+//	private Object[] getRejectedMergedsubs(Session session, Transaction t) {
+//		TastDbConditions c = new TastDbConditions();
+//		c.addCondition(Submission.getAttribute("submitted"), new Boolean(true), TastDbConditions.OP_EQUALS);
+//		c.addCondition(Submission.getAttribute("solved"), new Boolean(true), TastDbConditions.OP_EQUALS);
+//		c.addCondition(Submission.getAttribute("accepted"), new Boolean(false), TastDbConditions.OP_EQUALS);
+//		TastDbQuery q = new TastDbQuery("SubmissionMerge", c);
+//		Object[] subs = q.executeQuery(session);
+//		return subs;
+//	}
+//
+//	private Object[] getRejectedEditedsubs(Session session, Transaction t) {
+//		TastDbConditions c = new TastDbConditions();
+//		c.addCondition(Submission.getAttribute("submitted"), new Boolean(true), TastDbConditions.OP_EQUALS);
+//		c.addCondition(Submission.getAttribute("solved"), new Boolean(true), TastDbConditions.OP_EQUALS);
+//		c.addCondition(Submission.getAttribute("accepted"), new Boolean(false), TastDbConditions.OP_EQUALS);
+//		TastDbQuery q = new TastDbQuery("SubmissionEdit", c);
+//		Object[] subs = q.executeQuery(session);
+//		return subs;
+//	}
+//
+//	private Object[] getRejectedNewsubs(Session session,Transaction t) {
+//
+//		TastDbConditions c = new TastDbConditions();
+//		c.addCondition(Submission.getAttribute("submitted"), new Boolean(true), TastDbConditions.OP_EQUALS);
+//		c.addCondition(Submission.getAttribute("solved"), new Boolean(true), TastDbConditions.OP_EQUALS);
+//		c.addCondition(Submission.getAttribute("accepted"), new Boolean(false), TastDbConditions.OP_EQUALS);
+//		TastDbQuery q = new TastDbQuery("SubmissionNew", c);
+//		Object[] subs = q.executeQuery(session);
+//		return subs;
+//	}
 
 	/**
 	 * Columns visible in the list of all voyages
