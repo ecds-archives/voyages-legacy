@@ -15,10 +15,17 @@
 <f:view>
 <h:form id="main">
 	<%@ include file="../top-logo-bar.jsp" %>	
-	<%@ include file="submission-top-bar.jsp" %>
+	<table cellpadding="0" cellspacing="0">
+		<tr>
+			<td class="step-indicator-active-middle">Type of contribution</td>
+			<td class="step-indicator-middle">Your voyage information</td>
+			<td class="step-indicator-middle">Your sources</td>
+			<td class="step-indicator-middle">Summary</td>		
+		</tr>
+</table>
 	<br>
 
-	<h1>Choose type of submission</h1>
+	<h1>Choose type of contribution</h1>
 	
 	<br>
 	

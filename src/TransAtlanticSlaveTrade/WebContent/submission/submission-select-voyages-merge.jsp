@@ -9,12 +9,21 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Select voyages</title>
 	<link href="../styles/main.css" rel="stylesheet" type="text/css">
+	<link href="../styles/submission.css" rel="stylesheet" type="text/css">
+	<link href="../admin/main.css" rel="stylesheet" type="text/css">
 </head>
 <body style="margin: 15px;">
 <f:view>
 <h:form id="main">
 	<%@ include file="../top-logo-bar.jsp" %>
-	<%@ include file="submission-top-bar.jsp" %>
+	<table cellpadding="0" cellspacing="0">
+		<tr>
+			<td class="step-indicator-active-middle">Type of contribution</td>
+			<td class="step-indicator-left">Your voyage information</td>
+			<td class="step-indicator-left">Your sources</td>
+			<td class="step-indicator-middle">Summary</td>		
+		</tr>
+	</table>
 	<br>
 
 	<h1>Select voyages for merging</h1>

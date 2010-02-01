@@ -17,12 +17,19 @@
 <f:view>
 <h:form id="main">
 	<%@ include file="../top-logo-bar.jsp" %>
-	<%@ include file="submission-top-bar.jsp" %>
+	<table cellpadding="0" cellspacing="0">
+		<tr>
+			<td class="step-indicator-left">Type of contribution</td>
+			<td class="step-indicator-left">Your voyage information</td>
+			<td class="step-indicator-active-middle">Your sources</td>
+			<td class="step-indicator-middle">Summary</td>		
+		</tr>
+</table>
 	
 	<br>
 	
-	<h1><h:outputText value="Specify sources for your submission" rendered="#{SubmissionBean.submissionType==1}"/></h1>
-	<h1><h:outputText value="Specify additional sources" rendered="#{SubmissionBean.submissionType!=1}"/></h1>	
+	<h1><h:outputText value="Specify sources for your contribution" rendered="#{SubmissionBean.submissionType==1}"/></h1>
+	<h1><h:outputText value="Specify sources for your contribution" rendered="#{SubmissionBean.submissionType!=1}"/></h1>	
 	<br>
 	
 	<table>

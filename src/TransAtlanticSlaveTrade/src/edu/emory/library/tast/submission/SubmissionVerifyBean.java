@@ -2,6 +2,7 @@ package edu.emory.library.tast.submission;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -10,6 +11,8 @@ import edu.emory.library.tast.common.grideditor.Column;
 import edu.emory.library.tast.common.grideditor.Row;
 import edu.emory.library.tast.common.grideditor.RowGroup;
 import edu.emory.library.tast.common.grideditor.Values;
+import edu.emory.library.tast.common.grideditor.textbox.TextboxIntegerAdapter;
+import edu.emory.library.tast.util.JsfUtils;
 
 public class SubmissionVerifyBean {
 
@@ -41,9 +44,52 @@ public class SubmissionVerifyBean {
 	}
 
 	public Column[] getVerifyColumns() {
-		columns = this.submissionBean.getColumns();
-		Column updatedColumn = new Column(columns[columns.length - 1].getName(),
-				columns[columns.length - 1].getLabel(), true, columns[columns.length - 1].getCopyToColumn(),
+		if (this.submissionBean.getSubmissionType() == SubmissionBean.SUBMISSION_TYPE_NEW) {
+
+			columns = new Column[] { new Column(SubmissionBean.CHANGED_VOYAGE,
+					SubmissionBean.CONTRIBUTOR_LABEL, false) };
+
+		} else if (this.submissionBean.getSubmissionType() == SubmissionBean.SUBMISSION_TYPE_EDIT) {
+
+			columns = new Column[] {
+
+					new Column(SubmissionBean.ORIGINAL_VOYAGE, "Voyageid "
+							+ String.valueOf(this.submissionBean
+									.getSelectedVoyageForEdit().getVoyageId()),
+							true, false),
+
+					new Column(SubmissionBean.CHANGED_VOYAGE,
+							SubmissionBean.CONTRIBUTOR_LABEL, true, false) };
+
+		} else if (this.submissionBean.getSubmissionType() == SubmissionBean.SUBMISSION_TYPE_MERGE) {
+
+			Column columnstemp[] = new Column[this.submissionBean
+					.getSelectedVoyagesForMerge().size() + 1];
+
+			for (int i = 0; i < this.submissionBean
+					.getSelectedVoyagesForMerge().size(); i++) {
+				SelectedVoyageInfo info = (SelectedVoyageInfo) this.submissionBean
+						.getSelectedVoyagesForMerge().get(i);
+				columnstemp[i] = new Column(SubmissionBean.MERGED_VOYAGE_PREFIX
+						+ i, "Voyageid " + String.valueOf(info.getVoyageId()),
+						true, false);
+			}
+
+			columnstemp[this.submissionBean.getSelectedVoyagesForMerge().size()] = new Column(
+					SubmissionBean.CHANGED_VOYAGE,
+					SubmissionBean.CONTRIBUTOR_LABEL, true);
+
+			columns = columnstemp;
+
+		} else {
+			JsfUtils.navigateTo("start");
+			columns = null;
+		}
+
+		Column updatedColumn = new Column(
+				columns[columns.length - 1].getName(),
+				columns[columns.length - 1].getLabel(), true,
+				columns[columns.length - 1].getCopyToColumn(),
 				columns[columns.length - 1].getCopyToLabel());
 		columns[columns.length - 1] = updatedColumn;
 		return this.columns;
@@ -97,17 +143,55 @@ public class SubmissionVerifyBean {
 	}
 
 	public Row[] getVerifyRowsSlave() {
-		Row[] rows = this.submissionBean.getRowsSlave();
+		Row[] rows = null;
+		int groupsNumber;
+		if (this.submissionBean.getSubmissionType() == SubmissionBean.SUBMISSION_TYPE_EDIT) {
+			groupsNumber = 2;
+			rows = new Row[groupsNumber * SubmissionBean.SLAVE_CHAR_ROWS.length];
+			for (int i = 0; i < SubmissionBean.SLAVE_CHAR_ROWS.length; i++) {
+				rows[i] = new Row(TextboxIntegerAdapter.TYPE,
+						SubmissionBean.SLAVE_CHAR_ROWS[i] + "_old",
+						SubmissionBean.SLAVE_CHAR_ROWS_LABELS[i], null,true,
+						"characteristics-old");
+			}
+		} else if (this.submissionBean.getSubmissionType() == SubmissionBean.SUBMISSION_TYPE_MERGE) {
+			groupsNumber = this.submissionBean.getSelectedVoyagesForMerge()
+					.size() + 1;
+			rows = new Row[groupsNumber * SubmissionBean.SLAVE_CHAR_ROWS.length];
+			int j = 0;
+			for (Iterator iter = this.submissionBean
+					.getSelectedVoyagesForMerge().iterator(); iter.hasNext();) {
+				SelectedVoyageInfo element = (SelectedVoyageInfo) iter.next();
+				for (int i = 0; i < SubmissionBean.SLAVE_CHAR_ROWS.length; i++) {
+					rows[j++] = new Row(TextboxIntegerAdapter.TYPE,
+							SubmissionBean.SLAVE_CHAR_ROWS[i] + "_"
+									+ element.getVoyageId(),
+							SubmissionBean.SLAVE_CHAR_ROWS_LABELS[i], null,true,
+							"characteristics-" + element.getVoyageId());
+				}
+			}
+		} else {
+			groupsNumber = 1;
+			rows = new Row[SubmissionBean.SLAVE_CHAR_ROWS.length];
+		}
+		for (int i = 0; i < SubmissionBean.SLAVE_CHAR_ROWS.length; i++) {
+			rows[i + (groupsNumber - 1) * SubmissionBean.SLAVE_CHAR_ROWS.length] = new Row(
+					TextboxIntegerAdapter.TYPE,
+					SubmissionBean.SLAVE_CHAR_ROWS[i],
+					SubmissionBean.SLAVE_CHAR_ROWS_LABELS[i], null,true,
+					"characteristics");
+			rows[i + (groupsNumber - 1) * SubmissionBean.SLAVE_CHAR_ROWS.length]
+					.setNoteEnabled(true);
+		}
+		
 		for (int i = 0; i < SubmissionBean.SLAVE_CHAR_ROWS.length; i++) {
 			Row newRow = new Row(
 					rows[rows.length - 1 - i].getType(), 
 					rows[rows.length - 1 - i].getName(),
 					rows[rows.length - 1 - i].getLabel(),
 					rows[rows.length - 1 - i].getDescription(),
-					rows[rows.length - 1 - i].getGroupName(),
 					true,
-					rows[rows.length - 1 - i].getCopyToLabel(),
-					rows[rows.length - 1 - i].getCopyToRow());
+					rows[rows.length - 1 - i].getGroupName());
 			newRow.setNoteEnabled(true);
 			rows[rows.length - 1 - i] = newRow;
 		}

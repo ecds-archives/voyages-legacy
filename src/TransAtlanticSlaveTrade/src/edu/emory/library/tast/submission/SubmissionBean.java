@@ -314,6 +314,14 @@ public class SubmissionBean
 		
 	}
 	
+	public SelectedVoyageInfo getSelectedVoyageForEdit() {
+		return selectedVoyageForEdit;
+	}
+
+	public void setSelectedVoyageForEdit(SelectedVoyageInfo selectedVoyageForEdit) {
+		this.selectedVoyageForEdit = selectedVoyageForEdit;
+	}
+
 	private boolean loadVoyagesForMerge()
 	{
 		

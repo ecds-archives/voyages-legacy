@@ -35,6 +35,16 @@ public class Row
 		this.copyToRow = copyToRowName;
 		this.copyToLabel = copyToLabel;
 	}
+	
+	public Row(String type, String name, String label, String description, boolean readOnly, String groupName)
+	{
+		this.type = type;
+		this.name = name;
+		this.label = label;
+		this.description = description;
+		this.groupName = groupName;
+		this.readOnly = readOnly;
+	}
 
 	public Row(String type, String name, String label, String description)
 	{
