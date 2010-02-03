@@ -7,6 +7,7 @@ public abstract class AbstractTextFieldType extends FieldType
 	
 	private String cssClass = null;
 	private String cssStyle = null;
+	protected String inputSize = null;
 
 	public AbstractTextFieldType(String name)
 	{
@@ -24,6 +25,14 @@ public abstract class AbstractTextFieldType extends FieldType
 		super(name);
 		this.cssClass = cssClass;
 		this.cssStyle = cssStyle;
+	}
+
+	public String getInputSize() {
+		return inputSize;
+	}
+
+	public void setInputSize(String inputSize) {
+		this.inputSize = inputSize;
 	}
 
 	public String getCssClass()

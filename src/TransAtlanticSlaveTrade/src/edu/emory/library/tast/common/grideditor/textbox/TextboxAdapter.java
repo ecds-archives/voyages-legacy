@@ -52,6 +52,7 @@ public class TextboxAdapter extends Adapter
 		writer.writeAttribute("type", "text", null);
 		writer.writeAttribute("name", getInputName(inputPrefix), null);
 		JsfUtils.writeParamIfNotDefault(writer, "maxlength", textboxFieldType.getMaxLength(), Integer.MAX_VALUE);
+		JsfUtils.writeParamIfNotNull(writer, "size", textboxFieldType.getInputSize());
 		JsfUtils.writeParamIfNotNull(writer, "class", textboxFieldType.getCssClass());
 		JsfUtils.writeParamIfNotNull(writer, "style", textboxFieldType.getCssStyle());
 		writer.writeAttribute("value", (textboxValue != null ? textboxValue.getText(): null), null);

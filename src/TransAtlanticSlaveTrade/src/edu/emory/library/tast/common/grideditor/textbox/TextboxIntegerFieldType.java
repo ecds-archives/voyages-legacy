@@ -7,6 +7,7 @@ public class TextboxIntegerFieldType extends TextboxFieldType
 	public TextboxIntegerFieldType(String name)
 	{
 		super(name);
+		this.inputSize = "10";
 	}
 
 	public String getType()
