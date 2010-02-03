@@ -141,6 +141,8 @@ public class SubmissionBean
 		Transaction t = session.beginTransaction();
 		try {
 			cleanSubmission(session);
+			lookedUpVoyage = null;
+			lookupVoyageId = null;
 			if (submissionType != SUBMISSION_TYPE_EDIT) {
 				submissionType = SUBMISSION_TYPE_EDIT;
 				lookupVoyageId = null;
@@ -149,8 +151,10 @@ public class SubmissionBean
 				cleanSubmission(session);
 			} else {
 				if (selectedVoyageForEdit != null) {
-					lookedUpVoyage = selectedVoyageForEdit;
-					lookupVoyageId = new Integer(selectedVoyageForEdit.getVoyageId());
+
+					lookupPerformed = false;
+//					lookedUpVoyage = selectedVoyageForEdit;
+//					lookupVoyageId = new Integer(selectedVoyageForEdit.getVoyageId());
 				}
 			}
 		} finally {
@@ -164,10 +168,14 @@ public class SubmissionBean
 		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 		try {
+
+
 			cleanSubmission(session);
 			lookupPerformed = false;
+			lookupVoyageId = null;
 			lookedUpVoyage = null;
 			errorSelectAtLeastTwo = false;
+			selectedVoyagesForMerge.clear();
 			if (submissionType != SUBMISSION_TYPE_MERGE) {
 				submissionType = SUBMISSION_TYPE_MERGE;
 				expandedGridRows = null;
