@@ -55,7 +55,7 @@
 	<br>
 	<br>
 	
-	<h1>Verify submitted sources</h1>
+	<h1>Submitted sources</h1>
 	
 	<br>
 	
