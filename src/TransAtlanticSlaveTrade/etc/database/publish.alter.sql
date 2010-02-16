@@ -34,3 +34,9 @@ ALTER TABLE submissions_attribute_notes ADD CONSTRAINT fk_submissions_merge_note
 
 ALTER TABLE submissions_attribute_notes DROP CONSTRAINT fk_submissions_attribute_notes_to_submissions_edited_voyage;
 ALTER TABLE submissions_attribute_notes ADD CONSTRAINT fk_submissions_attribute_notes_to_submissions_edited_voyage FOREIGN KEY (edited_voyage_id) REFERENCES submissions_edited_voyages (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE CASCADE;
+
+ALTER TABLE submission_editors DROP CONSTRAINT fk_submission_users_to_edited_voyages;
+ALTER TABLE submission_editors
+  ADD CONSTRAINT fk_submission_users_to_edited_voyages FOREIGN KEY (edited_voyage_id)
+      REFERENCES submissions_edited_voyages (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE CASCADE;

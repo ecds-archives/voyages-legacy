@@ -738,19 +738,15 @@ public class AdminSubmissionBean {
 			this.publishing = true;
 		}
 		
-		if (this.revisionName == null || "".equals(this.revisionName)) {
-			this.message = "Revision name cannot be empty!";
-			return null;
-		}
 		
 		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 
 		try {
 			System.out.println("publish");
-			SQLQuery query = session.createSQLQuery("select publish('" + this.revisionName.replaceAll("'", "''") + "');");
+			SQLQuery query = session.createSQLQuery("select publish();");
 			query.list();
-			this.message = "New revision named '" + this.revisionName + "' has just been published.";
+			this.message = "New revision has just been published.";
 			this.revisionName = null;
 		} catch (Exception e) {
 			e.printStackTrace();
