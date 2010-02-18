@@ -324,16 +324,11 @@ public class AdminSubmissionBean {
 		TastDbConditions c = new TastDbConditions();
 		c.addCondition(Submission.getAttribute("submitted"), new Boolean(true), TastDbConditions.OP_EQUALS);		
 		if (this.requestStatus.equals("2")) {
-			c.addCondition(Submission.getAttribute("editorVoyage"), null, TastDbConditions.OP_IS_NOT);
-			c.addCondition(Submission.getAttribute("solved"), new Boolean(false), TastDbConditions.OP_EQUALS);
-		} if (this.requestStatus.equals("5")) {
-			c.addCondition(Submission.getAttribute("editorVoyage"), null, TastDbConditions.OP_IS_NOT);
-			c.addCondition(Submission.getAttribute("solved"), new Boolean(false), TastDbConditions.OP_EQUALS);
-		}else if (this.requestStatus.equals("3")) {
-			c.addCondition(Submission.getAttribute("editorVoyage"), null, TastDbConditions.OP_IS);
-			c.addCondition(Submission.getAttribute("solved"), new Boolean(false), TastDbConditions.OP_EQUALS);
+			c.addCondition(Submission.getAttribute("solved"),
+					new Boolean(false), TastDbConditions.OP_EQUALS);
 		} else if (this.requestStatus.equals("4")) {
-			c.addCondition(Submission.getAttribute("solved"), new Boolean(true), TastDbConditions.OP_EQUALS);
+			c.addCondition(Submission.getAttribute("solved"),
+					new Boolean(true), TastDbConditions.OP_EQUALS);
 		}
 		if (this.requestType.equals("1") || this.requestType.equals("2")) {
 			TastDbQuery q = new TastDbQuery("SubmissionNew", c);
@@ -343,6 +338,11 @@ public class AdminSubmissionBean {
 				if (!valid(submission)) {
 					continue;
 				}
+				
+				if (!validRestAttribute(this.requestStatus, submission)){
+					continue;
+				}
+				
 				String lastCol = submission.isSolved() ? "Solved" : "Under review";
 				if (submission.isSolved()) {
 					if (submission.isAccepted()) {
@@ -360,18 +360,24 @@ public class AdminSubmissionBean {
 						.getNewVoyage().getVoyage().getIid());
 		
 				//display the rows according  to the two inputs
-				if (this.requestStatus.equals("1") || this.requestStatus.equals("3") || this.requestStatus.equals("4") || (this.requestStatus.equals("2") && !editorsFinished(submission)) || (this.requestStatus.equals("5") && editorsFinished(submission))) {
+//				if (this.requestStatus.equals("1") || this.requestStatus.equals("3") || this.requestStatus.equals("4") || (this.requestStatus.equals("2") && !editorsFinished(submission)) || (this.requestStatus.equals("5") && editorsFinished(submission))) {
 					if (!this.authenticateduser.isEditor()) {
 						l.add(new GridRow(REQUEST_NEW_PREFIX
 								+ submission.getId(), new String[] {
-								"New voyage",
-								submission.getUser().getUserName(),
-								formatter.format(submission.getTime()),
-								adminVId_str,
-								this.getEditors(submission),
-								this.reviewedByEditor(submission, null) ? "Yes"
-										+ this.infoString(submission) : "No",
-								lastCol }));
+											"New voyage",
+											submission.getUser().getUserName(),
+											formatter.format(submission
+													.getTime()),
+											adminVId_str,
+											this.getEditors(submission),
+											this.reviewedByEditor(submission,
+													null) ? "Yes"
+													+ this
+															.infoString(submission)
+													: "No"
+															+ this
+																	.infoString(submission),
+											lastCol }));
 					} else {
 						l.add(new GridRow(REQUEST_NEW_PREFIX
 								+ submission.getId(),
@@ -387,7 +393,7 @@ public class AdminSubmissionBean {
 												this.authenticateduser) ? "Yes"
 												: "No" }));
 					}
-				}
+//				}
 			}
 		}
 
@@ -399,6 +405,11 @@ public class AdminSubmissionBean {
 				if (!valid(submission)) {
 					continue;
 				}
+				
+				if (!validRestAttribute(this.requestStatus, submission)){
+					continue;
+				}
+				
 				String lastCol = submission.isSolved() ? "Solved" : "Under review";
 				if (submission.isSolved()) {
 					if (submission.isAccepted()) {
@@ -411,19 +422,26 @@ public class AdminSubmissionBean {
 						.getOldVoyage().getVoyage().getIid());
 				
 				//display the rows according  to the two inputs
-				if (this.requestStatus.equals("1") || this.requestStatus.equals("3")|| this.requestStatus.equals("4") || (this.requestStatus.equals("2") && !editorsFinished(submission)) || (this.requestStatus.equals("5") && editorsFinished(submission))) {
+//				if (this.requestStatus.equals("1") || this.requestStatus.equals("3")|| this.requestStatus.equals("4") || (this.requestStatus.equals("2") && !editorsFinished(submission)) || (this.requestStatus.equals("5") && editorsFinished(submission))) {
 					if (!this.authenticateduser.isEditor()) {
 						l.add(new GridRow(REQUEST_EDIT_PREFIX
 								+ submission.getId(), new String[] {
-								"Edit voyage",
-								submission.getUser().getUserName(),
-								formatter.format(submission.getTime()),
-								submission.getOldVoyage().getVoyage()
-										.getVoyageid().toString(),
-								this.getEditors(submission),
-								this.reviewedByEditor(submission, null) ? "Yes"
-										+ this.infoString(submission) : "No",
-								lastCol }));
+											"Edit voyage",
+											submission.getUser().getUserName(),
+											formatter.format(submission
+													.getTime()),
+											submission.getOldVoyage()
+													.getVoyage().getVoyageid()
+													.toString(),
+											this.getEditors(submission),
+											this.reviewedByEditor(submission,
+													null) ? "Yes"
+													+ this
+															.infoString(submission)
+													: "No"
+															+ this
+																	.infoString(submission),
+											lastCol }));
 					} else {
 						l.add(new GridRow(REQUEST_EDIT_PREFIX
 								+ submission.getId(),
@@ -440,7 +458,7 @@ public class AdminSubmissionBean {
 												this.authenticateduser) ? "Yes"
 												: "No" }));
 					}
-				}
+//				}
 			}
 		}
 
@@ -452,6 +470,11 @@ public class AdminSubmissionBean {
 				if (!valid(submission)) {
 					continue;
 				}
+				
+				if (!validRestAttribute(this.requestStatus, submission)){
+					continue;
+				}
+				
 				String involvedStr = "";
 				Set involved = submission.getMergedVoyages();
 				boolean first = true;
@@ -484,22 +507,27 @@ public class AdminSubmissionBean {
 					shipName=suggestVoyage.getShipname();
 				
 				//display the rows according  to the two inputs
-				if (this.requestStatus.equals("1") || this.requestStatus.equals("3") || this.requestStatus.equals("4") || (this.requestStatus.equals("2") && !editorsFinished(submission)) || (this.requestStatus.equals("5") && editorsFinished(submission))) {
+//				if (this.requestStatus.equals("1") || this.requestStatus.equals("3") || this.requestStatus.equals("4") || (this.requestStatus.equals("2") && !editorsFinished(submission)) || (this.requestStatus.equals("5") && editorsFinished(submission))) {
 					if (!this.authenticateduser.isEditor()) {
 						l.add(new GridRow(REQUEST_MERGE_PREFIX
 								+ submission.getId(), new String[] {
-								"Merge voyages",
-								submission.getUser().getUserName(),
-								formatter.format(submission.getTime()),
-								involvedStr,
-								this.getEditors(submission),
-								this.reviewedByEditor(submission, null) ? "Yes"
-										+ this.infoString(submission) : "No",
-								lastCol }));
+											"Merge voyages",
+											submission.getUser().getUserName(),
+											formatter.format(submission
+													.getTime()),
+											involvedStr,
+											this.getEditors(submission),
+											this.reviewedByEditor(submission,
+													null) ? "Yes"
+													+ this
+															.infoString(submission)
+													: "No"
+															+ this
+																	.infoString(submission),
+											lastCol }));
 					} else {
 
-						l
-								.add(new GridRow(
+						l.add(new GridRow(
 										REQUEST_MERGE_PREFIX
 												+ submission.getId(),
 										new String[] {
@@ -516,7 +544,7 @@ public class AdminSubmissionBean {
 														this.authenticateduser) ? "Yes"
 														: "No" }));
 					}
-				}
+//				}
 			}
 		}
 		t.commit();
@@ -525,32 +553,61 @@ public class AdminSubmissionBean {
 		return (GridRow[]) l.toArray(new GridRow[] {});
 	}
 
+	private boolean validRestAttribute(String requestStatus,
+			Submission submission) {
+		if (requestStatus.equals("3")) {
+			if (submission.getSubmissionEditors().size() != 0) {
+				return false;
+			}
+		} else if (requestStatus.equals("5")) {
+			if (!reviewedByEditor(submission,
+					this.authenticateduser.isEditor() ? this.authenticateduser
+							: null))
+				return false;
+		}
+		return true;
+	}
+
 	private String infoString(Submission submission) {
 		
 		int all = 0;
 		int done = 0;
-		for (Iterator iter = submission.getSubmissionEditors().iterator(); iter.hasNext();) {
+		for (Iterator iter = submission.getSubmissionEditors().iterator(); iter
+				.hasNext();) {
 			SubmissionEditor element = (SubmissionEditor) iter.next();
 			all++;
 			if (element.isFinished()) {
 				done++;
 			}
 		}
-		
-		StringBuffer buffer = new StringBuffer();
-		buffer.append(" (");
-		buffer.append(done).append(" out of ").append(all);
-		buffer.append(")");
-		return buffer.toString();
+		if (all != 0) {
+			StringBuffer buffer = new StringBuffer();
+			buffer.append(" (");
+			buffer.append(done).append(" out of ").append(all);
+			buffer.append(")");
+			return buffer.toString();
+		} else {
+			return "";
+		}
 	}
 
 	private boolean reviewedByEditor(Submission submission, User user) {
-		for (Iterator iter = submission.getSubmissionEditors().iterator(); iter.hasNext();) {
-			SubmissionEditor element = (SubmissionEditor) iter.next();
-			if ((user == null || user.getId().equals(element.getUser().getId())) && element.getEditedVoyage() != null && element.getEditedVoyage().getVoyage() != null) {
-				return true;
+		if (user == null) {
+			return editorsFinished(submission);
+		} else {
+			for (Iterator iter = submission.getSubmissionEditors().iterator(); iter
+					.hasNext();) {
+				SubmissionEditor element = (SubmissionEditor) iter.next();
+				if (user.getId().equals(element.getUser().getId())) {
+					if (element.isFinished() == true) {
+						return true;
+					} else {
+						return false;
+					}
+				}
 			}
 		}
+
 		return false;
 	}
 	
@@ -1056,6 +1113,19 @@ public class AdminSubmissionBean {
 		return null;
 	}
 	
+	public String getFilePublishedandApprovedData()	{		
+		boolean useSQL = AppConfig.getConfiguration().getBoolean(AppConfig.DATABASE_USE_SQL);
+		
+		Session session = HibernateConn.getSession();
+		Transaction t = session.beginTransaction();
+				
+		TastDbQuery query = this.getQueryFilePublishedandApprovedData();		
+		CSVUtils.writeResponse(session, query, false, true);
+		t.commit();
+		session.close();
+		return null;		
+	}
+	
 	public String getFileAllData()	{		
 		boolean useSQL = AppConfig.getConfiguration().getBoolean(AppConfig.DATABASE_USE_SQL);
 		
@@ -1069,7 +1139,26 @@ public class AdminSubmissionBean {
 		return null;		
 	}
 	
-	private TastDbQuery getQueryFileAllData() {		
+	private TastDbQuery getQueryFileAllData() {
+
+		TastDbConditions cond = new TastDbConditions();
+		
+		TastDbQuery q = new TastDbQuery(new String[] {"Voyage"}, new String[] {}, cond);	
+		q.setOrderBy(new Attribute[] {Voyage.getAttribute("voyageid")});
+		q.setOrder(TastDbQuery.ORDER_ASC);
+		String[] str = 
+			{"voyageid", "suggestion", "revision", "iid", "adlt1imp", "adlt2imp", "adlt3imp", "adpsale1", "adpsale2", "adult1", "adult2", "adult3", "adult4", "adult5", "adult6", "adult7", "arrport", "arrport2", "boy1", "boy2", "boy3", "boy4", "boy5", "boy6", "boy7", "boyrat1", "boyrat3", "boyrat7", "captaina", "captainb", "captainc", "chil1imp", "chil2imp", "chil3imp", "child1", "child2", "child3", "child4", "child5", "child6", "child7", "chilrat1", "chilrat3", "chilrat7", "constreg", "crew", "crew1", "crew2", "crew3", "crew4", "crew5", "crewdied", "datedepa", "datedepb", "datedepc", "d1slatra", "d1slatrb", "d1slatrc", "dlslatra", "dlslatrb", "dlslatrc", "ddepam", "ddepamb", "ddepamc", "datarr32", "datarr33", "datarr34", "datarr36", "datarr37", "datarr38", "datarr39", "datarr40", "datarr41", "datarr43", "datarr44", "datarr45", "datedep", "datebuy", "dateleftafr", "dateland1", "dateland2", "dateland3", "datedepam", "dateend", "deptregimp", "deptregimp1", "embport", "embport2", "embreg", "embreg2", "evgreen", "fate", "fate2", "fate3", "fate4", "female1", "female2", "female3", "female4", "female5", "female6", "female7", "feml1imp", "feml2imp", "feml3imp", "girl1", "girl2", "girl3", "girl4", "girl5", "girl6", "girl7", "girlrat1", "girlrat3", "girlrat7", "guns", "infant1", "infant3", "infant4", "jamcaspr", "majbuypt", "majbyimp", "majbyimp1", "majselpt", "male1", "male1imp", "male2", "male2imp", "male3", "male3imp", "male4", "male5", "male6", "male7", "malrat1", "malrat3", "malrat7", "men1", "men2", "men3", "men4", "men5", "men6", "men7", "menrat1", "menrat3", "menrat7", "mjbyptimp", "mjselimp", "mjselimp1", "mjslptimp", "natinimp", "national", "ncar13", "ncar15", "ncar17", "ndesert", "npafttra", "nppretra", "npprior", "ownera", "ownerb", "ownerc", "ownerd", "ownere", "ownerf", "ownerg", "ownerh", "owneri", "ownerj", "ownerk", "ownerl", "ownerm", "ownern", "ownero", "ownerp", "plac1tra", "plac2tra", "plac3tra", "placcons", "placreg", "portdep", "portret", "ptdepimp", "regarr", "regarr2", "regdis1", "regdis2", "regdis3", "regem1", "regem2", "regem3", "regisreg", "resistance", "retrnreg", "retrnreg1", "rig", "saild1", "saild2", "saild3", "saild4", "saild5", "shipname", "sla1port", "slaarriv", "sladafri", "sladamer", "sladvoy", "slamimp", "slas32", "slas36", "slas39", "slavema1", "slavema3", "slavema7", "slavemx1", "slavemx3", "slavemx7", "slavmax1", "slavmax3", "slavmax7", "slaximp", "slinten2", "slintend", "sourcea", "sourceb", "sourcec", "sourced", "sourcee", "sourcef", "sourceg", "sourceh", "sourcei", "sourcej", "sourcek", "sourcel", "sourcem", "sourcen", "sourceo", "sourcep", "sourceq", "sourcer", "tonmod", "tonnage", "tontype", "tslavesd", "tslavesp", "tslmtimp", "voy1imp", "voy2imp", "voyage", "vymrtimp", "vymrtrat", "women1", "women2", "women3", "women4", "women5", "women6", "women7", "womrat1", "womrat3", "womrat7", "xmimpflag", "year10", "year100", "year25", "year5", "yearaf", "yearam", "yeardep", "yrcons", "yrreg"};
+		List<String> arrList = Arrays.asList(str);  
+				
+		for (Iterator iterator = arrList.iterator(); iterator.hasNext();) {
+			String attr  = (String) iterator.next();
+			q.addPopulatedAttribute(Voyage.getAttribute(attr));
+		}
+		
+		return q;	
+	}
+
+	private TastDbQuery getQueryFilePublishedandApprovedData() {		
 		Integer[] revArr = {1, -1};
 		TastDbConditions cond = new TastDbConditions();
 		cond.addCondition(Voyage.getAttribute("revision"), revArr, TastDbConditions.OP_IN);
@@ -1107,28 +1196,28 @@ public class AdminSubmissionBean {
 	}
 	
 	//Checks to see if all editors are done
-	public boolean editorsFinished(Submission sub){
-	boolean ret = true;
-	
-	Set editors = sub.getSubmissionEditors();
-	
-	Iterator itt = editors.iterator();
-	
-	if(!itt.hasNext()) 
-	{
-		return false;
-	}
-	
-	while(itt.hasNext())
-	{
-		SubmissionEditor se = (SubmissionEditor) itt.next();
-		
-		if(!se.isFinished()) {ret=false;}		
-		
-	}
-	
-	return ret;
-	
+	public boolean editorsFinished(Submission sub) {
+		boolean ret = true;
+
+		Set editors = sub.getSubmissionEditors();
+
+		Iterator itt = editors.iterator();
+
+		if (!itt.hasNext()) {
+			return false;
+		}
+
+		while (itt.hasNext()) {
+			SubmissionEditor se = (SubmissionEditor) itt.next();
+
+			if (!se.isFinished()) {
+				ret = false;
+			}
+
+		}
+
+		return ret;
+
 	}
 	
 	public void impute()

@@ -101,7 +101,7 @@
 		<h:commandButton value="Add reviewer"
 			rendered="#{AdminSubmissionBean.isChiefEditor && !AdminSubmissionBean.addingEditor}"
 			action="#{AdminSubmissionBean.addEditor}" />
-		<t:htmlTag value="div" rendered="#{AdminSubmissionBean.addingEditor}"
+		<t:htmlTag value="div" rendered="#{AdminSubmissionBean.addingEditor&&AdminSubmissionBean.isChiefEditor}"
 			style="border: 2px solid #CCCCCC; width: 400px; padding: 5px;">
 			<h:selectOneMenu value="#{AdminSubmissionBean.newEditorUser}">
 				<f:selectItems value="#{SubmissionUsersBean.editorUsers}" />
