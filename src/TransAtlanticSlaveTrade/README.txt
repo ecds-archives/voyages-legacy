@@ -19,8 +19,11 @@ Basic deploy
 8.	Move new war file into webapps directory
 9.	Restart tomcat
 
-For instructions on how to import / refresh data into the voyages table see the following URL
+For instructions on how to do as mass update of data in the voyages table see the following URL
 https://techknowhow.library.emory.edu/slave-voyages-database/import-refresh-data-voyages-table 
+
+For instructions on how to delete and reload all voyage data see this link:
+https://techknowhow.library.emory.edu/slave-voyages-database/delete-and-import-all-voyage-info
 
 
 

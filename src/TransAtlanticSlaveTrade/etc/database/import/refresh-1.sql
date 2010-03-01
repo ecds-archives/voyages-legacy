@@ -1,0 +1,15 @@
+delete from submission_editors;
+delete from submission_sources;
+delete from submissions_attribute_notes;
+delete from submissions_edit;
+delete from submissions_edited_voyages;
+delete from submissions_merge;
+delete from submissions_merge_voyages;
+delete from submissions_new;
+delete from submissions_sources_books;
+delete from submissions_sources_others;
+delete from submissions_sources_papers;
+delete from submissions_sources_primary;
+delete from submissions_sources;
+delete from submissions;
+delete from voyages;
