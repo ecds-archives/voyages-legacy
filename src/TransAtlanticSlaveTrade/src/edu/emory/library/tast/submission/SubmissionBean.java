@@ -124,6 +124,7 @@ public class SubmissionBean
 		Transaction t = session.beginTransaction();
 		try {
 			cleanSubmission(session);
+			initNewVoyage();
 			if (submissionType != SUBMISSION_TYPE_NEW) {
 				submissionType = SUBMISSION_TYPE_NEW;
 				expandedGridRows = null;
@@ -1211,5 +1212,8 @@ public class SubmissionBean
 		this.submissionType = type;
 	}
 		
-	
+
+	public Boolean getIsNewType(){
+		return new Boolean(submissionType == SUBMISSION_TYPE_NEW);
+	}
 }

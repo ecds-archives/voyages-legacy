@@ -245,6 +245,9 @@
 		<property name="adult5" column="adult5" />
 		<property name="adult4" column="adult4" />
 		<property name="infant4" column="infant4" />
+		<property name="infant2" column="infant2" />
+		<property name="infant5" column="infant5" />
+		<property name="infant6" column="infant6" />
 		<property name="nppretra" column="nppretra" />
 		<property name="tslavesp" column="tslavesp" />
 		<property name="sladvoy" column="sladvoy" />

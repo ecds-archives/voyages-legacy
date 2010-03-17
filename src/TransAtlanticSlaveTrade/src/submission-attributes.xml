@@ -61,17 +61,17 @@
 			<attribute name="guns"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="ownera" group="Ship, nation, owners" editable="Y" type="string" userLabel="First or managing owner of venture">
+	<submission-attributes name="ownera" group="Ship, nation, owners" editable="Y" type="string" userLabel="First or managing owner of venture"  comment="Enter last name , first name.">
 		<attributes>
 			<attribute name="ownera"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="ownerb" group="Ship, nation, owners" editable="Y" type="string" userLabel="Second owner of venture">
+	<submission-attributes name="ownerb" group="Ship, nation, owners" editable="Y" type="string" userLabel="Second owner of venture"  comment="Enter last name , first name.">
 		<attributes>
 			<attribute name="ownerb"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="owners" group="Ship, nation, owners" editable="Y" type="string" userLabel="Other owners">
+	<submission-attributes name="owners" group="Ship, nation, owners" editable="Y" type="string" userLabel="Other owners"  comment="Enter last name , first name.">
 		<attributes>
 			<attribute name="ownerc"/>
 			<attribute name="ownerd"/>
@@ -490,17 +490,17 @@
 		</attributes>
 	</submission-attributes>
     <!--###############################################Captain and crew############################################## -->
-	<submission-attributes name="captaina" group="Captain and crew" editable="Y" type="string" userLabel="First captain of voyage">
+	<submission-attributes name="captaina" group="Captain and crew" editable="Y" type="string" userLabel="First captain of voyage" comment="Enter last name , first name.">
 		<attributes>
 			<attribute name="captaina"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="captainb" group="Captain and crew" editable="Y" type="string" userLabel="Second captain of voyage">
+	<submission-attributes name="captainb" group="Captain and crew" editable="Y" type="string" userLabel="Second captain of voyage" comment="Enter last name , first name.">
 		<attributes>
 			<attribute name="captainb"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="captainc" group="Captain and crew" editable="Y" type="string" userLabel="Third captain of voyage">
+	<submission-attributes name="captainc" group="Captain and crew" editable="Y" type="string" userLabel="Third captain of voyage" comment="Enter last name , first name.">
 		<attributes>
 			<attribute name="captainc"/>
 		</attributes>
@@ -530,7 +530,7 @@
 				<attribute name="crew5"/>
 			</attributes>
 	</submission-attributes>
-	<submission-attributes name="crew" group="Captain and crew" editable="Y" type="integer" userLabel="Number of crew unspecified">
+	<submission-attributes name="crew" group="Captain and crew" editable="Y" type="integer" userLabel="Number of crew if voyage stage unknow">
 			<attributes>
 				<attribute name="crew"/>
 			</attributes>
@@ -1065,9 +1065,9 @@
 					<attribute name="infant4"/>
 				</attributes>
 	</submission-attributes>
-	<submission-attributes name="infant3" key="d1,infant" group="Slaves (Age and Sex)" editable="Y" type="integer" userLabel="Infants embarked at third port in Africa">
+	<submission-attributes name="infant5" key="e3,infant" group="Slaves (Age and Sex)" editable="Y" type="integer" userLabel="Infants embarked at third port in Africa">
 				<attributes>
-					<attribute name="infant3"/>
+					<attribute name="infant5"/>
 				</attributes>
 	</submission-attributes>
 	<submission-attributes name="infant2" key="died,infant" group="Slaves (Age and Sex)" editable="Y" type="integer" userLabel="Infants died on middle passage">
@@ -1075,9 +1075,9 @@
 					<attribute name="infant2"/>
 				</attributes>
 	</submission-attributes>
-	<submission-attributes name="infant5" key="e3,infant" group="Slaves (Age and Sex)" editable="Y" type="integer" userLabel="Infants at first disembarkation*">
+	<submission-attributes name="infant3" key="d1,infant" group="Slaves (Age and Sex)" editable="Y" type="integer" userLabel="Infants at first disembarkation*">
 				<attributes>
-					<attribute name="infant5"/>
+					<attribute name="infant3"/>
 				</attributes>
 	</submission-attributes>
 	<submission-attributes name="infant6" key="d2,infant" group="Slaves (Age and Sex)" editable="Y" type="integer" userLabel="Infants at second disembarkation*">
