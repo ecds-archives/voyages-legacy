@@ -23,7 +23,7 @@
 <body>
 <f:view>
 	<h:form id="main">
-
+		<I><h:outputText rendered="#{!AdminSubmissionBean.isChiefEditor}" value="Click &quot;Copy&quot; link to copy over existing information or adding new information to the field."/></I>
 		<h2>1. Request details</h2>
 
 		<s:gridEditor rows="#{AdminSubmissionBean.rows}"

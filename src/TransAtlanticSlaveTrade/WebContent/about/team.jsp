@@ -115,6 +115,10 @@
 									<span class="place">(Weston, Massachusetts, USA)</span>
 								</li>
 								<li>
+									<span class="person">Xin Zhang</span> &ndash;
+									<span class="function">Programmer</span>
+								</li>
+								<li>
 									<span class="person">Liyuan Han</span> &ndash;
 									<span class="function">Programmer</span>
 								</li>
