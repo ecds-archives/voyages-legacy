@@ -56,9 +56,10 @@
 
 	<div style="margin-top: 10px; margin-bottom: 10px;">
 		<h:commandButton value="< Previous" action="#{SubmissionBean.goBackFromForm}"/>
-		<h:commandButton value="Save & logout" action="#{SubmissionBean.saveStateSubmission}"/>
+		<h:commandButton value="Save & Logout" action="#{SubmissionBean.saveStateSubmission}"/>
 		<h:commandButton value="Logout Without Saving" action="#{SubmissionBean.logoutOnly}"/>
-		<h:commandButton value="Next > " action="#{SubmissionBean.toSources}"/>
+		<h:commandButton value="Cancel Contribution & Logout" action="#{SubmissionBean.cancel}"/>
+		<h:commandButton value="Next & Save> " action="#{SubmissionBean.toSources}"/>
 	</div>
 
 </h:form>

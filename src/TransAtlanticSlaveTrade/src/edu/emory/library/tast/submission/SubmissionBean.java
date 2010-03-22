@@ -191,13 +191,16 @@ public class SubmissionBean
 	
 	private void cleanSubmission(Session session) {
 		if (this.submission != null && !this.submission.isSubmitted()) {
-			Submission localCopy = Submission.loadById(session, this.submission.getId());
+			Submission localCopy = Submission.loadById(session, this.submission
+					.getId());
+			if (localCopy != null) {
 				Set sources = localCopy.getSources();
 				for (Iterator iter = sources.iterator(); iter.hasNext();) {
 					SubmissionSource element = (SubmissionSource) iter.next();
 					session.delete(element);
 				}
 				session.delete(localCopy);
+			}
 		}
 		this.submission = null;
 	}
@@ -976,6 +979,49 @@ public class SubmissionBean
 	
 	public String logoutOnly() {
 		this.authenticatedUser = null;
+		Session sess = HibernateConn.getSession();
+		Transaction trans = sess.beginTransaction();
+		try {
+			if (this.submission != null) {
+				Submission submission = Submission.loadById(sess,
+						this.submission.getId());
+				submission.setSavedState(SUBMISSION_STATE);
+				sess.update(submission);
+			}
+		} finally {
+			trans.commit();
+			sess.close();
+		}
+		return null;
+	}
+	
+	public String cancel() {
+		this.authenticatedUser = null;
+		Session sess = HibernateConn.getSession();
+		Transaction trans = sess.beginTransaction();
+		try {
+			if (this.submission != null&& !this.submission.isSubmitted()) {
+				Submission submission = Submission.loadById(sess,
+						this.submission.getId());
+				if (submission != null) {
+					Set sources = submission.getSources();
+					for (Iterator iter = sources.iterator(); iter.hasNext();) {
+						SubmissionSource element = (SubmissionSource) iter.next();
+						sess.delete(element);
+					}
+					sess.delete(submission);
+				}
+			}
+		} finally {
+			trans.commit();
+			sess.close();
+		}
+
+		this.submission = null;
+		lookupPerformed = false;
+		lookedUpVoyage = null;
+		selectedVoyagesForMerge.clear();
+		
 		return null;
 	}
 	

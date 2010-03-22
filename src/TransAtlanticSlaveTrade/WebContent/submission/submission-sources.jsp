@@ -29,7 +29,8 @@
 	<br>
 	
 	<h1><h:outputText value="Specify sources for your contribution" rendered="#{SubmissionBean.submissionType==1}"/></h1>
-	<h1><h:outputText value="Specify sources for your contribution" rendered="#{SubmissionBean.submissionType!=1}"/></h1>	
+	<h1><h:outputText value="Specify sources for your contribution" rendered="#{SubmissionBean.submissionType!=1}"/></h1>
+	<I>To cancel this contribution, please click "Cancel Contribution" button at "Your voyage information" page</I>	
 	<br>
 	
 	<table>
@@ -247,7 +248,7 @@
 	<t:htmlTag value="div" rendered="#{SourcesBean.newSourceType==-1}">
 		<h:commandButton value="< Previous" action="back"/>
 		<h:commandButton value="Save & logout" action="#{SubmissionBean.saveStateSources}"/>
-		<h:commandButton value="Next > " action="done"/>
+		<h:commandButton value="Next & Save> " action="done"/>
 	</t:htmlTag>
 </h:form>
 </f:view>

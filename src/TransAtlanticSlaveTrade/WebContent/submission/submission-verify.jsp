@@ -29,7 +29,7 @@
 	<br>
 	
 	<h1>Verify submitted information</h1>
-	
+	<I>To cancel this contribution, please click "Cancel Contribution" button at "Your voyage information" page</I>	
 	<br>
 
 	<s:gridEditor 
