@@ -1818,6 +1818,14 @@ public class VoyagesApplier
 		Map newValues = vals.getColumnValues(DECIDED_VOYAGE);
 		Submission lSubmission = Submission
 				.loadById(session, this.submissionId);
+		if (this.adminBean.getAuthenticateduser().isAdmin()) {
+			for (Iterator iter = lSubmission.getSubmissionEditors().iterator(); iter
+					.hasNext();) {
+				SubmissionEditor editor = (SubmissionEditor) iter.next();
+				editor.setFinished(true);
+				session.update(editor);
+			}
+		}
 
 		Voyage vNew = null;
 		Voyage mergedVoyage = updateMergedVoyage(session, lSubmission,
