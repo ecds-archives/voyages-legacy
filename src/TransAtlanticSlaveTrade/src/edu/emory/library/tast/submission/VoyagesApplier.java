@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import edu.emory.library.tast.admin.VoyageBean;
 import edu.emory.library.tast.common.GridOpenRowEvent;
 import edu.emory.library.tast.common.grideditor.Column;
 import edu.emory.library.tast.common.grideditor.ColumnAction;
@@ -23,7 +23,6 @@ import edu.emory.library.tast.common.grideditor.textbox.TextboxDoubleAdapter;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxIntegerAdapter;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxIntegerValue;
 import edu.emory.library.tast.database.SourceInformationLookup;
-import edu.emory.library.tast.database.query.Query;
 import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.db.TastDbConditions;
 import edu.emory.library.tast.db.TastDbQuery;
@@ -166,6 +165,10 @@ public class VoyagesApplier
 	private boolean requiredReload = false;
 	//private boolean requiredReloadSlave = false;
 
+	private static Object publishMonitor = new Object();
+	
+	private boolean revising = false;
+	
 	public VoyagesApplier(AdminSubmissionBean bean)
 	{
 		this.adminBean = bean;
@@ -1775,6 +1778,20 @@ public class VoyagesApplier
 		return avail;
 
 	}
+	
+	public Boolean getAccepted()
+	{
+		Boolean accepted = null;
+		Session session = HibernateConn.getSession();
+		Transaction t = session.beginTransaction();
+		Submission lSubmisssion = Submission.loadById(session,
+				this.submissionId);
+		accepted = new Boolean(lSubmisssion.isAccepted());
+		t.commit();
+		session.close();
+		return accepted;
+
+	}
 
 	/**
 	 * Action fired when reject button was pressed
@@ -1808,6 +1825,47 @@ public class VoyagesApplier
 		}
 		t.commit();
 		session.close();
+		return "back";
+	}
+	
+	public String deleteSubmission() {
+	
+
+		synchronized (publishMonitor) {
+			if (revising) {
+				return null;
+			}
+			this.revising = true;
+		}
+		
+		
+		Session session = HibernateConn.getSession();
+		Transaction t = session.beginTransaction();
+		Submission submission = Submission.loadById(session, this.submissionId);
+		try {
+			System.out.println("revising");
+			if(submission instanceof SubmissionNew){
+				SQLQuery query = session.createSQLQuery("select delete_new("+this.submissionId+");");
+				query.list();
+			} else if(submission instanceof SubmissionEdit) {
+				SQLQuery query = session.createSQLQuery("select delete_edit("+this.submissionId+");");
+				query.list();
+			} else if (submission instanceof SubmissionMerge){
+				SQLQuery query = session.createSQLQuery("select delete_merge("+this.submissionId+");");
+				query.list();
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}finally {
+			t.commit();
+			session.close();
+		}
+		synchronized (publishMonitor) {
+			revising = false;
+		}
+		
 		return "back";
 	}
 

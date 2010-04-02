@@ -40,3 +40,47 @@ ALTER TABLE submission_editors
   ADD CONSTRAINT fk_submission_users_to_edited_voyages FOREIGN KEY (edited_voyage_id)
       REFERENCES submissions_edited_voyages (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE CASCADE;
+
+ALTER TABLE submissions_sources
+  DROP CONSTRAINT fk_submissions_sources_to_submissions;
+      
+ALTER TABLE submissions_sources
+  ADD CONSTRAINT fk_submissions_sources_to_submissions FOREIGN KEY (submission_id)
+      REFERENCES submissions (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE CASCADE;
+
+ALTER TABLE submissions_sources_primary
+  DROP CONSTRAINT fk_submissions_sources_primaryto_sources;
+
+ALTER TABLE submissions_sources_primary
+  ADD CONSTRAINT fk_submissions_sources_primaryto_sources FOREIGN KEY (source_id)
+      REFERENCES submissions_sources (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE CASCADE;
+
+
+ALTER TABLE submissions_sources_books
+  DROP CONSTRAINT fk_submissions_sources_books_to_sources;
+  
+ALTER TABLE submissions_sources_books
+  ADD CONSTRAINT fk_submissions_sources_books_to_sources FOREIGN KEY (source_id)
+      REFERENCES submissions_sources (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE CASCADE;
+
+
+
+ALTER TABLE submissions_sources_others
+  DROP CONSTRAINT fk_submissions_sources_othersto_sources;
+
+ALTER TABLE submissions_sources_others
+  ADD CONSTRAINT fk_submissions_sources_othersto_sources FOREIGN KEY (source_id)
+      REFERENCES submissions_sources (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE CASCADE;
+
+
+ALTER TABLE submissions_sources_papers
+  DROP CONSTRAINT fk_submissions_sources_papers_to_sources;
+
+ALTER TABLE submissions_sources_papers
+  ADD CONSTRAINT fk_submissions_sources_papers_to_sources FOREIGN KEY (source_id)
+      REFERENCES submissions_sources (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE CASCADE;

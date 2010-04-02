@@ -11,11 +11,10 @@ import java.util.Set;
 
 import javax.faces.model.SelectItem;
 
-import org.hibernate.Query;
+
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Restrictions;
 
 import edu.emory.library.tast.AppConfig;
 import edu.emory.library.tast.admin.VoyageBean;
@@ -676,12 +675,21 @@ public class AdminSubmissionBean {
 		return this.applier.getRejectAvailable();
 
 	}
+	
+	public Boolean getAccepted() {
+		return this.applier.getAccepted();
+
+	}
 
 	/**
 	 * Action fired when reject button was pressed
 	 */
 	public String rejectSubmission() {
 		return this.applier.rejectSubmission();
+	}
+	
+	public String deleteSubmission() {
+		return this.applier.deleteSubmission();
 	}
 
 	public String submit() {

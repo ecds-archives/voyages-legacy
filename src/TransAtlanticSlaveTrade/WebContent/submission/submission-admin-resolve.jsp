@@ -99,7 +99,7 @@
 		
 
 		<h:commandButton value="Add reviewer"
-			rendered="#{AdminSubmissionBean.isChiefEditor && !AdminSubmissionBean.addingEditor}"
+			rendered="#{AdminSubmissionBean.isChiefEditor && !AdminSubmissionBean.addingEditor && !AdminSubmissionBean.accepted}"
 			action="#{AdminSubmissionBean.addEditor}" />
 		<t:htmlTag value="div" rendered="#{AdminSubmissionBean.addingEditor&&AdminSubmissionBean.isChiefEditor}"
 			style="border: 2px solid #CCCCCC; width: 400px; padding: 5px;">
@@ -128,7 +128,11 @@
 		<h:commandButton value="Reject request"
 			action="#{AdminSubmissionBean.rejectSubmission}"
 			rendered="#{AdminSubmissionBean.isAdmin}" />
+		<h:commandButton value="Delete request"
+			action="#{AdminSubmissionBean.deleteSubmission}"
+			rendered="#{AdminSubmissionBean.isAdmin}" />
 		<br>
+		
 	</h:form>
 </f:view>
 </body>
