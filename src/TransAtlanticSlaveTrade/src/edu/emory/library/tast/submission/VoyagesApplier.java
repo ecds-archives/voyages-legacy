@@ -2189,12 +2189,14 @@ public class VoyagesApplier
 						Q = " FROM EditedVoyage where voyage_iid = " + voy.getIid();
 						org.hibernate.Query query2 = session.createQuery(Q);
 						List editList = query2.list();
+						if(editList == null || editList.size() == 0) {continue;}
 						EditedVoyage ev = (EditedVoyage) editList.get(0);
 						Long id = ev.getId();
 						
 						Q = " FROM SubmissionNew where new_edited_voyage_id = " + id + " OR editor_edited_voyage_id = " + id ;
 						org.hibernate.Query query3 = session.createQuery(Q);
 						List newList = query3.list();
+						if(newList == null || newList.size() == 0) {continue;}
 						SubmissionNew sn = (SubmissionNew) newList.get(0);
 						Long subId = sn.getId();
 						
