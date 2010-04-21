@@ -275,6 +275,7 @@ public class VoyagesCalcConstants
            fate2Hash.put(new Integer("201"), new Integer("1"));
            fate2Hash.put(new Integer("203"), new Integer("1"));
            fate2Hash.put(new Integer("205"), new Integer("1"));
+           fate2Hash.put(new Integer("211"), new Integer("1"));
            fate2Hash.put(new Integer("2"), new Integer("2"));
            fate2Hash.put(new Integer("6"), new Integer("2"));
            fate2Hash.put(new Integer("10"), new Integer("2"));
@@ -315,6 +316,7 @@ public class VoyagesCalcConstants
            fate2Hash.put(new Integer("193"), new Integer("2"));
            fate2Hash.put(new Integer("198"), new Integer("2"));
            fate2Hash.put(new Integer("202"), new Integer("2"));
+           fate2Hash.put(new Integer("209"), new Integer("2"));
            fate2Hash.put(new Integer("42"), new Integer("3"));
            fate2Hash.put(new Integer("44"), new Integer("3"));
            fate2Hash.put(new Integer("69"), new Integer("3"));
@@ -348,6 +350,7 @@ public class VoyagesCalcConstants
            fate2Hash.put(new Integer("196"), new Integer("5"));
            fate2Hash.put(new Integer("199"), new Integer("5"));
            fate2Hash.put(new Integer("208"), new Integer("5"));
+           fate2Hash.put(new Integer("210"), new Integer("5"));
            fate2Hash.put(new Integer("28"), new Integer("7"));
            fate2Hash.put(new Integer("75"), new Integer("7"));
            fate2Hash.put(new Integer("89"), new Integer("7"));
@@ -384,6 +387,8 @@ public class VoyagesCalcConstants
              fate3Hash.put(new Integer("159"), new Integer("2"));
              fate3Hash.put(new Integer("192"), new Integer("2"));
              fate3Hash.put(new Integer("193"), new Integer("2"));
+             fate3Hash.put(new Integer("209"), new Integer("2"));
+             fate3Hash.put(new Integer("210"), new Integer("2"));
              fate3Hash.put(new Integer("10"), new Integer("3"));
              fate3Hash.put(new Integer("11"), new Integer("3"));
              fate3Hash.put(new Integer("12"), new Integer("3"));
@@ -513,6 +518,7 @@ public class VoyagesCalcConstants
              fate3Hash.put(new Integer("207"), new Integer("14"));
              fate3Hash.put(new Integer("208"), new Integer("14"));
              fate3Hash.put(new Integer("201"), new Integer("16"));
+             fate3Hash.put(new Integer("211"), new Integer("17"));
              return fate3Hash;
          }
          public static HashMap getfate4Hash()
