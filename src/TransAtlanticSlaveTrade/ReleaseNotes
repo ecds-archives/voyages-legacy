@@ -1,0 +1,91 @@
+Version 2.1 - September 2009
+
+* The program now contains the Calculations Module
+
+* A user will see the correct default Dates for Voyage Search Page
+
+* The calculations module will store each part of a date in separate fields (year, month, day) as well as a date field where at leas the year and moth          are known
+
+* A user will be able to logout without saving
+
+* A user will see characters for foreign languages correctly display when editing a voyage
+      
+
+* Publish stored procedure has been modified to publish submissions correctly
+
+      
+* A user of the contribute system will be able to use "copy" buttons for every field that is editable
+
+      
+* The build script for the project has been reworked so that it can be used in multiple environments
+
+      
+* An admin and editor user will be able to download new, merge, and edited voyage suggestions for rewiew
+
+      
+* The Contributor views of the contribute system has been reorganized
+
+      
+* The downloads section on the public site now refers to the current environment in which it is running
+
+      
+* Administrative / Maintenance Tasks
+
+
+* A site donw / redirect page has been added to the project.  This can be used when the site is being upgraded
+
+
+* various text changes to the public section of the site
+
+
+"Release 2" version 2.2 - April 2010
+
+* Calculations module has been updated
+
+* Voyageid can only be assigned by the admin user
+
+* The admin and editor users can filter voyage submissions in the contrib section based on type and status of the voyage
+
+* When the admin user assigns a voyageid to a new voayge, it is display in the list of pending voyages
+
+* Only The admin user can see imputed variables
+
+* The admin user can impute values for a voyages by clicking an "Impute" button
+
+* The admin user cannot be deleted through the UI 
+
+* When attempting to delete a user who has submissions, the admin user  receives a warning message saying that this is not allowed 
+
+* All users will see the correct layout, labels and text based on input from David and Paul
+
+* All user will see the correct labels on buttons and column headings (Additional UI changes from David and Paul)
+
+* The admin user will only see Accepted and Rejected voyages in the Voyage List Tab
+
+* The contributor will see the correct section of the navigation bar hilighted based on what page is being displayed
+
+* A contributor will no longer see the "copy" buttons on the verification page
+
+* The Reviewer and Admin users will see the correct set of buttons on voyage edit page
+
+* All users will be able to see more of grid 2 and 3 without scrolling left and right
+
+* When a contributor logs out, the previously selected voyageids will not appear on the voyage selection page the next time the user logs in
+
+* A Contributor can merge two voyages into one voyage. The result is that the voyage being merged into retains the edits and the other voyage is deleted. In addition, all rejected submissions will be keep on the system
+
+* The Editor will be able to download a CSV file of the entire database in addition to a CSV file of just "Published and Approved" voyages
+
+* A contributor will be able to click the "cancel contribution" button and discard edits to the published voyage
+
+* The Editor will mark the voyage as "Finished Review" when the Accept button is pressed even if the individual reviewers have not marked the edit as finished
+
+* When the Admin user clicks the "Delete submission" button, the submission will be deleted from the system
+
+* Users will see addition choices in the drop-down boxes for ports and fates
+
+* "Rate of Resistance" on Timeline page now works
+
+* Added GPL License statement and GPL file to project 
+
+
