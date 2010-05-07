@@ -27,6 +27,24 @@
 
 	<br>
 	
+	<s:gridEditor
+		rows="#{AdminVoyageBean.rowsSlave}"
+		columns="#{AdminVoyageBean.columnsSlave}"
+		values="#{AdminVoyageBean.valuesSlave}"
+		fieldTypes="#{AdminVoyageBean.fieldTypesSlave}"
+		rowGroups="#{AdminVoyageBean.rowGroupsSlave}"/>
+
+	<br>
+	
+		<s:gridEditor
+		rows="#{AdminVoyageBean.rowsSlave3}"
+		columns="#{AdminVoyageBean.columnsSlave3}"
+		values="#{AdminVoyageBean.valuesSlave3}"
+		fieldTypes="#{AdminVoyageBean.fieldTypesSlave3}"
+		rowGroups="#{AdminVoyageBean.rowGroupsSlave3}"/>
+
+	<br>
+	
 	<h:commandButton value="< Back" action="back"/>
 	<h:commandButton value="Save voyage" action="#{AdminVoyageBean.save}" rendered="#{AdminSubmissionBean.isAdmin}"/>
 	<h:commandButton value="Delete voyage" action="delete" rendered="#{AdminSubmissionBean.isAdmin}"/>
