@@ -26,14 +26,12 @@
 	</table>
 	<br>
 
-	<h1>Select voyage for editing</h1>
+	<h1>Select voyage for editing or deletion</h1>
 	
 	<br>
 	
 	<div style="width: 400px;">
-		Select the voyage using voyage ID you want to edit.
-		Then you can use the Lookup button to verify that
-		it is really the voyage you are looking for.
+		Using the voyage id select the voyage you want to edit or delete, then use the lookup button to verify that this is the voyage you are looking for.
 	</div>
 	
 	<div style="border-bottom: 1px solid #CCCCCC; margin-bottom: 10px; margin-top: 5px; padding-bottom: 10px;">
@@ -67,7 +65,7 @@
 		</t:htmlTag>
 	
 		<t:htmlTag value="div" style="margin-top: 10px;">
-			<h:commandButton value="Yes, this is correct, edit this voyage >" action="#{SubmissionBean.editVoyage}"/>
+			<h:commandButton value="Yes, this is correct; edit or delete this voyage >" action="#{SubmissionBean.editVoyage}"/>
 		</t:htmlTag>
 
 	</t:htmlTag>

@@ -37,7 +37,7 @@
 		<h:commandButton value="New voyage >" action="#{SubmissionBean.selectTypeNew}"/>
 	</div>
 	
-	<div style="font-weight: bold; font-size: 12pt">Edit an existing voyage</div>
+	<div style="font-weight: bold; font-size: 12pt">Edit an existing voyage or recommend its deletion</div>
 	<div style="width: 400px;">
 	Use this option to change information on a voyage in the current database.
 	</div>

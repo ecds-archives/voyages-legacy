@@ -28,12 +28,17 @@
 		</tr>
 </table>
 	<br>
-
+	<table width="600">
+	<tbody>
 	<h1>Edit voyage information</h1>
-		<I><h:outputText rendered="#{!SubmissionBean.isNewType}" value="Click &quot;Copy&quot; link to copy over existing information or adding new information to the field."/></I>
-		<br/>			
+	<tr><td>
+		<I><h:outputText rendered="#{SubmissionBean.isEditType}" value="Click &quot;Copy&quot; to copy over existing information, or, to add new data, enter the new data directly to the field. In the special case where you wish to recommend deletion, type &quot;DELETE&quot; in the Name of Vessel row and click on add note to explain the reasons for your request and any relevant sources."/></I>
+		<I><h:outputText rendered="#{SubmissionBean.isMergeType}" value="Click &quot;Copy&quot; link to copy over existing information or adding new information to the field."/></I>
+		<br/>		
+	</td></tr>
 	<br>
-	
+	</tbody>
+	</table>
 	<s:gridEditor 
 		id="grid"
 		rows="#{SubmissionBean.rows}"
@@ -56,10 +61,10 @@
 
 	<div style="margin-top: 10px; margin-bottom: 10px;">
 		<h:commandButton value="< Previous" action="#{SubmissionBean.goBackFromForm}"/>
-		<h:commandButton value="Save & Logout" action="#{SubmissionBean.saveStateSubmission}"/>
-		<h:commandButton value="Logout Without Saving" action="#{SubmissionBean.logoutOnly}"/>
-		<h:commandButton value="Cancel Contribution & Logout" action="#{SubmissionBean.cancel}"/>
-		<h:commandButton value="Next & Save> " action="#{SubmissionBean.toSources}"/>
+		<h:commandButton value="Save & logout" action="#{SubmissionBean.saveStateSubmission}"/>
+		<h:commandButton value="Logout without saving" action="#{SubmissionBean.logoutOnly}"/>
+		<h:commandButton value="Cancel contribution & logout" action="#{SubmissionBean.cancel}"/>
+		<h:commandButton value="Save & next> " action="#{SubmissionBean.toSources}"/>
 	</div>
 
 </h:form>
