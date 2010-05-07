@@ -811,6 +811,10 @@
 			<to-view-id>/submission/submission-admin-approve-delete.jsp</to-view-id>
 		</navigation-case>
 		<navigation-case>
+			<from-outcome>approve-delete-voyage</from-outcome>
+			<to-view-id>/submission/submission-admin-approve-delete-editandmerge.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
 			<from-outcome>login</from-outcome>
 			<to-view-id>/submission/submission-login.jsp</to-view-id>
 		</navigation-case>
@@ -818,6 +822,22 @@
 
 	<navigation-rule>
 		<from-view-id>/submission/submission-admin-approve-delete.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>main-menu</from-outcome>
+			<to-view-id>/submission/submission-admin.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>back</from-outcome>
+			<to-view-id>/submission/submission-admin-resolve.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>login</from-outcome>
+			<to-view-id>/submission/submission-login.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/submission/submission-admin-approve-delete-editandmerge.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>main-menu</from-outcome>
 			<to-view-id>/submission/submission-admin.jsp</to-view-id>
