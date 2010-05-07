@@ -80,15 +80,15 @@ public class TextboxDoubleValue extends TextboxValue
 		return valid;
 	}
 	
-	public double getDoubleValue()
+	public Double getDoubleValue()
 	{
 		if (!isValid())
 		{
-			return 0;
+			return null;
 		}
 		else
 		{
-			return doubleValue;
+			return new Double(doubleValue);
 		}
 	}
 	
