@@ -248,7 +248,7 @@
 	<t:htmlTag value="div" rendered="#{SourcesBean.newSourceType==-1}">
 		<h:commandButton value="< Previous" action="back"/>
 		<h:commandButton value="Save & logout" action="#{SubmissionBean.saveStateSources}"/>
-		<h:commandButton value="Next & Save> " action="done"/>
+		<h:commandButton value="Save & next> " action="done"/>
 	</t:htmlTag>
 </h:form>
 </f:view>

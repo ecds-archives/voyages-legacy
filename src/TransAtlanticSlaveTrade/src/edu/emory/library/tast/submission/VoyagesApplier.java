@@ -37,6 +37,7 @@ import edu.emory.library.tast.common.grideditor.Row;
 import edu.emory.library.tast.common.grideditor.RowGroup;
 import edu.emory.library.tast.common.grideditor.Value;
 import edu.emory.library.tast.common.grideditor.Values;
+import edu.emory.library.tast.common.grideditor.date.DateValue;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxDoubleAdapter;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxIntegerAdapter;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxIntegerValue;
@@ -740,25 +741,10 @@ public class VoyagesApplier
 	public Column[] getColumnsSlave3()
 	{
 		//Choose Admin or Editor Setup for Slave grids
-		String[] SLAVE_CHAR_COLS = null;
-		String[] SLAVE_CHAR_COLS_LABELS = null;
-		String[] SLAVE_CHAR_ROWS = null;
-		String[] SLAVE_CHAR_ROWS_LABELS = null;
-		
-		if (this.adminBean.getAuthenticateduser().isAdmin() || this.adminBean.getAuthenticateduser().isChiefEditor())
-		{
-			SLAVE_CHAR_COLS = SLAVE_CHAR_COLS_S;
-			SLAVE_CHAR_COLS_LABELS = SLAVE_CHAR_COLS_LABELS_S;
-			SLAVE_CHAR_ROWS = SLAVE_CHAR_ROWS_S;
-			SLAVE_CHAR_ROWS_LABELS = SLAVE_CHAR_ROWS_LABELS_S;
-		}
-		else
-		{
-			SLAVE_CHAR_COLS = SLAVE_CHAR_COLS_S;
-			SLAVE_CHAR_COLS_LABELS = SLAVE_CHAR_COLS_LABELS_S;
-			SLAVE_CHAR_ROWS = SLAVE_CHAR_ROWS_S;
-			SLAVE_CHAR_ROWS_LABELS = SLAVE_CHAR_ROWS_LABELS_S;
-		}
+		String[] SLAVE_CHAR_COLS = SLAVE_CHAR_COLS_S;
+		String[] SLAVE_CHAR_COLS_LABELS = SLAVE_CHAR_COLS_LABELS_S;
+		String[] SLAVE_CHAR_ROWS = SLAVE_CHAR_ROWS_S;
+		String[] SLAVE_CHAR_ROWS_LABELS = SLAVE_CHAR_ROWS_LABELS_S;
 		
 		
 		Column[] cols = new Column[SLAVE_CHAR_COLS.length];
@@ -981,96 +967,131 @@ public class VoyagesApplier
 		return rows;
 	}
 
-	public Row[] getRowsSlave()
-	{
-		//Choose Admin or Editor Setup for Slave grids
+	public Row[] getRowsSlave() {
+		// Choose Admin or Editor Setup for Slave grids
 		String[] SLAVE_CHAR_COLS = null;
 		String[] SLAVE_CHAR_COLS_LABELS = null;
 		String[] SLAVE_CHAR_ROWS = null;
 		String[] SLAVE_CHAR_ROWS_LABELS = null;
-		
-		if (this.adminBean.getAuthenticateduser().isAdmin() || this.adminBean.getAuthenticateduser().isChiefEditor())
-		{
+
+		if (this.adminBean.getAuthenticateduser().isAdmin()
+				|| this.adminBean.getAuthenticateduser().isChiefEditor()) {
 			SLAVE_CHAR_COLS = SLAVE_CHAR_COLS_A;
 			SLAVE_CHAR_COLS_LABELS = SLAVE_CHAR_COLS_LABELS_A;
 			SLAVE_CHAR_ROWS = SLAVE_CHAR_ROWS_A;
 			SLAVE_CHAR_ROWS_LABELS = SLAVE_CHAR_ROWS_LABELS_A;
-		}
-		else
-		{
+		} else {
 			SLAVE_CHAR_COLS = SLAVE_CHAR_COLS_E;
 			SLAVE_CHAR_COLS_LABELS = SLAVE_CHAR_COLS_LABELS_E;
 			SLAVE_CHAR_ROWS = SLAVE_CHAR_ROWS_E;
 			SLAVE_CHAR_ROWS_LABELS = SLAVE_CHAR_ROWS_LABELS_E;
 		}
-		
-		
+
 		Row[] rows = null;
 		int groupsNumber;
 		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
-		try
-		{
+		try {
 			Submission submission = Submission.loadById(session,
 					getSubmissionId());
 			if (submission instanceof SubmissionEdit
-					|| submission instanceof SubmissionMerge)
-			{
-				if (this.adminBean.getAuthenticateduser().isEditor())
-				{
+					|| submission instanceof SubmissionMerge) {
+				if (this.adminBean.getAuthenticateduser().isEditor()) {
 					groupsNumber = 2 + this.editRequests.length;
-				} else
-				{
+					rows = new Row[groupsNumber * SLAVE_CHAR_ROWS.length];
+				} else {
 					groupsNumber = 2 + this.editRequests.length
 							+ submission.getSubmissionEditors().size();
+
+					rows = new Row[SLAVE_CHAR_ROWS.length + (groupsNumber - 1)
+							* SLAVE_CHAR_ROWS_E.length];
 				}
-				rows = new Row[groupsNumber * SLAVE_CHAR_ROWS.length];
-				for (int i = 0; i < (groupsNumber - 1) * SLAVE_CHAR_ROWS.length; i++)
-				{
-					rows[i] = new Row(TextboxIntegerAdapter.TYPE,
-							SLAVE_CHAR_ROWS[i % SLAVE_CHAR_ROWS.length] + "-"
-									+ (i / SLAVE_CHAR_ROWS.length),
-							SLAVE_CHAR_ROWS_LABELS[i % SLAVE_CHAR_ROWS.length],
-							null, "characteristics-"
-									+ (i / SLAVE_CHAR_ROWS.length), true,
-							SLAVE_CHAR_ROWS[i % SLAVE_CHAR_ROWS.length], "Copy");
-					rows[i].setNoteEnabled(true);
-				}
-			} else
-			{
-				if (this.adminBean.getAuthenticateduser().isEditor())
-				{
-					groupsNumber = 2;
-				} else
-				{
-					groupsNumber = 2 + submission.getSubmissionEditors().size();
-				}
-				rows = new Row[groupsNumber * SLAVE_CHAR_ROWS.length];
-				for (int i = 0; i < (groupsNumber - 1) * SLAVE_CHAR_ROWS.length; i++)
-				{
+				// rows = new Row[groupsNumber * SLAVE_CHAR_ROWS.length];
+				// for (int i = 0; i < (groupsNumber - 1) *
+				// SLAVE_CHAR_ROWS.length; i++)
+				// {
+				// rows[i] = new Row(TextboxIntegerAdapter.TYPE,
+				// SLAVE_CHAR_ROWS[i % SLAVE_CHAR_ROWS.length] + "-"
+				// + (i / SLAVE_CHAR_ROWS.length),
+				// SLAVE_CHAR_ROWS_LABELS[i % SLAVE_CHAR_ROWS.length],
+				// null, "characteristics-"
+				// + (i / SLAVE_CHAR_ROWS.length), true,
+				// SLAVE_CHAR_ROWS[i % SLAVE_CHAR_ROWS.length], "Copy");
+				// rows[i].setNoteEnabled(true);
+				// }
+
+				for (int i = 0; i < (groupsNumber - 1)
+						* SLAVE_CHAR_ROWS_E.length; i++) {
 					rows[i] = new Row(
 							TextboxIntegerAdapter.TYPE,
-							SLAVE_CHAR_ROWS[i % SLAVE_CHAR_ROWS.length]
-									+ "-"
-									+ (int) (i / (double) SLAVE_CHAR_ROWS.length),
-							SLAVE_CHAR_ROWS_LABELS[i % SLAVE_CHAR_ROWS.length],
+							SLAVE_CHAR_ROWS[i % SLAVE_CHAR_ROWS_E.length] + "-"
+									+ (i / SLAVE_CHAR_ROWS_E.length),
+							SLAVE_CHAR_ROWS_LABELS[i % SLAVE_CHAR_ROWS_E.length],
 							null, "characteristics-"
-									+ (i / SLAVE_CHAR_ROWS.length), true,
-							SLAVE_CHAR_ROWS[i % SLAVE_CHAR_ROWS.length], "Copy");
+									+ (i / SLAVE_CHAR_ROWS_E.length), true,
+							SLAVE_CHAR_ROWS[i % SLAVE_CHAR_ROWS_E.length],
+							"Copy");
+					rows[i].setNoteEnabled(true);
+				}
+			} else {
+				if (this.adminBean.getAuthenticateduser().isEditor()) {
+					groupsNumber = 2;
+					rows = new Row[groupsNumber * SLAVE_CHAR_ROWS.length];
+				} else {
+					groupsNumber = 2 + submission.getSubmissionEditors().size();
+					rows = new Row[SLAVE_CHAR_ROWS.length + (groupsNumber - 1)
+							* SLAVE_CHAR_ROWS_E.length];
+				}
+				// rows = new Row[groupsNumber * SLAVE_CHAR_ROWS.length];
+				// for (int i = 0; i < (groupsNumber - 1) *
+				// SLAVE_CHAR_ROWS.length; i++)
+				// {
+				// rows[i] = new Row(
+				// TextboxIntegerAdapter.TYPE,
+				// SLAVE_CHAR_ROWS[i % SLAVE_CHAR_ROWS.length]
+				// + "-"
+				// + (int) (i / (double) SLAVE_CHAR_ROWS.length),
+				// SLAVE_CHAR_ROWS_LABELS[i % SLAVE_CHAR_ROWS.length],
+				// null, "characteristics-"
+				// + (i / SLAVE_CHAR_ROWS.length), true,
+				// SLAVE_CHAR_ROWS[i % SLAVE_CHAR_ROWS.length], "Copy");
+				// rows[i].setNoteEnabled(true);
+				// }
+
+				for (int i = 0; i < (groupsNumber - 1)
+						* SLAVE_CHAR_ROWS_E.length; i++) {
+					rows[i] = new Row(
+							TextboxIntegerAdapter.TYPE,
+							SLAVE_CHAR_ROWS[i % SLAVE_CHAR_ROWS_E.length]
+									+ "-"
+									+ (int) (i / (double) SLAVE_CHAR_ROWS_E.length),
+							SLAVE_CHAR_ROWS_LABELS[i % SLAVE_CHAR_ROWS_E.length],
+							null, "characteristics-"
+									+ (i / SLAVE_CHAR_ROWS_E.length), true,
+							SLAVE_CHAR_ROWS[i % SLAVE_CHAR_ROWS_E.length],
+							"Copy");
 					rows[i].setNoteEnabled(true);
 				}
 			}
-			for (int i = 0; i < SLAVE_CHAR_ROWS.length; i++)
-			{
-				rows[i + (groupsNumber - 1) * SLAVE_CHAR_ROWS.length] = new Row(
+			// for (int i = 0; i < SLAVE_CHAR_ROWS.length; i++)
+			// {
+			// rows[i + (groupsNumber - 1) * SLAVE_CHAR_ROWS.length] = new Row(
+			// TextboxIntegerAdapter.TYPE, SLAVE_CHAR_ROWS[i],
+			// SLAVE_CHAR_ROWS_LABELS[i], null, "characteristics",
+			// true);
+			// rows[i + (groupsNumber - 1) * SLAVE_CHAR_ROWS.length]
+			// .setNoteEnabled(true);
+			// }
+
+			for (int i = 0; i < SLAVE_CHAR_ROWS.length; i++) {
+				rows[i + (groupsNumber - 1) * SLAVE_CHAR_ROWS_E.length] = new Row(
 						TextboxIntegerAdapter.TYPE, SLAVE_CHAR_ROWS[i],
 						SLAVE_CHAR_ROWS_LABELS[i], null, "characteristics",
 						true);
-				rows[i + (groupsNumber - 1) * SLAVE_CHAR_ROWS.length]
+				rows[i + (groupsNumber - 1) * SLAVE_CHAR_ROWS_E.length]
 						.setNoteEnabled(true);
 			}
-		} finally
-		{
+		} finally {
 			t.commit();
 			session.close();
 		}
@@ -1160,26 +1181,10 @@ public class VoyagesApplier
 	public Row[] getRowsSlave3()
 	{
 		//Choose Admin or Editor Setup for Slave grids
-		String[] SLAVE_CHAR_COLS = null;
-		String[] SLAVE_CHAR_COLS_LABELS = null;
-		String[] SLAVE_CHAR_ROWS = null;
-		String[] SLAVE_CHAR_ROWS_LABELS = null;
-		
-		if (this.adminBean.getAuthenticateduser().isAdmin() || this.adminBean.getAuthenticateduser().isChiefEditor())
-		{
-			SLAVE_CHAR_COLS = SLAVE_CHAR_COLS_S;
-			SLAVE_CHAR_COLS_LABELS = SLAVE_CHAR_COLS_LABELS_S;
-			SLAVE_CHAR_ROWS = SLAVE_CHAR_ROWS_S;
-			SLAVE_CHAR_ROWS_LABELS = SLAVE_CHAR_ROWS_LABELS_S;
-		}
-		else
-		{
-			SLAVE_CHAR_COLS = SLAVE_CHAR_COLS_S;
-			SLAVE_CHAR_COLS_LABELS = SLAVE_CHAR_COLS_LABELS_S;
-			SLAVE_CHAR_ROWS = SLAVE_CHAR_ROWS_S;
-			SLAVE_CHAR_ROWS_LABELS = SLAVE_CHAR_ROWS_LABELS_S;
-		}
-		
+		String[] SLAVE_CHAR_COLS = SLAVE_CHAR_COLS_S;
+		String[] SLAVE_CHAR_COLS_LABELS = SLAVE_CHAR_COLS_LABELS_S;
+		String[] SLAVE_CHAR_ROWS = SLAVE_CHAR_ROWS_S;
+		String[] SLAVE_CHAR_ROWS_LABELS = SLAVE_CHAR_ROWS_LABELS_S;
 		
 		Row[] rows = null;
 		int groupsNumber;
@@ -1194,11 +1199,13 @@ public class VoyagesApplier
 			{
 				if (this.adminBean.getAuthenticateduser().isEditor())
 				{
-					groupsNumber = 2 + this.editRequests.length;
+//					groupsNumber = 2 + this.editRequests.length;
+					groupsNumber = 1;
 				} else
 				{
-					groupsNumber = 2 + this.editRequests.length
-							+ submission.getSubmissionEditors().size();
+//					groupsNumber = 2 + this.editRequests.length
+//							+ submission.getSubmissionEditors().size();
+					groupsNumber = 1;
 				}
 				rows = new Row[groupsNumber * SLAVE_CHAR_ROWS.length];
 				for (int i = 0; i < (groupsNumber - 1) * SLAVE_CHAR_ROWS.length; i++)
@@ -1219,7 +1226,8 @@ public class VoyagesApplier
 					groupsNumber = 2;
 				} else
 				{
-					groupsNumber = 2 + submission.getSubmissionEditors().size();
+//					groupsNumber = 2 + submission.getSubmissionEditors().size();
+					groupsNumber = 1;
 				}
 				rows = new Row[groupsNumber * SLAVE_CHAR_ROWS.length];
 				for (int i = 0; i < (groupsNumber - 1) * SLAVE_CHAR_ROWS.length; i++)
@@ -1572,28 +1580,34 @@ public class VoyagesApplier
 			{
 				if (this.adminBean.getAuthenticateduser().isEditor())
 				{
+//					return new RowGroup[] {
+//							new RowGroup("characteristics-0",
+//									"Slaves (age and sex) [Contributor]"),
+//							new RowGroup("characteristics",
+//									"Slaves (age and sex) ["+this.adminBean
+//									.getAuthenticateduser().getUserName()+"]") };
+					
 					return new RowGroup[] {
-							new RowGroup("characteristics-0",
-									"Slaves (age and sex) [Contributor]"),
 							new RowGroup("characteristics",
 									"Slaves (age and sex) ["+this.adminBean
 									.getAuthenticateduser().getUserName()+"]") };
 				} else
 				{
-					RowGroup[] response = new RowGroup[2 + submission
-							.getSubmissionEditors().size()];
-					response[0] = new RowGroup("characteristics-0",
-							"Slaves (age and sex) [Contributor]");
-					Iterator iter = submission.getSubmissionEditors()
-							.iterator();
-					for (int i = 1; i < response.length - 1; i++)
-					{
-						SubmissionEditor editor = (SubmissionEditor) iter
-								.next();
-						response[i] = new RowGroup("characteristics-" + i,
-								"Slaves (age and sex) ["
-										+ editor.getUser().getUserName() + "]");
-					}
+					RowGroup[] response = new RowGroup[1];
+//					RowGroup[] response = new RowGroup[2 + submission
+//							.getSubmissionEditors().size()];
+//					response[0] = new RowGroup("characteristics-0",
+//							"Slaves (age and sex) [Contributor]");
+//					Iterator iter = submission.getSubmissionEditors()
+//							.iterator();
+//					for (int i = 1; i < response.length - 1; i++)
+//					{
+//						SubmissionEditor editor = (SubmissionEditor) iter
+//								.next();
+//						response[i] = new RowGroup("characteristics-" + i,
+//								"Slaves (age and sex) ["
+//										+ editor.getUser().getUserName() + "]");
+//					}
 					response[response.length - 1] = new RowGroup(
 							"characteristics",
 							"Slaves (age and sex) [Editor]");
@@ -1886,6 +1900,48 @@ public class VoyagesApplier
 		
 		return "back";
 	}
+	
+
+	
+	public String deleteVoyage() {
+
+		synchronized (publishMonitor) {
+			if (revising) {
+				return null;
+			}
+			this.revising = true;
+		}
+		
+		
+		Session session = HibernateConn.getSession();
+		Transaction t = session.beginTransaction();
+		Submission submission = Submission.loadById(session, this.submissionId);
+		try {
+			System.out.println("deleting");
+			if(submission instanceof SubmissionNew){
+				SQLQuery query = session.createSQLQuery("select delete_newvoyage("+this.submissionId+");");
+				query.list();
+			} else if(submission instanceof SubmissionEdit) {
+				SQLQuery query = session.createSQLQuery("select delete_editvoyage("+this.submissionId+");");
+				query.list();
+			} else if (submission instanceof SubmissionMerge){
+				SQLQuery query = session.createSQLQuery("select delete_mergevoyage("+this.submissionId+");");
+				query.list();
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}finally {
+			t.commit();
+			session.close();
+		}
+		synchronized (publishMonitor) {
+			revising = false;
+		}
+		
+		return "back";
+	}
 
 	public String submit()
 	{
@@ -1966,6 +2022,9 @@ public class VoyagesApplier
 
 			for (int j = 0; j < vals.length; j++)
 			{
+				if((val instanceof DateValue)&&(vals[j]==(Object)0)){
+					continue;
+				}
 				vNew
 						.setAttrValue(attrs[i].getAttribute()[j].getName(),
 								vals[j]);
@@ -2153,6 +2212,9 @@ public class VoyagesApplier
 			if(vals!=null){
 			for (int j = 0; j < vals.length; j++)
 			{
+				if((val instanceof DateValue)&&(vals[j]==(Object)0)){
+					continue;
+				}
 				vNew.setAttrValue(attrs[i].getAttribute()[j].getName(), vals[j]);
 			}
 			}

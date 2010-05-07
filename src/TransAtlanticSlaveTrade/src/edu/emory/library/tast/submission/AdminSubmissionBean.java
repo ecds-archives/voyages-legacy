@@ -133,6 +133,8 @@ public class AdminSubmissionBean {
 	 * When deletion is approved, this is set to true
 	 */
 	private boolean deleteApproved = false;
+	
+	private boolean deleteVoaygeApproved = false;
 
 	/**
 	 * Loggenin user - if null - no user was logged in
@@ -709,6 +711,16 @@ public class AdminSubmissionBean {
 	public String deleteSubmission() {
 		return this.applier.deleteSubmission();
 	}
+	
+	
+	public String deleteVoyage() {
+		if (!deleteVoaygeApproved) {
+			return "approve-delete-voyage";
+		}
+		deleteVoaygeApproved = false;
+		return this.applier.deleteVoyage();
+	}
+	
 
 	public String submit() {
 		Session session = HibernateConn.getSession();
@@ -739,8 +751,20 @@ public class AdminSubmissionBean {
 		}
 		return "main-menu";
 	}
+	
+	public String deleteEditandMerge() {
+		this.deleteVoaygeApproved = true;
+		if (this.applier.deleteVoyage()== null) {
+			return "back";
+		}
+		return "main-menu";
+	}
 
 	public String rejectDelete() {
+		return "main-menu";
+	}
+	
+	public String rejectDeleteVoyage() {
 		return "main-menu";
 	}
 
@@ -783,6 +807,15 @@ public class AdminSubmissionBean {
 		}
 	}
 
+	public Boolean getIsNew() {
+		Session session = HibernateConn.getSession();
+		Transaction t = session.beginTransaction();
+		Submission lSubmission = Submission.loadById(session, this.applier.getSubmissionId());
+		t.commit();
+		session.close();
+		return new Boolean((lSubmission instanceof SubmissionNew));
+	}
+	
 	public Boolean getIsAdmin() {
 		return new Boolean(this.authenticateduser.isAdmin());
 	}

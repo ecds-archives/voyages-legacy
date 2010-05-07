@@ -36,6 +36,7 @@ import edu.emory.library.tast.common.grideditor.Row;
 import edu.emory.library.tast.common.grideditor.RowGroup;
 import edu.emory.library.tast.common.grideditor.Value;
 import edu.emory.library.tast.common.grideditor.Values;
+import edu.emory.library.tast.common.grideditor.date.DateValue;
 import edu.emory.library.tast.common.grideditor.textbox.TextboxIntegerAdapter;
 import edu.emory.library.tast.database.SourceInformationLookup;
 import edu.emory.library.tast.db.HibernateConn;
@@ -835,6 +836,9 @@ public class SubmissionBean
 							
 				Object[] vals = attrs[i].getValues(sess, val);
 				for (int j = 0; j < vals.length; j++) {
+					if((val instanceof DateValue)&&(vals[j]==(Object)0)){
+						continue;
+					}
 					voyage.setAttrValue(attrs[i].getAttribute()[j].getName(), vals[j]);
 				}									
 			}
@@ -1021,6 +1025,26 @@ public class SubmissionBean
 			if (this.submission != null&& !this.submission.isSubmitted()) {
 				Submission submission = Submission.loadById(sess,
 						this.submission.getId());
+				Voyage voyage = null;
+				if (submission instanceof SubmissionNew)
+					voyage = Voyage.loadById(sess, ((SubmissionNew) submission)
+							.getNewVoyage().getVoyage().getIid());
+
+				if (submission instanceof SubmissionEdit)
+					voyage = Voyage.loadById(sess,
+							((SubmissionEdit) submission).getOldVoyage()
+									.getVoyage().getIid());
+
+				if (submission instanceof SubmissionMerge) {
+					Long suggestedVoyageId = ((SubmissionMerge) submission)
+							.getProposedVoyage().getId();
+
+					EditedVoyage eV = EditedVoyage.loadById(sess,
+							suggestedVoyageId);
+					voyage = eV.getVoyage();
+				}
+
+				
 				if (submission != null) {
 					Set sources = submission.getSources();
 					for (Iterator iter = sources.iterator(); iter.hasNext();) {
@@ -1028,6 +1052,7 @@ public class SubmissionBean
 						sess.delete(element);
 					}
 					sess.delete(submission);
+					sess.delete(voyage);
 				}
 			}
 		} finally {
@@ -1091,6 +1116,9 @@ public class SubmissionBean
 				}
 				Object[] vals = attrs[i].getValues(sess, val);
 				for (int j = 0; j < vals.length; j++) {
+					if((val instanceof DateValue)&&(vals[j]==(Object)0)){
+						continue;
+					}
 					voyage.setAttrValue(attrs[i].getAttribute()[j].getName(), vals[j]);
 				}
 			}
@@ -1279,5 +1307,13 @@ public class SubmissionBean
 
 	public Boolean getIsNewType(){
 		return new Boolean(submissionType == SUBMISSION_TYPE_NEW);
+	}
+	
+	public Boolean getIsEditType(){
+		return new Boolean(submissionType == SUBMISSION_TYPE_EDIT);
+	}
+	
+	public Boolean getIsMergeType(){
+		return new Boolean(submissionType == SUBMISSION_TYPE_MERGE);
 	}
 }

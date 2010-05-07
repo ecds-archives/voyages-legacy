@@ -119,7 +119,7 @@
 			rendered="#{AdminSubmissionBean.imputeAvailable}" />
 		<h:commandButton value="Save" action="#{AdminSubmissionBean.save}"
 			rendered="#{AdminSubmissionBean.rejectAvailable}" />
-		<h:commandButton value="Logout Without Saving"
+		<h:commandButton value="Logout without saving"
 			action="#{AdminSubmissionBean.logoutOnly}"
 			rendered="#{AdminSubmissionBean.rejectAvailable}" />
 		<h:commandButton value="Accept request"
@@ -130,7 +130,10 @@
 			rendered="#{AdminSubmissionBean.isAdmin}" />
 		<h:commandButton value="Delete request"
 			action="#{AdminSubmissionBean.deleteSubmission}"
-			rendered="#{AdminSubmissionBean.isAdmin}" />
+			rendered="#{AdminSubmissionBean.isAdmin}" />		
+		<h:commandButton value="Delete voyage"
+			action="#{AdminSubmissionBean.deleteVoyage}"
+			rendered="#{AdminSubmissionBean.isAdmin && !AdminSubmissionBean.isNew}" />
 		<br>
 		
 	</h:form>
