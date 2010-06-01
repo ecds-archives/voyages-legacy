@@ -16,6 +16,7 @@ DECLARE
         subMergeVoyRec submissions_merge_voyages%rowtype;
         compareID integer; --used for comparasion
         backIID integer;--used for search back by iid
+        ship character varying;
 BEGIN
         RAISE NOTICE '----------START----------';
 	
@@ -46,12 +47,17 @@ BEGIN
 		--Delete voyage record an FKs
 		DELETE FROM voyages WHERE voyageid=voyID AND ( (revision=0) OR (revision=1 AND suggestion='f'));
 		
-		--Update to active revision  
-		UPDATE voyages SET revision=1 WHERE voyageid=voyID AND revision=-1 and suggestion='f';
+		--Update to active revision
+		SELECT shipname into ship from voyages WHERE voyageid=voyID AND revision=-1 and suggestion='f';
+		IF ship = 'DELETE'	THEN
+			DELETE FROM voyages  WHERE voyageid=voyID AND revision=-1 and suggestion='f';
+		ELSE	
+			UPDATE voyages SET revision=1 WHERE voyageid=voyID AND revision=-1 and suggestion='f';
+		END IF;
 		RAISE NOTICE 'After Update';
 	END LOOP;
 
-	FOR voyRec IN SELECT * FROM voyages v WHERE  revision!=1 
+	FOR voyRec IN SELECT * FROM voyages v WHERE  revision!=1  
 	LOOP
 		voyIID:=voyRec.iid;
 

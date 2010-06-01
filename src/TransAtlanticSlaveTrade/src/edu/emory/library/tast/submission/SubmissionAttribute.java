@@ -57,6 +57,10 @@ import edu.emory.library.tast.dm.Source;
 import edu.emory.library.tast.dm.TonType;
 import edu.emory.library.tast.dm.VesselRig;
 import edu.emory.library.tast.dm.Voyage;
+import edu.emory.library.tast.dm.Xmimpflag;
+import edu.emory.library.tast.dm.Year25;
+import edu.emory.library.tast.dm.Year5;
+import edu.emory.library.tast.dm.Year10;
 import edu.emory.library.tast.dm.attributes.Attribute;
 
 public class SubmissionAttribute {
@@ -309,7 +313,37 @@ public class SubmissionAttribute {
 				return new Object[] {null};
 			}
 			return new Object[] {Dictionary.loadById(TonType.class, sess, id)};
-		}else if (type.equals(SubmissionDictionaries.NATIONALS)) {
+		} else if(type.equals(SubmissionDictionaries.YEAR5S)) {
+			String id = ((ListValue)object).getValues()[0];
+			if (id.equals("-1")) {
+				return new Object[] {null};
+			}
+			return new Object[] {Dictionary.loadById(Year5.class, sess, id)};
+		} else if(type.equals(SubmissionDictionaries.YEAR10S)) {
+			String id = ((ListValue)object).getValues()[0];
+			if (id.equals("-1")) {
+				return new Object[] {null};
+			}
+			return new Object[] {Dictionary.loadById(Year10.class, sess, id)};
+		} else if(type.equals(SubmissionDictionaries.YEAR25S)) {
+			String id = ((ListValue)object).getValues()[0];
+			if (id.equals("-1")) {
+				return new Object[] {null};
+			}
+			return new Object[] {Dictionary.loadById(Year25.class, sess, id)};
+		} else if(type.equals(SubmissionDictionaries.XMIMPFLAGS)) {
+			String id = ((ListValue)object).getValues()[0];
+			if (id.equals("-1")) {
+				return new Object[] {null};
+			}
+			return new Object[] {Dictionary.loadById(Xmimpflag.class, sess, id)};
+		} else if (type.equals(SubmissionDictionaries.NATIONALS)) {
+			String id = ((ListValue)object).getValues()[0];
+			if (id.equals("-1")) {
+				return new Object[] {null};
+			}
+			return new Object[] {Dictionary.loadById(Nation.class, sess, id)};
+		}else if (type.equals(SubmissionDictionaries.NATINIMPS)) {
 			String id = ((ListValue)object).getValues()[0];
 			if (id.equals("-1")) {
 				return new Object[] {null};

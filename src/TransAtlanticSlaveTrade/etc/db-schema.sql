@@ -236,6 +236,7 @@ CREATE TABLE voyages
   yearam int4,
   year100 int8,
   year5 int8,
+  year10 int8,
   year25 int8,
   tonmod float8,
   vymrtimp int8,
@@ -618,6 +619,9 @@ CREATE TABLE voyages
       REFERENCES dictionary (oid) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION,
   CONSTRAINT year5 FOREIGN KEY (year5)
+      REFERENCES dictionary (oid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT year10 FOREIGN KEY (year10)
       REFERENCES dictionary (oid) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION,
   CONSTRAINT yearches FOREIGN KEY (yearches)

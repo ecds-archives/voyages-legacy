@@ -836,11 +836,15 @@ public class SubmissionBean
 							
 				Object[] vals = attrs[i].getValues(sess, val);
 				for (int j = 0; j < vals.length; j++) {
-					if((val instanceof DateValue)&&(vals[j]==(Object)0)){
-						continue;
+					if (val instanceof DateValue) {
+						if (!(vals[j] == (Object) 0))
+							voyage.setAttrValue(attrs[i].getAttribute()[j]
+									.getName(), vals[j]);
+					} else {
+						voyage.setAttrValue(attrs[i].getAttribute()[j]
+								.getName(), vals[j]);
 					}
-					voyage.setAttrValue(attrs[i].getAttribute()[j].getName(), vals[j]);
-				}									
+				}
 			}
 			
 			for (int i = 0; i < SLAVE_CHAR_COLS.length; i++) {
@@ -1030,12 +1034,12 @@ public class SubmissionBean
 					voyage = Voyage.loadById(sess, ((SubmissionNew) submission)
 							.getNewVoyage().getVoyage().getIid());
 
-				if (submission instanceof SubmissionEdit)
+				else if (submission instanceof SubmissionEdit)
 					voyage = Voyage.loadById(sess,
 							((SubmissionEdit) submission).getOldVoyage()
 									.getVoyage().getIid());
 
-				if (submission instanceof SubmissionMerge) {
+				else if (submission instanceof SubmissionMerge) {
 					Long suggestedVoyageId = ((SubmissionMerge) submission)
 							.getProposedVoyage().getId();
 
@@ -1116,11 +1120,16 @@ public class SubmissionBean
 				}
 				Object[] vals = attrs[i].getValues(sess, val);
 				for (int j = 0; j < vals.length; j++) {
-					if((val instanceof DateValue)&&(vals[j]==(Object)0)){
-						continue;
+					if (val instanceof DateValue) {
+						if (!(vals[j] == (Object) 0))
+							voyage.setAttrValue(attrs[i].getAttribute()[j]
+									.getName(), vals[j]);
+					} else {
+						voyage.setAttrValue(attrs[i].getAttribute()[j]
+								.getName(), vals[j]);
 					}
-					voyage.setAttrValue(attrs[i].getAttribute()[j].getName(), vals[j]);
 				}
+
 			}
 			
 			for (int i = 0; i < SLAVE_CHAR_COLS.length; i++) {

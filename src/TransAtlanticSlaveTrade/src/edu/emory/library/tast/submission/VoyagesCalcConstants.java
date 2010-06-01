@@ -190,6 +190,16 @@ public class VoyagesCalcConstants
              dateRanges3.add(new Integer[]{new Integer("1850"), new Integer("1876"), new Integer("15")});
              return dateRanges3;
          }
+         
+         public static ArrayList getdateRanges4()
+         {
+             ArrayList dateRanges4=new ArrayList();
+             dateRanges4.add(new Integer[]{new Integer("1500"), new Integer("1601"), new Integer("1500")});
+             dateRanges4.add(new Integer[]{new Integer("1600"), new Integer("1701"), new Integer("1600")});
+             dateRanges4.add(new Integer[]{new Integer("1700"), new Integer("1801"), new Integer("1700")});
+             dateRanges4.add(new Integer[]{new Integer("1800"), new Integer("1901"), new Integer("1800")});
+             return dateRanges4;
+         }
 
          public static HashMap getfate2Hash()
          {

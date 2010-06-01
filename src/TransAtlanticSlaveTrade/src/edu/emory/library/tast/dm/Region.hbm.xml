@@ -21,7 +21,7 @@
 		
 		<many-to-one name="area" column="area_id" />
 		
-		<set name="ports" inverse="true" order-by="name asc">
+		<set name="ports" inverse="true" order-by="id asc">
 			<key column="region_id" />
 			<one-to-many class="edu.emory.library.tast.dm.Port" />
 		</set>

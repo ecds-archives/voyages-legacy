@@ -46,8 +46,8 @@
 	<br>
 	
 	<h:commandButton value="< Back" action="back"/>
-	<h:commandButton value="Save voyage" action="#{AdminVoyageBean.save}" rendered="#{AdminSubmissionBean.isAdmin}"/>
-	<h:commandButton value="Delete voyage" action="delete" rendered="#{AdminSubmissionBean.isAdmin}"/>
+	<!--<h:commandButton value="Save voyage" action="#{AdminVoyageBean.save}" rendered="#{AdminSubmissionBean.isAdmin}"/>
+	<h:commandButton value="Delete voyage" action="delete" rendered="#{AdminSubmissionBean.isAdmin}"/>-->
 </h:form>
 </f:view>
 </body>

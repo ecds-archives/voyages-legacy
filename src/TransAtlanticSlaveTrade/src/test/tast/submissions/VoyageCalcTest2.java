@@ -34,6 +34,7 @@ import edu.emory.library.tast.dm.Nation;
 import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.dm.TonType;
 import edu.emory.library.tast.dm.Voyage;
+import edu.emory.library.tast.dm.Xmimpflag;
 import edu.emory.library.tast.submission.VoyagesCalculation;
 
 import java.text.ParseException;
@@ -520,9 +521,9 @@ public class VoyageCalcTest2 extends TestCase {
 			VoyagesCalculation voyageCalc = new VoyagesCalculation(session, voyage);		
 			voyageCalc.calculateValuesYear();			
 			saveVoyage(voyage);
-			assertEquals(voyage.getYear5(), new Integer("49"));
-			assertEquals(voyage.getYear10(), new Integer("27"));
-			assertEquals(voyage.getYear25(), new Integer("11"));
+			assertEquals(voyage.getYear5().getId(), new Long("49"));
+			assertEquals(voyage.getYear10().getId(), new Long("27"));
+			assertEquals(voyage.getYear25().getId(), new Long("11"));
 			assertEquals(voyage.getYear100(), new Integer("1700"));
 			
 			
@@ -548,7 +549,7 @@ public class VoyageCalcTest2 extends TestCase {
 			voyage.setSlas36(20);
 			voyage.setSlas39(30);
 			
-			voyage.setXmimpflag(127d);
+			voyage.setXmimpflag(Xmimpflag.loadById(session, 127));
 			voyage.setTslavesp(100);
 			voyage.setSlaarriv(75);
 			voyage.setTslavesd(100);
@@ -586,7 +587,7 @@ public class VoyageCalcTest2 extends TestCase {
 			voyage.setSlas36(20);
 			voyage.setSlas39(30);
 			
-			voyage.setXmimpflag(127d);
+			voyage.setXmimpflag(Xmimpflag.loadById(session, 127));
 			voyage.setTslavesp(100);
 			voyage.setSlaarriv(75);
 			voyage.setTslavesd(100);

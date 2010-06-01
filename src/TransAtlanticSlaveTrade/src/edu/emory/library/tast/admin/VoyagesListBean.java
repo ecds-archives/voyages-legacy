@@ -19,12 +19,14 @@ Copyright 2010 Emory University
 package edu.emory.library.tast.admin;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 import javax.faces.model.SelectItem;
 
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -44,8 +46,6 @@ import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.dm.attributes.specific.FunctionAttribute;
 import edu.emory.library.tast.dm.attributes.specific.SequenceAttribute;
-import edu.emory.library.tast.submission.AdminSubmissionBean;
-import edu.emory.library.tast.submission.SubmissionBean;
 import edu.emory.library.tast.util.StringUtils;
 
 public class VoyagesListBean
@@ -70,6 +70,10 @@ public class VoyagesListBean
 	private int voyageIdTo = -1;
 	
 	private int revision = -1;
+	
+	private static Object searchMonitor = new Object();
+	
+	private boolean searching = false;
 	
 	private String nationId;
 	
@@ -174,8 +178,7 @@ public class VoyagesListBean
 		MessageFormat slaveNumFmt = new MessageFormat("{0,number,#,###,###}");
 
 		// more voyages to UI
-		int i = 0;
-		
+
 		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
 
@@ -183,40 +186,87 @@ public class VoyagesListBean
 //		Object[] rejectedEditedsubs = getRejectedEditedsubs(session, t);
 //		Object[] rejectedMergesubs = getRejectedMergedsubs(session, t);
 
-		rows = new GridRow[voyages.size()];
 
-		for (Iterator iter = voyages.iterator(); iter.hasNext();)
-		{
-			
+		List<GridRow> rowList = new ArrayList<GridRow>();		
+		for (Iterator iter = voyages.iterator(); iter.hasNext();) {
+
 			Voyage voyage = (Voyage) iter.next();
-			
-			String rowId = voyage.getIid().toString();		
 
-			String nation = voyage.getNatinimp() == null ? null :
-				voyage.getNatinimp().getName();
-			
-			String slaximp = voyage.getSlaximp() == null ? null :
-				slaveNumFmt.format(new Object[] {voyage.getSlaximp()});
-			
-			String slamimp = voyage.getSlamimp() == null ? null :
-				slaveNumFmt.format(new Object[] {voyage.getSlamimp()});
-			
-			String yearam = voyage.getYearam() == null ? null :
-				String.valueOf(voyage.getYearam());
+			String rowId = voyage.getIid().toString();
 
-			String mjPlacePurchase = voyage.getMjbyptimp() == null ? null :
-				voyage.getMjbyptimp().getRegion().getName() + " / " + voyage.getMjbyptimp().getName();
+			String nation = voyage.getNatinimp() == null ? null : voyage
+					.getNatinimp().getName();
 
-			String mjPlaceSell = voyage.getMjslptimp() == null ? null :
-				voyage.getMjslptimp().getRegion().getName() + " / " + voyage.getMjslptimp().getName();
+			String slaximp = voyage.getSlaximp() == null ? null : slaveNumFmt
+					.format(new Object[] { voyage.getSlaximp() });
 
-			rows[i++] = new GridRow(rowId, new String[] {
-					String.valueOf(voyage.getVoyageid()),
-					voyage.getShipname(), yearam, nation, slaximp, slamimp, 
-					mjPlacePurchase, mjPlaceSell});
+			String slamimp = voyage.getSlamimp() == null ? null : slaveNumFmt
+					.format(new Object[] { voyage.getSlamimp() });
+
+			String yearam = voyage.getYearam() == null ? null : String
+					.valueOf(voyage.getYearam());
+
+			String mjPlacePurchase = voyage.getMjbyptimp() == null ? null
+					: voyage.getMjbyptimp().getRegion().getName() + " / "
+							+ voyage.getMjbyptimp().getName();
+
+			String mjPlaceSell = voyage.getMjslptimp() == null ? null : voyage
+					.getMjslptimp().getRegion().getName()
+					+ " / " + voyage.getMjslptimp().getName();
+
+			String type = null;
+
+			if (voyage.getShipname() != null
+					&& voyage.getShipname().equals("DELETE")) {
+				type = "Deleted";
+				rowList.add(new GridRow(rowId, new String[] {
+						String.valueOf(voyage.getVoyageid()), type,
+						voyage.getShipname(), yearam, nation, slaximp, slamimp,
+						mjPlacePurchase, mjPlaceSell }));
+			} else {
+				long submissionId = getSubmissionId(voyage.getVoyageid());
+
+				Submission submission = Submission.loadById(sess, submissionId);
+
+				if (submission instanceof SubmissionNew) {
+					type = "New";
+					rowList.add(new GridRow(rowId, new String[] {
+							String.valueOf(voyage.getVoyageid()), type,
+							voyage.getShipname(), yearam, nation, slaximp,
+							slamimp, mjPlacePurchase, mjPlaceSell }));
+				} else if (submission instanceof SubmissionEdit) {
+					type = "Edited";
+					rowList.add(new GridRow(rowId, new String[] {
+							String.valueOf(voyage.getVoyageid()), type,
+							voyage.getShipname(), yearam, nation, slaximp,
+							slamimp, mjPlacePurchase, mjPlaceSell }));
+				} else if (submission instanceof SubmissionMerge) {
+					Set involved = ((SubmissionMerge) submission)
+							.getMergedVoyages();
+					for (Iterator iterator = involved.iterator(); iterator
+							.hasNext();) {
+						EditedVoyage element = (EditedVoyage) iterator.next();
+
+						if (voyage.getVoyageid().longValue() == element
+								.getVoyage().getVoyageid().longValue()) {
+							type = "Merge (voyageid retained)";
+						} else {
+							type = "Merge (voyageid deleted)";
+						}
+						rowList.add(new GridRow(rowId, new String[] {
+								String.valueOf(voyage.getVoyageid()), type,
+								voyage.getShipname(), yearam, nation, slaximp,
+								slamimp, mjPlacePurchase, mjPlaceSell }));
+					}
+				}
+			}
 
 		}
-
+		rows = new GridRow[rowList.size()];
+		
+		for(int i =0; i<rowList.size(); i++){
+			rows[i] = rowList.get(i);
+		}
 		// determine total count
 		TastDbQuery queryCount = new TastDbQuery("Voyage", conds);
 		queryCount.addPopulatedAttribute(new FunctionAttribute("count", new Attribute[] {Voyage.getAttribute("iid")}));		
@@ -382,6 +432,39 @@ public class VoyagesListBean
 //		return subs;
 //	}
 
+	private long getSubmissionId(Integer id) {
+		synchronized (searchMonitor) {
+			if (searching) {
+				return 0;
+			}
+			this.searching = true;
+		}
+		
+		long submissionid=0;
+		Object test ;
+		Session session = HibernateConn.getSession();
+		Transaction t = session.beginTransaction();
+		try {
+			System.out.println("searching");
+
+				SQLQuery query = session.createSQLQuery("select getsubmissionid("+id.intValue()+");");
+				List result = query.list();
+				submissionid = Long.parseLong(result.get(0).toString());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}finally {
+			t.commit();
+			session.close();
+		}
+		synchronized (searchMonitor) {
+			searching = false;
+		}
+		
+		return submissionid;
+	}
+
 	/**
 	 * Columns visible in the list of all voyages
 	 * @return
@@ -390,7 +473,7 @@ public class VoyagesListBean
 	{
 		return new GridColumn[] {
 			new GridColumn("Voyage ID"),
-//			new GridColumn("Type"),
+			new GridColumn("Type"),
 			new GridColumn("Ship"),	
 			new GridColumn("Year"),	
 			new GridColumn("Nation"),	

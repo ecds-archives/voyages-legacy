@@ -124,13 +124,17 @@ String dlUrl = AppConfig.getConfiguration().getString(AppConfig.DOWNLOADS_URL);
 					estimates than the database itself. Users interested in exploring the complex methodology involved 
 					in generating the estimates, or in testing the extent to which alternative assumptions lower or 
 					augment estimates of the full volume of the slave trade (in its entirety or for a national carrier 
-					or period of time), can download below an Excel-formatted copy of the spreadsheet and a PDF version
-					of the essay detailing the methodology used.</p>
+					or period of time), can download below an Excel-formatted copy of the spreadsheet estimating the 
+					full volume of the slave trade by national carrier and year of arrival, the SPSS file applying 
+					estimates of volume in the spreadsheet to data on exports and imports aggregated by national carrier, 
+					year of arrival, and the route of the voyage from region of embarkation to region of disembarkation, 
+					and a PDF version of the essay detailing the methodology used.</p>
 					
 					<h3>Download:</h3>
 					<ul>
-						<li>2009 Estimates, Excel: <% /* <a href="replaceWithdlUrlVar/estimates-2009.xls">estimates-2009.xls</a> */ %> <span style="font-style: italic">will be available soon</span></li>
-						<li>2009 Methodology essay, PDF: <a href="<%=dlUrl%>/estimates-method.pdf">estimates-method.pdf</a></li>
+						<li>Estimates spreadsheet: <a href="<%=dlUrl%>/2010-estimates-excel.xlsx">2010 estimates-excel.xlsx</a></li>
+						<li>Estimates SPSS file: <a href="<%=dlUrl%>/2010-estimates-SPSS.sav">2010 estimates-SPSS.sav</a></li>
+						<li>Methodology essay: <a href="<%=dlUrl%>/2010estimates-method.pdf">2010 estimates-method.pdf</a></li>
 					</ul>
 		
 					Questions about downloading or using these datasets? Please contact 

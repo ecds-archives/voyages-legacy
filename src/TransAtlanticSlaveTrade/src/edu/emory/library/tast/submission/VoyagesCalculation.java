@@ -37,8 +37,11 @@ import edu.emory.library.tast.dm.FateVessel;
 import edu.emory.library.tast.dm.Nation;
 import edu.emory.library.tast.dm.Port;
 import edu.emory.library.tast.dm.Region;
-import edu.emory.library.tast.dm.VesselRig;
 import edu.emory.library.tast.dm.Voyage;
+import edu.emory.library.tast.dm.Xmimpflag;
+import edu.emory.library.tast.dm.Year10;
+import edu.emory.library.tast.dm.Year25;
+import edu.emory.library.tast.dm.Year5;
 
 public class VoyagesCalculation {
 	
@@ -469,26 +472,37 @@ public class VoyagesCalculation {
 	} catch (Exception e) {
 		e.printStackTrace();
 	}
+	
+	try {
+		//Assign values and call function to calculate year25
+		    dateInputs=new ArrayList();
+		    dateInputs.add(yearam);
+		    dateRanges=VoyagesCalcConstants.getdateRanges4();
+		    impDate = recode(dateInputs, dateRanges, false);
+		    year100 = (Integer) impDate.get(0);
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
 
 	    //ranges too few for year100 to create a HashMap
-	    if (yearam !=null && yearam < 1601) {year100=1500;}
-	    else if (yearam !=null && yearam > 1600 && yearam < 1701) {year100=1600;}
-	    else if (yearam !=null && yearam > 1700 && yearam < 1801) {year100=1700;}
-	    else if (yearam !=null && yearam > 1800) {year100=1800;}
+//	    if (yearam !=null && yearam < 1601) {year100=1500;}
+//	    else if (yearam !=null && yearam > 1600 && yearam < 1701) {year100=1600;}
+//	    else if (yearam !=null && yearam > 1700 && yearam < 1801) {year100=1700;}
+//	    else if (yearam !=null && yearam > 1800) {year100=1800;}
 	    
 	    //Set values in object 
 	    //value of -1 means no match from function
 	    if(year5!=null && year5!=-1)
 	    {
-	    	voyage.setYear5(year5);
+	    	voyage.setYear5(Year5.loadById(session, year5));
 	    }
 	    if(year10!=null && year10!=-1)
 	    {
-	    	voyage.setYear10(year10);
+	    	voyage.setYear10(Year10.loadById(session, year10));
 	    }
 	    if(year25!=null && year25!=-1)
 	    {
-	    	voyage.setYear25(year25);
+	    	voyage.setYear25(Year25.loadById(session, year25));
 	    }
 	    if(year100!=null && year100!=-1)
 	    {
@@ -1055,7 +1069,7 @@ public class VoyagesCalculation {
 		Long mjselimp1=null;
 		
 		//Input
-		Integer xmimpflag=(voyage.getXmimpflag()==null ? null : voyage.getXmimpflag().intValue()); //TODO xmimpflag imputed var
+		Integer xmimpflag=(voyage.getXmimpflag()==null ? null : voyage.getXmimpflag().getId().intValue()); //TODO xmimpflag imputed var
 		Integer fate2=(voyage.getFate2()==null ? null : voyage.getFate2().getId().intValue());
 		Integer tslavesd = voyage.getTslavesd();
 		Integer tslavesp = voyage.getTslavesp();
@@ -2823,7 +2837,7 @@ public class VoyagesCalculation {
 		else if  ((rig == null || (Arrays.binarySearch(rigArray, rig)) >= 0) && (gte(yearam, 1626) && lt(yearam, 1651))) {xmimpflag = 127d ;}			
 		
             //Store in voyage
-			voyage.setXmimpflag(round(xmimpflag, 6));
+			voyage.setXmimpflag(Xmimpflag.loadById(session, round(xmimpflag, 6).longValue()));
 			//System.out.println("xmimpflag:" + xmimpflag);
 
 	}
@@ -3055,6 +3069,14 @@ public class VoyagesCalculation {
 		if (year != null && month != null && day != null && year> 0 && month > 0 && day > 0){
 			cal.clear();
 			cal.set(year, --month, day);
+			dt = cal.getTime();
+		}else if (year != null && month != null && year> 0 && month > 0 ){
+			cal.clear();
+			cal.set(year, --month, 1);
+			dt = cal.getTime();
+		}else if (year != null && year >0){
+			cal.clear();
+			cal.set(year, 0, 1);
 			dt = cal.getTime();
 		}
 		return dt;

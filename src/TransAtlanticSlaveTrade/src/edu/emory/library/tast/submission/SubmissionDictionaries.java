@@ -56,6 +56,10 @@ import edu.emory.library.tast.dm.Region;
 import edu.emory.library.tast.dm.TonType;
 import edu.emory.library.tast.dm.VesselRig;
 import edu.emory.library.tast.dm.Resistance;
+import edu.emory.library.tast.dm.Xmimpflag;
+import edu.emory.library.tast.dm.Year25;
+import edu.emory.library.tast.dm.Year5;
+import edu.emory.library.tast.dm.Year10;
 
 public class SubmissionDictionaries {
 
@@ -67,7 +71,12 @@ public class SubmissionDictionaries {
 	public static final String RIGS = "rigs";
 	public static final String FATES = "fates";
 	public static final String TONTYPES = "tontypes";
+	public static final String YEAR5S = "year5s";
+	public static final String YEAR10S = "year10s";
+	public static final String YEAR25S = "year25s";
+	public static final String XMIMPFLAGS = "xmimpflags";
 	public static final String NATIONALS = "nationals";
+	public static final String NATINIMPS = "natinimps";
 	public static final String RESISTANCE = "resistance";
 	public static final String REGIONS = "regions";
 
@@ -84,7 +93,12 @@ public class SubmissionDictionaries {
 	public static ListItem[] rigs;
 	public static ListItem[] fates;
 	public static ListItem[] tontypes;
+	public static ListItem[] year5s;
+	public static ListItem[] year10s;
+	public static ListItem[] year25s;
+	public static ListItem[] xmimpflags;
 	public static ListItem[] nationals;
+	public static ListItem[] natinimps;
 	public static ListItem[] regions;
 
 	public static ListItem[] fate2;
@@ -166,12 +180,27 @@ public class SubmissionDictionaries {
 		fieldTypes.put(RIGS, new ListFieldType(RIGS, rigs));
 		fates = fillIn(session, Fate.class);
 		fieldTypes.put(FATES, new ListFieldType(FATES, fates));
-		nationals = fillIn(session, Nation.class);
+		nationals = fillInNation(session, Nation.class);
 		fieldTypes.put(NATIONALS, new ListFieldType(NATIONALS, nationals));
+		
+		natinimps = fillInNatinimps(session, Nation.class);
+		fieldTypes.put(NATINIMPS, new ListFieldType(NATINIMPS, natinimps));
 
 		tontypes = fillIn(session, TonType.class);
 		fieldTypes.put(TONTYPES, new ListFieldType(TONTYPES, tontypes));
+		
+		year5s = fillIn(session, Year5.class);
+		fieldTypes.put(YEAR5S, new ListFieldType(YEAR5S, year5s));
 
+		year10s = fillIn(session, Year10.class);
+		fieldTypes.put(YEAR10S, new ListFieldType(YEAR10S, year10s));
+		
+		year25s = fillIn(session, Year25.class);
+		fieldTypes.put(YEAR25S, new ListFieldType(YEAR25S, year25s));
+		
+		xmimpflags = fillIn(session, Xmimpflag.class);
+		fieldTypes.put(XMIMPFLAGS, new ListFieldType(XMIMPFLAGS, xmimpflags));
+		
 		fate2 = fillIn(session, FateSlaves.class);
 		fieldTypes.put(FATE2, new ListFieldType(FATE2, fate2));
 		fate3 = fillIn(session, FateVessel.class);
@@ -214,7 +243,7 @@ public class SubmissionDictionaries {
 	}
 
 	private static ListItem[] fillIn(Session sessios, Class clazz) {
-		List dics = Dictionary.loadAll(clazz, sessios, "name");
+		List dics = Dictionary.loadAll(clazz, sessios, "id");
 		ListItem[] items = new ListItem[dics.size() + 1];
 		items[0] = new ListItem("-1", "Unknown");
 		int i = 1;
@@ -222,6 +251,38 @@ public class SubmissionDictionaries {
 			Dictionary element = (Dictionary) iter.next();
 			items[i++] = new ListItem(element.getId().toString(), element
 					.getName().toString());
+		}
+		return items;
+	}
+
+	private static ListItem[] fillInNation(Session sessios, Class clazz) {
+		List dics = Dictionary.loadAll(clazz, sessios, "id");
+		ListItem[] items = new ListItem[dics.size() + 1 - 4];
+		items[0] = new ListItem("-1", "Unknown");
+		int i = 1;
+		for (Iterator iter = dics.iterator(); iter.hasNext();) {
+			Dictionary element = (Dictionary) iter.next();
+			if (!(element.getId() == 3 || element.getId() == 6
+					|| element.getId() == 15 || element.getId() == 30))
+				items[i++] = new ListItem(element.getId().toString(), element
+						.getName().toString());
+		}
+		return items;
+	}
+
+	private static ListItem[] fillInNatinimps(Session sessios, Class clazz) {
+		List dics = Dictionary.loadAll(clazz, sessios, "id");
+		ListItem[] items = new ListItem[dics.size() + 1 - 14];
+		items[0] = new ListItem("-1", "Unknown");
+		int i = 1;
+		for (Iterator iter = dics.iterator(); iter.hasNext();) {
+			Dictionary element = (Dictionary) iter.next();
+			if (element.getId() == 3 || element.getId() == 6
+					|| element.getId() == 7 || element.getId() == 8
+					|| element.getId() == 9 || element.getId() == 10
+					|| element.getId() == 15 || element.getId() == 30)
+				items[i++] = new ListItem(element.getId().toString(), element
+						.getName().toString());
 		}
 		return items;
 	}

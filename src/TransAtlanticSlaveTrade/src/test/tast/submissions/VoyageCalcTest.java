@@ -484,7 +484,7 @@ public class VoyageCalcTest extends TestCase {
 				voyageCalc.calculateXmImpflag();
 				saveVoyage(voyage);			
 				if (voyage.getXmimpflag() != null) {
-					assertEquals(voyage.getXmimpflag().doubleValue(), (double)rsltArray[i]);
+					assertEquals(voyage.getXmimpflag().getId().doubleValue(), (double)rsltArray[i]);
 				}
 				voyage = null;
 			}

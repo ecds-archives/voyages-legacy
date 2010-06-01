@@ -285,6 +285,7 @@
     <attribute name="regisreg" type="DepartureRegion" userLabel=""/>
     <attribute name="year100" type="Year100" userLabel=""/>
     <attribute name="year5" type="Year5" userLabel=""/>
+    <attribute name="year10" type="Year10" userLabel=""/>
     <attribute name="year25" type="Year25" userLabel=""/>  
     <attribute name="regem1" type="EmbRegion" userLabel=""/>
     <attribute name="regem2" type="EmbRegion" userLabel=""/>

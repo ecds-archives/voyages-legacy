@@ -55,7 +55,11 @@ import edu.emory.library.tast.dm.attributes.ResistanceAttribute;
 import edu.emory.library.tast.dm.attributes.StringAttribute;
 import edu.emory.library.tast.dm.attributes.TonTypeAttribute;
 import edu.emory.library.tast.dm.attributes.VesselRigAttribute;
-import edu.emory.library.tast.util.StringUtils;
+import edu.emory.library.tast.dm.attributes.XmimpflagAttribute;
+import edu.emory.library.tast.dm.attributes.Year10Attribute;
+import edu.emory.library.tast.dm.attributes.Year25Attribute;
+import edu.emory.library.tast.dm.attributes.Year5Attribute;
+
 
 /**
  * Voyage object.
@@ -90,6 +94,10 @@ public class Voyage extends AbstractDescriptiveObject
 		attributes.add(new NationAttribute("natinimp", "Voyage", "natinimp"));
 		attributes.add(new VesselRigAttribute("rig", "Voyage", "rig"));
 		attributes.add(new TonTypeAttribute("tontype", "Voyage", "tontype"));
+		attributes.add(new Year5Attribute("year5", "Voyage", "year5"));
+		attributes.add(new Year10Attribute("year10", "Voyage", "year10"));
+		attributes.add(new Year25Attribute("year25", "Voyage", "year25"));
+		attributes.add(new XmimpflagAttribute("xmimpflag", "Voyage", "xmimpflag"));
 		attributes.add(new NumericAttribute("tonnage", "Voyage", NumericAttribute.TYPE_INTEGER, "tonnage"));
 		attributes.add(new NumericAttribute("tonmod", "Voyage", NumericAttribute.TYPE_FLOAT, "tonmod"));
 		attributes.add(new NumericAttribute("guns", "Voyage", NumericAttribute.TYPE_INTEGER, "guns"));
@@ -433,10 +441,6 @@ public class Voyage extends AbstractDescriptiveObject
 		attributes.add(new NumericAttribute("arrport2_area", "Voyage", NumericAttribute.TYPE_LONG, "arrport2_area"));
 		attributes.add(new NumericAttribute("insurrec", "Voyage", NumericAttribute.TYPE_INTEGER, "insurrec"));
 		
-		attributes.add(new NumericAttribute("xmimpflag", "Voyage", NumericAttribute.TYPE_DOUBLE, "xmimpflag"));
-		attributes.add(new NumericAttribute("year5", "Voyage", NumericAttribute.TYPE_INTEGER, "year5"));
-		attributes.add(new NumericAttribute("year10", "Voyage", NumericAttribute.TYPE_INTEGER, "year10"));
-		attributes.add(new NumericAttribute("year25", "Voyage", NumericAttribute.TYPE_INTEGER, "year25"));
 		attributes.add(new NumericAttribute("year100", "Voyage", NumericAttribute.TYPE_INTEGER, "year100"));
 		attributes.add(new PortAttribute("majselpt", "Voyage", "majselpt"));
 		attributes.add(new RegionAttribute("majselrg", "Voyage", "majselrg"));
@@ -904,18 +908,6 @@ public class Voyage extends AbstractDescriptiveObject
 	
 	public void setYeardep(Integer yeardep) {
 		this.values.put("yeardep", yeardep);
-	}
-	
-	public void setYear5(Integer year5) {
-		this.values.put("year5", year5);
-	}
-	
-	public void setYear10(Integer year10) {
-		this.values.put("year10", year10);
-	}
-	
-	public void setYear25(Integer year25) {
-		this.values.put("year25", year25);
 	}
 	
 	public void setYear100(Integer year100) {
@@ -1543,18 +1535,6 @@ public class Voyage extends AbstractDescriptiveObject
 		return (Integer) this.values.get("yeardep");
 	}
 	
-	public Integer getYear5() {
-		return (Integer) this.values.get("year5");
-	}
-	
-	public Integer getYear10() {
-		return (Integer) this.values.get("year10");
-	}
-	
-	public Integer getYear25() {
-		return (Integer) this.values.get("year25");
-	}
-	
 	public Integer getYear100() {
 		return (Integer) this.values.get("year100");
 	}
@@ -1729,6 +1709,22 @@ public class Voyage extends AbstractDescriptiveObject
 
 	public TonType getTontype() {
 		return (TonType) this.values.get("tontype");
+	}
+	
+	public Year5 getYear5() {
+		return (Year5) this.values.get("year5");
+	}
+	
+	public Year10 getYear10() {
+		return (Year10) this.values.get("year10");
+	}
+	
+	public Year25 getYear25() {
+		return (Year25) this.values.get("year25");
+	}
+	
+	public Xmimpflag getXmimpflag() {
+		return (Xmimpflag) this.values.get("xmimpflag");
 	}
 
 	public Integer getSladamer() {
@@ -2055,6 +2051,22 @@ public class Voyage extends AbstractDescriptiveObject
 		this.values.put("tontype", val);
 	}
 
+	public void setYear5(Year5 val) {
+		this.values.put("year5", val);
+	}
+	
+	public void setYear10(Year10 val) {
+		this.values.put("year10", val);
+	}
+
+	public void setYear25(Year25 val) {
+		this.values.put("year25", val);
+	}
+	
+	public void setXmimpflag(Xmimpflag val) {
+		this.values.put("xmimpflag", val);
+	}
+	
 	public void setSladamer(Integer val) {
 		this.values.put("sladamer", val);
 	}
@@ -2804,14 +2816,6 @@ public class Voyage extends AbstractDescriptiveObject
 	public void setFemale7(Integer obj){
 		this.values.put("female7", obj);
 	}	
-	
-	public void setXmimpflag(Double xmimpflag) {
-		this.values.put("xmimpflag", xmimpflag);
-	}
-	
-	public Double getXmimpflag() {
-		return (Double) this.values.get("xmimpflag");
-	}
 	
 	public void setDatedepa(Integer obj) {		
 		this.values.put("datedepa", obj);			

@@ -170,6 +170,9 @@ public class VoyagesApplier
 	 * once.
 	 */
 	private Long[] editRequests = null;
+	
+	
+	private Long[] relatedSubmissionsId = null;
 
 	/**
 	 * Main voyage id in merge request.
@@ -186,6 +189,15 @@ public class VoyagesApplier
 
 	private static Object publishMonitor = new Object();
 	
+	public Long[] getRelatedSubmissionsId() {
+		return relatedSubmissionsId;
+	}
+
+	public void setRelatedSubmissionsId(Long[] relatedSubmissionsId) {
+		this.relatedSubmissionsId = relatedSubmissionsId;
+	}
+
+
 	private boolean revising = false;
 	
 	public VoyagesApplier(AdminSubmissionBean bean)
@@ -643,7 +655,6 @@ public class VoyagesApplier
 		session.close();
 		
 	}*/
-	
 	
 
 	/**
@@ -1766,17 +1777,21 @@ public class VoyagesApplier
 						new Boolean(false), TastDbConditions.OP_EQUALS);
 				q = new TastDbQuery("SubmissionEdit", c);
 				Object[] rets = q.executeQuery(session);
-				editRequests = new Long[rets.length];
+				this.editRequests = new Long[rets.length];
+				this.relatedSubmissionsId = new Long[rets.length];
 				for (int i = 0; i < editRequests.length; i++)
 				{
 					editRequests[i] = ((SubmissionEdit) rets[i]).getNewVoyage()
 							.getId();
+					relatedSubmissionsId[i] = ((SubmissionEdit) rets[i]).getId();
 				}
 			} else if (lSubmission instanceof SubmissionMerge)
 			{
 				Set voyagesToMerge = ((SubmissionMerge) lSubmission)
 						.getMergedVoyages();
 				editRequests = new Long[voyagesToMerge.size()];
+				this.relatedSubmissionsId = new Long[1];
+				this.relatedSubmissionsId[0] = this.submissionId;
 				Iterator iter = voyagesToMerge.iterator();
 				int i = 0;
 				while (iter.hasNext())
@@ -1785,6 +1800,9 @@ public class VoyagesApplier
 				}
 				this.mergeMainVoyage = ((SubmissionMerge) lSubmission)
 						.getProposedVoyage().getId();
+			} else if (lSubmission instanceof Submission){
+				this.relatedSubmissionsId = new Long[1];
+				this.relatedSubmissionsId[0] = this.submissionId;
 			}
 		} else
 		{
@@ -1991,6 +2009,8 @@ public class VoyagesApplier
 				.getVoyageid(), TastDbConditions.OP_EQUALS);
 		cond.addCondition(Voyage.getAttribute("revision"), new Integer(-1),
 				TastDbConditions.OP_EQUALS);
+		cond.addCondition(Voyage.getAttribute("suggestion"), new Boolean(false),
+				TastDbConditions.OP_EQUALS);
 		TastDbQuery qValue = new TastDbQuery("Voyage", cond);
 		Object[] voyage = qValue.executeQuery(session);
 		if (voyage.length != 0)
@@ -2020,15 +2040,17 @@ public class VoyagesApplier
 				wasError = true;
 			}
 
-			for (int j = 0; j < vals.length; j++)
-			{
-				if((val instanceof DateValue)&&(vals[j]==(Object)0)){
-					continue;
-				}
-				vNew
-						.setAttrValue(attrs[i].getAttribute()[j].getName(),
+			for (int j = 0; j < vals.length; j++) {
+				if (val instanceof DateValue) {
+					if (!(vals[j] == (Object) 0))
+						vNew.setAttrValue(attrs[i].getAttribute()[j].getName(),
 								vals[j]);
+				} else {
+					vNew.setAttrValue(attrs[i].getAttribute()[j].getName(),
+							vals[j]);
+				}
 			}
+
 		}
 		if (!wasError)
 		{
@@ -2209,14 +2231,18 @@ public class VoyagesApplier
 			}
 			Object[] vals = attrs[i].getValues(session, val);
 
-			if(vals!=null){
-			for (int j = 0; j < vals.length; j++)
-			{
-				if((val instanceof DateValue)&&(vals[j]==(Object)0)){
-					continue;
+			if (vals != null) {
+				for (int j = 0; j < vals.length; j++) {
+					if (val instanceof DateValue) {
+						if (!(vals[j] == (Object) 0))
+							vNew.setAttrValue(attrs[i].getAttribute()[j]
+									.getName(), vals[j]);
+					} else {
+						vNew.setAttrValue(attrs[i].getAttribute()[j].getName(),
+								vals[j]);
+					}
+
 				}
-				vNew.setAttrValue(attrs[i].getAttribute()[j].getName(), vals[j]);
-			}
 			}
 			if (!StringUtils.isNullOrEmpty(val.getNote()))
 			{

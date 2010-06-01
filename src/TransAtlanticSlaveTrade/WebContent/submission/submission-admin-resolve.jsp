@@ -114,7 +114,7 @@
 
 		<br>
 		<br>
-		<h:commandButton value="< Back" action="back" />
+		<h:commandButton value="< Back" action="#{AdminSubmissionBean.back}" />
 		<h:commandButton value="Impute" action="#{AdminSubmissionBean.impute}"
 			rendered="#{AdminSubmissionBean.imputeAvailable}" />
 		<h:commandButton value="Save" action="#{AdminSubmissionBean.save}"

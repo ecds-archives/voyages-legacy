@@ -743,6 +743,11 @@ public class AdminSubmissionBean {
 	public String save() {
 		return this.applier.save();
 	}
+	
+	public String back() {
+		this.sourceId=null;
+		return "back";
+	}
 
 	public String approveDelete() {
 		this.deleteApproved = true;
@@ -892,59 +897,84 @@ public class AdminSubmissionBean {
 	public GridColumn[] getSourcesColumns() {
 		return new GridColumn[] {
 				new GridColumn("Source type"),
-				new GridColumn("Source details")
+				new GridColumn("Source details"),
+				new GridColumn("Contributor")
 		};
 	}
 	
 	public GridRow[] getSourcesRows() {
-		
-		int i = 0;
-		
-		TastDbConditions c = new TastDbConditions();
-		c.addCondition(new SequenceAttribute(new Attribute[] {SubmissionSource.getAttribute("submission"), Submission.getAttribute("id")}), this.applier.getSubmissionId(), TastDbConditions.OP_EQUALS);
-		TastDbQuery qValue = new TastDbQuery("SubmissionSource", c);
-		List list = qValue.executeQueryList();
-		Iterator iter = list.iterator();
-		
-		GridRow[] rows = new GridRow[list.size()];
-		
-		while (iter.hasNext()) {
-			SubmissionSource source = (SubmissionSource)iter.next();
-			if (source instanceof SubmissionSourceBook) {
-				SubmissionSourceBook book = (SubmissionSourceBook)source;
-				String desc = "Title: " + this.shortenIfNecessary(book.getTitle()) + 
-				"; Authors: " + this.shortenIfNecessary(book.getAuthors());
-				rows[i++] = new GridRow(book.getId().toString(), new String[] {
-					"Book",
-					desc
-				});
-			} else if (source instanceof SubmissionSourcePaper) {
-				SubmissionSourcePaper paper = (SubmissionSourcePaper)source;
-				String desc = "Title: " + this.shortenIfNecessary(paper.getTitle()) + 
-					"; Authors: " + this.shortenIfNecessary(paper.getAuthors());
-				rows[i++] = new GridRow(paper.getId().toString(), new String[] {
-					"Article",
-					desc
-				});
-			} else if (source instanceof SubmissionSourceOther) {
-				SubmissionSourceOther other = (SubmissionSourceOther)source;
-				String desc = "Title: " + this.shortenIfNecessary(other.getTitle()) + 
-				"; Location: " + this.shortenIfNecessary(other.getLocation());
-				rows[i++] = new GridRow(other.getId().toString(), new String[] {
-					"Other",
-					desc
-				});
-			} else if (source instanceof SubmissionSourcePrimary) {
-				SubmissionSourcePrimary primary = (SubmissionSourcePrimary)source;
-				String desc = "Name: " + this.shortenIfNecessary(primary.getName()) + 
-				"; Location: " + this.shortenIfNecessary(primary.getLocation());
-				rows[i++] = new GridRow(primary.getId().toString(), new String[] {
-					"Primary source",
-					desc
-				});
+
+		Session session = HibernateConn.getSession();
+		Transaction t = session.beginTransaction();
+
+
+		List<GridRow> rowList = new ArrayList<GridRow>();
+
+		Long[] relatedSubmissionId = this.applier.getRelatedSubmissionsId();
+//		Long[] requestlist = {(long)1795366,(long)1795371};
+		for (int i = 0; i < relatedSubmissionId.length; i++) {
+
+			
+//			c.addCondition(new SequenceAttribute(new Attribute[] {SubmissionSource.getAttribute("submission"), Submission.getAttribute("id")}), this.applier.getSubmissionId(), TastDbConditions.OP_EQUALS);
+			
+			TastDbConditions c = new TastDbConditions();
+			
+			c.addCondition(new SequenceAttribute(new Attribute[] {
+					SubmissionSource.getAttribute("submission"),
+					Submission.getAttribute("id") }), relatedSubmissionId[i],
+					TastDbConditions.OP_EQUALS);
+			TastDbQuery qValue = new TastDbQuery("SubmissionSource", c);
+			List list = qValue.executeQueryList();
+			Iterator iter = list.iterator();
+
+			// GridRow[] rows = new GridRow[list.size()];
+
+			while (iter.hasNext()) {
+				SubmissionSource source = (SubmissionSource) iter.next();
+				String contributorName = Submission.loadById(session,
+						relatedSubmissionId[i]).getUser().getUserName();
+				if (source instanceof SubmissionSourceBook) {
+					SubmissionSourceBook book = (SubmissionSourceBook) source;
+					String desc = "Title: "
+							+ this.shortenIfNecessary(book.getTitle())
+							+ "; Authors: "
+							+ this.shortenIfNecessary(book.getAuthors());
+					rowList.add(new GridRow(book.getId().toString(),
+							new String[] { "Book", desc, contributorName }));
+				} else if (source instanceof SubmissionSourcePaper) {
+					SubmissionSourcePaper paper = (SubmissionSourcePaper) source;
+					String desc = "Title: "
+							+ this.shortenIfNecessary(paper.getTitle())
+							+ "; Authors: "
+							+ this.shortenIfNecessary(paper.getAuthors());
+					rowList.add(new GridRow(paper.getId().toString(),
+							new String[] { "Article", desc, contributorName }));
+				} else if (source instanceof SubmissionSourceOther) {
+					SubmissionSourceOther other = (SubmissionSourceOther) source;
+					String desc = "Title: "
+							+ this.shortenIfNecessary(other.getTitle())
+							+ "; Location: "
+							+ this.shortenIfNecessary(other.getLocation());
+					rowList.add(new GridRow(other.getId().toString(),
+							new String[] { "Other", desc, contributorName }));
+				} else if (source instanceof SubmissionSourcePrimary) {
+					SubmissionSourcePrimary primary = (SubmissionSourcePrimary) source;
+					String desc = "Name: "
+							+ this.shortenIfNecessary(primary.getName())
+							+ "; Location: "
+							+ this.shortenIfNecessary(primary.getLocation());
+					rowList.add(new GridRow(primary.getId().toString(),
+							new String[] { "Primary source", desc,
+									contributorName }));
+				}
 			}
 		}
+
+		GridRow[] rows = new GridRow[rowList.size()];
 		
+		for(int i =0; i<rowList.size(); i++){
+			rows[i] = rowList.get(i);
+		}
 		return rows;
 	}
 	
@@ -1060,6 +1090,7 @@ public class AdminSubmissionBean {
 				dataItems.add(new SourceData("Additional information", primary.getNote()));
 			}
 		} finally {
+
 			t.commit();
 			session.close();
 		}

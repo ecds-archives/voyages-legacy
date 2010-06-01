@@ -84,3 +84,4 @@ ALTER TABLE submissions_sources_papers
   ADD CONSTRAINT fk_submissions_sources_papers_to_sources FOREIGN KEY (source_id)
       REFERENCES submissions_sources (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE CASCADE;
+

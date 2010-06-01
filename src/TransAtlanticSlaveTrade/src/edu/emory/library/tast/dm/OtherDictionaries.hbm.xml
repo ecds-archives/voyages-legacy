@@ -74,5 +74,45 @@
         </id>
         <property name="name" column="name"/>
     </class>
+    
+    <class name="edu.emory.library.tast.dm.Year5" table="year5">
+		<!-- 
+		<cache usage="read-write" />
+		-->
+        <id name="id">
+        	<generator class="native"/>
+        </id>
+        <property name="name" column="name"/>
+    </class>
+    
+    <class name="edu.emory.library.tast.dm.Year10" table="year10">
+		<!-- 
+		<cache usage="read-write" />
+		-->
+        <id name="id">
+        	<generator class="native"/>
+        </id>
+        <property name="name" column="name"/>
+    </class>
+    
+    <class name="edu.emory.library.tast.dm.Year25" table="year25">
+		<!-- 
+		<cache usage="read-write" />
+		-->
+        <id name="id">
+        	<generator class="native"/>
+        </id>
+        <property name="name" column="name"/>
+    </class>
+    
+    <class name="edu.emory.library.tast.dm.Xmimpflag" table="xmimpflag">
+		<!-- 
+		<cache usage="read-write" />
+		-->
+        <id name="id">
+        	<generator class="native"/>
+        </id>
+        <property name="name" column="name"/>
+    </class>
 
 </hibernate-mapping>

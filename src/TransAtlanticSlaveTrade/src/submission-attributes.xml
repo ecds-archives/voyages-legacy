@@ -89,7 +89,7 @@
 			<attribute name="ownerp"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="natinimp" group="Ship, nation, owners" editable="N" type="nationals" userLabel="Imputed national carrier*">
+	<submission-attributes name="natinimp" group="Ship, nation, owners" editable="N" type="natinimps" userLabel="Imputed national carrier*">
 		<attributes>
 			<attribute name="natinimp"/>
 		</attributes>
@@ -459,17 +459,17 @@
 			<attribute name="yearam"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="year5" group="Voyage dates &lt;div class=&quot;row-description&quot; &gt;Enter partial information (year only or month and year only) when full date unknown.&lt;/div&gt;" editable="N" type="integer" userLabel="Quinquennium in which voyage occurred*">
+	<submission-attributes name="year5" group="Voyage dates &lt;div class=&quot;row-description&quot; &gt;Enter partial information (year only or month and year only) when full date unknown.&lt;/div&gt;" editable="N" type="year5s" userLabel="Quinquennium in which voyage occurred*">
 		<attributes>
 			<attribute name="year5"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="year10" group="Voyage dates &lt;div class=&quot;row-description&quot; &gt;Enter partial information (year only or month and year only) when full date unknown.&lt;/div&gt;" editable="N" type="integer" userLabel="Decade in which voyage occurred*">
+	<submission-attributes name="year10" group="Voyage dates &lt;div class=&quot;row-description&quot; &gt;Enter partial information (year only or month and year only) when full date unknown.&lt;/div&gt;" editable="N" type="year10s" userLabel="Decade in which voyage occurred*">
 		<attributes>
 			<attribute name="year10"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="year25" group="Voyage dates &lt;div class=&quot;row-description&quot; &gt;Enter partial information (year only or month and year only) when full date unknown.&lt;/div&gt;" editable="N" type="integer" userLabel="Quarter-century in which voyage occurred*">
+	<submission-attributes name="year25" group="Voyage dates &lt;div class=&quot;row-description&quot; &gt;Enter partial information (year only or month and year only) when full date unknown.&lt;/div&gt;" editable="N" type="year25s" userLabel="Quarter-century in which voyage occurred*">
 		<attributes>
 			<attribute name="year25"/>
 		</attributes>
@@ -645,7 +645,7 @@
 			<attribute name="sladamer"/>
 		</attributes>
 	</submission-attributes> 
-    <submission-attributes name="xmimpflag" group="Slaves (numbers)" editable="N" type="double" userLabel="Voyage groupings for estimating imputed slaves*">
+    <submission-attributes name="xmimpflag" group="Slaves (numbers)" editable="N" type="xmimpflags" userLabel="Voyage groupings for estimating imputed slaves*">
 		<attributes>
 			<attribute name="xmimpflag"/>
 		</attributes>
