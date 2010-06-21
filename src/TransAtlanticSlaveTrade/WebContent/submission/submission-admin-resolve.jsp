@@ -116,7 +116,7 @@
 		<br>
 		<h:commandButton value="< Back" action="#{AdminSubmissionBean.back}" />
 		<h:commandButton value="Impute" action="#{AdminSubmissionBean.impute}"
-			rendered="#{AdminSubmissionBean.imputeAvailable}" />
+			rendered="#{AdminSubmissionBean.isAdmin}" />
 		<h:commandButton value="Save" action="#{AdminSubmissionBean.save}"
 			rendered="#{AdminSubmissionBean.rejectAvailable}" />
 		<h:commandButton value="Logout without saving"
