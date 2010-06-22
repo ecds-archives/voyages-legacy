@@ -14,6 +14,7 @@
 	<script src="../scripts/utils.js" type="text/javascript" language="javascript"></script>
 	<script src="../scripts/tooltip.js" language="javascript" type="text/javascript"></script>
 	<script src="../scripts/grid-editor.js" type="text/javascript" language="javascript"></script>
+	<script src="../scripts/disablekey.js" type="text/javascript" language="javascript"></script>
 </head>
 <body style="margin: 15px;">
 <f:view>

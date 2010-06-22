@@ -2023,38 +2023,28 @@ public class VoyagesApplier
 		}
 
 		wasError = false;
-		for (int i = 0; i < attrs.length; i++)
-		{
-			Value val = (Value) newValues.get(attrs[i].getName());
+		String[] fullAttributes = Voyage.getAllAttrNames();
 
-			if (!val.isCorrectValue())
-			{
-				val.setErrorMessage("Error in value!");
-				wasError = true;
-			}
-			Object[] vals = attrs[i].getValues(null, val);
+		for (int i = 0; i < fullAttributes.length; i++) {
+			Object val = mergedVoyage.getAttrValue(fullAttributes[i]);
 
-			if (attrs[i].getName().equals("voyageid") && vals[0] == null)
-			{
-				val.setErrorMessage("This field is required!");
-				wasError = true;
-			}
-
-			for (int j = 0; j < vals.length; j++) {
-				if (val instanceof DateValue) {
-					if (!(vals[j] == (Object) 0))
-						vNew.setAttrValue(attrs[i].getAttribute()[j].getName(),
-								vals[j]);
-				} else {
-					vNew.setAttrValue(attrs[i].getAttribute()[j].getName(),
-							vals[j]);
+			if (val == null) {
+				if (fullAttributes[i].equals("voyageid")) {
+					Value idVal = (Value) newValues.get("voyageid");
+					idVal.setErrorMessage("This field is required!");
+					wasError = true;
 				}
+				continue;
 			}
+
+			vNew.setAttrValue(fullAttributes[i], val);
 
 		}
 		if (!wasError)
 		{
 			vNew.saveOrUpdate();
+		} else{
+			return null;
 		}
 
 		if (lSubmission instanceof SubmissionEdit)

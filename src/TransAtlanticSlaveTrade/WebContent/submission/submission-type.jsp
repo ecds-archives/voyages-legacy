@@ -10,6 +10,7 @@
 	<title>Submission - step 1</title>
 	<link href="../styles/main.css" rel="stylesheet" type="text/css">
 	<link href="../styles/submission.css" rel="stylesheet" type="text/css">
+	<script src="../scripts/disablekey.js" type="text/javascript" language="javascript"></script>
 </head>
 <body style="margin: 15px;">
 <f:view>

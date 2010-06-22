@@ -474,7 +474,7 @@ public class VoyagesCalculation {
 	}
 	
 	try {
-		//Assign values and call function to calculate year25
+		//Assign values and call function to calculate year100
 		    dateInputs=new ArrayList();
 		    dateInputs.add(yearam);
 		    dateRanges=VoyagesCalcConstants.getdateRanges4();
@@ -2837,8 +2837,12 @@ public class VoyagesCalculation {
 		else if  ((rig == null || (Arrays.binarySearch(rigArray, rig)) >= 0) && (gte(yearam, 1626) && lt(yearam, 1651))) {xmimpflag = 127d ;}			
 		
             //Store in voyage
+	    if(xmimpflag==null){
+	    	voyage.setXmimpflag(null);
+	    }else{
 			voyage.setXmimpflag(Xmimpflag.loadById(session, round(xmimpflag, 6).longValue()));
 			//System.out.println("xmimpflag:" + xmimpflag);
+	    }
 
 	}
 	

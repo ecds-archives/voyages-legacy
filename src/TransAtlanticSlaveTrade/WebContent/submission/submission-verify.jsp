@@ -11,8 +11,9 @@
 	<link href="../styles/submission-grid.css" rel="stylesheet" type="text/css">
 	<link href="../styles/submission.css" rel="stylesheet" type="text/css">
 	<link href="../admin/main.css" rel="stylesheet" type="text/css">
-	<script src="../scripts/utils.js" type="text/javascript" langiage="javascript"></script>
-	<script src="../scripts/grid-editor.js" type="text/javascript" langiage="javascript"></script>
+	<script src="../scripts/utils.js" type="text/javascript" language="javascript"></script>
+	<script src="../scripts/grid-editor.js" type="text/javascript" language="javascript"></script>
+	<script src="../scripts/disablekey.js" type="text/javascript" language="javascript"></script>
 </head>
 <body style="margin: 15px;">
 <f:view>
