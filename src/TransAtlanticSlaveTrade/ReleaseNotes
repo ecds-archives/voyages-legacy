@@ -1,3 +1,27 @@
+Version 2.3 - July 2010
+
+* An Editor and Reviewer will be able reference Submitted Sources info from all related merges and edits to the voyage. This will allow them to make decisions about how to publish the voyage 
+
+* When the Admin downloads the list of voyages after a publish, only the correct voyages (including the correct flag combinations) will be in the CSV file
+
+* When Editor or Admin double clicks on a record in the voyages list in the editor/admin panel, the display results in a screen that includes all "Slave characteristics"
+
+* Admin should always see the "Impute" and "accept" buttons in the contrib section. Clicking the "accept" button will save all fields including composite fields
+
+* Contributors will be able to click a "Save and Next" button throughout contribution process 
+
+* All buttons in the contrib section will have standard capitalization in the labels
+
+* A Editor can click a "Delete voyage" button that will delete the published version and edited versions of a voyage
+
+* Return key should be disabled for contributors entering data. Otherwise when entering data in the contributor tables hitting the return key will cause all data lost
+
+* All users will see revised options labels and reformatted sections in the contribute section
+
+* Users will be able to view information about sources in the Voyage Database search page
+
+* Users will be able to download up to date files from the "Downloads section of the site
+
 Version 2.1 - September 2009
 
 * The program now contains the Calculations Module
