@@ -44,12 +44,12 @@
                     <div class="method-info">
 						<span class="method-author"><b>David Eltis</b></span>
 						<span class="method-location">(Emory University)</span>,
-						<span class="method-date">2007</span>
+						<span class="method-date">2010</span>
 					</div>
 					
 					<h2>Geographic Data</h2>
 					
-					<p>The most straightforward of the imputed variables are geographic. The 786 locations in the data set where slave ships were
+					<p>The most straightforward of the imputed variables are geographic. The 798 locations in the data set where slave ships were
 					built, registered, cleared for a slaving voyage, embarked or disembarked slaves are grouped into seven broad regions and 90
 					specific regions. A full listing of these places is contained in the code book, but space constraints prevent all these from
 					being represented in the maps. We have adopted a convention that a geographical placename, such as London or Luanda or Charleston,

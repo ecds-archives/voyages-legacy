@@ -45,7 +45,7 @@
                     <div class="method-info">
 						<span class="method-author"><b>David Eltis</b></span>
 						<span class="method-location">(Emory University)</span>,
-						<span class="method-date">2007</span>
+						<span class="method-date">2010</span>
 					</div>
 									
 					<h2>Data Variables</h2>					
@@ -62,49 +62,99 @@
 					British trade. <span class="superscript">(5)</span></p>
 					
 					<center>
-					<p style="font-weight: bold;">Table 1. Select Summary of Information Contained in the Trans-Atlantic Slave Voyage Data Set</p>					
+					<p style="font-weight: bold;">Table 1. Select Summary of Information Contained in the Trans-Atlantic Slave Voyage Data Set: Version 2008 Compared to 2010</p>					
 					
 					<table border="1" cellspacing="0" cellpadding="3" class="methodborder">
-						<tr><td class="number">34,941</td>
-
-							<td>Number of slave voyages in the data set</td></tr>
-						<tr><td class="number">33,337</td>
-							<td>Voyages with name of vessel</td></tr>
-						<tr><td class="number">30,895</td>
-							<td>Voyages with name of captain(s)</td></tr>
-						<tr><td class="number">21,024</td>
-
-							<td>Voyages with name of at least one ship owner</td></tr>
-						<tr><td class="number">17,591</td>
-							<td>Tonnage of ship available</td></tr>
-						<tr><td class="number">28,443</td>
-							<td>Place of ship departure given</td></tr>
-						<tr><td class="number">22,193</td>
-
-							<td>Date of ship departure given</td></tr>
-						<tr><td class="number">21,121</td>
-							<td>Place(s) of embarkation on the African coast available</td></tr>
-						<tr><td class="number">8,207</td>
-							<td>Numbers of Africans embarked reported</td></tr>
-						<tr><td class="number">4,426</td>
-
-							<td>Voyages with age or gender of Africans reported</td></tr>
-						<tr><td class="number">24,849</td>
-							<td>Place(s) of disembarkation available</td></tr>
-						<tr><td class="number">17,445</td>
-							<td>Dates of arrival at place of disembarkation available</td></tr>
-						<tr><td class="number">18,184</td>
-
-							<td>Numbers of Africans disembarked reported</td></tr>
-						<tr><td class="number">6,332</td>
-							<td>Voyages reporting number of Africans died on board</td></tr>
-						<tr><td class="number">8,881</td>	
-							<td>Voyages with place of ship construction reported</td></tr>
-						<tr><td class="number">10,100</td>
-
-							<td>Date of return to Europe or end of voyage given</td></tr>
-						<tr><td class="number">31,554</td>
-							<td>Some indication of outcome of voyage indicated</td></tr>
+						<tr>
+							<td></td>
+							<td>2008</td>
+							<td>2010</td>
+						</tr>
+						<tr>
+							<td>Number of slave voyages in the data set</td>
+							<td class="number">34,940</td>
+							<td class="number">34,948</td>
+						</tr>
+						<tr>
+							<td>Voyages with name of vessel</td>
+							<td class="number">33,337</td>
+							<td class="number">33,353</td>
+						</tr>
+						<tr>
+							<td>Voyages with name of captain(s)</td>
+							<td class="number">30,895</td>
+							<td class="number">30,894</td>
+						</tr>
+						<tr>
+							<td>Voyages with name of at least one ship owner</td>
+							<td class="number">21,024</td>
+							<td class="number">21,064</td>
+						</tr>
+						<tr>
+							<td>Tonnage of ship available</td>
+							<td class="number">17,691</td>
+							<td class="number">17,608</td>
+						</tr>
+						<tr>
+							<td>Place of ship departure given</td>
+							<td class="number">28,443</td>
+							<td class="number">28,449</td>
+						</tr>
+						<tr>
+							<td>Date of ship departure given</td>
+							<td class="number">22,193</td>
+							<td class="number">22,231</td>
+						</tr>
+						<tr>
+							<td>Place(s) of embarkation on the African coast available</td>
+							<td class="number">21,121</td>
+							<td class="number">21,291</td>
+						</tr>
+						<tr>
+							<td>Numbers of Africans embarked reported</td>
+							<td class="number">8,207</td>
+							<td class="number">8,272</td>
+						</tr>
+						<tr>
+							<td>Voyages with age or gender of Africans reported</td>
+							<td class="number">4,426</td>
+							<td class="number">4,498</td>
+							</tr>
+						<tr>
+							<td>Place(s) of disembarkation available</td>
+							<td class="number">24,849</td>
+							<td class="number">24,916</td>
+						</tr>
+						<tr>
+							<td>Dates of arrival at place of disembarkation available</td>
+							<td class="number">17,446</td>
+							<td class="number">17,533</td>
+							</tr>
+						<tr>
+							<td>Numbers of Africans disembarked reported</td>
+							<td class="number">18,184</td>
+							<td class="number">18,269</td>
+						</tr>
+						<tr>
+							<td>Voyages reporting number of Africans died on board</td>
+							<td class="number">6,332</td>
+							<td class="number">6,438</td>
+						</tr>
+						<tr>
+							<td>Voyages with place of ship construction reported</td>
+							<td class="number">8,881</td>
+							<td class="number">8,888</td>	
+						</tr>
+						<tr>
+							<td>Date of return to Europe or end of voyage given</td>
+							<td class="number">10,100</td>
+							<td class="number">10,414</td>
+							</tr>
+						<tr>
+							<td>Some indication of outcome of voyage indicated</td>
+							<td class="number">31,554</td>
+							<td class="number">31,612</td>
+						</tr>
 					</table>
 					</center>
 						

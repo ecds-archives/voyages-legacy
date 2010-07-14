@@ -44,7 +44,7 @@
                     <div class="method-info">
 						<span class="method-author"><b>David Eltis</b></span>
 						<span class="method-location">(Emory University)</span>,
-						<span class="method-date">2007</span>
+						<span class="method-date">2010</span>
 					</div>
 					
 					<h2>Coverage of the Slave Trade</h2>
@@ -66,18 +66,18 @@
 					43,600. New information will certainly emerge from the archives, but we think it unlikely that future scholars will
 					dramatically increase the  size or scale of the trans-Atlantic slave trade. </p>
 
-					<p>The 34,941 trans-Atlantic voyages contained in the database allows us to infer the total number of voyages
+					<p>The 34,948 trans-Atlantic voyages contained in the database allows us to infer the total number of voyages
 					carrying slaves from Africa. The Estimates page suggests that 12 ½  million captives (12,520,000) departed
 					Africa for the Americas. Dividing this total by the average number of people embarked per voyage, 304 individuals,
 					yields 41,190 voyages. Similarly, the Estimates pages suggests that 10.7 million enslaved Africans disembarked,
 					mainly in the Americas. Given the average number disembarked per voyage, 265 people, yields an estimated 40,380
-					voyages arriving. Not all 34,941 voyages in the database carried slaves from Africa. A total of 1,536 ships (4.4%)
+					voyages arriving. Not all 34,948 voyages in the database carried slaves from Africa. A total of 1,262 voyages (3.6%)
 					never reached the African coast because they were lost at sea, captured or suffered some other misfortune. After
 					removing these voyages, the database contains some trace of 81 percent of voyages that embarked captives. The
-					database also contains records of 32,788 voyages that disembarked slaves, or could have done so (in other words,
-					for some of these we do not know the outcome of the voyage). A total of 763 of these disembarked their slaves in
+					database also contains records of 33,684 voyages that disembarked slaves, or could have done so (in other words,
+					for some of these we do not know the outcome of the voyage). A total of 924 of these disembarked their slaves in
 					the Old World. The latter group comprised mainly ships captured in the nineteenth century which were taken to Sierra
-					Leone and St. Helena as part of the attempt to suppress the trade. A further 167 sank after leaving Africa with the
+					Leone and St. Helena as part of the attempt to suppress the trade. A further 276 sank after leaving Africa with the
 					loss of their slaves. In all, the database contains some record of almost 80 percent of vessels disembarking captives.
 					Of course, there are other estimates of the volume of the trans-Atlantic slave trade. If we take a higher estimate of,
 					say, 15.4 million departures,<span class="superscript">(2)</span> then the Voyages Database documents

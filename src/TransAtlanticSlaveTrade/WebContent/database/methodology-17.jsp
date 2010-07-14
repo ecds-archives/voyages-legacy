@@ -44,16 +44,16 @@
                     <div class="method-info">
 						<span class="method-author"><b>David Eltis</b></span>
 						<span class="method-location">(Emory University)</span>,
-						<span class="method-date">2007</span>
+						<span class="method-date">2010</span>
 					</div>
 					
 					<h2>National Carriers</h2>
 					
 					<p>We have also made some assumptions in order to project a fuller picture of national carriers in the trade.
-					The set identifies the national affiliations of 25,570 or 73 percent of the voyages in the data set.
-					The variable that carries this information is “Flag” (NATIONAL). For a further 7,705 ventures, the context of the
+					The set identifies the national affiliations of 26,055 or 75 percent of the voyages in the data set.
+					The variable that carries this information is “Flag” (NATIONAL). For a further 7,364 ventures, the context of the
 					voyage and the name of the ship owner or captain make inferences about place of registration possible, and thus we
-					created an imputed variable of national affiliation that contains affiliations for 33,275 voyages. This is “Flag*”
+					created an imputed variable of national affiliation that contains affiliations for 33,419 voyages. This is “Flag*”
 					(NATINIMP). For some ships, no method enables one to impute the national registration. From 1839, the British allowed
 					their cruisers to take slave ships flying the Portuguese flag into British Vice-Admiralty Courts for confiscation
 					under British law. In response to this (and to similar legislation in 1845 that extended the provision to the
@@ -67,8 +67,8 @@
 					the British Americas, and a similar problem of geographic specificity arises with the Portuguese and Brazilian ships
 					in the nineteenth century. A frequency count of this imputed flag variable is nevertheless of interest and indicates
 					that 12,014 voyages were British and that a further 2,175 were registered in the British Americas. Of the other principal
-					nations, 11,366 are identified as Portuguese or Brazilian; 4,181 were French; 1,574 were Dutch; 1,551 were Spanish or
-					Uruguayan; and 402 flew the flags of various Baltic states (mainly Danish), including Brandenburg-Prussia. Many of
+					nations, 11,426 are identified as Portuguese or Brazilian; 4,192 were French; 1,577 were Dutch; 1,579 were Spanish or
+					Uruguayan; and 404 flew the flags of various Baltic states (mainly Danish), including Brandenburg-Prussia. Many of
 					the voyages of unknown nationality were likely Portuguese, but even if they all were, Portuguese voyages are still
 					somewhat underrepresented in the Voyages Database.</p>
 					

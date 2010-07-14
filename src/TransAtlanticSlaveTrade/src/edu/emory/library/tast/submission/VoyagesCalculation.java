@@ -2322,8 +2322,6 @@ public class VoyagesCalculation {
 	      
 	      if(gte(tslavesd,1) && adlt1imp==null && eq(chil1imp, tslavesd))  {adlt1imp = 0;}
 	      if(gte(tslavesd,1) && chil1imp==null && eq(adlt1imp, tslavesd)) {chil1imp = 0;}
-	      if(tslavesd==null && adlt1imp==null && eq(chil1imp, tslavesd)) {adlt1imp = 0;}
-	      if(tslavesd==null && chil1imp==null && eq(adlt1imp, tslavesd)) {chil1imp = 0;}
 
 		  
 	    //set more default values
@@ -2357,8 +2355,6 @@ public class VoyagesCalculation {
 
 			 if (gte(tslavesd,1) && male1imp==null && eq(feml1imp,tslavesd)) {male1imp = 0;}
 			 if (gte(tslavesd,1) && feml1imp==null && eq(male1imp,tslavesd)) {feml1imp = 0;}
-			 if (tslavesd==null && male1imp==null && eq(feml1imp,tslavesd)) {male1imp = 0;}
-			 if (tslavesd==null && feml1imp==null && eq(male1imp,tslavesd)) {feml1imp = 0;}
 
 
 			  

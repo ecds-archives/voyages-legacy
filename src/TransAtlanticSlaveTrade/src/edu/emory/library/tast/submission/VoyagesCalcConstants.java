@@ -355,6 +355,7 @@ public class VoyagesCalcConstants
            fate2Hash.put(new Integer("165"), new Integer("5"));
            fate2Hash.put(new Integer("166"), new Integer("5"));
            fate2Hash.put(new Integer("188"), new Integer("5"));
+           fate2Hash.put(new Integer("191"), new Integer("5"));
            fate2Hash.put(new Integer("194"), new Integer("5"));
            fate2Hash.put(new Integer("195"), new Integer("5"));
            fate2Hash.put(new Integer("196"), new Integer("5"));
@@ -519,11 +520,17 @@ public class VoyagesCalcConstants
              fate3Hash.put(new Integer("154"), new Integer("13"));
              fate3Hash.put(new Integer("157"), new Integer("13"));
              fate3Hash.put(new Integer("1"), new Integer("14"));
+             fate3Hash.put(new Integer("40"), new Integer("14"));
+             fate3Hash.put(new Integer("41"), new Integer("14"));
+             fate3Hash.put(new Integer("44"), new Integer("14"));
              fate3Hash.put(new Integer("49"), new Integer("14"));
              fate3Hash.put(new Integer("59"), new Integer("14"));
              fate3Hash.put(new Integer("68"), new Integer("14"));
+             fate3Hash.put(new Integer("70"), new Integer("14"));
+             fate3Hash.put(new Integer("77"), new Integer("14"));
              fate3Hash.put(new Integer("88"), new Integer("14"));
              fate3Hash.put(new Integer("92"), new Integer("14"));
+             fate3Hash.put(new Integer("93"), new Integer("14"));
              fate3Hash.put(new Integer("206"), new Integer("14"));
              fate3Hash.put(new Integer("207"), new Integer("14"));
              fate3Hash.put(new Integer("208"), new Integer("14"));
@@ -691,6 +698,10 @@ public class VoyagesCalcConstants
              fate4Hash.put( new Integer("199"), new Integer("3"));
              fate4Hash.put( new Integer("201"), new Integer("3"));
              fate4Hash.put( new Integer("202"), new Integer("3"));
+             fate4Hash.put( new Integer("40"), new Integer("4"));
+             fate4Hash.put( new Integer("70"), new Integer("4"));
+             fate4Hash.put( new Integer("96"), new Integer("4"));
+             fate4Hash.put( new Integer("208"), new Integer("4"));
              return fate4Hash;
          }
          public static ArrayList getRegionRanges1()
@@ -730,6 +741,7 @@ public class VoyagesCalcConstants
              ranges1.add(new Integer[]{new Integer("21601"), new Integer("21699"), new Integer("21600")});
              ranges1.add(new Integer[]{new Integer("21701"), new Integer("21799"), new Integer("21700")});
              ranges1.add(new Integer[]{new Integer("21801"), new Integer("21899"), new Integer("21800")});
+             ranges1.add(new Integer[]{new Integer("21901"), new Integer("21999"), new Integer("21900")});
              ranges1.add(new Integer[]{new Integer("31101"), new Integer("31199"), new Integer("31100")});
              ranges1.add(new Integer[]{new Integer("31201"), new Integer("31299"), new Integer("31200")});
              ranges1.add(new Integer[]{new Integer("31301"), new Integer("31399"), new Integer("31300")});

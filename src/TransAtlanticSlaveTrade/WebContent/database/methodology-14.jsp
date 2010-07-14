@@ -44,16 +44,16 @@
                     <div class="method-info">
 						<span class="method-author"><b>David Eltis</b></span>
 						<span class="method-location">(Emory University)</span>,
-						<span class="method-date">2007</span>
+						<span class="method-date">2010</span>
 					</div>
 					
 					<h2>Imputing Numbers of Slaves</h2>
 					
 					<p>A second set of inferences is suggested by the data on numbers of slaves leaving Africa and arriving in the New (and
-					in some cases, the Old) World. Although 25,288 voyages in the data set arrived with slaves, and a further 7,500 could
-					have done so, the sources provide the actual number on board at arrival for only 18,184 voyages. On the African side,
-					the data are much weaker, with only 8,207 yielding information on the number of slaves leaving Africa, out of 28,962
-					voyages that left with slaves, and a further 4,443 that could have done so. Because most of those studying the slave
+					in some cases, the Old) World. Although 26,216 voyages in the data set arrived with slaves, and a further 7,192 could
+					have done so, the sources provide the actual number on board at arrival for only 18,269 voyages. On the African side,
+					the data are much weaker, with only 8,272 yielding information on the number of slaves leaving Africa, out of 29,095
+					voyages that left with slaves, and a further 3,335 that could have done so. Because most of those studying the slave
 					trade are interested in the captives rather than the ships, some inference would seem appropriate for those ships
 					that traded without leaving anything in the historical record about the slaves they carried. The first step in making
 					reasonable inferences is to draw on the number of captives who might have been reported for the same voyage at an
@@ -62,7 +62,7 @@
 					<p>Only 5,803 voyages in the revised database contain numbers of both captives embarked and captives disembarked,
 					but for a further 2,404 we have the figure for departures alone and for 12,279 numbers arrived alone. Imputed totals
 					for the missing information may be made from the large subset of voyages that provide information on deaths during
-					the passage. The Voyages Database contains 6,332 voyages for which a ratio of deaths to slaves embarked may be
+					the passage. The Voyages Database contains 6,438 voyages for which a ratio of deaths to slaves embarked may be
 					calculated. Deaths as a proportion of those embarked differed markedly by African region of embarkation. Table 2
 					shows breakdowns of shipboard mortality as a percentage of those slaves taken on board.</p>
 
@@ -81,66 +81,66 @@
 					</tr>
 					<tr>
 						<td>Senegambia</td>
-						<td class="number">10.7%</td>
-						<td class="number">13.5%</td>
-						<td class="number">413</td>
+						<td class="number">10.9%</td>
+						<td class="number">13.7%</td>
+						<td class="number">421</td>
 					</tr>
 
 					<tr>
 						<td>Sierra Leone</td>
-						<td class="number">9.5%</td>
-						<td class="number">15.6%</td>
-						<td class="number">226</td>
+						<td class="number">9.8%</td>
+						<td class="number">16.5%</td>
+						<td class="number">231</td>
 					</tr>
 					<tr>
 
 						<td>Windward Coast</td>
-						<td class="number">9.3%</td>
+						<td class="number">9.6%</td>
 						<td class="number">11.9%</td>
-						<td class="number">108</td>
+						<td class="number">111</td>
 					</tr>
 					<tr>
 						<td>Gold Coast</td>
 
-						<td class="number">11.8%</td>
-						<td class="number">12.8%</td>
-						<td class="number">640</td>
+						<td class="number">12.0%</td>
+						<td class="number">13.5%</td>
+						<td class="number">654</td>
 					</tr>
 					<tr>
 						<td>Bight of Benin</td>
 						<td class="number">11.7%</td>
 						<td class="number">14.3%</td>
-						<td class="number">1,194</td>
+						<td class="number">1,197</td>
 					</tr>
 					<tr>
 						<td>Bight of Biafra</td>
-						<td class="number">19.0%</td>
-						<td class="number">18.7%</td>
-						<td class="number">637</td>
+						<td class="number">19.1%</td>
+						<td class="number">18.8%</td>
+						<td class="number">646</td>
 					</tr>
 					<tr>
 						<td>West-central Africa</td>
 						<td class="number">9.1%</td>
 						<td class="number">11.7%</td>
-						<td class="number">2,442</td>
+						<td class="number">2,464</td>
 					</tr>
 					<tr>
 						<td>South-east Africa</td>
-						<td class="number">18.9%</td>
-						<td class="number">16.3%</td>
-						<td class="number">334</td>
+						<td class="number">19.3%</td>
+						<td class="number">16.5%</td>
+						<td class="number">356</td>
 					</tr>
 					<tr>
 						<td>Region cannot be identified</td>
 						<td class="number">17.4%</td>
 						<td class="number">17.7%</td>
-						<td class="number">338</td>
+						<td class="number">358</td>
 					</tr>
 					<tr>
 						<td>All Africa</td>
 						<td class="number">11.9%</td>
 						<td class="number">14.2%</td>
-						<td class="number">6,332</td>
+						<td class="number">6,438</td>
 					</tr>						
 					</table>	
 					</center>
@@ -161,11 +161,11 @@
 					information is missing. The number of captives on board was very much a function of the type of ship as well
 					as place of trade in Africa, and to a lesser extent in the Americas. Moreover, the size of the type of vessel
 					as reflected in its rig changed over time. The Appendix table attempts to take into account these factors by
-					showing average number of captives both embarked and disembarked for 142 separate combinations of first, rig
+					showing average number of captives both embarked and disembarked for 155 separate combinations of first, rig
 					of vessel and time period; and second, where these were not available, place of trade in Africa; and third,
 					a separate grouping of 18 types of vessels – smaller than those from the rest of the Atlantic World before
 					1800 - built in North America. A small group of vessels have no information on either rig or place of trade
-					and estimates of captives for these are classed as “No rig” in the Appendix table. The means for these 142
+					and estimates of captives for these are classed as “No rig” in the Appendix table. The means for these 155
 					categories were added to voyage records, as appropriate, whenever data on slaves could not be extracted from
 					the sources. Users should note that in all cases these averages might be termed “running” in the sense that
 					that as we added data to the database we recalculated the statistics reported in the Appendix table. And as

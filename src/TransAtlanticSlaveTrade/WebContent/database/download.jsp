@@ -51,7 +51,7 @@ String dlUrl = AppConfig.getConfiguration().getString(AppConfig.DOWNLOADS_URL);
 						<s:secondaryMenu>
 						
 							<s:secondaryMenuItem
-								label="The Trans-Atlantic Slave Trade SPSS Database (expanded data set)"
+								label="The 2010 Version of the Trans-Atlantic Slave Trade Database (expanded data set)"
 								menuId="extended"
 								href="#extended"/>			
 							
@@ -77,24 +77,34 @@ String dlUrl = AppConfig.getConfiguration().getString(AppConfig.DOWNLOADS_URL);
 					
 					<a name="extended"></a> 
 					
-					<h2>The Trans-Atlantic Slave Trade SPSS Database (expanded data set)</h2>
+					<h2>The 2010 Version of the Trans-Atlantic Slave Trade Database (expanded data set)</h2>
 						
-					<p>The 2008 version of the Trans-Atlantic Slave Trade Database contains 8,374 voyages 
-					added since the CD-Rom was published in 1999 and additional information on 19,320 voyages. 
-					The expanded data set has 276 variables, compared with 99 in the Voyages Database available 
+					<p>TThe 2010 version of the transatlantic slave trade database contains 34,948 voyages 
+					compared to 34,940 in 2008 (and 27,233 in the 1999 version of the database that appeared 
+					on CD-ROM). However, since 2008, several hundred corrections have been made and additional 
+					information added. Thus 86 of the 2008 voyages have been deleted either because we found 
+					they had been entered twice, or because we discovered that a voyage was not involved in 
+					the transatlantic slave trade. Voyage id 16772, the Pye, Captain Adam, turned out to have 
+					carried slaves from Jamaica to the Chesapeake, but obtained its captives in Jamaica, not 
+					Africa. Offsetting the deletions are 94 voyages added on the basis of new information. 
+					Further many voyages that are common to both 2008 and 2010 versions of the database contain 
+					information that was not available in 2008 (see table 1 of “Understanding the Database”). 
+					The 2010 version has 276 variables, compared with 99 in the Voyages Database available 
 					online. Users interested in working with this larger data set can download it in a file 
 					formatted for use with SPSS software. A variable in this dataset (EVGREEN) identifies 
 					voyages on the CD-ROM version published in 1999. Because some users may find it useful 
 					to view data as it existed in 1999, the CD-ROM version can also be selected for download. 
 					A codebook describing all variable names, variable labels, and values of the expanded 
 					dataset can be downloaded as a separate PDF document. With only a few exceptions, it 
-					retains variable names in the original 1999 CD-ROM version.</p>
+					retains variable names in the original 1999 CD-ROM version. The 2008 version of the database 
+					may also be downloaded.</p>
 				
 					<h3>Downloads:</h3>
 					<ul>
+						<li>Expanded dataset (2010, SPSS format): <a href="<%=dlUrl%>/tastdb-exp-2010.sav">tastdb-exp-2010.sav</a></li>
 						<li>Expanded dataset (2008, SPSS format): <a href="<%=dlUrl%>/tastdb-exp-2008.sav">tastdb-exp-2008.sav</a></li>
 						<li>Original CD-ROM dataset (1999, SPSS format): <a href="<%=dlUrl%>/tastdb-1999.sav">tastdb-1999.sav</a></li>
-						<li>Codebook: <a href="<%=dlUrl%>/Codebook-SPSS2008.pdf" target="_blank">SPSS codebook</a></li>
+						<li>Codebook: <a href="<%=dlUrl%>/Codebook2010.pdf" target="_blank">SPSS codebook</a></li>
 					</ul>		
 					
 					<a name="voyages"></a> 
@@ -109,9 +119,9 @@ String dlUrl = AppConfig.getConfiguration().getString(AppConfig.DOWNLOADS_URL);
 					
 					<h3>Downloads:</h3>
 					<ul>
-						<li>2008, SPSS: <a href="<%=dlUrl%>/tastdb-2008.sav">tastdb-2008.sav</a></li>
-						<li>2008, comma-delimited: <a href="<%=dlUrl%>/tastdb-2008.csv">tastdb-2008.csv</a></li>
-						<li>2008, dBase: <a href="<%=dlUrl%>/tastdb-2008.dbf">tastdb-2008.dbf</a></li>
+						<li>2010, SPSS: <a href="<%=dlUrl%>/tastdb-2010.sav">tastdb-2010.sav</a></li>
+						<li>2010, comma-delimited: <a href="<%=dlUrl%>/tastdb-2010.csv">tastdb-2010.csv</a></li>
+						<li>2010, dBase: <a href="<%=dlUrl%>/tastdb-2010.dbf">tastdb-2010.dbf</a></li>
 					</ul>
 						
 					<a name="estimates"></a> 

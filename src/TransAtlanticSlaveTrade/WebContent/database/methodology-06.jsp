@@ -44,7 +44,7 @@
                     <div class="method-info">
 						<span class="method-author"><b>David Eltis</b></span>
 						<span class="method-location">(Emory University)</span>,
-						<span class="method-date">2007</span>
+						<span class="method-date">2010</span>
 					</div>
 					
 					<h2>Dates</h2>
@@ -68,6 +68,12 @@
 					we assumed that these were arrival dates. When multiple dates were reported in the sources, the editors chose the latest dates
 					for departures and the earliest dates for arrivals.<span class="superscript">(7)</span> </p>
 
+					<p>One further convention is adopted for vessels captured off Africa without slaves. Some voyages in the data set that were 
+					captured by pirates or ships of other nations display a date of departure from Africa even though they had no slaves on board. 
+					In such cases the date of departure from the coast should be read as the date of capture. The great majority of such instances 
+					occurred in the nineteenth century when British naval vessels captured many empty slave vessels as part of their efforts to suppress 
+					the slave trade.</p>
+					
 					<p>The new data set includes variables that report the place and year of construction for most vessels in the British slave
 					trade. Merchants often purchased ships from other trades and converted them to slavers. The British slaving fleet also included
 					prizes captured from the French, Spanish, Dutch, or Americans during the many wars of the eighteenth century. Shipping sources,

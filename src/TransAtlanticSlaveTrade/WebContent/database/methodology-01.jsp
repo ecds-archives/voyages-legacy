@@ -44,7 +44,7 @@
                     <div class="method-info">
 						<span class="method-author"><b>David Eltis</b></span>
 						<span class="method-location">(Emory University)</span>,
-						<span class="method-date">2007</span>
+						<span class="method-date">2010</span>
 					</div>
 					
 					<p>It is difficult to believe in the first decade of the twenty-first century that just over two centuries
@@ -71,7 +71,7 @@
 					on board slave vessels detained by naval cruisers attempting to suppress the slave trade in the nineteenth century.
 					These people can be searched and analyzed using the names interface. Although of limited utility for persons seeking
 					their own family histories, our data set does provide an extraordinary source for historical reconstruction of the
-					history of the African peoples in America. The details of the 34,941 voyages presented here greatly facilitate the
+					history of the African peoples in America. The details of the 34,948 voyages presented here greatly facilitate the
 					study of cultural, demographic, and economic change in the Atlantic world from the late sixteenth to the mid-nineteenth
 					centuries. Trends and cycles in the flow of African captives from specific coastal outlets should provide scholars with
 					new, basic information useful in examining the relationships among slaving, warfare—in both Africa and Europe—political

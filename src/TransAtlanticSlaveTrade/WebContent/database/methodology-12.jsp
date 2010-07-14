@@ -44,13 +44,13 @@
                     <div class="method-info">
 						<span class="method-author"><b>David Eltis</b></span>
 						<span class="method-location">(Emory University)</span>,
-						<span class="method-date">2007</span>
+						<span class="method-date">2010</span>
 					</div>
 					
 					<h2>Voyage Outcomes</h2>
 					
 					<p>Obviously, not all slave ships made it to the Americas, or even to Africa. Fortunately the data set is quite rich in
-					information on the outcome of voyages. The data set allows for 171 different voyage outcomes. As with the geographical
+					information on the outcome of voyages. The data set allows for 177 different voyage outcomes. As with the geographical
 					variables, some regrouping is required to make these more manageable. The first regrouping, “Outcome of voyage for slaves”
 					(FATE2), takes the standpoint of the Africans on board, and asks where the ship disembarked its slaves. The majority were
 					disembarked in the Americas, but about 12 percent in the present sample died during the voyage. In addition, some who left

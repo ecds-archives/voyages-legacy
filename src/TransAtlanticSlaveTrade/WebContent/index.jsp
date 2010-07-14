@@ -154,7 +154,7 @@
 							far the largest of the national carriers. Brazil dominated the slave trade in the
 							sense that Rio de Janeiro and Bahia sent out more slaving voyages than any port in
 							Europe, and certainly many times more than did Lisbon. Over nearly three centuries
-							between 1560 and 1852, Brazil was consistently the largest destination for slaves
+							between 1560 and 1850, Brazil was consistently the largest destination for slaves
 							in the Americas. Almost all the slaves coming into the region came from just two
 							coastal areas in Africa: the Bight of Benin and West-central Africa.
 						</div>
@@ -177,7 +177,7 @@
 						<div class="welcome-map-region-name"><img src="./images/index/map-africa-title.png" border="0" width="80" height="40" align="top" alt="" /></div>
 						<div class="welcome-map-region-desc">
 							Sub-Saharan Africa lost over twelve and a half million people to the
-							trans-Atlantic slave trade alone between 1526 and 1867. Perhaps as many
+							trans-Atlantic slave trade alone between 1525 and 1867. Perhaps as many
 							again were carried off to slave markets across the Sahara and the Indian Ocean.
 							Over forty percent of captives left from West-central Africa alone with most of
 							the remainder leaving from the Bight of Benin, the Bight of Biafra, and the Gold

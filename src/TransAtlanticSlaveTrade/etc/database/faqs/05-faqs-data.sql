@@ -235,7 +235,7 @@ ship.</p>');
 
 INSERT INTO faqs (id, cat_id, question, answer) VALUES (22, 3, 'What does the 
 command “New query” do?', '<p>This command resets the query interface to its 
-initial setting, containing all 34,941 voyages in the database. Otherwise, 
+initial setting, containing all 34,948 voyages in the database. Otherwise, 
 previous specifications remain in effect. If you find less than all voyages or 
 some specifications already set at the beginning of a session, the reason is 
 probably information in your cache from previous sessions which prevents you 

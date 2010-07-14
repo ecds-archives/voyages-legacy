@@ -44,7 +44,7 @@
                     <div class="method-info">
 						<span class="method-author"><b>David Eltis</b></span>
 						<span class="method-location">(Emory University)</span>,
-						<span class="method-date">2007</span>
+						<span class="method-date">2010</span>
 					</div>
 					
 					<h2>Cases and Variables</h2>
@@ -69,7 +69,8 @@
 					available in the downloadable version of the database. Users should note, though, that the website set combines all sources into one
 					variable and the day, month, year values are also combined into one variable for each of the ten dates entered. The names of captives,
 					names of Caribbean agents, names of crew other than captain, the details of shipboard insurrection, and much other information are not
-					included in the present data set, but may be added fairly easily or linked with it via the unique voyage identification number.</p>
+					included in the present data set, but may be added fairly easily or linked with it via the unique voyage identification number and 
+					compares version 2008 of the database with version 2010..</p>
 					
 					<p>The database contains two broad types of variables: data variables and imputed variables. The largest group, 44 of those in the
 					search interface, are data variables. They incorporate information collected from the sources. Imputed variables, indicated by an

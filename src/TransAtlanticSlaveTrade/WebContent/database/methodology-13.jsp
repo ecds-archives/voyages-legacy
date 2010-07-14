@@ -44,7 +44,7 @@
                     <div class="method-info">
 						<span class="method-author"><b>David Eltis</b></span>
 						<span class="method-location">(Emory University)</span>,
-						<span class="method-date">2007</span>
+						<span class="method-date">2010</span>
 					</div>
 					
 					<h2>Inferring Places of Trade</h2>
@@ -53,21 +53,21 @@
 					and numbers of people purchased. We have a good basis for imputing locations of slave trading as well as estimating the
 					numbers of slaves embarked and disembarked. We turn first to the geography of the traffic. For some voyages we know the
 					intended ports of trade on the African coast and in the Americas. Private correspondence, newspaper reports, and official
-					records of clearances from ports in Europe and the Americas frequently provide such information. Of the 34,941 voyages in
-					the data set, at least 1,536 did not embark slaves, usually on account of capture or natural hazard. Of those that did,
+					records of clearances from ports in Europe and the Americas frequently provide such information. Of the 34,948 voyages in
+					the data set, at least 1,262 did not embark slaves, usually on account of capture or natural hazard. Of those that did,
 					several hundred failed to complete the Middle Passage. The data set provides some information on African place of trade
-					for 20,826 voyages or about half of those that are likely to have obtained slaves. While this information surpasses
-					current knowledge of the geography of the slave trade, it is possible to glean yet more. For 4,084 voyages that left
+					for 21,291 voyages or about half of those that are likely to have obtained slaves. While this information surpasses
+					current knowledge of the geography of the slave trade, it is possible to glean yet more. For 4,722 voyages that left
 					Africa with slaves, or could have done so in the sense that the ship was not wrecked or captured prior to trade beginning,
 					we may not know the African place of embarkation, but we do know where the captain intended to buy slaves. If we assume
 					that he did in fact do what was intended, then after eliminating those locations that are not easy to group into regions
 					(for example the French designation Côte d’Or, which ranged from the Windward Coast to the Bight of Biafra), we are left
 					with 25,010 voyages that contain useful information on place of African trade—or about 60 percent of those vessels in
 					our sample that actually did or could have left Africa with slaves. Switching to the other side of the Atlantic, the
-					data set yields some information on ports of arrival for 24,844 voyages. Once more we have additional information on
+					data set yields some information on ports of arrival for 24,916 voyages. Once more we have additional information on
 					where 5,444 voyages intended to trade their slaves even though we cannot be certain that they actually did so. If we
 					assume that captains completed the voyage according to plan, then the sample for places of disembarkation increases
-					from 24,844 to 30,288 voyages, or close to 75 percent of all those ventures disembarking captives. </p>
+					from 24,916 to 30,295 voyages, or close to 75 percent of all those ventures disembarking captives. </p>
 					
 					<p>How valid are these assumptions on imputing places of trade from information on intended place of trade? Most slave
 					ships traded in the regions where owners declared they would trade. After eliminating captured ships that rarely

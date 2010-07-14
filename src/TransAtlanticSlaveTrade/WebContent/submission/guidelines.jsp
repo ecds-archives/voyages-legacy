@@ -59,7 +59,7 @@
 					<p>Every three years, beginning 1 September 2011, an editorial board will produce 
 					a revised edition of Voyages, incorporating new slaving voyage information located 
 					in primary or secondary sources. Contributions may concern new voyages not currently 
-					in the database, or details on some of the 34,941 ventures searchable in the set. 
+					in the database, or details on some of the 34,948 ventures searchable in the set. 
 					Voyages functions like an academic journal: all contributions must proceed through 
 					a peer-reviewed editorial process, and must therefore be documented thoroughly to 
 					enable the editors to verify the information. All contributors will be acknowledged 
@@ -95,7 +95,7 @@
 					
 					<p>1) New voyage</p>
 					
-					<p>The Voyages Database contains information on 34,941 trans-Atlantic slaving voyages, 1514-1866. The 
+					<p>The Voyages Database contains information on 34,948 trans-Atlantic slaving voyages, 1514-1866. The 
 					editors estimate that the file contains 90-95% of all transatlantic ventures, and there are thus 
 					between 1,750 and 3,500 slaving voyages not recorded in the set.</p>
 					
@@ -121,7 +121,7 @@
 					
 					<p>2) Edit an existing voyage</p>
 					
-					<p>For many of the 34,941 voyages documented in the set, users may locate additional information on 
+					<p>For many of the 34,948 voyages documented in the set, users may locate additional information on 
 					sailing dates, markets, ship details, or data on numbers of slaves or slave characteristics. Choosing 
 					this contribution category requires the Voyage Identification Number. After entering the Voyage ID, 
 					click the “Lookup…” button. Three basic details about the voyage will appear on the screen: the 

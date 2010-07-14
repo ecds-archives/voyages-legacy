@@ -44,7 +44,7 @@
                     <div class="method-info">
 						<span class="method-author"><b>David Eltis</b></span>
 						<span class="method-location">(Emory University)</span>,
-						<span class="method-date">2007</span>
+						<span class="method-date">2010</span>
 					</div>
 					
 					<h2>Nature of Sources</h2>
@@ -72,11 +72,11 @@
 					independently of the others. Winds and ocean currents kept the South Atlantic trade out of the non-Portuguese archives,
 					as well as keeping northern Europeans out of South Atlantic ports.</p>
 					
-					<p>Of the 34,941 voyages in the data set, 12,452 have only one source listed. In fact, more than half of these apparently
+					<p>Of the 34,948 voyages in the data set, 12,320 have only one source listed. In fact, more than half of these apparently
 					single-source records are taken from already published material where, in nearly all cases, additional primary references
 					are to be found. Furthermore, other publications on which the present data set draws, such as Coughtry’s listing of Rhode
 					Island voyages, are based on a range of primary documents which are not listed by voyage in the publication itself. After
-					allowing for these multi-sourced single references, it would appear that perhaps only one in six of the 34,941 voyages are
+					allowing for these multi-sourced single references, it would appear that perhaps only one in six of the 34,948 voyages are
 					based on a single historical record. Sixty percent of the voyages in the set have three or more separate sources each.
 					Researchers should no longer need to depend on data collected on the basis of a single source. Abbreviated reference to
 					the sources for any particular voyage can be viewed in the results section of the database by clicking on “configure columns”
