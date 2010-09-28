@@ -272,6 +272,12 @@ public class SourcesBean {
 				return;
 			}
 			try {
+				//ADDED 09/28/2010 per Ticket 140 of Post Launch Wrap-Up. If no ending page, default it to the starting page so a user can submit with only 1 page.
+				if(this.newBook.getPageTo().equals(""))
+				{
+					this.newBook.setPageTo(this.newBook.getPageFrom());
+				}
+				
 				book.setPageTo(Integer.parseInt(this.newBook.getPageTo()));
 			} catch (NumberFormatException nex) {
 				this.errorMessage = "Numeric value expected for page number";
@@ -325,6 +331,11 @@ public class SourcesBean {
 				return;
 			}
 			try {
+				//ADDED 09/28/2010 per Ticket 140 of Post Launch Wrap-Up. If no ending page, default it to the starting page so a user can submit with only 1 page.
+				if(this.newArticle.getPageTo().equals(""))
+				{
+					this.newArticle.setPageTo(this.newArticle.getPageFrom());
+				}
 				paper.setPageTo(Integer.parseInt(this.newArticle.getPageTo()));
 			} catch (NumberFormatException nex) {
 				this.errorMessage = "Numeric value expected for page number";
