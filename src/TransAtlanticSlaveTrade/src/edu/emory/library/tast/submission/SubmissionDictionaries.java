@@ -84,7 +84,6 @@ public class SubmissionDictionaries {
 	public static final String FATE3 = "fate3";
 	public static final String FATE4 = "fate4";
 	public static final String BOOLEAN = "boolean";
-	public static final String BOOLEAN1999CD = "boolean1999CD";
 	public static final String AREAS = "areas";
 
 	public static Map fieldTypes = new HashMap();
@@ -106,7 +105,6 @@ public class SubmissionDictionaries {
 	public static ListItem[] fate3;
 	public static ListItem[] fate4;
 	public static ListItem[] boolItems;
-	public static ListItem[] boolItems1999CD;
 	public static ListItem[] resistance;
 
 	static {
