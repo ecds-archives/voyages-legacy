@@ -69,6 +69,7 @@
 	</div>
 
 </h:form>
+<script type="text/javascript">insertAttrib(document.getElementById("main"), "autocomplete", "off")</script>
 </f:view>
 </body>
 </html>

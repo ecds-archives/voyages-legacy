@@ -714,3 +714,9 @@ var StringUtils =
 	}
 
 }
+
+//Adds an attributes to an existing element
+//Mostly used to add attributes to elements generated with JSF which limits the attributes that can be passed to the tag 
+function insertAttrib(elem, key, val) {
+	elem.setAttribute(key, val);
+}
