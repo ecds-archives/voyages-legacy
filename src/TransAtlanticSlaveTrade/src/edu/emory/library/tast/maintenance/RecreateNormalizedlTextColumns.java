@@ -144,6 +144,8 @@ public class RecreateNormalizedlTextColumns
 		
 		conn.close();
 		
+		System.out.println("DONE!");
+		
 	}
 
 }
