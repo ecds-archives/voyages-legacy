@@ -2317,13 +2317,7 @@ public class VoyagesCalculation {
 	      chil1imp = add(new Integer[]{boy1, girl1, child1, infant1, boy4, girl4, child4, infant4, boy5, girl5, child5});
 	      
 
-	      adlt1imp=(eq(adlt1imp, 0) ? null : adlt1imp);
-	      chil1imp=(eq(chil1imp, 0) ? null : chil1imp);
-	      
-	      if(gte(tslavesd,1) && adlt1imp==null && eq(chil1imp, tslavesd))  {adlt1imp = 0;}
-	      if(gte(tslavesd,1) && chil1imp==null && eq(adlt1imp, tslavesd)) {chil1imp = 0;}
 
-		  
 	    //set more default values
 	      if(
 	    		  (male1 !=null && male1 >= 1) || 
@@ -2350,16 +2344,7 @@ public class VoyagesCalculation {
 			 if (male1imp==null) {male1imp = add(new Integer[]{men1,boy1,men4,boy4,men5,boy5});}
 			 if (feml1imp==null) {feml1imp = add(new Integer[]{women1,girl1,women4,girl4,women5,girl5});}
 				
-			 male1imp=(eq(male1imp, 0) ? null : male1imp);
-			 feml1imp=(eq(feml1imp, 0) ? null : feml1imp); 
-
-			 if (gte(tslavesd,1) && male1imp==null && eq(feml1imp,tslavesd)) {male1imp = 0;}
-			 if (gte(tslavesd,1) && feml1imp==null && eq(male1imp,tslavesd)) {feml1imp = 0;}
-
-
-			  
-
- 			 slavema1 = addD(new Integer[]{adlt1imp,chil1imp});
+			 slavema1 = addD(new Integer[]{adlt1imp,chil1imp});
 			 slavemx1 = addD(new Integer[]{male1imp, feml1imp});
 			 slavmax1=addD(new Integer[]{men1,women1,boy1,girl1,men4,women4,boy4,girl4,men5,women5,boy5,girl5});
 			
@@ -2465,23 +2450,7 @@ public class VoyagesCalculation {
 		     if (male3imp==null) {male3imp = add(new Integer[]{men3,boy3,men6,boy6});}
 		     if (feml3imp==null) {feml3imp = add(new Integer[]{women3,girl3,women6,girl6});}
 
-
-		     adlt3imp=(eq(adlt3imp, 0) ? null : adlt3imp);
-		     chil3imp=(eq(chil3imp, 0) ? null : chil3imp);
-		     male3imp=(eq(male3imp, 0) ? null : male3imp);
-		     feml3imp=(eq(feml3imp, 0) ? null : feml3imp);
-
-		     if(gte(slaarriv, 1) && adlt3imp==null && eq(chil3imp, slaarriv)) {adlt3imp = 0;}
-		     if(gte(slaarriv, 1) && chil3imp==null && eq(adlt3imp, slaarriv)) {chil3imp = 0;}
-		     if(gte(slaarriv, 1) && male3imp==null && eq(feml3imp, slaarriv)) {male3imp = 0;}
-		     if(gte(slaarriv, 1) && feml3imp==null && eq(male3imp, slaarriv)) {feml3imp = 0;}
-
-
-
-			 
-			 
-
-			 slavema3 = addD(new Integer[]{adlt3imp,chil3imp});
+		     slavema3 = addD(new Integer[]{adlt3imp,chil3imp});
 			 slavemx3 = addD(new Integer[]{male3imp,feml3imp});
 			 slavmax3=addD(new Integer[]{men3,women3,boy3,girl3,men6,women6,boy6,girl6});
 			 
