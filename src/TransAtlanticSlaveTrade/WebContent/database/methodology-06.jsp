@@ -86,7 +86,7 @@
 					<table border="0" cellspacing="0" cellpadding="0" class="method-prev-next">
 					<tr>
 						<td class="method-prev">
-							<a href="methodology-05.faces">Data Variables</a>
+							<a href="agecategories.faces">Age Categories</a>
 						</td>
 						<td class="method-next">
 							<a href="methodology-07.faces">Names</a>

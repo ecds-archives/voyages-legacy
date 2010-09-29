@@ -46,6 +46,10 @@
 					menuId="methodology-05"
 					href="methodology-05.faces"/>
 				<s:secondaryMenuItem
+					label="Age Categories"
+					menuId="agecategories"
+					href="agecategories.faces"/>
+				<s:secondaryMenuItem
 					label="Dates"
 					menuId="methodology-06"
 					href="methodology-06.faces"/>
