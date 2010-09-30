@@ -90,6 +90,12 @@ public class SourceInformationLookup {
 		return cachedInst;
 	}
 	
+	public synchronized static void reinitializeCachedInstance(Session sess)
+	{
+		cachedInst = null;
+		cachedInst = new SourceInformationLookup(sess); 
+	}
+	
 	public Source match(String source) {
 		if (source == null) {
 			return null;
