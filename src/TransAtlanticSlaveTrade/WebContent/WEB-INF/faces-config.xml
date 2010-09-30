@@ -511,6 +511,20 @@
 	</managed-bean>
 	
 	<managed-bean>
+		<managed-bean-name>SubmissionSourceCodesBean</managed-bean-name>
+		<managed-bean-class>edu.emory.library.tast.submission.SubmissionSourceCodesBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>submissionBean</property-name>
+			<value>#{SubmissionBean}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>adminSubmissionBean</property-name>
+			<value>#{AdminSubmissionBean}</value>
+		</managed-property>
+	</managed-bean>
+	
+	<managed-bean>
 		<managed-bean-name>MethodAppendixBean</managed-bean-name>
 		<managed-bean-class>edu.emory.library.tast.database.MethodAppendixBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
@@ -798,6 +812,14 @@
 			<from-outcome>edit-user</from-outcome>
 			<to-view-id>/submission/submission-admin-user.jsp</to-view-id>
 		</navigation-case>
+		<navigation-case>
+			<from-outcome>edit-source</from-outcome>
+			<to-view-id>/submission/submission-admin-source-codes.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>create-source</from-outcome>
+			<to-view-id>/submission/submission-admin-new-source.jsp</to-view-id>
+		</navigation-case>
 	</navigation-rule>
 	
 	<navigation-rule>
@@ -922,6 +944,30 @@
 	
 	<navigation-rule>
 		<from-view-id>/submission/submission-admin-user.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>main-menu</from-outcome>
+			<to-view-id>/submission/submission-admin.jsp</to-view-id>
+		</navigation-case>	
+		<navigation-case>
+			<from-outcome>login</from-outcome>
+			<to-view-id>/submission/submission-login.jsp</to-view-id>
+		</navigation-case>	
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/submission/submission-admin-source-codes.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>main-menu</from-outcome>
+			<to-view-id>/submission/submission-admin.jsp</to-view-id>
+		</navigation-case>	
+		<navigation-case>
+			<from-outcome>login</from-outcome>
+			<to-view-id>/submission/submission-login.jsp</to-view-id>
+		</navigation-case>	
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/submission/submission-admin-new-source.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>main-menu</from-outcome>
 			<to-view-id>/submission/submission-admin.jsp</to-view-id>
