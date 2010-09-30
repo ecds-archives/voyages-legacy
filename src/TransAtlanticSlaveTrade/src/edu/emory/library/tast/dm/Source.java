@@ -18,6 +18,18 @@ Copyright 2010 Emory University
 */
 package edu.emory.library.tast.dm;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.hibernate.Session;
+
+import edu.emory.library.tast.db.TastDbConditions;
+import edu.emory.library.tast.db.TastDbQuery;
+import edu.emory.library.tast.dm.attributes.Attribute;
+import edu.emory.library.tast.dm.attributes.BooleanAttribute;
+import edu.emory.library.tast.dm.attributes.NumericAttribute;
+import edu.emory.library.tast.dm.attributes.StringAttribute;
+
 
 public class Source
 {
@@ -32,6 +44,43 @@ public class Source
 	public static final int TYPE_PUBLISHED_SOURCE = 2;
 	public static final int TYPE_UNPUBLISHED_SECONDARY_SOURCE = 3; 
 	public static final int TYPE_PRIVATE_NOTE_OR_COLLECTION = 4;
+	
+	private static Map attributes = new HashMap();
+	static {
+		attributes.put("id", new NumericAttribute("id", null, NumericAttribute.TYPE_LONG));
+		attributes.put("sourceId", new StringAttribute("sourceId", null));
+		attributes.put("name", new StringAttribute("name", null));
+		attributes.put("type", new NumericAttribute("type", null, NumericAttribute.TYPE_LONG));
+	}
+	
+	public Source() {
+		
+	}
+	
+	public Source(String sourceId, String name, int type) {
+		this.sourceId = sourceId;
+		this.name = name;
+		this.type = type;
+	}
+	
+	public static Attribute getAttribute(String name) {
+		return (Attribute)attributes.get(name);
+	}
+	
+	public static Source loadById(Session session, Long checkedSourceId) {
+		return (Source) Dictionary.loadById(Source.class, session, checkedSourceId.longValue());
+	}
+	
+	public static Source loadBySourceId(Session session, String newSourceId) {
+		TastDbConditions c = new TastDbConditions();
+		c.addCondition(getAttribute("sourceId"), newSourceId, TastDbConditions.OP_EQUALS);
+		TastDbQuery qVal = new TastDbQuery("Source", c);
+		Object[] objects = qVal.executeQuery(session);
+		if (objects.length == 0) {
+			return null;
+		}
+		return (Source) objects[0];
+	}
 	
 	public String getName()
 	{
