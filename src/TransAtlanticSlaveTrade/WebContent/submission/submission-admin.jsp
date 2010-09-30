@@ -41,6 +41,7 @@
 			<s:tab text="Voyages list" tabId="voyages" />
 			<s:tab text="Requests list" tabId="requests" />
 			<s:tab text="Users list" tabId="users" />
+			<s:tab text="Source Codes" tabId="source_codes" />
 			<s:tab text="Publish new database revision" tabId="publish" />						
 		</s:tabBar>	
 		</tr>
@@ -133,6 +134,33 @@
 		</f:verbatim>
 	
 	</h:panelGroup>
+	
+	<h:panelGroup rendered="#{AdminSubmissionBean.sourceCodesSelected}">
+		
+		<div value="div" style="margin-top: 10px; padding: 5px 10px 5px 10px;">
+			<table border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="10">&nbsp;</td>
+				<td><h:commandButton style="width:200px;" value="Create New Source" action="#{SubmissionSourceCodesBean.switchToCreateSource}"/></td>
+			</tr>
+			</table>
+		</div>
+		<t:htmlTag value="br"/>
+		<t:htmlTag value="br"/>
+		
+		<div style="height: 500px; overflow: auto; padding-top: 10px;">
+		<s:grid id="sources"
+			columns="#{SubmissionSourceCodesBean.sourceColumns}"
+			rows="#{SubmissionSourceCodesBean.sourceRows}" 
+			action="#{SubmissionSourceCodesBean.enterEditSource}"
+			onOpenRow="#{SubmissionSourceCodesBean.editSource}"
+			onColumnClick="#{SubmissionSourceCodesBean.onGridColumnClick}" />
+		</div>
+		
+		
+
+	</h:panelGroup>
+	
 	
 	<h:panelGroup rendered="#{AdminSubmissionBean.publishSelected}">
 		<t:htmlTag value="br"/>
