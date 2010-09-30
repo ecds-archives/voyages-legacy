@@ -9,6 +9,7 @@ import edu.emory.library.tast.common.GridColumn;
 import edu.emory.library.tast.common.GridColumnClickEvent;
 import edu.emory.library.tast.common.GridOpenRowEvent;
 import edu.emory.library.tast.common.GridRow;
+import edu.emory.library.tast.database.SourceInformationLookup;
 import edu.emory.library.tast.db.HibernateConn;
 import edu.emory.library.tast.db.TastDbConditions;
 import edu.emory.library.tast.db.TastDbQuery;
@@ -235,6 +236,9 @@ public class SubmissionSourceCodesBean {
 		source.setType(this.checkedType);
 		
 		t.commit();
+		
+		SourceInformationLookup.reinitializeCachedInstance(session);
+		
 		session.close();
 		this.checkedId = null;
 		return "main-menu";
@@ -310,6 +314,8 @@ public class SubmissionSourceCodesBean {
 		this.newSourceErrorMessage = "";
 		session.save(source);
 		t.commit();
+		
+		SourceInformationLookup.reinitializeCachedInstance(session);
 		session.close();
 		return "main-menu";
 		}
