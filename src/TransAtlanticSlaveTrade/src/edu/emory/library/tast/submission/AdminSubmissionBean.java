@@ -281,6 +281,14 @@ public class AdminSubmissionBean {
 	public Boolean getPublishSelected() {
 		return new Boolean(this.chosenTab.equals("publish"));
 	}
+	
+	/**
+	 * Checks if source codes is selected.
+	 * @return
+	 */
+	public Boolean getSourceCodesSelected() {
+		return new Boolean(this.chosenTab.equals("source_codes"));
+	}
 
 	/**
 	 * Returns types of available requests.
