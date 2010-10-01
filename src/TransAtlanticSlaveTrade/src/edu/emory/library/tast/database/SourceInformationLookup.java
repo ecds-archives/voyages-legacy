@@ -90,6 +90,7 @@ public class SourceInformationLookup {
 		return cachedInst;
 	}
 	
+	//The below is only called from the SubmissionSourceCodesBean.java. It reinstantiates this cache whenever the source codes / descriptions are updated so that they actually appear on the site without a server reboot.
 	public synchronized static void reinitializeCachedInstance(Session sess)
 	{
 		cachedInst = null;
