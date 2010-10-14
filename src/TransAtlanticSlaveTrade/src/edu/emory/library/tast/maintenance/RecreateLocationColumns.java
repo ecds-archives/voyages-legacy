@@ -27,9 +27,9 @@ import edu.emory.library.tast.util.SqlUtils;
 public class RecreateLocationColumns
 {
 	
-	private static final String DB_CONN_STRING = "jdbc:postgresql://localhost/tast";
-	private static final String DB_USER = "tast";
-	private static final String DB_PASS = "tast";
+	private static final String DB_CONN_STRING = "jdbc:postgresql://HOSTNAME/DBNAME";
+	private static final String DB_USER = "";
+	private static final String DB_PASS = "";
 	
 	private static final int DB_REVISION = 1;
 	
