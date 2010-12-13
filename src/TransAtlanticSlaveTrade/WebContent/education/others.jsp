@@ -250,21 +250,22 @@
 			
 					<div class="link-title">
 						<div class="link-main-title">
-							Comité de Liaison et d'Application des Sources Historiques  						
+							Comité de Liaison et d'Application des Sources Historiques <br />
+							(Mémoire St Barth | Histoire de Saint-Barthélemy)  						
 						</div>
 					</div>
 					<table border="0" cellspacing="0" cellpadding="0" class="link-info">
 					<tr>
 						<td class="link-info-label">Content</td>
 						<td class="link-info">
-							Educational resources website dedicated to the history of Saint-Barthélemy (FWI) and focusing on the slave trade,<br> 
-							slavery and abolition and their impact on this island of the Lesser Antilles. 
+							Resources dedicated to the history of Saint-Barthelemy (FWI) : 
+							slave trade, slavery, their abolition and impact on this island of the Lesser Antilles  
 						</td>
 					</tr>
 					<tr>
-						<td class="link-info-label">WWW address</td>
+						<td class="link-info-label">WWW&nbsp;address</td>
 						<td class="link-info">
-							<a href="http://www.c-l-a-s-h.info">http://www.c-l-a-s-h.info</a>
+							<a href="http://www.MemoireStBarth.com">http://www.MemoireStBarth.com</a>
 						</td>
 					</tr>
 					</table>
