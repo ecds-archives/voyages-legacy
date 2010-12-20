@@ -40,8 +40,6 @@
 			
 				<h1>Contribute </h1>
 				
-				<p style="font-weight: bold;">(This page is still under development.)</p>
-				
 				<p>The Contribute section of the Voyages website contains data entry forms by which users 
 				of the website can supply revise existing information in the Voyages Database or supply 
 				new data. A team of slave trade scholars will review each contribution, as part of the 
