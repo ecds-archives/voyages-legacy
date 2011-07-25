@@ -215,8 +215,10 @@ public class SourcesBean {
 			}
 			this.newPrimary = null;
 			this.errorMessage = null;
-		} finally {
 			t.commit();
+		} catch(Exception e) {
+			this.errorMessage = "Could not save this record due to either invalid data or your entry for a field is too long. The system reported cause is: " + e.getCause();
+		} finally {	
 			session.close();
 		}
 	}
@@ -244,8 +246,10 @@ public class SourcesBean {
 			}
 			this.newOther = null;
 			this.errorMessage = null;
-		} finally {
 			t.commit();
+		} catch(Exception e) {
+			this.errorMessage = "Could not save this record due to either invalid data or your entry for a field is too long. The system reported cause is: " + e.getCause();
+		} finally {	
 			session.close();
 		}
 	}
@@ -298,8 +302,10 @@ public class SourcesBean {
 			}
 			this.newBook = null;
 			this.errorMessage = null;
-		} finally {
 			t.commit();
+		} catch(Exception e) {
+			this.errorMessage = "Could not save this record due to either invalid data or your entry for a field is too long. The system reported cause is: " + e.getCause();
+		} finally {	
 			session.close();
 		}
 	}
@@ -356,8 +362,10 @@ public class SourcesBean {
 			}
 			this.newArticle = null;
 			this.errorMessage = null;
-		} finally {
 			t.commit();
+		} catch(Exception e) {
+			this.errorMessage = "Could not save this record due to either invalid data or your entry for a field is too long. The system reported cause is: " + e.getCause();
+		} finally {	
 			session.close();
 		}
 	}
