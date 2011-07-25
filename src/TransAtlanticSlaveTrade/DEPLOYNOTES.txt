@@ -1,0 +1,9 @@
+For initial DEPLOYNOTES, please see the README.txt of this project. This is for version specific upgrades.
+
+Version 2.4.2 - July 25, 2011
+
+* The migration script that needs to be run for this release is: <source_folder>/etc/database/voyages.alter_script_release_2_4_2.sql
+
+* The svn needs to be switched to the tagged release: https://svn.library.emory.edu/svn/slavevoyages/release_2.4.2/
+
+* The project needs to be rebuilt using the correct hibernate.properties and tast.properties files. I'm unsure of who builds this WAR, so let me know if I can help.

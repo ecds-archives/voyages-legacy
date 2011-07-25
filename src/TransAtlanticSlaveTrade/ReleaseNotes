@@ -1,3 +1,9 @@
+Version 2.4.2 - July 25, 2011
+
+* This is a micro-release to increase the field size of a title field and catch an error if a contributer source does not save correctly. 
+  The migration script that needs to be run for this release is: <source_folder>/etc/database/voyages.alter_script_release_2_4_2.sql
+  Additionally, as a few files were modified, the project does need to be redeployed.
+
 Version 2.3 - July 2010
 
 * An Editor and Reviewer will be able reference Submitted Sources info from all related merges and edits to the voyage. This will allow them to make decisions about how to publish the voyage 
