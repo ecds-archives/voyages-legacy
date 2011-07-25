@@ -165,6 +165,12 @@
 			<t:htmlTag value="div" rendered="#{SourcesBean.newSourceType==3}" style="margin-top: 10px; padding: 5px; border: 1px solid #CCCCCC;">
 				<h:outputText value="Other source" style="font-weight: bold;"/>
 				<t:htmlTag value="table">
+					<t:htmlTag value="tr" rendered="#{SourcesBean.errorMessage != null}">
+						<t:htmlTag value="td"></t:htmlTag>
+						<t:htmlTag value="td">
+							<h:outputText style="font-weight: bold; color: red;" value="#{SourcesBean.errorMessage}"/>
+						</t:htmlTag>
+					</t:htmlTag>
 					<t:htmlTag value="tr">
 						<t:htmlTag value="td"><h:outputText value="Title"/></t:htmlTag>
 						<t:htmlTag value="td"><h:inputText style="width: 350px;" value="#{SourcesBean.newOther.title}"/></t:htmlTag>
