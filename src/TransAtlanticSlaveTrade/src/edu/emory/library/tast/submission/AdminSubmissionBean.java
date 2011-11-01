@@ -834,7 +834,11 @@ public class AdminSubmissionBean {
 	}
 	
 	public Boolean getIsAdmin() {
+		try{
 		return new Boolean(this.authenticateduser.isAdmin());
+		}catch(Exception e){
+			return false; //default to false if there is an error
+		}
 	}
 	
 	public Boolean getIsChiefEditor() {
