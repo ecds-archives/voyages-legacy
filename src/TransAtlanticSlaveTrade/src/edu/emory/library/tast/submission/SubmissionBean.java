@@ -872,14 +872,23 @@ public class SubmissionBean
 			
 			//imputeVariables(sess, voyage);
 			
-			sess.save(voyage);
+			try{
+				sess.save(voyage);
+			}catch(Exception e){
+				System.out.println("Could not save this record due to either invalid data or your entry for a field is too long. The system reported cause is: " + e.getCause());
+			}
+			
 			if (submissionType == SUBMISSION_TYPE_NEW) {
 
 				SubmissionNew submissionNew = new SubmissionNew();
 				submission = submissionNew;
 
 				EditedVoyage eVoyage = new EditedVoyage(voyage, notes);
-				sess.save(eVoyage);
+				try{
+				  sess.save(eVoyage);
+				}catch(Exception e){
+					System.out.println("Could not save this record due to either invalid data or your entry for a field is too long. The system reported cause is: " + e.getCause());
+				}
 
 				submissionNew.setNewVoyage(eVoyage);
 
@@ -892,8 +901,12 @@ public class SubmissionBean
 
 				EditedVoyage eNewVoyage = new EditedVoyage(voyage, notes);
 				EditedVoyage eOldVoyage = new EditedVoyage(Voyage.loadCurrentRevision(sess, lookupVoyageId), null);
+				try{
 				sess.save(eOldVoyage);
 				sess.save(eNewVoyage);
+				}catch(Exception e){
+					System.out.println("Could not save this record due to either invalid data or your entry for a field is too long. The system reported cause is: " + e.getCause());
+				}
 
 				submissionEdit.setNewVoyage(eNewVoyage);
 				submissionEdit.setOldVoyage(eOldVoyage);
@@ -906,7 +919,11 @@ public class SubmissionBean
 				submission = submissionMerge;
 
 				EditedVoyage eNewVoyage = new EditedVoyage(voyage, notes);
-				sess.save(eNewVoyage);
+				try{
+				  sess.save(eNewVoyage);
+				}catch(Exception e){
+					System.out.println("Could not save this record due to either invalid data or your entry for a field is too long. The system reported cause is: " + e.getCause());
+				}
 
 				submissionMerge.setProposedVoyage(eNewVoyage);
 
@@ -917,7 +934,11 @@ public class SubmissionBean
 					EditedVoyage eVoyage = new EditedVoyage(
 							(Voyage.loadCurrentRevision(sess, voyageInfo.getVoyageId())), null);
 					mergedVoyages.add(eVoyage);
+					try{
 					sess.save(eVoyage);
+					}catch(Exception e){
+						System.out.println("Could not save this record due to either invalid data or your entry for a field is too long. The system reported cause is: " + e.getCause());
+					}
 				}
 
 			}
@@ -926,11 +947,16 @@ public class SubmissionBean
 			submission.setTime(new Date());
 			submission.setSavedState(phase);
 
-			sess.save(submission);
+			try{
+			 sess.save(submission);
+			}catch(Exception e){
+				System.out.println("Could not save this record due to either invalid data or your entry for a field is too long. The system reported cause is: " + e.getCause());
+			}
+			
 			this.cleanSubmission(sess);
+			trans.commit();
 
 		} finally {
-			trans.commit();
 			sess.close();
 		}
 		return submission;

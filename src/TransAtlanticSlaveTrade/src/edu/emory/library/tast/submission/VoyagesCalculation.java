@@ -81,8 +81,13 @@ public class VoyagesCalculation {
 		calculateValuesPeople();
 		
 		
-		session.save(voyage);
-		trans.commit();
+		try{
+		 session.save(voyage);
+		 trans.commit();
+		}catch (Exception e){
+			System.out.println("Could not save this record due to either invalid data or your entry for a field is too long. The system reported cause is: " + e.getCause());
+		}
+		
 		//session.close();
 		
 		return voyage;

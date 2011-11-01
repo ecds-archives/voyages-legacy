@@ -57,6 +57,8 @@ public class Estimate {
 	private double slavImported;
 
 	private double slavExported;
+	
+	public String errorMessage;
 
 	public EstimatesNation getNation() {
 		return nation;
@@ -135,9 +137,18 @@ public class Estimate {
 
 	public void save() {
 		Session session = HibernateConn.getSession();
-		Transaction transaction = session.beginTransaction();
-		session.save(this);
-		transaction.commit();
+		try
+		{
+			Transaction transaction = session.beginTransaction();
+			session.save(this);
+			transaction.commit();
+		}catch(Exception e) {
+			this.errorMessage = "Could not save this record due to either invalid data or your entry for a field is too long. The system reported cause is: " + e.getCause();
+		}
+		finally {	
+			session.close();
+		}
+		
 	}
 
 	public static Attribute getAttribute(String name)

@@ -614,9 +614,15 @@ public class SubmissionUsersBean {
 		user.setPhone2(this.newUserPhone2);
 		user.setDescription(this.newUserDescription);
 		this.newUserErrorMessage = "";
-		session.save(user);
-		t.commit();
-		session.close();
+		try{
+			session.save(user);
+			t.commit();
+		}catch(Exception e){
+			this.newUserErrorMessage = "Could not save this record due to either invalid data or your entry for a field is too long. The system reported cause is: " + e.getCause();
+		}finally{
+			session.close();
+		}
+		
 		return "created";
 		}
 	}

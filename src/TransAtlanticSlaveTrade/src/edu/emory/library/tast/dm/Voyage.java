@@ -78,6 +78,7 @@ public class Voyage extends AbstractDescriptiveObject
 	 */
 	private static List attributes = new ArrayList();
 	private static Map attributesLookup = new HashMap();
+	public String errorMessage;
 	static {
 		attributes.add(new NumericAttribute("iid", "Voyage", NumericAttribute.TYPE_LONG, null));
 		attributes.add(new NumericAttribute("voyageid", "Voyage", NumericAttribute.TYPE_INTEGER, "voyageid"));
@@ -613,10 +614,15 @@ public class Voyage extends AbstractDescriptiveObject
 	 */
 	public void save()
 	{
-		Session session = HibernateConn.getSession();
-		Transaction transaction = session.beginTransaction();
-		session.save(this);
-		transaction.commit();
+		try{
+			Session session = HibernateConn.getSession();
+			Transaction transaction = session.beginTransaction();
+			session.save(this);
+			transaction.commit();
+		}catch(Exception e) {
+			this.errorMessage = "Could not save this record due to either invalid data or your entry for a field is too long. The system reported cause is: " + e.getCause();
+		}
+		
 	}
 
 	/**

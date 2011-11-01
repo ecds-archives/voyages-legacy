@@ -749,7 +749,11 @@ public class AdminSubmissionBean {
 	 * Action fired when accept button was pressed
 	 */
 	public String save() {
+		try{
 		return this.applier.save();
+		}catch(Exception e){
+			return "Could not save this record due to either invalid data or your entry for a field is too long. The system reported cause is: " + e.getCause();
+		}
 	}
 	
 	public String back() {
@@ -1017,8 +1021,8 @@ public class AdminSubmissionBean {
 			session.save(eVoyage);
 			session.save(editor);
 			this.applier.setRequiredReload(true);
-		} finally {
 			t.commit();
+		} finally {
 			session.close();
 		}
 		return null;
@@ -1320,7 +1324,12 @@ public class AdminSubmissionBean {
 	
 	public void impute()
 	{
-		this.applier.save();
+		try{
+			this.applier.save();
+		}catch(Exception e){
+			System.out.println("Could not save this record due to either invalid data or your entry for a field is too long. The system reported cause is: " + e.getCause());
+		}
+
 		
 		System.out.println("I feel like I'm going to impute!");
 		

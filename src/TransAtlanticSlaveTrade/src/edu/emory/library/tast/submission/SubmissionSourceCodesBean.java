@@ -312,9 +312,16 @@ public class SubmissionSourceCodesBean {
 		Source source = new Source(this.newSourceId, this.newName, this.newType);
 
 		this.newSourceErrorMessage = "";
-		session.save(source);
-		t.commit();
-		
+		try{
+		 session.save(source);
+		 t.commit();
+		}catch(Exception e){
+			this.newSourceErrorMessage = "Could not save this record due to either invalid data or your entry for a field is too long. The system reported cause is: " + e.getCause();
+			
+		}finally{
+			session.close();
+		}
+				
 		SourceInformationLookup.reinitializeCachedInstance(session);
 		session.close();
 		return "main-menu";

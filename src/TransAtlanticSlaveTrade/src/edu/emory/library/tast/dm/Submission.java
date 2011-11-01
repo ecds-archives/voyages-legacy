@@ -148,7 +148,10 @@ public abstract class Submission
 		//sn.setAttributeNotes(notes);
 		//sn.setEditorNotes(notesEditor);
 		sn.setSources(sources);
-		sess.save(sn);
+		try{
+		    sess.save(sn);
+		}catch(Exception e) {System.out.println("Error: "  + e.getCause());}
+			
 		
 		System.out.println("new submission created, id = " + sn.getId());
 
@@ -156,7 +159,9 @@ public abstract class Submission
 		//se.setOldVoyage(v1);
 		//se.setNewVoyage(v2);
 		se.setTime(new Date());
-		sess.save(se);
+		try{
+		    sess.save(se);
+		}catch(Exception e) {System.out.println("Error: "  + e.getCause());}
 		
 		System.out.println("new submission created, id = " + se.getId());
 		
@@ -167,7 +172,9 @@ public abstract class Submission
 		mergedVoyages.add(v2);
 		sm.setMergedVoyages(mergedVoyages);
 		sm.setTime(new Date());
-		sess.save(sm);
+		try{
+		    sess.save(sm);
+		}catch(Exception e) {System.out.println("Error: "  + e.getCause());}
 		
 		System.out.println("new submission created, id = " + sm.getId());
 
