@@ -2971,14 +2971,14 @@ public class VoyagesCalculation {
 		if (yearaf == null) yearaf = datarr45;
 		voyage.setYearaf(yearaf);
 		
-		Integer yeardep = null;
-		yeardep = datedepc;
-		if (yeardep == null) yeardep = d1slatrc;
-		if (yeardep == null) yeardep = dlslatrc;
-		if (yeardep == null) yeardep = datarr34;
-		if (yeardep == null) yeardep = ddepamc;
-		if (yeardep == null) yeardep = datarr45;
-		voyage.setYeardep(yeardep);				
+//		Integer yeardep = null;
+//		yeardep = datedepc;
+//		if (yeardep == null) yeardep = d1slatrc;
+//		if (yeardep == null) yeardep = dlslatrc;
+//		if (yeardep == null) yeardep = datarr34;
+//		if (yeardep == null) yeardep = ddepamc;
+//		if (yeardep == null) yeardep = datarr45;
+//		voyage.setYeardep(yeardep);				
 	}
 	
 	/* impute variables datedep, datebuy, dateleftAfr, dateland1,

@@ -75,7 +75,11 @@ public class User {
 	}
 	
 	public boolean isAdmin() {
-		return admin;
+		try{
+			return admin;
+		}catch(Exception e){
+			return false;
+		}
 	}
 	public void setAdmin(boolean admin) {
 		this.admin = admin;
@@ -203,7 +207,11 @@ public class User {
 	}
 
 	public boolean isChiefEditor() {
-		return chiefEditor;
+		try{
+			return chiefEditor;
+		}catch(Exception e){
+			return false;
+		}
 	}
 
 	public void setChiefEditor(boolean chiefEditor) {

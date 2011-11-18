@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.hibernate.HibernateException;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -1817,15 +1818,19 @@ public class VoyagesApplier
 
 	public Boolean getRejectAvailable()
 	{
-		Boolean avail = null;
-		Session session = HibernateConn.getSession();
-		Transaction t = session.beginTransaction();
-		Submission lSubmisssion = Submission.loadById(session,
-				this.submissionId);
-		avail = new Boolean(!lSubmisssion.isSolved());
-		t.commit();
-		session.close();
-		return avail;
+		try {
+			Boolean avail = null;
+			Session session = HibernateConn.getSession();
+			Transaction t = session.beginTransaction();
+			Submission lSubmisssion = Submission.loadById(session,
+					this.submissionId);
+			avail = new Boolean(!lSubmisssion.isSolved());
+			t.commit();
+			session.close();
+			return avail;
+		} catch (Exception e) {
+			return false;
+		}
 
 	}
 	

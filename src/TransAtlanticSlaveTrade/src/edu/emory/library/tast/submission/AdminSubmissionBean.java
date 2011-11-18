@@ -842,7 +842,11 @@ public class AdminSubmissionBean {
 	}
 	
 	public Boolean getIsChiefEditor() {
-		return new Boolean(this.authenticateduser.isAdmin() || this.authenticateduser.isChiefEditor());
+		try{
+			return new Boolean(this.authenticateduser.isAdmin() || this.authenticateduser.isChiefEditor());
+		}catch (Exception e) {
+			return false;
+		}
 	}
 
 	public boolean isEditValid() {
