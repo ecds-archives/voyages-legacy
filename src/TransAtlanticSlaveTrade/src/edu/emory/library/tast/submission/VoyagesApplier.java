@@ -508,7 +508,7 @@ public class VoyagesApplier
 			{
 				SubmissionAttribute attribute = attrs[i];
 				if (attrs[i].getName().equals("saild2")){
-					System.out.println("attr:" + attrs[i].getName());
+					//System.out.println("attr:" + attrs[i].getName());
 				}
 				Object[] toBeFormatted = new Object[attribute.getAttribute().length];
 				for (int j = 0; j < toBeFormatted.length; j++)
@@ -518,7 +518,7 @@ public class VoyagesApplier
 				}
 				Value value = attrs[i].getValue(session, toBeFormatted,
 						sourceInformationUtils);
-				System.out.println("attr:" + attrs[i].getName());
+				//System.out.println("attr:" + attrs[i].getName());
 				value.setNote((String) attributeNotes[n]
 						.get(attrs[i].getName()));
 				vals.setValue(cols[n], attrs[i].getName(), value);

@@ -406,7 +406,7 @@ public class GridEditorComponent extends UIComponentBase
 				
 				Column column = columns[j];
 				String columnName = column.getName();
-				System.out.println("Column: " + columnName + "  Row: " + rowName);
+				//System.out.println("Column: " + columnName + "  Row: " + rowName);
 				Value value = values.getValue(columnName, rowName);
 				
 				if (j > 0) regJS.append(", ");
