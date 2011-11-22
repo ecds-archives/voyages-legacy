@@ -33,9 +33,9 @@ public class DateValue extends Value
 
 	private boolean parsed = false;
 	private boolean valid = false;
-	private transient int dayInt;
-	private transient int monthInt;
-	private transient int yearInt;
+	private transient Integer dayInt = null;
+	private transient Integer monthInt = null;
+	private transient Integer yearInt = null;
 	
 	public DateValue(String day, String month, String year)
 	{
@@ -100,11 +100,16 @@ public class DateValue extends Value
 				if (!"DD".equals(day)) {
 					dayInt = Integer.parseInt(StringUtils.trimAndUnNull(day));
 				}
+				else{
+					dayInt = null;
+				}
 				if (!"MM".equals(month)) {
 					monthInt = Integer.parseInt(StringUtils.trimAndUnNull(month));
-				}
+				}else{monthInt = null ;}
 				if (!"YYYY".equals(year)) {
 					yearInt = Integer.parseInt(StringUtils.trimAndUnNull(year));
+				}else{
+					yearInt = null;
 				}
 				valid = true;
 			}
@@ -125,9 +130,16 @@ public class DateValue extends Value
 		}
 		else
 		{
+			
 			Calendar cal = Calendar.getInstance();
-			cal.set(yearInt, monthInt, dayInt);
+			try{
+				cal.set(yearInt, monthInt, dayInt);
+			}catch(Exception e){}
+			
+			if (cal != null)
 			return cal.getTime();
+			else
+				return null;
 		}
 	}
 	
