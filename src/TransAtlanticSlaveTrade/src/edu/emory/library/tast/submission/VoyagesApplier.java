@@ -2233,6 +2233,9 @@ public class VoyagesApplier
 							vNew.setAttrValue(attrs[i].getAttribute()[j]
 									.getName(), vals[j]);
 					} else {
+						//Resize array to max attrs size for field
+						//so it can handle deleting values if the list shrinks
+						vals = StringUtils.resizeArray((String[])vals, attrs.length); 
 						vNew.setAttrValue(attrs[i].getAttribute()[j].getName(),
 								vals[j]);
 					}

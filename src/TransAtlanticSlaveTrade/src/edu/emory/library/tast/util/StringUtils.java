@@ -541,5 +541,16 @@ public class StringUtils
 		}
 		return longs;
 	}
+	
+	public static String[] resizeArray(String[] orig, int size){
+	    String[] newArray = new String[size];
+
+	    if(orig !=null && orig.length!=0){
+	        for(int i =0; i < orig.length; i++){
+	            newArray[i] = orig[i];
+	        }
+	    }
+	    return newArray;
+	}
 
 }
