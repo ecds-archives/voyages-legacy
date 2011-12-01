@@ -1335,7 +1335,8 @@ public class AdminSubmissionBean {
 		try{
 			this.applier.save();
 		}catch(Exception e){
-			System.out.println("Could not save this record due to either invalid data or your entry for a field is too long. The system reported cause is: " + e.getCause());
+			System.out.println("Could not save this record due to either invalid data or your entry for a field is too long. The system reported cause is:");
+			e.printStackTrace();
 		}
 
 		

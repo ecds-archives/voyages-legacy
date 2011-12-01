@@ -2235,7 +2235,10 @@ public class VoyagesApplier
 					} else {
 						//Resize array to max attrs size for field
 						//so it can handle deleting values if the list shrinks
-						vals = StringUtils.resizeArray((String[])vals, attrs.length); 
+						if (attrs[i].getAttribute().length > 1){
+							vals = StringUtils.resizeArray(vals, attrs[i].getAttribute().length);
+						}
+						 
 						vNew.setAttrValue(attrs[i].getAttribute()[j].getName(),
 								vals[j]);
 					}

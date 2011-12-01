@@ -542,8 +542,10 @@ public class StringUtils
 		return longs;
 	}
 	
-	public static String[] resizeArray(String[] orig, int size){
-	    String[] newArray = new String[size];
+//	This is NOT just for strings but I could not find another convenient place to put it where it would be available to all classes 
+//    This takes an object array and up-sizes it to the specified size and fills or partially fills it with original array
+	public static Object[] resizeArray(Object[] orig, int size){
+	    Object[] newArray = new String[size];
 
 	    if(orig !=null && orig.length!=0){
 	        for(int i =0; i < orig.length; i++){
