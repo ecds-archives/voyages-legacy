@@ -1102,8 +1102,8 @@ public class VoyagesCalculation {
 			else if (gte(tslavesd,1)) {slaximp = tslavesd.doubleValue();}
 
 			//reversed
-			if (slaarriv==null && tslavesd==null && tslavesd==null && ncartot==null && gte(slastot,50)) {slamimp=null;}
-			else if (slaarriv==null && tslavesd==null && tslavesp==null && lte(slastot,ncartot)) {slamimp=ncartot.doubleValue();}
+			if (slaarriv==null && tslavesd==null && tslavesd==null && ncartot==null && gte(slastot,50)) {slamimp=slastot;}
+			else if (slaarriv==null && tslavesd==null && tslavesp==null && lte(slastot,ncartot)) {slamimp=slastot;}
 			else if (slaarriv==null && tslavesd==null && lte(slastot,tslavesp)) {slamimp=slastot;}
 			else if (slaarriv==null && lte(slastot,tslavesd)) {slamimp=slastot;}
 			else if (gte(slaarriv,1)) {slamimp = slaarriv.doubleValue();}
