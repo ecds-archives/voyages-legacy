@@ -228,11 +228,9 @@ public class VoyagesApplier
 	 */
 	public Values getValues()
 	{
-		if (vals == null || requiredReload)
-		{
-			requiredReload = false;
-			fillInValues();
-		}
+		requiredReload = false;
+		fillInValues();
+
 		return vals;
 
 	}
