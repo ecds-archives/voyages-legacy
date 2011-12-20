@@ -1087,54 +1087,32 @@ public class SubmissionBean
 	}
 	
 	public String cancel() {
-		this.authenticatedUser = null;
-		Session sess = HibernateConn.getSession();
-		Transaction trans = sess.beginTransaction();
-		try {
-			if (this.submission != null&& !this.submission.isSubmitted()) {
-				Submission submission = Submission.loadById(sess,
-						this.submission.getId());
-				Voyage voyage = null;
-				if (submission instanceof SubmissionNew)
-					voyage = Voyage.loadById(sess, ((SubmissionNew) submission)
-							.getNewVoyage().getVoyage().getIid());
-
-				else if (submission instanceof SubmissionEdit)
-					voyage = Voyage.loadById(sess,
-							((SubmissionEdit) submission).getOldVoyage()
-									.getVoyage().getIid());
-
-				else if (submission instanceof SubmissionMerge) {
-					Long suggestedVoyageId = ((SubmissionMerge) submission)
-							.getProposedVoyage().getId();
-
-					EditedVoyage eV = EditedVoyage.loadById(sess,
-							suggestedVoyageId);
-					voyage = eV.getVoyage();
-				}
-
-				
-				if (submission != null) {
-					Set sources = submission.getSources();
-					for (Iterator iter = sources.iterator(); iter.hasNext();) {
-						SubmissionSource element = (SubmissionSource) iter.next();
-						sess.delete(element);
-					}
-					sess.delete(submission);
-					sess.delete(voyage);
-				}
-			}
-		} finally {
-			trans.commit();
-			sess.close();
-		}
-
-		this.submission = null;
-		lookupPerformed = false;
-		lookedUpVoyage = null;
-		selectedVoyagesForMerge.clear();
 		
-		return null;
+		Session session = HibernateConn.getSession();
+		Transaction t = session.beginTransaction();
+		Submission submission = Submission.loadById(session, this.submissionId);
+		try {
+			System.out.println("revising");
+			if(submission instanceof SubmissionNew){
+				SQLQuery query = session.createSQLQuery("select delete_new("+this.submission.getId()+");");
+				query.list();
+			} else if(submission instanceof SubmissionEdit) {
+				SQLQuery query = session.createSQLQuery("select delete_edit("+this.submission.getId()+");");
+				query.list();
+			} else if (submission instanceof SubmissionMerge){
+				SQLQuery query = session.createSQLQuery("select delete_merge("+this.submission.getId()+");");
+				query.list();
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}finally {
+			t.commit();
+			session.close();
+		}
+		
+		return "back";
 	}
 	
 	public String saveStateSources() {
