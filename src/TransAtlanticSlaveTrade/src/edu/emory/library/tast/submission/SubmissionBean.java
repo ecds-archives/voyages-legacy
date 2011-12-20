@@ -595,6 +595,8 @@ public class SubmissionBean
 		
 		TastDbConditions cond = new TastDbConditions();
 		cond.addCondition(Voyage.getAttribute("voyageid"), lookupVoyageId, TastDbConditions.OP_EQUALS);
+		cond.addCondition(Voyage.getAttribute("suggestion"), false, TastDbConditions.OP_EQUALS);
+		cond.addCondition(Voyage.getAttribute("revision"), 1, TastDbConditions.OP_EQUALS);
 		
 		TastDbQuery query = new TastDbQuery("Voyage", cond);
 		query.setLimit(1);
