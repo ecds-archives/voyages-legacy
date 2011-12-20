@@ -52,6 +52,7 @@ import edu.emory.library.tast.dm.User;
 import edu.emory.library.tast.dm.Voyage;
 import edu.emory.library.tast.dm.attributes.Attribute;
 import edu.emory.library.tast.util.JsfUtils;
+import org.hibernate.SQLQuery;
 
 public class SubmissionBean
 {
@@ -116,6 +117,8 @@ public class SubmissionBean
 	private User authenticatedUser = null;
 	
 	private Submission submission;
+	
+	private String errorMsg = "";
 	
 	public SubmissionBean()
 	{
@@ -559,6 +562,37 @@ public class SubmissionBean
 		Session sess = HibernateConn.getSession();
 		Transaction trans = sess.beginTransaction();
 		
+		
+		//Check if a voyage has been submitted for edit or merge
+		String mQ = " select voyageid " + 
+		" from voyages v, submissions_edited_voyages sev, submissions_edit se, submissions s " +
+		" where sev.voyage_iid = v.iid " +
+		" and sev.id = se.old_edited_voyage_id " +
+		" and se.submission_id = s.id " +
+		" and s.submitted ='t' " +
+		" and v.voyageid = " + lookupVoyageId + " " +
+		" UNION " + 
+		" select voyageid " + 
+		" from voyages v, submissions_edited_voyages sev, submissions_merge_voyages sm, submissions s " +
+		" where sev.voyage_iid = v.iid " +
+		" and sev.id = sm.edited_voyage_id " +
+		" and sm.submission_id = s.id " +
+		" and s.submitted ='t' " +
+		" and v.voyageid  = " + lookupVoyageId + " ;";
+		
+		SQLQuery modQuery = sess.createSQLQuery(mQ);
+		List modResult = modQuery.list();
+
+		if (modResult.size() > 0){
+			this.setErrorMsg("This voyage has already been submitted for evaluation.  " +
+					         "Please contact the editor for any further revisions or additional " +
+					         "information you wish to contribute");
+			trans.commit();
+			sess.close();
+			return null;
+		}
+		
+		
 		TastDbConditions cond = new TastDbConditions();
 		cond.addCondition(Voyage.getAttribute("voyageid"), lookupVoyageId, TastDbConditions.OP_EQUALS);
 		
@@ -570,7 +604,7 @@ public class SubmissionBean
 		query.addPopulatedAttribute(Voyage.getAttribute("yearam"));
 		
 		List voyages = query.executeQueryList(sess);
-		
+				
 		if (voyages.size() != 0)
 		{
 			Object[] voyageInfoDb = (Object[]) voyages.get(0);
@@ -579,6 +613,9 @@ public class SubmissionBean
 					(String) voyageInfoDb[1],
 					(String) voyageInfoDb[0],
 					voyageInfoDb[2] != null ? voyageInfoDb[2].toString() : "not known");
+		}
+		else{
+			this.setErrorMsg("No voyage with this Voyage ID found.");
 		}
 		
 		trans.commit();
@@ -1350,5 +1387,19 @@ public class SubmissionBean
 	
 	public Boolean getIsMergeType(){
 		return new Boolean(submissionType == SUBMISSION_TYPE_MERGE);
+	}
+
+	/**
+	 * @param errorMsg the errorMsg to set
+	 */
+	public void setErrorMsg(String errorMsg) {
+		this.errorMsg = errorMsg;
+	}
+
+	/**
+	 * @return the errorMsg
+	 */
+	public String getErrorMsg() {
+		return errorMsg;
 	}
 }

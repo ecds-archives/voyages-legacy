@@ -40,7 +40,7 @@
 	</div>
 
 	<t:htmlTag value="div" rendered="#{SubmissionBean.showLookupFailed}" style="border-bottom: 1px solid #CCCCCC; margin-bottom: 10px; padding-bottom: 10px;">
-		<h:outputText value="No voyage with this Voyage ID found. Please try again." />
+		<h:outputText value="#{SubmissionBean.errorMsg}" />
 	</t:htmlTag>
 	
 	<t:htmlTag value="div" rendered="#{SubmissionBean.showLookedUpVoyage}" style="border-bottom: 1px solid #CCCCCC; margin-bottom: 10px; padding-bottom: 10px;">
