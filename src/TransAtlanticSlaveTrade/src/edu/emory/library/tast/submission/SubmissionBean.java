@@ -1090,17 +1090,16 @@ public class SubmissionBean
 		
 		Session session = HibernateConn.getSession();
 		Transaction t = session.beginTransaction();
-		Submission submission = Submission.loadById(session, this.submissionId);
+		Submission submission = Submission.loadById(session, this.submission.getId());
 		try {
-			System.out.println("revising");
 			if(submission instanceof SubmissionNew){
-				SQLQuery query = session.createSQLQuery("select delete_new("+this.submission.getId()+");");
+				SQLQuery query = session.createSQLQuery("select delete_new("+submission.getId()+");");
 				query.list();
 			} else if(submission instanceof SubmissionEdit) {
-				SQLQuery query = session.createSQLQuery("select delete_edit("+this.submission.getId()+");");
+				SQLQuery query = session.createSQLQuery("select delete_edit("+submission.getId()+");");
 				query.list();
 			} else if (submission instanceof SubmissionMerge){
-				SQLQuery query = session.createSQLQuery("select delete_merge("+this.submission.getId()+");");
+				SQLQuery query = session.createSQLQuery("select delete_merge("+submission.getId()+");");
 				query.list();
 			}
 
@@ -1112,7 +1111,8 @@ public class SubmissionBean
 			session.close();
 		}
 		
-		return "back";
+		this.authenticatedUser = null;
+		return "logout";
 	}
 	
 	public String saveStateSources() {
