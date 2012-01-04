@@ -535,13 +535,79 @@ public class SubmissionBean
 	
 	public String submit()
 	{
-		this.sourcesBean.submit();
+		boolean OK = true;
+		this.setErrorMsg("");
 		
-		lookupPerformed = false;
-		lookedUpVoyage = null;
-		selectedVoyagesForMerge.clear();
+		Session sess = HibernateConn.getSession();
+		Transaction trans = sess.beginTransaction();
 		
-		return "done";
+		
+		//get all voyages for current submission
+		String sQ = " select voyageid " + 
+		" from voyages v, submissions_edited_voyages sev, submissions_edit se, submissions s " +
+		" where sev.voyage_iid = v.iid " +
+		" and sev.id = se.old_edited_voyage_id " +
+		" and se.submission_id = s.id " +
+		" and s.submitted ='f' " +
+		" and s.id = " + submission.getId() + " " +
+		" UNION " + 
+		" select voyageid " + 
+		" from voyages v, submissions_edited_voyages sev, submissions_merge_voyages sm, submissions s " +
+		" where sev.voyage_iid = v.iid " +
+		" and sev.id = sm.edited_voyage_id " +
+		" and sm.submission_id = s.id " +
+		" and s.submitted ='f' " +
+		" and s.id  = " + submission.getId() + " ;";
+		
+		SQLQuery Q = sess.createSQLQuery(sQ);
+		List result = Q.list();
+		
+		for (int i = 0; i < result.size(); i++){
+			Object vid =  result.get(i);
+			System.out.println("VOYAGEID: " + vid);
+			
+			//check if any have been submitted yet
+			String mQ = " select voyageid " + 
+			" from voyages v, submissions_edited_voyages sev, submissions_edit se, submissions s " +
+			" where sev.voyage_iid = v.iid " +
+			" and sev.id = se.old_edited_voyage_id " +
+			" and se.submission_id = s.id " +
+			" and s.submitted ='t' " +
+			" and v.voyageid = " + vid + " " +
+			" UNION " + 
+			" select voyageid " + 
+			" from voyages v, submissions_edited_voyages sev, submissions_merge_voyages sm, submissions s " +
+			" where sev.voyage_iid = v.iid " +
+			" and sev.id = sm.edited_voyage_id " +
+			" and sm.submission_id = s.id " +
+			" and s.submitted ='t' " +
+			" and v.voyageid  = " + vid + " ;";
+			
+			Q = sess.createSQLQuery(mQ);
+			result = Q.list();
+			
+			if(result.size() > 0)
+				OK = false;
+		} 
+
+		trans.commit();
+		sess.close();
+		
+		if(OK == true){
+		    this.sourcesBean.submit();
+		
+		    lookupPerformed = false;
+		    lookedUpVoyage = null;
+		    selectedVoyagesForMerge.clear();
+		
+		    return "done";
+		}
+		else{
+			this.setErrorMsg("Could not submit request. A voyage associated with your request has already been submitted for evaluation.  " +
+					         "Please contact the editor for any further revisions or additional " +
+					         "information you wish to contribute");
+			return null;
+		}
 
 	}
 	
@@ -552,6 +618,7 @@ public class SubmissionBean
 	public String lookupVoyage()
 	{
 		
+		this.setErrorMsg("");
 		lookupPerformed = true;
 		lookedUpVoyage = null;
 		errorSelectAtLeastTwo = false;
@@ -615,6 +682,7 @@ public class SubmissionBean
 					(String) voyageInfoDb[1],
 					(String) voyageInfoDb[0],
 					voyageInfoDb[2] != null ? voyageInfoDb[2].toString() : "not known");
+			this.setErrorMsg("");
 		}
 		else{
 			this.setErrorMsg("No voyage with this Voyage ID found.");

@@ -30,6 +30,9 @@
 	<br>
 	
 	<h1>Verify submitted information</h1>
+	<div style="color:red"> 
+        <h:outputText value="#{SubmissionBean.errorMsg}" />
+    </div>
 	<I>To cancel this contribution, please click "Cancel Contribution" button at "Your voyage information" page</I>	
 	<br>
 
