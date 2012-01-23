@@ -269,6 +269,29 @@
 						</td>
 					</tr>
 					</table>
+
+					<a name="allianceinternationale"></a>
+			
+					<div class="link-title">
+						<div class="link-main-title">
+							Les Anneaux de la Mémoire: Alliance Internationale
+						</div>
+					</div>
+					<table border="0" cellspacing="0" cellpadding="0" class="link-info">
+					<tr>
+						<td class="link-info-label">Content</td>
+						<td class="link-info">
+							A range of interactive resources and materials pertaining to the history of slavery
+							and the slave trade mainly in the francophone world.
+						</td>
+					</tr>
+					<tr>
+						<td class="link-info-label">WWW&nbsp;address</td>
+						<td class="link-info">
+							<a href="http://www.anneauxdelamemoire.org">http://www.anneauxdelamemoire.org</a>
+						</td>
+					</tr>
+					</table>
 					
 				</s:simpleBox>
 			</td>

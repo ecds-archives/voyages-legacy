@@ -90,9 +90,8 @@
 					information on these Africans was drawn. Information on liberated
 					Africans and registers of the Courts of Mixed Commission may also
 					be found in the Glossary. For more information about the African
-					Origins Project and opportunities to participate, please see the
-					description on <a href="http://en.wikipedia.org/wiki/African_Origins_Project">Wikipedia</a>
-					or contact the <a href="mailto:&#x61;&#x66;&#x72;&#x69;&#x63;&#x61;&#x6E;&#x2D;&#x6F;&#x72;&#x69;&#x67;&#x69;&#x6E;&#x73;&#x40;&#x65;&#x6D;&#x6F;&#x72;&#x79;&#x2E;&#x65;&#x64;&#x75;">African Origins Project team</a>.</p>  
+					Origins Project and opportunities to participate, please visit 
+					<a href="http://www.african-origins.org">http://www.african-origins.org</a>.</p>  
 
 				</s:simpleBox>
 			</td>
