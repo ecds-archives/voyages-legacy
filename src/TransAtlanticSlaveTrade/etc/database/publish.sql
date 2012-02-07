@@ -57,39 +57,6 @@ BEGIN
 		RAISE NOTICE 'After Update';
 	END LOOP;
 
-	FOR voyRec IN SELECT * FROM voyages v WHERE  revision!=1  
-	LOOP
-		voyIID:=voyRec.iid;
-
-		--Get the id column in summissions_edited_voyages table
-		SELECT id into sevID from submissions_edited_voyages where voyage_iid = voyIID;
-
-		--Get the records in merge table based on the sevID
-		SELECT * from submissions_merge into subMergeRec WHERE proposed_edited_voyage_id = sevID;
-		
-		SELECT * from submissions_edit into subEditRec WHERE new_edited_voyage_id = sevID;
-		
-		SELECT * from submissions_new into subNewRec WHERE new_edited_voyage_id = sevID;
-	     
-		IF subMergeRec.submission_id IS NOT NULL     THEN
-			RAISE NOTICE 'Do not need to delete-left for further requirement';
-			
-		ELSIF subNewRec.submission_id IS NOT NULL	 THEN
-			RAISE NOTICE 'Do not need to delete-left for further requirement';
-
-		ELSIF subEditRec.submission_id IS NOT NULL	THEN
-			RAISE NOTICE 'Do not need to delete-left for further requirement';
-
-		ELSE
-			DELETE FROM voyages where iid = voyIID;
-
-		END IF;
-		
-	     
-		RAISE NOTICE 'After Update';
-	END LOOP;
-
-	 
         RAISE NOTICE '---------END----------';
         
 	RETURN true;
