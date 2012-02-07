@@ -1,4 +1,4 @@
-Version 2.5.0 - Jan 2012
+Version 2.5.0 - ? 2012
 * General error handling improvements
 * Contrib notes now save after page refresh in editor / admin view
 * Now only one conbrib is allowed per voyage at a time
@@ -6,7 +6,7 @@ Version 2.5.0 - Jan 2012
 * Editor / admin can now delete values from sources section in main form
 * Editor / admin can now edit date values 
 * Contrib canceling submission no longer deletes original voyage
-* 
+* Updated publish proc to not delete edited undecided voyages.
 
 Version 2.4.2 - July 25, 2011
 
