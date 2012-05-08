@@ -1,0 +1,36 @@
+# Files to ignore by default in Git #
+#####################################
+*.pyc
+*.gz
+*.tar
+*.zip
+*.dll
+tastdb-*
+
+# DB and other log files #
+##########################
+*.log
+*.db
+*.sqlite
+*.sql
+
+# Specific Files to ignore #
+############################
+localsettings.py
+playspace.py
+Thumbs.db
+Icon?
+.DS_Store?
+ehthumbs.db
+.idea
+collectedmedia
+
+# Directories to Ignore #
+#########################
+build
+dist
+#ignore the docs _build directory
+doc/_build/
+sitemedia
+static/documents
+nbproject

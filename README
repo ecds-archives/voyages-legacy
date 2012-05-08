@@ -1,0 +1,164 @@
+About 
+=====
+
+The Trans-Atlantic Slave Trade Database is the culmination of several 
+decades of independent and collaborative research by scholars drawing
+upon data in libraries and archives around the Atlantic world. The
+Voyages website itself is the product of two years of development by a
+multi-disciplinary team of historians, librarians, curriculum specialists,
+cartographers, computer programmers, and web designers, in consultation
+with scholars of the slave trade from universities in Europe, Africa,
+South America, and North America. The National Endowment for the
+Humanities is the principal sponsor of the project, and it is an Emory
+University Digital Library Research Initiative.
+
+'Link To Site <http://www.slavevoyages.org/>_'
+
+Deployment Notes
+================
+
+Because the data comes in various forms that change over time there isn't a straight path to many of the 
+deployments or upgrades.  These are notes related to how we have been able to work through that process
+in the past.
+
+Basic deploy
+------------
+
+1. Copy current war file to /opt/tomcat/oldwars
+2. Redirect site to static page or put tomcat in maintenance mode
+3. Backup code and database as necessary
+4. Shutdown tomcat
+5. Run any SQL scripts if necessary
+6. Clear the cache by deleting everything in /opt/tomcat/work directory
+7. Delete webapps/tast.war and webapps/tast
+8. Move new war file into webapps directory
+9. Restart tomcat
+
+
+For instructions on how to delete and reload all voyage data see this link:
+https://techknowhow.library.emory.edu/slave-voyages-database/delete-and-import-all-voyage-info
+
+First Time Deployment Instructions
+----------------------------------
+
+1. Backup up the database and create new database using the backup (Frank)
+2. Backup code base using this command while in the webapps directory: tar -czvf tast-voyages.tar.gz tast voyages tast.war voyages.war
+3. Move tast-voyages.tar.gz to /opt/tomcat/oldwars/tast-voyages.tar.gz_[date].
+4. copy the existing war files from the webapps directory to /opt/tomcat/oldwars/war_[date].
+5. Delete the following files from the tomcat directory (above webapps):
+
+* demo.mov
+* hibernate.properties
+* gcgraph.war
+* footer.jsp
+* jspbook.jar
+* tast.properties
+* team.jsp
+* tast.war
+
+7. Run the SQL Scripts listedbelow on tast_v1 database. These are located in the etc/database directory in the SVN repo
+
+* voyages.alter.sql - adds new columns to voyages table
+* voyages.alter_script_release_2_4_2.sql - modifies some column lengths for the 2.4.2 release.
+* publish.sql
+* Updates the publish function
+* publish.alter.sql - updates constraints so that the publish function executes efficiently.
+* publishpreUpdate.sql - function called before date-update is executed
+* publishPostUpdate.sql - function called after date-update is executed
+* date-update.sql - updates date format in voyages table (may have to run each line in procs manualy)
+* region-port-codes.sql - inserts missing region and port codes into tables
+* ton_type-create.sql - creates ton_type table and inserts values to this table
+
+8. Run the SQL Scripts listedbelow on tast_v1 database. These are located in the etc/database/faqs directory in the SVN repo
+
+* 01-drop-tables.sql
+* 02-faqs-categories-schema.sql
+* 03-faqs-schema.sql
+* 04-faqs-categories-data.sql
+* 05-faqs-data.sql
+
+9. Run the SQL Scripts listedbelow on tast_v1 database. These are located in the etc/database/glossary directory in the SVN repo
+
+* 01-drop-tables.sql
+* 02-glossasy-schema.sql
+* 03-glossary-data.sql
+
+10. Run the SQL Scripts listedbelow on tast_v1 database. These are located in the etc/database/images directory in the SVN repo
+
+* 01-drop-tables.sql
+* 02-image-categories-schema.sql
+* 03-images-schema.sql
+* 03-images-voyages-schema.sql
+* 04-ports-images-schema.sql
+* 05-regions-images-schema.sql
+* 06-people-images-schema.sql
+* 07-image-categories-data.sql
+* 08-images-data.sql
+* 09-images-voyages-data.sql
+* 10-images-ports-data.sql
+* 11-images-regions-data.sql
+
+11. Upload estimates-method.pdf,
+12. estimates-2009.xls (not used yet) to downloads directory
+13. Build war with new prod setting, rename it to voyages.war and deploy in webapps
+14. shutdown tomcat
+15. Delete tomcat/webapps/voyages directory
+16. Delete the cache in tomcat/work directory
+17. Restart tomcat
+18. Review changes on /voyages
+19. Dr. Eltis logs to /voyages as Admin and deletes or enables usrs.
+20. Shutdown tomcat
+21. Delete tast.war and tast and voyages.war and voyages directory
+22. Build new war file with correct settng for tast and deploy to webapps directory
+23. Clear cashe agin
+24. Restart tomcat
+25. Checklist
+
+* As admin spot check heading and lables of a voyage if any are available.
+* Check Images
+* Check Estimates
+* Check Search Database
+* Check Maps
+* Check Custom Graphs
+
+Delete and Import All Voyage Info
+---------------------------------
+
+1. Backup databae
+2. Run  the refresh-1.sql script located here in the repository ...etc/database/import/refresh-1.sql
+3. Modify CSV file
+
+* Insert new columns named iid, revision, and suggestion
+* Generate a sequence number for each iid
+* Set suggestion to 'f'
+* Set set revision to 1
+
+4. Make sure the file is in UTF8 format
+
+* PSPad seems to do a good job with this
+* Open file in PSPad and select format > UTF8
+* Save and Exit
+
+5. Run publishpreupdate function
+6. upload the file - must be superuser
+
+* open input file as a text file and copy the header row
+  past list of fields into the command:
+* COPY voyages
+  (<list of fields>)
+  from E'\\pathto\\file' WITH NULL AS ' ' DELIMITER ','  CSV HEADER;
+
+7. Run publishpostupdate function
+8. Run RecreateLocationColumns.java and RecreateNormalizedlTextColumns.java
+
+* Change config in each program to point to the correct env.
+* Run thru eclipse 
+
+9. Restart tomcat
+
+* .../bin/shutdown.sh
+* .../bin/startup.sh
+
+
+
+
