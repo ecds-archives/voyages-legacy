@@ -42,7 +42,9 @@
 			<td id="about-right-column">
 				<s:simpleBox>
 			
-					<h1>African Origins Project</h1>
+					<h1 style="float:left; margin-right:10px;">African Origins Project</h1>
+					<a href="http://www.african-origins.org" target="_blank">Explore the site <img src='/tast/images/origins.png'/> </a>
+									 
 
 					<p>In January 2009 the directors of the project to create <em>Voyages:
 					The Trans-Atlantic Slave Trade Database</em> began the African Origins
@@ -91,7 +93,7 @@
 					Africans and registers of the Courts of Mixed Commission may also
 					be found in the Glossary. For more information about the African
 					Origins Project and opportunities to participate, please visit 
-					<a href="http://www.african-origins.org">http://www.african-origins.org</a>.</p>  
+					<a href="http://www.african-origins.org" target="_blank">http://www.african-origins.org</a>.</p>  
 
 				</s:simpleBox>
 			</td>

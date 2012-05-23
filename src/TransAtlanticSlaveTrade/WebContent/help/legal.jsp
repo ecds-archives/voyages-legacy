@@ -115,8 +115,7 @@
 			<td class="restrictions"><a href="http://www.gnu.org/licenses/gpl.html" target="_blank">GNU General Public License, v. 3</a> or later</td>
 			<td class="citations">Not applicable.</td>
 			<td class="notes">Code for this site may be found at
-			<a href="http://sourceforge.net" target="_blank">SourceForge</a> and
-			<a href="http://code.google.com/opensource" target="_blank">Google Code</a>,
+			<a href="https://github.com/emory-libraries/voyages" target="_blank">GitHub</a>,
 			and is made available to support open
 			source programming efforts. Visit the GNU website for more
 			information on the limits of this license.</td>
@@ -347,8 +346,7 @@
 		sponsor, this site licenses its code through a
 		<a href="http://www.gnu.org/licenses/gpl.html" target="_blank">GNU General Public License (GPL), version 3</a>
 		or any later version. Open source software components of the Voyages website are freely available through
-		<a href="http://sourceforge.net" target="_blank">SourceForge</a> and
-		<a href="http://code.google.com/opensource" target="_blank">Google Code</a>.</p>
+		<a href="https://github.com/emory-libraries/voyages" target="_blank">GitHub</a>.</p>
 	
 	</div>
 
