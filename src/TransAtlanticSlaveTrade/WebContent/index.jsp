@@ -251,7 +251,7 @@
 					<td class="featured-section-text">
 						<div class="featured-section-caption">
 							<a href="./about/origins.faces">
-							Explore the new African Origins site
+							View African names on African-Origins
 							<img src="./images/index/link-arrow.png" border="0" width="16" height="16" align="top" alt="" />
 							</a>
 						</div>

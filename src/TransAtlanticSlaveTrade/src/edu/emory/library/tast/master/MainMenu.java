@@ -89,7 +89,7 @@ public class MainMenu
 						"resources/images.faces"),
 				new MainMenuBarPageItem(
 						"slaves",
-						"Explore the new African Origins site",
+						"View African names on African-Origins",
 						"about/origins.faces")}),
 			
 	new MainMenuBarSectionItem(

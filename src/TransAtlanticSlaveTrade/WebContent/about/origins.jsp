@@ -43,15 +43,14 @@
 				<s:simpleBox>
 			
 					<h1 style="float:left; margin-right:10px;">African Origins Project</h1>
-					<a href="http://www.african-origins.org" target="_blank">Explore the site <img src='/tast/images/origins.png'/> </a>
+					<a href="http://www.african-origins.org" target="_blank">View the site <img src='/tast/images/origins.png'/> </a>
 									 
 
 					<p>In January 2009 the directors of the project to create <em>Voyages:
 					The Trans-Atlantic Slave Trade Database</em> began the African Origins
 					Project, a scholar-public collaborative endeavor to trace the
 					geographic origins of Africans transported in the transatlantic
-					slave trade. Starting with the detailed descriptions found in the <em>Voyages</em>
-					African Names Database, this project seeks the help of members of
+					slave trade. African Origins seeks the help of members of
 					the African diaspora, Africans, scholars, and others to identify
 					the likely origins of these liberated Africans and thus begin to
 					trace the migration histories of other Africans transported across
@@ -76,7 +75,7 @@
 					origins than provided by its written counterpart alone.</p>
 
 					<p>Eltis and Nwokeji played these recordings to informants in
-					Nigeria, Sierra Leone, and Angola and to members of the African
+					Nigeria and to members of the African
 					diaspora in parts of North America, who were able to identify
 					through these pronunciations the likely ethnic group from which the
 					name derived. Such one-on-one research with informants, though
@@ -85,8 +84,7 @@
 					to the pursuit of an online method of broadly soliciting volunteers
 					to assist with this project.</p>
 
-					<p>In addition to the African Names Database, the <em>Voyages</em>
-					website contains digitized images of the first pages of the
+					<p>View digitized images of the first pages of the
 					<a href="http://www.slavevoyages.org/tast/resources/images.faces">Sierra
 					Leone and Cuba Courts of Mixed Commission registers</a>, from which the
 					information on these Africans was drawn. Information on liberated
