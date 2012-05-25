@@ -1,5 +1,7 @@
 For initial DEPLOYNOTES, please see the README.txt of this project. This is for version specific upgrades.
 
+Version 2.5.1 - May 2012 (text updates)
+- Copy the file src/downloads/AfricanNamesDatabase.csv to the downloads directory specified in the tast.properties file.
 
 Version 2.5.0 - Jan 2012 (Bugfix)
 - while the site is down run etc/database/publish.sql  script to update the publish function.

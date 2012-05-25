@@ -64,6 +64,11 @@ String dlUrl = AppConfig.getConfiguration().getString(AppConfig.DOWNLOADS_URL);
 								label="Estimates spreadsheet"
 								menuId="estimates"
 								href="#estimates"/>
+								
+							<s:secondaryMenuItem
+								label="African Names Database"
+								menuId="namesdb"
+								href="#namesdb"/>								
 
 						</s:secondaryMenu>
 						
@@ -146,6 +151,21 @@ String dlUrl = AppConfig.getConfiguration().getString(AppConfig.DOWNLOADS_URL);
 						<li>Estimates SPSS file: <a href="<%=dlUrl%>/2010-estimates-SPSS.sav">2010 estimates-SPSS.sav</a></li>
 						<li>Methodology essay: <a href="<%=dlUrl%>/2010estimates-method.pdf">2010 estimates-method.pdf</a></li>
 					</ul>
+					
+					<a name="namesdb"></a> 
+						
+					<h2>African Names Database</h2>
+					
+					<p>Between 2008 and May 2012 <i>Voyages</i>i> offered access to an African Names Database 
+					that identified over 67,000 Africans removed from slave ships in the abolition era, 
+					including their names, age, gender, stature, and place of embarkation. While these 
+					data have been incorporated into the African-Origins site the latter does not include 
+					stature data. The African Names Database is thus made available here in csv format.</p>
+					
+					<h3>Download:</h3>
+					<ul>
+						<li>African Names Database: <a href="<%=dlUrl%>/AfricanNamesDatabase.csv">AfricanNamesDatabase.csv</a></li>
+					</ul>					
 		
 					Questions about downloading or using these datasets? Please contact 
 					<a href="mailto:&#118;&#111;&#121;a&#103;&#101;s&#64;&#101;&#109;o&#114;&#121;&#46;&#101;d&#117;">

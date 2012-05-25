@@ -1,4 +1,10 @@
-Version 2.5.0 - ? 2012
+Version 2.5.1 - May 2012
+* Updated text and links on legal page to point to GitHub code
+* Updated tex and links homepage to point old names DB links to Origins landing page
+* Updated Origins landing page to have a more prominent link to the Origins site and other additional text changes
+* Updated download page to have new section for names DB and added new file download link
+
+Version 2.5.0 - Jan 2012
 * General error handling improvements
 * Contrib notes now save after page refresh in editor / admin view
 * Now only one conbrib is allowed per voyage at a time

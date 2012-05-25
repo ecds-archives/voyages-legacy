@@ -43,7 +43,7 @@
 				<s:simpleBox>
 			
 					<h1 style="float:left; margin-right:10px;">African Origins Project</h1>
-					<a href="http://www.african-origins.org" target="_blank">View the site <img src='/tast/images/origins.png'/> </a>
+					<a href="http://www.african-origins.org" target="_blank">Explore the site <img src='/tast/images/origins.png'/> </a>
 									 
 
 					<p>In January 2009 the directors of the project to create <em>Voyages:
@@ -87,8 +87,11 @@
 					<p>View digitized images of the first pages of the
 					<a href="http://www.slavevoyages.org/tast/resources/images.faces">Sierra
 					Leone and Cuba Courts of Mixed Commission registers</a>, from which the
-					information on these Africans was drawn. Information on liberated
-					Africans and registers of the Courts of Mixed Commission may also
+					information on these Africans was drawn. An earlier database drawn 
+					from these sources called the African names database is available 
+					on the downloads page of this site. It contains data on stature 
+					that are not available on African-Origins. Information on liberated 
+					Africans and registers of the Courts of Mixed Commission may also 
 					be found in the Glossary. For more information about the African
 					Origins Project and opportunities to participate, please visit 
 					<a href="http://www.african-origins.org" target="_blank">http://www.african-origins.org</a>.</p>  
