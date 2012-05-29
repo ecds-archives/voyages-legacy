@@ -156,7 +156,7 @@ String dlUrl = AppConfig.getConfiguration().getString(AppConfig.DOWNLOADS_URL);
 						
 					<h2>African Names Database</h2>
 					
-					<p>Between 2008 and May 2012 <i>Voyages</i>i> offered access to an African Names Database 
+					<p>Between 2008 and May 2012 <i>Voyages</i> offered access to an African Names Database 
 					that identified over 67,000 Africans removed from slave ships in the abolition era, 
 					including their names, age, gender, stature, and place of embarkation. While these 
 					data have been incorporated into the African-Origins site the latter does not include 
