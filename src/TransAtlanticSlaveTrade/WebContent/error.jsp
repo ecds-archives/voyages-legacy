@@ -135,7 +135,7 @@ a {
 							<li><a href="<%= request.getContextPath() %>/index.faces">Homepage</a></li>
 							<li><a href="<%= request.getContextPath() %>/database/search.faces">Search the Voyages Database</a></li>
 							<li><a href="<%= request.getContextPath() %>/assessment/estimates.faces">Examine Estimates of the Slave Trade</a></li>
-							<li><a href="<%= request.getContextPath() %>/resources/slaves.faces">Explore the African Names Database</a></li>
+							<li><a href="<%= request.getContextPath() %>/about/origins.faces">Explore African names on African-Origins</a></li>
 						</ul>
 						
 						<p>

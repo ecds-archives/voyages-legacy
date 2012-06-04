@@ -244,7 +244,7 @@
 				</tr>
 				<tr>
 					<td class="featured-section-image">
-						<a href="./resources/slaves.faces">
+						<a href="./about/origins.faces">
 							<img src="./images/index/link-slaves.png" width="124" height="64" border="0" />
 						</a>
 					</td>

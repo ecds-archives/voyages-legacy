@@ -80,7 +80,7 @@
 					by naval action alone. Nevertheless, naval intervention did result
 					in the capture of nearly 2,000 slave vessels after 1808. Only 544
 					of these had slaves on board at the time of capture, but their
-					<a href="../resources/slaves.faces">125,000 captives</a> (or strictly, re-captives) were diverted from the
+					125,000 captives (or strictly, re-captives) were diverted from the
 					sugar and coffee plantations for which they were intended, and for
 					the most part ended their lives with choices they did not have
 					prior to their re-capture.</p>

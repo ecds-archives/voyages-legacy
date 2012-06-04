@@ -45,7 +45,7 @@
 			<table border="0" cellspacing="0" cellpadding="0">
 			<tr>
 				<td class="section-title"><a href="images.faces">Images</a></td>
-				<td class="section-title"><a href="slaves.faces">African Names Database</a></td>
+				<td class="section-title"><a href="/tast/about/origins.faces">African Origins Project</a></td>
 			</tr>
 			</table>
 		</div>
@@ -60,16 +60,15 @@
 				people, places, artifacts and vessels of the slave trade era.  Links are 
 				provided to relevant voyages in the Voyages Database.</td>
 
-				<td class="section-desc">The trans-Atlantic slave trade culminated in the 
-				age of abolition. In the nineteenth century, mixed-commissioned courts 
-				created around the Atlantic basins adjudicated cases of vessels detained 
-				for illegally engaging in the slave trade. The African Names Database was 
-				built with documents from the Foreign Office, Series 84 and 313, held by 
-				the British National Archives. It offers a compilation of lists of liberated 
-				Africans from slave vessels captured by British cruisers between 1819 and 
-				1845, and taken for adjudication in the courts established in Freetown, 
-				Sierra Leone, and in Havana, Cuba.  Links are provided to ships in the 
-				Voyages Database from which the liberated Africans were rescued.</td>
+				<td class="section-desc">African Origins contains information about the migration 
+				histories of Africans forcibly carried on slave ships into the Atlantic. Using the 
+				personal details of 91,491 Africans liberated by International Courts of Mixed 
+				Commission and British Vice Admiralty Courts, this resource makes possible new 
+				geographic, ethnic, and linguistic data on peoples captured in Africa and 
+				pulled into the slave trade. Through contributions to this website by Africans, 
+				members of the African Diaspora, and others, we hope to set in motion the rediscovery 
+				of the backgrounds of the millions of Africans captured and sold into slavery during 
+				suppression of transatlantic slave trading in the 19th century.</td>
 
 			</tr>
 			</table>
