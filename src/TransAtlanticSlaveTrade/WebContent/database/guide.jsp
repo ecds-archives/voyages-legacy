@@ -51,7 +51,7 @@
 					<h1>A Guide to Understanding and Using the Voyages Database and Website</h1>
 					
 					<p>This guide provides instructions on how to navigate the website and use the four databases: 
-					the Voyages Database, the Estimates database, the Images database, and the African names database. 
+					the Voyages Database, the Estimates database, and the Images database. 
 					It concludes with a section on how to contribute new information to the Voyages Database.</p>
 					
 					<p>The guide is provided as a PDF file to allow users to reference it in a separate window 

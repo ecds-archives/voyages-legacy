@@ -12,7 +12,6 @@ tastdb-*
 *.log
 *.db
 *.sqlite
-*.sql
 
 # Specific Files to ignore #
 ############################
