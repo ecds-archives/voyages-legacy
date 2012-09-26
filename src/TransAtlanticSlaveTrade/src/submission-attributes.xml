@@ -99,12 +99,13 @@
 			<attribute name="tonmod"/>
 		</attributes>
 	</submission-attributes> 
-	<!--<submission-attributes name="constreg" group="Ship, nation, owners" editable="N" type="regions" userLabel="Region where ship constructed*">
+	<submission-attributes name="constreg" group="Ship, nation, owners" editable="N" type="regions" userLabel="Region where ship constructed*">
 		<attributes>
 			<attribute name="constreg"/>
 		</attributes>
 	</submission-attributes>
-	<submission-attributes name="regisreg" group="Ship, nation, owners" editable="N" type="regions" userLabel="Region where ship registered*">
+	
+	<!--<submission-attributes name="regisreg" group="Ship, nation, owners" editable="N" type="regions" userLabel="Region where ship registered*">
 		<attributes>
 			<attribute name="regisreg"/>
 		</attributes>
@@ -254,6 +255,50 @@
 			<attribute name="mjslptimp"/>
 		</attributes>
     </submission-attributes>
+    
+    <submission-attributes name="deptregimp" group="Voyage itinerary" editable="N" type="regions" userLabel="Region where voyage began*">
+		<attributes>
+			<attribute name="deptregimp"/>
+		</attributes>
+    </submission-attributes>
+    
+    <submission-attributes name="regem1" group="Voyage itinerary" editable="N" type="regions" userLabel="First region of embarkation of slaves*">
+		<attributes>
+			<attribute name="regem1"/>
+		</attributes>
+	</submission-attributes>
+	
+	<submission-attributes name="regdis1" group="Voyage itinerary" editable="N" type="regions" userLabel="First region of slave landing*">
+		<attributes>
+			<attribute name="regdis1"/>
+		</attributes>
+    </submission-attributes>
+    
+    <submission-attributes name="regdis2" group="Voyage itinerary" editable="N" type="regions" userLabel="Second region of slave landing*">
+		<attributes>
+			<attribute name="regdis2"/>
+		</attributes>
+    </submission-attributes>
+
+    <submission-attributes name="regdis3" group="Voyage itinerary" editable="N" type="regions" userLabel="Third region of slave landing*">
+		<attributes>
+			<attribute name="regdis3"/>
+		</attributes>
+    </submission-attributes>
+    
+    <submission-attributes name="regem2" group="Voyage itinerary" editable="N" type="regions" userLabel="Second region of embarkation of slaves*">
+		<attributes>
+			<attribute name="regem2"/>
+		</attributes>
+	 </submission-attributes>
+
+ 	<submission-attributes name="regem3" group="Voyage itinerary" editable="N" type="regions" userLabel="Third region of embarkation of slaves*">
+		<attributes>
+			<attribute name="regem3"/>
+		</attributes>
+	 </submission-attributes>
+    
+    
 	<!--<submission-attributes name="mjslptimp" group="Voyage itinerary" editable="N" type="locations" userLabel="Principal place of slave landing*">
 		<attributes>
 			<attribute name="mjselimp"/>
@@ -275,12 +320,6 @@
     <submission-attributes name="deptreg1" group="Voyage itinerary" editable="N" type="areas" userLabel="Broad region of departure*">
 		<attributes>
 			<attribute name="deptreg1"/>
-		</attributes>
-    </submission-attributes>
-
-    <submission-attributes name="deptregimp" group="Voyage itinerary" editable="N" type="regions" userLabel="Region where voyage began*">
-		<attributes>
-			<attribute name="deptregimp"/>
 		</attributes>
     </submission-attributes>
 
@@ -334,42 +373,6 @@
 			<attribute name="regarr2"/>
 		</attributes>
     </submission-attributes>
-
-    <submission-attributes name="regdis1" group="Voyage itinerary" editable="N" type="regions" userLabel="First region of slave landing*">
-		<attributes>
-			<attribute name="regdis1"/>
-		</attributes>
-    </submission-attributes>
-
-    <submission-attributes name="regdis2" group="Voyage itinerary" editable="N" type="regions" userLabel="Second region of slave landing*">
-		<attributes>
-			<attribute name="regdis2"/>
-		</attributes>
-    </submission-attributes>
-
-    <submission-attributes name="regdis3" group="Voyage itinerary" editable="N" type="regions" userLabel="Third region of slave landing*">
-		<attributes>
-			<attribute name="regdis3"/>
-		</attributes>
-    </submission-attributes>
-
-	<submission-attributes name="regem1" group="Voyage itinerary" editable="N" type="regions" userLabel="First region of embarkation of slaves*">
-		<attributes>
-			<attribute name="regem1"/>
-		</attributes>
-	</submission-attributes>
-	
-	<submission-attributes name="regem2" group="Voyage itinerary" editable="N" type="regions" userLabel="Second region of embarkation of slaves*">
-		<attributes>
-			<attribute name="regem2"/>
-		</attributes>
-	 </submission-attributes>
-
- 	<submission-attributes name="regem3" group="Voyage itinerary" editable="N" type="regions" userLabel="Third region of embarkation of slaves*">
-		<attributes>
-			<attribute name="regem3"/>
-		</attributes>
-	 </submission-attributes>
 
 	<submission-attributes name="retrnreg" group="Voyage itinerary" editable="N" type="regions" userLabel="Region of return*">
 		<attributes>
