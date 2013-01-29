@@ -466,6 +466,81 @@
 							This lesson is an introduction to the database that can also serve as an introduction to the trans-Atlantic slave trade.  It exposes students to the vast amount and variability of material in the database, and helps to develop the necessary technical skills for using a database.  Students will analyze the historical data as a means of learning to formulate compelling research questions.
 						</div>
 					</div>
+					
+<!------>
+					<a name="research-tast"></a>
+		
+					<div class="lesson-plan-title">
+						Researching the Transatlantic Slave Trade 
+						<span class="download">(<a href="lesson-plans/research-tast.pdf">Download</a>, PDF, 645KB)</span>
+					</div>
+					<div class="lesson-plan-detail">			
+						<div class="lesson-plan-author">
+							Author:
+							<span class="lesson-plan-author-name">
+								Christine Kadonsky; David Eltis
+							</span>
+						</div>
+						<div class="lesson-plan-grade-level">
+							Grade Level:
+							<span class="lesson-plan-grade-level">
+								9th – 12th grade
+							</span>
+						</div>
+						<div class="lesson-plan-course">
+							Course:
+							<span class="lesson-plan-course">
+								World History; US History
+							</span>
+						</div>
+						<div class="lesson-plan-keywords">
+							Key Words:
+							<span class="lesson-plan-keywords">
+								Abolition; Slave Trade; United States; World History; Primary Sources; Graph skills
+							</span>
+						</div>
+						<div class="lesson-plan-standards-title">Standards</div>
+						<ul class="lesson-plan-standards">
+							<li>
+								<span class="lesson-plan-standards-name">
+									NCHS History Standards
+								</span>
+								<ul class="lesson-plan-standards-listing">
+									<li>U.S. History Era 1(Three Worlds Meet)–Standard 1</li>
+									<li>World History Era 6 (First Global Age)–Standard 4</li>
+								</ul>
+							</li>
+							<li>
+								<span class="lesson-plan-standards-name">
+									NCSS Social Studies Themes
+								</span>
+								<ul class="lesson-plan-standards-listing">
+									<li>II. Time, Continuity, Change</li>
+									<li>VII. Production, Distribution, Consumption</li>
+									<li>IX. Global Connections</li>
+								</ul>
+							</li>
+							<li>
+								<span class="lesson-plan-standards-name">
+									Geography
+								</span>
+								<ul class="lesson-plan-standards-listing">
+									<li>World in Spatial Terms Standards 1-3</li>
+									<li>Places and Regions Standards 4-6</li>
+									<li>Human Systems Standards 9-13</li>
+									<li>Issues of Geography Standard 17</li>
+								</ul>
+							</li>
+						</ul>
+						<div class="lesson-plan-abstract-title">Abstract</div>
+						<div class="lesson-plan-abstract">
+							In this lesson, students will learn how to search The Trans--Atlantic Slave Trade Database. 
+							They will discover the scope of the slave trade over four centuries. 
+							Students will search the database to learn more about five noteworthy voyages. 
+							Students will review the African Names Database to learn the name of Africans liberated from ships attempting to trade illegally. 
+							By completing this lesson, students will have a better understanding how historians use databases and statistics to conduct historical research.
+						</div>
+					</div>					
 		
 				</s:simpleBox>
 			</td>
