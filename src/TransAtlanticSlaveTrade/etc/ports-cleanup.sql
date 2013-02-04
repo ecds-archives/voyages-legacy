@@ -98,10 +98,13 @@ INSERT INTO ports
 (id, region_id, name, latitude, longitude, order_num, show_at_zoom, show_on_main_map, show_on_voyage_map)
 VALUES(60627, 60600, 'Rio Nazareth', 0, 0, 60525, 0, 'f', 't');
 
+INSERT INTO ports
+(id, region_id, name, latitude, longitude, order_num, show_at_zoom, show_on_main_map, show_on_voyage_map)
+VALUES(60341, 60300, 'Garraway Roads', 4.4969, -7.9331, 60341, 0, 'f', 't');
 
 
 select cleanup_ports(60203, 60202);
-select cleanup_ports(60209, 60340);
+select cleanup_ports(60209, 60341);
 select cleanup_ports(60216, 60340);
 select cleanup_ports(60304, 60429);
 select cleanup_ports(60308, 60306);
@@ -124,8 +127,8 @@ UPDATE ports set name = 'Sugary (Siekere)' WHERE id = 60219;
 
 
 -- Deleted Ports
-DELETE from ports where id in(60203, 60216, 60304, 60308, 60423, 60320, 60327, 60525);
+DELETE from ports where id in(60203, 60216, 60304, 60308, 60423, 60320, 60327, 60525, 60209);
 
-commit:
+commit;
 
 DROP FUNCTION cleanup_ports(bigint, bigint);
