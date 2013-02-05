@@ -76,7 +76,7 @@ VALUES(60403, 60400, 'Acoda  (Akka or Acquida)', 0, 0, 60403, 0, 'f', 'f');
 
 INSERT INTO ports
 (id, region_id, name, latitude, longitude, order_num, show_at_zoom, show_on_main_map, show_on_voyage_map)
-VALUES(60429, 60400, 'Boutry', 0, 0, 60429, 0, 'f', 'f');
+VALUES(60429, 60400, 'Bercou', 0, 0, 60429, 0, 'f', 'f');
 
 INSERT INTO ports
 (id, region_id, name, latitude, longitude, order_num, show_at_zoom, show_on_main_map, show_on_voyage_map)
@@ -100,7 +100,7 @@ VALUES(60627, 60600, 'Rio Nazareth', 0, 0, 60525, 0, 'f', 't');
 
 INSERT INTO ports
 (id, region_id, name, latitude, longitude, order_num, show_at_zoom, show_on_main_map, show_on_voyage_map)
-VALUES(60341, 60300, 'Garraway Roads', 4.4969, -7.9331, 60341, 0, 'f', 't');
+VALUES(60341, 60300, 'Garroway Roads', 4.4969, -7.9331, 60341, 0, 'f', 't');
 
 
 select cleanup_ports(60203, 60202);
