@@ -68,7 +68,7 @@ public class VisibleAttrSlave {
 		visibleAttributes.put("datearr", attr);
 		
 		attr = new VisibleAttrEstimate("source", new Attribute[] {Slave.getAttribute("source")});
-		attr.setUserLabel(TastResource.getText("components_names_attributes_source"));
+		attr.setUserLabel(TastResource.getText("components_names_attributes_goto"));
 		visibleAttributes.put("source", attr);
 		
 		attr = new VisibleAttrEstimate("country", new Attribute[] {Slave.getAttribute("country")});

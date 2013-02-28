@@ -250,14 +250,16 @@
 					</td>
 					<td class="featured-section-text">
 						<div class="featured-section-caption">
-							<a href="./about/origins.faces">
-							Explore African names on African-Origins
+							<a href="./resources/slaves.faces">
+							Explore the African Names Database
 							<img src="./images/index/link-arrow.png" border="0" width="16" height="16" align="top" alt="" />
 							</a>
 						</div>
 						<div class="featured-section-description">
-							This new website presents personal 
-							details of over 90,000 Africans liberated from slave ships during the 19th century.  							
+							This new website presents personal details of over 90,000 Africans liberated from slave ships during the 
+							19th century." to  "This database identifies 91,491 Africans taken from captured slave ships or from 
+							African trading sites. It displays the African name, age, gender, origin, country, and places of embarkation 
+							and disembarkation of each individual.  							
 						</div>
 					</td>
 				</tr>
