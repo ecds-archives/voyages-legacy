@@ -33,9 +33,9 @@ import edu.emory.library.tast.util.StringUtils;
 public class RecreateNormalizedlTextColumns
 {
 	
-	private static final String DB_CONN_STRING = "jdbc:postgresql://HOSTNAME/DBNAME";
-	private static final String DB_USER = "";
-	private static final String DB_PASS = "";
+//	private static final String DB_CONN_STRING = "jdbc:postgresql://wilson.library.emory.edu/tast_v1_2013-02-26_09-13";
+//	private static final String DB_USER = "tast";
+//	private static final String DB_PASS = "tast";
 
 	private static final int DB_REVISION = 1;
 	
@@ -133,6 +133,9 @@ public class RecreateNormalizedlTextColumns
 
 	public static void main(String[] args) throws ClassNotFoundException, SQLException
 	{
+		String DB_CONN_STRING = args[0]; 
+		String DB_USER = args[1];  
+		String DB_PASS = args[2];
 		
 		Class.forName("org.postgresql.Driver");
 		Connection conn = DriverManager.getConnection(DB_CONN_STRING, DB_USER, DB_PASS);

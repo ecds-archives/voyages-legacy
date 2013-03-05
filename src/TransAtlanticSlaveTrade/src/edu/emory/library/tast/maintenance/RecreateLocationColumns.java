@@ -27,14 +27,17 @@ import edu.emory.library.tast.util.SqlUtils;
 public class RecreateLocationColumns
 {
 	
-	private static final String DB_CONN_STRING = "jdbc:postgresql://HOSTNAME/DBNAME";
-	private static final String DB_USER = "";
-	private static final String DB_PASS = "";
+//	private static final String DB_CONN_STRING = "jdbc:postgresql://wilson.library.emory.edu/tast_v1_2013-02-26_09-13";
+//	private static final String DB_USER = "tast";
+//	private static final String DB_PASS = "tast";
 	
 	private static final int DB_REVISION = 1;
 	
 	public static void main(String[] args) throws ClassNotFoundException, SQLException
 	{
+		String DB_CONN_STRING = args[0];
+		String DB_USER = args[1];
+		String DB_PASS = args[2];
 		
 		long timeStart = System.currentTimeMillis();
 
