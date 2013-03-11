@@ -198,7 +198,12 @@
 				Alternatively, we could create this as an image. -->
 			
 				<div id="welcome-text">
-					<img src="./images/index/welcome-text.png" width="500" height="170" border="0" />
+					<!--<img src="./images/index/welcome-text.png" width="500" height="170" border="0" /> -->
+					<h1 style="color:gray; font-weight:bold;">The Trans-Atlantic Slave Trade Database has</h1>
+					<h1 style="color:gray;  font-weight:bold;">information on more then 35,000 slave voyages</h1>
+					<p style="font-size:14pt; color:gray; margin-top: 0px;">that forcibly embarked over 10 million Africans for transport to the Americas between the sixteenth 
+					and nineteenth centuries. It offers researchers, students and the general public a change to rediscover 
+					the reality of one of the largest forced movements of peoples in world history.</p>
 				</div>
 				
 				<table border="0" cellspacing="0" cellpadding="0" id="featured-sections">
@@ -256,10 +261,10 @@
 							</a>
 						</div>
 						<div class="featured-section-description">
-							This new website presents personal details of over 90,000 Africans liberated from slave ships during the 
-							19th century." to  "This database identifies 91,491 Africans taken from captured slave ships or from 
-							African trading sites. It displays the African name, age, gender, origin, country, and places of embarkation 
-							and disembarkation of each individual.  							
+							This database identifies 91,491 Africans taken from captured slave ships 
+							or from African trading sites. It displays the 
+							African name, age, gender, origin, country, and places of 
+							embarkation and disembarkation of each individual.  							
 						</div>
 					</td>
 				</tr>
