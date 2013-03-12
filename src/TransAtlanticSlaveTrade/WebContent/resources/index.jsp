@@ -61,7 +61,7 @@
 				provided to relevant voyages in the Voyages Database.</td>
 
 				<td class="section-desc">During the last 60 years of the trans-Atlantic slave trade, courts around the Atlantic 
-basins condemned over two thousands vessels for engaging in the traffic and recorded the details of captives found on 
+basins condemned over two thousand vessels for engaging in the traffic and recorded the details of captives found on 
 board including their African names. The African Names Database was  created from these records, now located in the 
 Registers of Liberated Africans at the Sierra Leone National Archives, Freetown, as well as Series FO84, FO313, CO247 and 
 CO267 held at the British National Archives in London. Links are provided to the ships in the Voyages Database from which 
