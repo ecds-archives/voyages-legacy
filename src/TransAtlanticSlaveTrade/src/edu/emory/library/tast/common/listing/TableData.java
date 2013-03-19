@@ -382,7 +382,7 @@ public class TableData {
 			Object[] dataColumn = new Object[columns.size()];
 			Object[] additionalDataColumn = new Object[additionalColumns.size()];
 			Object[] rawRow = (Object[]) rawData[i];
-
+			
 			// Hack to link to Origins site via the slave id
 			if (this.columns.get(this.columns.size()-1).toString().equals("Go to African-Origins Record")){
 				rawRow[12] = "<a onclick='return confirm(\"Redirecting to African Origins\");' target='_blank' href='http://african-origins.org/african-data/detail/" + rawRow[0] + "'>GO</a>";

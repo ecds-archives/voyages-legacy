@@ -34,6 +34,8 @@ import javax.faces.event.PhaseId;
 import edu.emory.library.tast.TastResource;
 import edu.emory.library.tast.common.Tooltip;
 import edu.emory.library.tast.common.listing.TableData.ColumnData;
+import edu.emory.library.tast.common.listing.TableData.DataTableItem;
+import edu.emory.library.tast.database.tabscommon.VisibleAttribute;
 import edu.emory.library.tast.database.tabscommon.VisibleAttributeInterface;
 import edu.emory.library.tast.db.TastDbQuery;
 import edu.emory.library.tast.util.JsfUtils;
@@ -56,6 +58,7 @@ public class TableResultComponent extends UIOutput
 	 */
 	private MethodBinding showDetails;
 
+	
 	/**
 	 * Default constructor.
 	 * 
@@ -305,6 +308,11 @@ public class TableResultComponent extends UIOutput
 				String voyageIdString = rowId == null ? 
 					TastResource.getText("components_table_missingid") :
 					rowId.toString();
+					
+					if(populatedAttributes.length == 12 && populatedAttributes[11].toString().equals("Go to African-Origins Record")){
+						ColumnData voyagIdVis = (ColumnData)rows[i].dataRow[6];
+						voyageIdString = voyagIdVis.getDataToDisplay()[0];
+					}
 
 				String jsClick = JsfUtils.generateSubmitJS(
 						context, form,

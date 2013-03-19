@@ -171,7 +171,7 @@ public class Slave {
 	{
 		return (Attribute)attributes.get(name);
 	}
-
+	
 	public static String getDisembarkationCode(Port port) {
 //		if (port.getId().longValue() == 60220) {
 //			return "Sierra Leone";

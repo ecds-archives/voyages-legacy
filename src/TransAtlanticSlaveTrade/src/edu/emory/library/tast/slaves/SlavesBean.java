@@ -142,6 +142,7 @@ public class SlavesBean {
 
 		tableData = new TableData();
 		tableData.setKeyAttribute(Slave.getAttribute("voyageId"));
+		tableData.setKeyAttribute(Slave.getAttribute("id"));
 		tableData.setVisibleColumns(visibleAttrs);
 		tableData.setOrderByColumn(visibleAttrs[0]);
 		tableData.setFormatter(VisibleAttrSlave.getAttributeForTable("majselpt"), new AbstractAttributeFormatter() {
