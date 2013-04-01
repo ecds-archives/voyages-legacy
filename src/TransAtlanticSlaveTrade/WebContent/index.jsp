@@ -200,9 +200,9 @@
 				<div id="welcome-text" style='font-size:18pt; color:#404A49; font-family: "Times New Roman",Times,serif;'>
 					<!--<img src="./images/index/welcome-text.png" width="500" height="170" border="0" /> -->
 					<h1 style="font-size: 18pt; font-weight: bold">The Trans-Atlantic Slave Trade Database has <br>
-					information on more then 35,000 slave voyages</h1>
+					information on more than 35,000 slave voyages</h1>
 					<p style="margin-top:0px;">that forcibly embarked over 10 million Africans for transport to the Americas between the sixteenth 
-					and nineteenth centuries. It offers researchers, students and the general public a change to rediscover 
+					and nineteenth centuries. It offers researchers, students and the general public a chance to rediscover 
 					the reality of one of the largest forced movements of peoples in world history.</p>
 				</div>
 				
