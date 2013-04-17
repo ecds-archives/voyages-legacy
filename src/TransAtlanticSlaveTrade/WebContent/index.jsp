@@ -197,15 +197,16 @@
 				browser renders the text exactly on the same number of lines.
 				Alternatively, we could create this as an image. -->
 			
-				<div id="welcome-text" style='font-size:18pt; color:#404A49; font-family: "Times New Roman",Times,serif;'>
-					<!--<img src="./images/index/welcome-text.png" width="500" height="170" border="0" /> -->
-					<h1 style="font-size: 18pt; font-weight: bold">The Trans-Atlantic Slave Trade Database has <br>
-					information on more than 35,000 slave voyages</h1>
-					<p style="margin-top:0px;">that forcibly embarked over 10 million Africans for transport to the Americas between the sixteenth 
-					and nineteenth centuries. It offers researchers, students and the general public a chance to rediscover 
-					the reality of one of the largest forced movements of peoples in world history.</p>
-				</div>
-				
+			        <div style="color: rgb(64, 74, 73); font-family: &quot;Times New Roman&quot;,Times,serif; white-space: nowrap;" id="welcome-text">
+                                        <!--<img src="./images/index/welcome-text.png" width="500" height="170" border="0" /> -->
+                                        <h1 style="font-size: 18pt; font-weight: bold">The Trans-Atlantic Slave Trade Database has <br>
+                                        information on more than 35,000 slave voyages</h1>
+                                        <p style="margin-top:0px; font-size: 12pt; line-height:130%">
+                                                             that forcibly embarked over 12 million Africans for transport to the<br>
+                                                             Americas between the sixteenth and nineteenth centuries. It offers<br>
+                                                             researchers, students and the general public a chance to rediscover the<br>
+                                                             reality of one of the largest forced movements of peoples in world history.</p>
+                                </div>	
 				<table border="0" cellspacing="0" cellpadding="0" id="featured-sections">
 				<tr>
 					<td class="featured-section-image">
