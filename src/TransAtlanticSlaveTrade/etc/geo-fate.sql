@@ -55,7 +55,7 @@ UPDATE ports SET name= 'La Guaira' WHERE id=  41214;
 -- New Ports
 INSERT INTO ports
 (id, region_id, name, latitude, longitude, order_num, show_at_zoom, show_on_main_map, show_on_voyage_map)
-VALUES(31106, 31100, 'Santo Domingo', 0, 0, 31106, 0, 'f', 'f');
+VALUES(31106, 31100, 'Santo Domingo (port)', 0, 0, 31106, 0, 'f', 'f');
 
 INSERT INTO ports
 (id, region_id, name, latitude, longitude, order_num, show_at_zoom, show_on_main_map, show_on_voyage_map)
@@ -81,7 +81,7 @@ VALUES(31327, 31300, 'Baracoa', 0, 0, 31327, 0, 'f', 'f');
 
 INSERT INTO ports
 (id, region_id, name, latitude, longitude, order_num, show_at_zoom, show_on_main_map, show_on_voyage_map)
-VALUES(31328, 31300, 'Los Macorijes', 0, 0, 31328, 0, 'f', 'f');
+VALUES(31328, 31300, 'Punta Macurijes', 0, 0, 31328, 0, 'f', 'f');
 
 
 -- change codes in voyages
