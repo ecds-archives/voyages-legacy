@@ -92,6 +92,9 @@ select cleanup_ports(31105, 31199);
 DELETE from ports where id in (31105);
 
 
+-- Update estimaates codes
+UPDATE estimates_import_regions SET name ='Spanish Circum-Caribbean' where id=703;
+
 -- New Fates
 INSERT INTO fates
 VALUES(213, 'Captured by the Dominican Republic');
