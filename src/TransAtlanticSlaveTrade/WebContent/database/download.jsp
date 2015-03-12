@@ -127,6 +127,7 @@ String dlUrl = AppConfig.getConfiguration().getString(AppConfig.DOWNLOADS_URL);
 						<li>2010, SPSS: <a href="<%=dlUrl%>/tastdb-2010.sav">tastdb-2010.sav</a></li>
 						<li>2010, comma-delimited: <a href="<%=dlUrl%>/tastdb-2010.csv">tastdb-2010.csv</a></li>
 						<li>2010, dBase: <a href="<%=dlUrl%>/tastdb-2010.dbf">tastdb-2010.dbf</a></li>
+						<li><a href="<%=dlUrl%>/Voyagesclassexercises.docx">Voyagesclassexercises.docx</a></li>
 					</ul>
 						
 					<a name="estimates"></a> 
@@ -150,6 +151,8 @@ String dlUrl = AppConfig.getConfiguration().getString(AppConfig.DOWNLOADS_URL);
 						<li>Estimates spreadsheet: <a href="<%=dlUrl%>/2010-estimates-excel.xlsx">2010 estimates-excel.xlsx</a></li>
 						<li>Estimates SPSS file: <a href="<%=dlUrl%>/2010-estimates-SPSS.sav">2010 estimates-SPSS.sav</a></li>
 						<li>Methodology essay: <a href="<%=dlUrl%>/2010estimates-method.pdf">2010 estimates-method.pdf</a></li>
+						<li>IntraAmertoSpa Notes: <a href="<%=dlUrl%>/Notes_on_the_estimates_of_the_IntraAmerican_trade.docx">Notes_on_the_estimates_of_the_IntraAmerican_trade.docx</a></li>
+						<li>IntraAmertoSpa Amer2015 <a href="<%=dlUrl%>/IntraAmertoSpa_Amer2015.xlsx">IntraAmertoSpa_Amer2015.xlsx</a></li>
 					</ul>
 					
 					<a name="namesdb"></a> 
